@@ -1,0 +1,80 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "--std",
+                "c++17",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compiler: /usr/bin/g++"
+        },
+        {
+            "label": "build (make)",
+            "type": "shell",
+            "command": "cd ${fileDirname}; make",
+            "args": []
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [
+                "-s",
+                "-rounds",
+                "${input:rounds}",
+                "${workspaceFolder}/inputs/${input:graph}",
+                "${input:others}"
+            ]
+        },
+        {
+            "label": "run (make)",
+            "type": "shell",
+            "command": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [
+                "-s",
+                "-rounds",
+                "${input:rounds}",
+                "${workspaceFolder}/inputs/${input:graph}",
+                "${input:others}"
+            ],
+            "dependsOn": [
+                "build (make)",
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "rounds",
+            "description": "# rounds (int)",
+            "default": "3",
+            "type": "promptString"
+        },
+        {
+            "id": "graph",
+            "description": "graph name",
+            "default": "rMatGraph_J_5_100",
+            "type": "promptString"
+        },
+        {
+            "id": "others",
+            "description": "other arguments",
+            "default": "",
+            "type": "promptString"
+        },
+    ]
+}
