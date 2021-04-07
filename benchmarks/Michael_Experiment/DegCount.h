@@ -17,26 +17,18 @@ namespace gbbs
 
         auto map_f = [&ST](const uintE &u, const uintE &v, const W &wgh) {
             ST.insert(std::make_tuple(u, 1));
-            ST.insert(std::make_tuple(v, 1));
         };
 
         G.mapEdges(map_f);
 
         auto ET = ST.entries();
         std::cout << "size: " << ET.size() << "\n";
-        for (size_t i = 0; i < G.n; i++)
-        {
+
+        parallel_for(0, ET.size(), [&](size_t i) {
             auto v = std::get<0>(ET[i]);
-            uintE count = std::get<1>(ET[i]) / 2;
-            std::cout << v << ", " << G.get_vertex(v).out_degree() << ", " << count << std::endl;
+            uintE count = std::get<1>(ET[i]);
             assert(G.get_vertex(v).out_degree() == count);
-        }
-        // parallel_for(0, G.n, [&](size_t i) {
-        //     auto v = std::get<0>(ET[i]);
-        //     uintE count = std::get<1>(ET[i]) / 2;
-        //     std::cout << G.get_vertex(v).out_degree() << ", " << count << std::endl;
-        //     assert(G.get_vertex(v).out_degree() == count);
-        // });
+        });
         std::cout << "finished"
                   << "\n";
     }
