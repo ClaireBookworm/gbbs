@@ -15,10 +15,13 @@ namespace gbbs
 
         timer t;
         t.start();
-        DegCount(G);
+        DegCount1(G);
         double tt = t.stop();
-
-        std::cout << "### Running Time: " << tt << std::endl;
+        std::cout << "### Running Time 1: " << tt << std::endl;
+        t.start();
+        DegCount2(G);
+        tt = t.stop();
+        std::cout << "### Running Time 2: " << tt << std::endl;
         return tt;
     }
 
