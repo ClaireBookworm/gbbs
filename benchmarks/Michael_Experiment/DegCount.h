@@ -66,7 +66,7 @@ namespace gbbs
     {
         using W = typename Graph::weight_type;
 
-        auto empty = std::make_tuple(UINT_E_MAX, UINT_E_MAX);
+        auto empty = std::make_tuple(UINT_E_MAX, 0);
         auto ST = pbbslib::sparse_additive_map<uintE, uintE>(G.n, empty);
 
         auto map_f = [&ST](const uintE &u, const uintE &v, const W &wgh) {
