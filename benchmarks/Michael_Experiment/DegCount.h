@@ -11,14 +11,38 @@ namespace gbbs
     void check(Graph &G, Sequence &ET)
     {
         std::cout << "size: " << ET.size() << "\n";
-
         parallel_for(0, ET.size(), [&](size_t i) {
             auto v = std::get<0>(ET[i]);
             uintE count = std::get<1>(ET[i]);
+            //std::cout << v << "\n";
+            if (G.get_vertex(v).out_degree() != count)
+            {
+                std::cout << v << " " << i << " " << count << " " << G.get_vertex(v).out_degree() << "\n";
+            }
             assert(G.get_vertex(v).out_degree() == count);
         });
         std::cout << "finished"
                   << "\n";
+    }
+
+    template <class Graph>
+    void isSymmetry(Graph &G)
+    {
+        parallel_for(0, G.n, [&](size_t i) {
+            auto v = G.get_vertex(i);
+            auto neighbors = v.out_neighbors();
+            parallel_for(0, v.out_degree(), [&](size_t j) {
+                auto u = G.get_vertex(neighbors.get_neighbor(j));
+                auto uNeighbors = u.out_neighbors();
+                bool isSymmetric = false;
+                parallel_for(0, u.out_degree(), [&](size_t k) {
+                    uintE p = uNeighbors.get_neighbor(k);
+                    if (p == i)
+                        pbbslib::atomic_compare_and_swap(&isSymmetric, false, true);
+                });
+                assert(isSymmetric);
+            });
+        });
     }
 
     template <class Graph>
@@ -30,7 +54,7 @@ namespace gbbs
         auto ST = pbbslib::sparse_additive_map<uintE, uintE>(G.n, empty);
 
         auto map_f = [&ST](const uintE &u, const uintE &v, const W &wgh) {
-            ST.insert(std::make_tuple(u, 1));
+            ST.insert(std::make_tuple(v, 1));
         };
 
         G.mapEdges(map_f);
@@ -48,7 +72,7 @@ namespace gbbs
         auto ST = pbbslib::sparse_additive_map<uintE, uintE>(G.n, empty);
 
         auto map_f = [&ST](const uintE &u, const uintE &v, const W &wgh) {
-            ST.insert(std::make_tuple(u, 1));
+            ST.insert(std::make_tuple(v, 1));
         };
 
         parallel_for(0, G.n, [&](size_t i) {

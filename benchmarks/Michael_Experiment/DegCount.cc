@@ -13,6 +13,7 @@ namespace gbbs
         std::cout << "### ------------------------------------" << std::endl;
         std::cout << "### ------------------------------------" << std::endl;
 
+        isSymmetry(G);
         timer t;
         t.start();
         DegCount1(G);
