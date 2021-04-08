@@ -2,7 +2,6 @@
 
 #include "gbbs/gbbs.h"
 #include "gbbs/pbbslib/sparse_additive_map.h"
-#undef NDEBUG
 #include <assert.h>
 
 namespace gbbs
@@ -14,7 +13,6 @@ namespace gbbs
         parallel_for(0, ET.size(), [&](size_t i) {
             auto v = std::get<0>(ET[i]);
             uintE count = std::get<1>(ET[i]);
-            //std::cout << v << "\n";
             if (G.get_vertex(v).out_degree() != count)
             {
                 std::cout << v << " " << i << " " << count << " " << G.get_vertex(v).out_degree() << "\n";
