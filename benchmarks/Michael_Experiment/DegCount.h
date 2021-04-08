@@ -10,27 +10,15 @@ namespace gbbs
     void check(Graph &G, Sequence &ET)
     {
         std::cout << "size: " << ET.size() << "\n";
-        for (size_t i = 0; i < ET.size(); i++)
-        {
+        parallel_for(0, ET.size(), [&](size_t i) {
             auto v = std::get<0>(ET[i]);
             uintE count = std::get<1>(ET[i]);
-            //std::cout << v << "\n";
             if (G.get_vertex(v).out_degree() != count)
             {
                 std::cout << v << " " << i << " " << count << " " << G.get_vertex(v).out_degree() << "\n";
             }
             assert(G.get_vertex(v).out_degree() == count);
-        }
-        // parallel_for(0, ET.size(), [&](size_t i) {
-        //     auto v = std::get<0>(ET[i]);
-        //     uintE count = std::get<1>(ET[i]);
-        //     //std::cout << v << "\n";
-        //     if (G.get_vertex(v).out_degree() != count)
-        //     {
-        //         std::cout << v << " " << i << " " << count << " " << G.get_vertex(v).out_degree() << "\n";
-        //     }
-        //     assert(G.get_vertex(v).out_degree() == count);
-        // });
+        });
         std::cout << "finished"
                   << "\n";
     }
