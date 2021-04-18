@@ -56,13 +56,13 @@ inline sequence<uintE> KCore(Graph& G, size_t num_buckets = 16) {
         uintE new_deg = std::max(deg - edgesRemoved, k);
         D[v] = new_deg;
         return wrap(v, b.get_bucket(new_deg));
-      }
+      } // deg==k means it's effectually deleted
       return std::nullopt;
     };
 
     auto cond_f = [] (const uintE& u) { return true; };
     vertexSubsetData<uintE> moved = nghCount(G, active, cond_f, apply_f, em, no_dense);
-
+    // "moved" is a wrapper storing a sequence of tuples like (id, newBucket)
     bt.start();
     b.update_buckets(moved);
     bt.stop();
@@ -89,13 +89,14 @@ struct kcore_fetch_add {
   inline std::optional<uintE> updateAtomic(const uintE& s, const uintE& d,
                                    const W& wgh) {
     if (pbbslib::fetch_and_add(&er[d], (uintE)1) == 1) {
-      return std::optional<uintE>((uintE)0);
+      return std::optional<uintE>((uintE)0); // returns 0 if it's just created?
     }
     return std::nullopt;
   }
   inline bool cond(uintE d) { return D[d] > k; }
 };
 
+// FA stands for fetch_and_add which atomically executes x+=a; this is just an implementation using atomic add to resolve neighbor update race
 template <class Graph>
 inline sequence<uintE> KCore_FA(Graph& G,
                                   size_t num_buckets = 16) {
@@ -128,13 +129,18 @@ inline sequence<uintE> KCore_FA(Graph& G,
 
     auto moved = edgeMapData<uintE>(
         G, active, kcore_fetch_add<W>(ER.begin(), D.begin(), k));
+    // edgeMapData maps over all neighboring edges of "active" updates the neighbors' ERs, returning a vertexSubsetData (which is basically a vertex subset where each vertex has a data)
+    // "moved" again stores tuple (id, cur_bucket)
     vertexMap(moved, apply_f);
+    // updates degree and bucket
 
     if (moved.dense()) {
       b.update_buckets(moved.get_fn_repr(), n);
+      // get_fn_repr() creates a sequence of tuples out of a sequence of elements, with 2nd dim = empty
     } else {
       b.update_buckets(moved.get_fn_repr(), moved.size());
     }
+    // why not just use b.update_buckets(moved)?
     rho++;
   }
   std::cout << "### rho = " << rho << " k_{max} = " << k_max << "\n";

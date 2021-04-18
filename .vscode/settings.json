@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.h": "cpp",
+        "*.cc": "cpp",
+        "deque": "cpp",
+        "locale": "cpp",
+        "sstream": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    }
+}
