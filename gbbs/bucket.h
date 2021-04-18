@@ -71,7 +71,7 @@ struct buckets {
     }
   };
 
-  using id_dyn_arr = pbbslib::dyn_arr<ident_t>;
+  using id_dyn_arr = pbbslib::dyn_arr<ident_t>; // dynamic array
 
   const bucket_id null_bkt = std::numeric_limits<bucket_id>::max();
 
@@ -102,6 +102,8 @@ struct buckets {
       auto imap_f = [&](size_t i) { return d[i]; };
       auto imap = pbbslib::make_sequence<bucket_id>(n, imap_f);
       size_t min_b = pbbslib::reduce(imap, pbbslib::minm<bucket_id>());
+      // "reduce" performs a "sum" where the sum uses the monoid provided. In this case min.
+      // So this obtains the min bucket id
       cur_range = min_b / open_buckets;
     } else if (order == decreasing) {
       auto imap_f = [&](size_t i) { return (d[i] == null_bkt) ? 0 : d[i]; };
@@ -390,7 +392,7 @@ struct buckets {
       if (bkt <
           cur_range *
               open_buckets) {  // this can happen because of the lazy bucketing
-        return null_bkt;
+        return null_bkt; // open_buckets is blocksize (range of buckets that are materialized)
       }
       return (bkt < (cur_range + 1) * open_buckets) ? (bkt % open_buckets)
                                                     : open_buckets;

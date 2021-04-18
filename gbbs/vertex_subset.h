@@ -207,7 +207,7 @@ struct vertexSubsetData<pbbslib::empty> {
   using D = bool;
 
   // Move constructor
-  vertexSubsetData<pbbslib::empty>(vertexSubsetData<pbbslib::empty>&& other) noexcept {
+  vertexSubsetData(vertexSubsetData<pbbslib::empty>&& other) noexcept {
     n = other.n;
     m = other.m;
     s = std::move(other.s);
@@ -230,14 +230,14 @@ struct vertexSubsetData<pbbslib::empty> {
   }
 
   // An empty vertex set.
-  vertexSubsetData<pbbslib::empty>(size_t _n)
+  vertexSubsetData(size_t _n)
       : n(_n),
         m(0),
         isDense(0),
         sum_out_degrees(std::numeric_limits<size_t>::max()) {}
 
   // A vertexSubset with a single vertex.
-  vertexSubsetData<pbbslib::empty>(size_t _n, uintE v)
+  vertexSubsetData(size_t _n, uintE v)
       : n(_n),
         m(1),
         isDense(0),
@@ -247,14 +247,14 @@ struct vertexSubsetData<pbbslib::empty> {
   }
 
   // A vertexSubset from array of vertex indices.
-  vertexSubsetData<pbbslib::empty>(size_t _n, size_t _m, sequence<S>&& A)
+  vertexSubsetData(size_t _n, size_t _m, sequence<S>&& A)
       : n(_n),
         m(_m),
         s(std::move(A)),
         isDense(0),
         sum_out_degrees(std::numeric_limits<size_t>::max()) {}
 
-  vertexSubsetData<pbbslib::empty>(size_t n, sequence<S>&& A)
+  vertexSubsetData(size_t n, sequence<S>&& A)
       : n(n),
         m(A.size()),
         s(std::move(A)),
@@ -262,7 +262,7 @@ struct vertexSubsetData<pbbslib::empty> {
         sum_out_degrees(std::numeric_limits<size_t>::max()) {}
 
   // A vertexSubset from boolean array giving number of true values.
-  vertexSubsetData<pbbslib::empty>(size_t _n, size_t _m, sequence<D>&& A)
+  vertexSubsetData(size_t _n, size_t _m, sequence<D>&& A)
       : n(_n),
         m(_m),
         d(std::move(A)),
@@ -271,7 +271,7 @@ struct vertexSubsetData<pbbslib::empty> {
 
   // A vertexSubset from boolean array giving number of true values. Calculate
   // number of nonzeros and store in m.
-  vertexSubsetData<pbbslib::empty>(size_t _n, sequence<D>&& A)
+  vertexSubsetData(size_t _n, sequence<D>&& A)
       : n(_n),
         d(std::move(A)),
         isDense(1),
