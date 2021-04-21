@@ -215,7 +215,7 @@ struct buckets {
 
     size_t block_bits = pbbslib::log2_up(num_blocks);
     num_blocks = 1 << block_bits; // scale num_blocks up to the next 2^i
-    size_t block_size = (k + num_blocks - 1) / num_blocks;
+    size_t block_size = (k + num_blocks - 1) / num_blocks; // this is just a roundup division to get modified blocksize (which has a baseline of 4096)
 
     bucket_id* hists = pbbslib::new_array_no_init<bucket_id>((num_blocks + 1) *
                                                   total_buckets * CACHE_LINE_S);
@@ -224,6 +224,7 @@ struct buckets {
 
     // 1. Compute per-block histograms
     par_for(0, num_blocks, 1, [&] (size_t i) {
+      // instead of histogramming on 1 histogram, create num_blocks histograms to ensure there's no collision in parallel updates
       size_t s = i * block_size;
       size_t e = std::min(s + block_size, k);
       bucket_id* hist = &(hists[i * total_buckets]);
@@ -232,7 +233,7 @@ struct buckets {
         hist[j] = 0;
       }
       for (size_t j = s; j < e; j++) {
-        auto m = f(j);
+        auto m = f(j); // m is (id, bucket_id)
         bucket_id b = std::get<1>(*m);
         if (m.has_value() && b != null_bkt) {
           hist[b]++;
@@ -242,6 +243,8 @@ struct buckets {
 
     // 2. Aggregate histograms into a single histogram.
     auto get = [&](size_t i) {
+      // we are changing a flat array organized by [num_blocks][total_buckets]
+      // to [total_buckets][num_blocks]
       size_t col = i % num_blocks;
       size_t row = i / num_blocks;
       return hists[col * total_buckets + row];
@@ -255,6 +258,7 @@ struct buckets {
     outs[last_ind] = 0;
 
     pbbslib::scan_inplace(outs.slice(), pbbslib::addm<bucket_id>());
+    // we do a prefix sum over the flat array [total_buckets][num_blocks]
 //    outs[num_blocks * total_buckets] = sum;
 
     // 3. Resize buckets based on the summed histogram.
@@ -273,7 +277,7 @@ struct buckets {
       }
     });
 
-    // 5. Iterate over blocks again. Insert (id, bkt) into bkt[hists[bkt]]
+    // 5. Iterate over blocks again. Insert (id, bkt) into bkts[hists[bkt]]
     // and increment hists[bkt].
     par_for(0, num_blocks, 1, [&] (size_t i) {
       size_t s = i * block_size;
