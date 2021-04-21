@@ -219,6 +219,7 @@ struct buckets {
 
     bucket_id* hists = pbbslib::new_array_no_init<bucket_id>((num_blocks + 1) *
                                                   total_buckets * CACHE_LINE_S);
+    // * CACHE_LINE_S for memory alignment (so each bucket has its cache line -> facilitates parallel updates)
 //    bucket_id* outs =
 //        pbbslib::new_array_no_init<bucket_id>((num_blocks + 1) * total_buckets);
 
@@ -245,8 +246,8 @@ struct buckets {
     auto get = [&](size_t i) {
       // we are changing a flat array organized by [num_blocks][total_buckets]
       // to [total_buckets][num_blocks]
-      size_t col = i % num_blocks;
-      size_t row = i / num_blocks;
+      size_t col = i % num_blocks; // col=block_index
+      size_t row = i / num_blocks; // row=bucket_index
       return hists[col * total_buckets + row];
     };
 
@@ -274,6 +275,9 @@ struct buckets {
       for (size_t j = 0; j < num_blocks; j++) {
         hists[(i * num_blocks + j) * CACHE_LINE_S] =
             outs[i * num_blocks + j] - start;
+        // note we are basically recreating hists as [total_buckets][num_blocks] here
+        // where each num_block position indicates how much that and all previous blocks add to that bucket
+        // thus the index of insertion in that bucket for the first element in the block
       }
     });
 
@@ -289,6 +293,7 @@ struct buckets {
         bucket_id b = std::get<1>(*m);
         if (m.has_value() && b != null_bkt) {
           size_t ind = hists[(b * num_blocks + i) * CACHE_LINE_S];
+          // hists gives [b][num_block]'s current index of insertion in the bucket
           bkts[b].insert(v, ind);
           hists[(b * num_blocks + i) * CACHE_LINE_S]++;
         }
@@ -322,7 +327,7 @@ struct buckets {
   id_dyn_arr* bkts;
 
   template <class F>
-  // returns num_elements successfully added
+  // returns num_elements successfully added (including out of range)
   inline size_t update_buckets_seq(F& f, size_t k) {
     size_t ne_before = num_elms;
     for (size_t i = 0; i < k; i++) {
@@ -347,7 +352,7 @@ struct buckets {
   inline bool curBucketNonEmpty() { return bkts[cur_bkt].size > 0; }
 
   inline void unpack() {
-    size_t m = bkts[open_buckets].size;
+    size_t m = bkts[open_buckets].size; // bkts[open_buckets] stores all unmaterialized buckets
     auto tmp = sequence<ident_t>(m);
     ident_t* A = bkts[open_buckets].A;
     par_for(0, m, pbbslib::kSequentialForThreshold, [&] (size_t i)
@@ -361,7 +366,7 @@ struct buckets {
 
     auto g = [&](ident_t i) -> std::optional<std::tuple<ident_t, bucket_id> > {
       ident_t v = tmp[i];
-      bucket_id bkt = to_range(d[v]);
+      bucket_id bkt = to_range(d[v]); // returns modded index in new range
       return std::optional<std::tuple<ident_t, bucket_id> >(std::make_tuple(v, bkt));
     };
 
@@ -374,13 +379,15 @@ struct buckets {
       assert(m == num_elms);  // corrruption in bucket structure.
     }
     size_t updated = update_buckets(g, m);
-    size_t num_in_range = updated - bkts[open_buckets].size;
+    size_t num_in_range = updated - bkts[open_buckets].size; // how many is added in range
     //none in range
     if(num_in_range == 0 && bkts[open_buckets].size > 0) {
       auto imap = pbbslib::make_sequence<bucket_t>(bkts[open_buckets].size, [&] (size_t j) { return (size_t)d[bkts[open_buckets].A[j]]; });
+      // imap gives the bucket each bucket out of range still belongs to
       if(order == increasing) {
         size_t minBkt = pbbs::reduce(imap, pbbs::minm<size_t>());
         cur_range = minBkt/open_buckets-1; //will be incremented in next unpack() call
+        // jump the range directly to 1 before the next non-empty bucket
       }
       else if(order == decreasing) {
         size_t minBkt = pbbs::reduce(imap, pbbs::maxm<size_t>());
@@ -393,7 +400,7 @@ struct buckets {
   inline void _next_bucket() {
     cur_bkt++;
     if (cur_bkt == open_buckets) {
-      unpack();
+      unpack(); // unpack materializes the next open range
       cur_bkt = 0;
     }
   }
