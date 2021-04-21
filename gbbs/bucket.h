@@ -62,6 +62,7 @@ struct buckets {
    using bucket_id = bucket_t; // for readability
   // node that bucket_dests are just bucket_t's (bucket_ids)
 
+  // it's the structure to be returned for each bucket, which is actually stored as a dyn_arr
   struct bucket {
     size_t id;
     size_t num_filtered;
@@ -86,7 +87,7 @@ struct buckets {
   //   d[i] = std::numeric_limits<bucket_id>::max() if i is not in any bucket
   buckets(size_t _n, D& _d, bucket_order _order, size_t _total_buckets)
       : n(_n),
-        d(_d),
+        d(_d),// d is an arr of bucket_ids indicating where each item should go
         order(_order),
         open_buckets(_total_buckets - 1),
         total_buckets(_total_buckets),
@@ -105,11 +106,14 @@ struct buckets {
       // "reduce" performs a "sum" where the sum uses the monoid provided. In this case min.
       // So this obtains the min bucket id
       cur_range = min_b / open_buckets;
+      // open bucket indicates the number of buckets ahead that are materialized
+      // cur_range indicates [cur_range*open_buckets,(cur_range+1)*open_buckets) is materialized
     } else if (order == decreasing) {
       auto imap_f = [&](size_t i) { return (d[i] == null_bkt) ? 0 : d[i]; };
       auto imap = pbbslib::make_sequence<bucket_id>(n, imap_f);
       size_t max_b = pbbslib::reduce(imap, pbbslib::maxm<bucket_id>());
       cur_range = (max_b + open_buckets) / open_buckets;
+      // cur_range indicates [(cur_range-1)*open_buckets,cur_range*open_buckets) is materialized
     } else {
       std::cout << "Unknown order: " << order
                 << ". Must be one of {increasing, decreasing}"
@@ -133,9 +137,9 @@ struct buckets {
   // value's bkt_id is null_bkt when no further buckets remain.
   inline bucket next_bucket() {
     while (!curBucketNonEmpty() && num_elms > 0) {
-      _next_bucket();
+      _next_bucket(); // increment cur_bkt counter
     }
-    if (num_elms == 0) {
+    if (num_elms == 0) { // num_elms is num_elements ahead
       size_t bkt_num = null_bkt;  // no buckets remain
       return bucket(bkt_num, sequence<ident_t>());
     }
@@ -144,12 +148,14 @@ struct buckets {
 
   // Computes a bucket_dest for an identifier moving from bucket_id prev to
   // bucket_id next.
+  // returns the local index of the destination
   inline bucket_id get_bucket(const bucket_id& prev,
                               const bucket_id& next) const {
     bucket_id pb = to_range(prev);
     bucket_id nb = to_range(next);
     if ((nb != null_bkt) &&
         ((prev == null_bkt) || (pb != nb) || (nb == cur_bkt))) {
+      // we only need to move if nb is not passed and (prev is passed || there's a change in index || nb is cur_bkt)
       return nb;
     }
     return null_bkt;
@@ -164,7 +170,7 @@ struct buckets {
       // case for strictly_decreasing priorities, assuming elements start out
       // in the structure.
       if (nb != null_bkt && nb != open_buckets) {
-        return nb;
+        return nb; // return when it's in open range
       } // case for strictly_increasing elided
     } else { // bkt_order == decreasing
       if (nb != null_bkt) {
@@ -188,6 +194,8 @@ struct buckets {
   inline size_t update_buckets(vertexSubsetData<uintE>& VS) {
     if (VS.dense()) {
       return update_buckets(VS.get_fn_repr(), VS.n);
+      // get_fn_repr returns a function which gives (index, data)
+      // in this case, data is assumed to be the bucket_dests
     } else {
       return update_buckets(VS.get_fn_repr(), VS.size());
     }
@@ -206,7 +214,7 @@ struct buckets {
     size_t ne_before = num_elms;
 
     size_t block_bits = pbbslib::log2_up(num_blocks);
-    num_blocks = 1 << block_bits;
+    num_blocks = 1 << block_bits; // scale num_blocks up to the next 2^i
     size_t block_size = (k + num_blocks - 1) / num_blocks;
 
     bucket_id* hists = pbbslib::new_array_no_init<bucket_id>((num_blocks + 1) *
@@ -299,24 +307,25 @@ struct buckets {
   size_t n;  // total number of identifiers in the system
   D& d;
   const bucket_order order;
-  size_t open_buckets;
+  size_t open_buckets; // number of open buckets
   size_t total_buckets;
-  size_t cur_bkt;
+  size_t cur_bkt; // the modded bucket index
   size_t max_bkt;
-  size_t num_elms;
+  size_t num_elms; // the num elements left ahead in open buckets
   bool allocated;
 
-  size_t cur_range;
+  size_t cur_range; // [cur_range*open_buckets,(cur_range+1)*open_buckets) gives the open range
   id_dyn_arr* bkts;
 
   template <class F>
+  // returns num_elements successfully added
   inline size_t update_buckets_seq(F& f, size_t k) {
     size_t ne_before = num_elms;
     for (size_t i = 0; i < k; i++) {
       auto m = f(i);
       bucket_id bkt = std::get<1>(*m);
       if (m.has_value() && bkt != null_bkt) {
-        bkts[bkt].resize(1);
+        bkts[bkt].resize(1); // lazy increase size by 1
         insert_in_bucket(bkt, std::get<0>(*m));
         num_elms++;
       }
@@ -325,7 +334,7 @@ struct buckets {
   }
 
   inline void insert_in_bucket(bucket_id bkt, ident_t ident) {
-    auto dst = bkts[bkt].A;
+    auto dst = bkts[bkt].A; // A is the actual array in the dyn_arr
     auto size = bkts[bkt].size;
     dst[size] = ident;
     bkts[bkt].size++;
@@ -387,6 +396,7 @@ struct buckets {
 
   // increasing: [cur_range*open_buckets, (cur_range+1)*open_buckets)
   // decreasing: [(cur_range-1)*open_buckets, cur_range*open_buckets)
+  // returns modded bucket_id if within open range, else return null_bkt to indicate it's passed the range, open_buckets to indicate out of range
   inline bucket_id to_range(bucket_id bkt) const {
     if (order == increasing) {
       if (bkt <
@@ -406,6 +416,7 @@ struct buckets {
     }
   }
 
+  // returns global index
   size_t get_cur_bucket_num() const {
     if (order == increasing) {
       return cur_range * open_buckets + cur_bkt;
@@ -421,9 +432,10 @@ struct buckets {
     ident_t* out = pbbslib::new_array_no_init<ident_t>(size);
     size_t cur_bkt_num = get_cur_bucket_num();
     auto p = [&](size_t i) { return d[i] == cur_bkt_num; };
+    // we need to apply filter to check each item is still in the bucket because of lazy delete
     size_t m = pbbslib::filterf(bkt.A, out, size, p);
     bkts[cur_bkt].size = 0;
-    if (m == 0) {
+    if (m == 0) { // if no item is left in the bucket
       pbbslib::free_array(out);
       return next_bucket();
     }

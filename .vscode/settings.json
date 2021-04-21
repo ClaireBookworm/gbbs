@@ -6,6 +6,7 @@
         "locale": "cpp",
         "sstream": "cpp",
         "string": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "optional": "cpp"
     }
 }
