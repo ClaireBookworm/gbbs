@@ -65,7 +65,7 @@ struct buckets {
   // it's the structure to be returned for each bucket, which is actually stored as a dyn_arr
   struct bucket {
     size_t id;
-    size_t num_filtered;
+    size_t num_filtered; // number of original size of bkt before filtering
     sequence<ident_t> identifiers;
     bucket(size_t _id, sequence<ident_t>&& _identifiers)
         : id(_id), identifiers(std::move(_identifiers)) {
