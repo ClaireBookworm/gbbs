@@ -1,6 +1,8 @@
 #include "ClaireTest.h"
 namespace gbbs
 {
+
+  
   template <class Graph>
   double BFS_runner(Graph &G, commandLine P)
   {
