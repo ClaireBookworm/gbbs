@@ -7,6 +7,11 @@
         "sstream": "cpp",
         "string": "cpp",
         "vector": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "__nullptr": "cpp",
+        "exception": "cpp",
+        "limits": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp"
     }
 }
