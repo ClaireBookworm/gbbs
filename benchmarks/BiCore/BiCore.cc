@@ -33,14 +33,14 @@
 //     -fa : run the fetch-and-add implementation of k-core
 //     -nb : the number of buckets to use in the bucketing implementation
 
-#include "KCore.h"
+#include "BiCore.h"
 
 namespace gbbs {
 template <class Graph>
 double BiCore_runner(Graph& G, commandLine P) {
   size_t num_buckets = P.getOptionLongValue("-nb", 16);
-  bool fa = P.getOption("-fa");
-  std::cout << "### Application: KCore" << std::endl;
+  size_t bipartition = P.getOptionLongValue("-bi", 2);
+  std::cout << "### Application: BiCore" << std::endl;
   std::cout << "### Graph: " << P.getArgument(0) << std::endl;
   std::cout << "### Threads: " << num_workers() << std::endl;
   std::cout << "### n: " << G.n << std::endl;
@@ -56,7 +56,7 @@ double BiCore_runner(Graph& G, commandLine P) {
 
   // runs the fetch-and-add based implementation if set.
   timer t; t.start();
-  auto cores = (fa) ? KCore_FA(G, num_buckets) : KCore(G, num_buckets);
+  auto cores = BiCore(G,num_buckets,bipartition);
   double tt = t.stop();
 
   std::cout << "### Running Time: " << tt << std::endl;
