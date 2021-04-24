@@ -25,7 +25,6 @@
 
 #include "gbbs/gbbs.h"
 #include "gbbs/julienne.h"
-#include algorithm
 
 namespace gbbs {
 
@@ -49,8 +48,8 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
   });
 
   uDel = vertexSubset(n,mask)
-  auto cond_f = [] (const uintE& u) { return true; };
-  auto apply_fu = [&](const std::tuple<uintE, uintE>& p)
+  auto cond_f = [] (const uintE& u) { return D[u]>0; };
+  auto clearZeroV = [&](const std::tuple<uintE, uintE>& p)
       -> const std::optional<std::tuple<uintE, uintE> > {
     uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
     uintE deg = D[v];
@@ -61,7 +60,7 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
     return std::nullopt;
   };
 
-  auto apply_fv = [&](const std::tuple<uintE, uintE>& p)
+  auto clearU = [&](const std::tuple<uintE, uintE>& p)
       -> const std::optional<std::tuple<uintE, uintE> > {
     uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
     uintE deg = D[u];
@@ -74,8 +73,8 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
 
   // peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
   while(!uDel.isEmpty()){
-    vertexSubset vDel = nghCount(G, uDel, cond_f, apply_fu, em, no_dense);
-    uDel = nghCount(G, vDel, cond_f, apply_fv, em, no_dense);
+    vertexSubset vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
+    uDel = nghCount(G, vDel, cond_f, clearU, em, no_dense);
   }
 
   auto D =
@@ -88,11 +87,12 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
   // note this i value is not real i value; realI = i+bipartition+1
   timer bt;
 
-  size_t finished = 0, rho_alpha = 0;
+  size_t finished = 0, rho_alpha = 0, max_beta = 0;
   while (finished != n_b) {
     bt.start();
     auto vbkt = b.next_bucket();
     bt.stop();
+    max_beta = std::max(max_beta,vbkt.id);
 
     if(vbkt.id==0)
       continue;
@@ -100,27 +100,31 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
     auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
     finished += activeV.size();
 
-    auto apply_f = [&](const std::tuple<uintE, uintE>& p)
+    auto cond_f = [] (const uintE& u) { return D[u]>0; };
+    vertexSubset deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
+    // "deleteU" is a wrapper storing a sequence id of deleted vertices in U
+
+    auto getVBuckets = [&](const std::tuple<uintE, uintE>& p)
         -> const std::optional<std::tuple<uintE, uintE> > {
       uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
       uintE deg = D[v];
-      if (deg > k) {
-        uintE new_deg = std::max(deg - edgesRemoved, k);
+      if (deg > max_beta) {
+        uintE new_deg = std::max(deg - edgesRemoved, max_beta);
         D[v] = new_deg;
         return wrap(v, b.get_bucket(new_deg));
-      } // deg==k means it's effectually deleted
+      } // deg==k means it's effectually deleted and traversed on this round
       return std::nullopt;
     };
 
-    auto cond_f = [] (const uintE& u) { return true; };
-    vertexSubsetData<uintE> moved = nghCount(G, activeV, cond_f, apply_f, em, no_dense);
-    // "moved" is a wrapper storing a sequence of tuples like (id, newBucket)
+    vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense)
+    // "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
+
     bt.start();
-    b.update_buckets(moved);
+    b.update_buckets(movedV);
     bt.stop();
     rho_alpha++;
   }
-  std::cout << "### rho_alpha = " << rho_alpha << " k_{max} = " << k_max << "\n";
+  std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
   debug(bt.reportTotal("bucket time"););
   return D;
 }
