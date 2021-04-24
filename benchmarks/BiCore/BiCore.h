@@ -32,7 +32,7 @@ namespace gbbs {
 // bipartition gives the last vertex id in first partition
 template <class Graph>
 inline void BiCore(Graph& G, size_t num_buckets=16, size_t = bipartition){
-  
+
 }
 
 template <class Graph>
@@ -42,28 +42,62 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
   const size_t n_b = n-bipartition-1;
   const size_t n_a = bipartition+1;
 
-  bool mask[n];
-  std::fill_n(mask, n, false);
+  auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
 
-  parallel_for(0,bipartition+1,[&](size_t i){
-    if(G.get_vertex(i).out_degree()<alpha)
-      mask[i]=true;
+  mask = sequence<bool>(n, [&](size_t i){
+    return G.get_vertex(i).out_degree()<alpha;
   });
 
-  auto D =
-      sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i+bipartition+1).out_degree(); });
+  uDel = vertexSubset(n,mask)
+  auto cond_f = [] (const uintE& u) { return true; };
+  auto apply_fu = [&](const std::tuple<uintE, uintE>& p)
+      -> const std::optional<std::tuple<uintE, uintE> > {
+    uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+    uintE deg = D[v];
+    uintE new_deg = deg - edgesRemoved;
+    D[v] = new_deg;
+    if(new_deg==0)
+      return wrap(v, pbbslib::empty);
+    return std::nullopt;
+  };
 
-  auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
-  auto b = make_vertex_buckets(n-bipartition-1, D, increasing, num_buckets);
+  auto apply_fv = [&](const std::tuple<uintE, uintE>& p)
+      -> const std::optional<std::tuple<uintE, uintE> > {
+    uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
+    uintE deg = D[u];
+    uintE new_deg = deg - edgesRemoved;
+    D[u] = new_deg;
+    if(new_deg<alpha)
+      return wrap(u, pbbslib::empty);
+    return std::nullopt;
+  };
+
+  // peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
+  while(!uDel.isEmpty()){
+    vertexSubset vDel = nghCount(G, uDel, cond_f, apply_fu, em, no_dense);
+    uDel = nghCount(G, vDel, cond_f, apply_fv, em, no_dense);
+  }
+
+  auto D =
+      sequence<uintE>(n_b, [&](size_t i) {
+        return G.get_vertex(i+bipartition+1).out_degree();
+      });
+
+  auto b = make_vertex_buckets(n_b, D, increasing, num_buckets);
   // make num_buckets buckets such that each vertex i is in D[i] bucket
+  // note this i value is not real i value; realI = i+bipartition+1
   timer bt;
 
   size_t finished = 0, rho_alpha = 0;
   while (finished != n_b) {
     bt.start();
-    auto bkt = b.next_bucket();
+    auto vbkt = b.next_bucket();
     bt.stop();
-    auto activeV = vertexSubset(n, std::move(bkt.identifiers)); // container of vertices
+
+    if(vbkt.id==0)
+      continue;
+
+    auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
     finished += activeV.size();
 
     auto apply_f = [&](const std::tuple<uintE, uintE>& p)
@@ -79,7 +113,7 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
     };
 
     auto cond_f = [] (const uintE& u) { return true; };
-    vertexSubsetData<uintE> moved = nghCount(G, active, cond_f, apply_f, em, no_dense);
+    vertexSubsetData<uintE> moved = nghCount(G, activeV, cond_f, apply_f, em, no_dense);
     // "moved" is a wrapper storing a sequence of tuples like (id, newBucket)
     bt.start();
     b.update_buckets(moved);
