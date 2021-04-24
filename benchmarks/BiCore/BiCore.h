@@ -25,28 +25,46 @@
 
 #include "gbbs/gbbs.h"
 #include "gbbs/julienne.h"
+#include algorithm
 
 namespace gbbs {
 
+// bipartition gives the last vertex id in first partition
 template <class Graph>
-inline sequence<uintE> BiCore(Graph& G, size_t num_buckets = 16, size_t bipartition = 2) {
+inline void BiCore(Graph& G, size_t num_buckets=16, size_t = bipartition){
+  
+}
+
+template <class Graph>
+inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2) {
+
   const size_t n = G.n;
+  const size_t n_b = n-bipartition-1;
+  const size_t n_a = bipartition+1;
+
+  bool mask[n];
+  std::fill_n(mask, n, false);
+
+  parallel_for(0,bipartition+1,[&](size_t i){
+    if(G.get_vertex(i).out_degree()<alpha)
+      mask[i]=true;
+  });
+
   auto D =
-      sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
+      sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i+bipartition+1).out_degree(); });
 
   auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
-  auto b = make_vertex_buckets(n, D, increasing, num_buckets);
+  auto b = make_vertex_buckets(n-bipartition-1, D, increasing, num_buckets);
+  // make num_buckets buckets such that each vertex i is in D[i] bucket
   timer bt;
 
-  size_t finished = 0, rho = 0, k_max = 0;
-  while (finished != n) {
+  size_t finished = 0, rho_alpha = 0;
+  while (finished != n_b) {
     bt.start();
     auto bkt = b.next_bucket();
     bt.stop();
-    auto active = vertexSubset(n, std::move(bkt.identifiers));
-    uintE k = bkt.id;
-    finished += active.size();
-    k_max = std::max(k_max, bkt.id);
+    auto activeV = vertexSubset(n, std::move(bkt.identifiers)); // container of vertices
+    finished += activeV.size();
 
     auto apply_f = [&](const std::tuple<uintE, uintE>& p)
         -> const std::optional<std::tuple<uintE, uintE> > {
@@ -66,9 +84,9 @@ inline sequence<uintE> BiCore(Graph& G, size_t num_buckets = 16, size_t bipartit
     bt.start();
     b.update_buckets(moved);
     bt.stop();
-    rho++;
+    rho_alpha++;
   }
-  std::cout << "### rho = " << rho << " k_{max} = " << k_max << "\n";
+  std::cout << "### rho_alpha = " << rho_alpha << " k_{max} = " << k_max << "\n";
   debug(bt.reportTotal("bucket time"););
   return D;
 }
