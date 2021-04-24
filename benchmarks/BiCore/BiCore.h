@@ -71,6 +71,20 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
     return std::nullopt;
   };
 
+  auto getVBuckets = [&](const std::tuple<uintE, uintE>& p)
+      -> const std::optional<std::tuple<uintE, uintE> > {
+    uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+    uintE deg = D[v];
+    if (deg > max_beta) {
+      uintE new_deg = std::max(deg - edgesRemoved, max_beta);
+      D[v] = new_deg;
+      return wrap(v, b.get_bucket(new_deg));
+    } // deg==k means it's effectually deleted and traversed on this round
+    return std::nullopt;
+  };
+
+
+
   // peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
   while(!uDel.isEmpty()){
     vertexSubset vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
@@ -100,21 +114,8 @@ inline void PeelFixA(Graph& G, size_t alpha, size_t num_buckets = 16, size_t bip
     auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
     finished += activeV.size();
 
-    auto cond_f = [] (const uintE& u) { return D[u]>0; };
     vertexSubset deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
     // "deleteU" is a wrapper storing a sequence id of deleted vertices in U
-
-    auto getVBuckets = [&](const std::tuple<uintE, uintE>& p)
-        -> const std::optional<std::tuple<uintE, uintE> > {
-      uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-      uintE deg = D[v];
-      if (deg > max_beta) {
-        uintE new_deg = std::max(deg - edgesRemoved, max_beta);
-        D[v] = new_deg;
-        return wrap(v, b.get_bucket(new_deg));
-      } // deg==k means it's effectually deleted and traversed on this round
-      return std::nullopt;
-    };
 
     vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense)
     // "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
