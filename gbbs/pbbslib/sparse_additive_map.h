@@ -96,21 +96,24 @@ namespace pbbslib
 
     bool insert(std::tuple<K, V> kv)
     {
+      // What this if block is doing is saying, okay if we don’t find our key in the table, and we come across an empty block, this empty block is where we are going to put our key
       K k = std::get<0>(kv);
       V v = std::get<1>(kv);
       size_t h = firstIndex(k);
       while (1)
       {
-        if (std::get<0>(table[h]) == empty_key)
+        if (std::get<0>(table[h]) == empty_key) // if key is not in table
         {
           if (pbbslib::CAS(&std::get<0>(table[h]), empty_key, k))
           {
+            // if compare and swap on empty block works
             pbbslib::write_add(&std::get<1>(table[h]), v);
             return 1;
           }
         }
-        if (std::get<0>(table[h]) == k)
+        if (std::get<0>(table[h]) == k) // ket is IN table
         {
+          // atomic add onto the value
           pbbslib::write_add(&std::get<1>(table[h]), v);
           return false;
         }
