@@ -37,7 +37,7 @@ template <class Graph, class MT>
 void initialize_trussness_values(Graph& GA, MT& multi_table) {
   using W = typename Graph::weight_type;
 
-  timer it; it.start();
+  timer it; it.start(); // how much time it takes to run
   GA.mapEdges([&] (const uintE& u, const uintE& v, const W& wgh) {
     if (u < v) {
       multi_table.insert(u, std::make_tuple(v,0));
@@ -230,6 +230,8 @@ void KTruss_ht(Graph& GA, size_t num_buckets = 16) {
     bt.start();
     b.update_buckets(edges_moved_f, rebucket_edges.size());
     bt.stop();
+
+  // apply_f - gets an optional result O
 
 //    auto apply_f = [&](const std::tuple<edge_t, uintE>& p)
 //        -> const Maybe<std::tuple<edge_t, bucket_t> > {

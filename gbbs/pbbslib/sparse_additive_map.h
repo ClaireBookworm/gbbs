@@ -26,108 +26,128 @@
 
 #include "gbbs/bridge.h"
 
-namespace pbbslib {
+namespace pbbslib
+{
 
-template <class K, class V>
-class sparse_additive_map {
- public:
-  using T = std::tuple<K, V>;
+  template <class K, class V>
+  class sparse_additive_map
+  {
+  public:
+    using T = std::tuple<K, V>;
 
-  size_t m;
-  size_t mask;
-  T empty;
-  K empty_key;
-  T* table;
-  bool alloc;
+    size_t m;
+    size_t mask;
+    T empty;
+    K empty_key;
+    T *table;
+    bool alloc;
+    // kv is a template tuple (with values K and V?)
+    static void clearA(T *A, long n, T kv)
+    {
+      parallel_for(0, n, [&](size_t i) { A[i] = kv; });
+    }
 
-  static void clearA(T* A, long n, T kv) {
-    parallel_for(0, n, [&] (size_t i) { A[i] = kv; });
-  }
+    inline size_t hashToRange(size_t h) { return h & mask; }
+    inline size_t firstIndex(K &k) { return hashToRange(pbbslib::hash64(k)); }
+    inline size_t incrementIndex(size_t h) { return hashToRange(h + 1); }
 
-  inline size_t hashToRange(size_t h) { return h & mask; }
-  inline size_t firstIndex(K& k) { return hashToRange(pbbslib::hash64(k)); }
-  inline size_t incrementIndex(size_t h) { return hashToRange(h + 1); }
+    void del()
+    {
+      if (alloc)
+      {
+        pbbslib::free_array(table);
+        alloc = false;
+      }
+    }
 
-  void del() {
-    if (alloc) {
-      pbbslib::free_array(table);
+    sparse_additive_map() : m(0)
+    {
+      mask = 0;
       alloc = false;
     }
-  }
 
-  sparse_additive_map() : m(0) {
-    mask = 0;
-    alloc = false;
-  }
+    // Size is the maximum number of values the hash table will hold.
+    // Overfilling the table could put it into an infinite loop.
+    sparse_additive_map(size_t _m, T _empty)
+        : m((size_t)1 << pbbslib::log2_up((size_t)(1.1 * _m))),
+          mask(m - 1),
+          empty(_empty),
+          empty_key(std::get<0>(empty))
+    {
+      size_t line_size = 64;
+      size_t bytes = ((m * sizeof(T)) / line_size + 1) * line_size;
+      table = (T *)aligned_alloc(line_size, bytes);
+      clearA(table, m, empty);
+      alloc = true;
+    }
 
-  // Size is the maximum number of values the hash table will hold.
-  // Overfilling the table could put it into an infinite loop.
-  sparse_additive_map(size_t _m, T _empty)
-      : m((size_t)1 << pbbslib::log2_up((size_t)(1.1 * _m))),
-        mask(m - 1),
-        empty(_empty),
-        empty_key(std::get<0>(empty)) {
-    size_t line_size = 64;
-    size_t bytes = ((m * sizeof(T)) / line_size + 1) * line_size;
-    table = (T*)aligned_alloc(line_size, bytes);
-    clearA(table, m, empty);
-    alloc = true;
-  }
+    // Size is the maximum number of values the hash table will hold.
+    // Overfilling the table could put it into an infinite loop.
+    sparse_additive_map(size_t _m, T _empty, T *_tab)
+        : m(_m),
+          mask(m - 1),
+          table(_tab),
+          empty(_empty),
+          empty_key(std::get<0>(empty))
+    {
+      clearA(table, m, empty);
+      alloc = false;
+    }
 
-  // Size is the maximum number of values the hash table will hold.
-  // Overfilling the table could put it into an infinite loop.
-  sparse_additive_map(size_t _m, T _empty, T* _tab)
-      : m(_m),
-        mask(m - 1),
-        table(_tab),
-        empty(_empty),
-        empty_key(std::get<0>(empty)) {
-    clearA(table, m, empty);
-    alloc = false;
-  }
-
-  bool insert(std::tuple<K, V> kv) {
-    K k = std::get<0>(kv);
-    V v = std::get<1>(kv);
-    size_t h = firstIndex(k);
-    while (1) {
-      if (std::get<0>(table[h]) == empty_key) {
-        if (pbbslib::CAS(&std::get<0>(table[h]), empty_key, k)) {
+    bool insert(std::tuple<K, V> kv)
+    {
+      K k = std::get<0>(kv);
+      V v = std::get<1>(kv);
+      size_t h = firstIndex(k);
+      while (1)
+      {
+        if (std::get<0>(table[h]) == empty_key)
+        {
+          if (pbbslib::CAS(&std::get<0>(table[h]), empty_key, k))
+          {
+            pbbslib::write_add(&std::get<1>(table[h]), v);
+            return 1;
+          }
+        }
+        if (std::get<0>(table[h]) == k)
+        {
           pbbslib::write_add(&std::get<1>(table[h]), v);
+          return false;
+        }
+        h = incrementIndex(h);
+      }
+      return 0;
+    }
+
+    bool contains(K k)
+    {
+      size_t h = firstIndex(k);
+      while (1)
+      {
+        if (std::get<0>(table[h]) == k)
+        {
           return 1;
         }
-      }          
-      if (std::get<0>(table[h]) == k) {
-        pbbslib::write_add(&std::get<1>(table[h]), v);
-        return false;
+        else if (std::get<0>(table[h]) == empty_key)
+        {
+          return 0;
+        }
+        h = incrementIndex(h);
       }
-      h = incrementIndex(h);
+      return 0;
     }
-    return 0;
-  }
 
-  bool contains(K k) {
-    size_t h = firstIndex(k);
-    while (1) {
-      if (std::get<0>(table[h]) == k) {
-        return 1;
-      } else if (std::get<0>(table[h]) == empty_key) {
-        return 0;
-      }
-      h = incrementIndex(h);
+    auto entries()
+    {
+      auto pred = [&](const T &t) { return std::get<0>(t) != empty_key; };
+      auto table_seq = pbbslib::make_sequence<T>(table, m);
+      return pbbslib::filter(table_seq, pred);
     }
-    return 0;
-  }
 
-  auto entries() {
-    auto pred = [&](const T& t) { return std::get<0>(t) != empty_key; };
-    auto table_seq = pbbslib::make_sequence<T>(table, m);
-    return pbbslib::filter(table_seq, pred);
-  }
+    void clear()
+    {
+      parallel_for(0, m, [&](size_t i) { table[i] = empty; });
+    }
+  };
 
-  void clear() {
-    parallel_for(0, m, [&] (size_t i) { table[i] = empty; });
-  }
-};
-
-}  // namespace pbbslib
+} // namespace pbbslib
