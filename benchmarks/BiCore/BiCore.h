@@ -33,6 +33,7 @@ namespace gbbs
 	template <class Graph>
 	inline void BiCore(Graph &G, size_t num_buckets = 16, size_t = bipartition)
 	{
+		// ComShrDecom??
 		// delta = max_unicore(U+V, E)
 		// for a in range(1, delta+1):
 		//  peelByB(U, V, E, a)
@@ -150,9 +151,11 @@ namespace gbbs
 			return G.get_vertex(i).out_degree() < alpha;
 		});
 
-		uDel = vertexSubset(m, mask) auto cond_f = [](const uintE &u) {
+		vDel = vertexSubset(m, mask) auto cond_f = [](const uintE &u) {
 			return D[v] > 0;
 		};
+
+		// if the U list is empty
 		auto clearZeroU = [&](const std::tutple<uintE, uintE> &p)
 				-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved std::get<1>(p);
@@ -187,8 +190,9 @@ namespace gbbs
 			return std::nullopt;
 		};
 
+		// nghCount counts the # of neighbors
 		while (!vDel.isEmpty()) {
-			vertexSubset uDel = nghCount(G, Vdel, cond_f, clearZeroU, em, no_dense);
+			vertexSubset uDel = nghCount(G, vDel, cond_f, clearZeroU, em, no_dense);
 			vDel = nghCount(G, uDel, cond_f, clearV, em, no_dense);
 		}
 
@@ -198,13 +202,13 @@ namespace gbbs
 			});
 		auto a = make_vertex_buckets(m_b, D, increasing, num_buckets);
 		//# of buckets do that each i vertex is in D[i] buckets
-		timer at;
+		timer bt;
 
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		while (finished != m_b) {
-			at.start();
+			bt.start();
 			auto ubkt = b.next_bucket();
-			at.stop();
+			bt.stop();
 			max_beta = std::max(max_beta, ubkt.id);
 
 			if(ubkt.id == 0)
@@ -215,13 +219,13 @@ namespace gbbs
 
 			vertexSubset deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
 			vertexSubset movedU = nghCount (G, deleteV, cond_f, getUBuckets, em, no_dense);
-			at.start();
+			bt.start();
 			a.update_buckets(movedU);
-			at.stop();
+			bt.stop();
 			rho_alpha++;
 		}
 		std::cout << "### rho_alha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
-		debug(at.reportTotal("bucket time"));
+		debug(bt.reportTotal("bucket time"));
 		return D;
 	}
 
