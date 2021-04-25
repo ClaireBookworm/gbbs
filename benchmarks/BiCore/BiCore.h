@@ -124,7 +124,7 @@ namespace gbbs
 			vertexSubset deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 
-			vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense)
+			vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense);
 														// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 
 														bt.start();
@@ -133,7 +133,7 @@ namespace gbbs
 			rho_alpha++;
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
-		debug(bt.reportTotal("bucket time"););
+		debug(bt.reportTotal("bucket time"));
 		return D;
 	}
 
@@ -196,7 +196,33 @@ namespace gbbs
 			sequence<uintE>(m_b, [&](site_t i) {
 				return G.get_vertex(I + bipartition+1).out_degree();
 			});
+		auto a = make_vertex_buckets(m_b, D, increasing, num_buckets);
+		//# of buckets do that each i vertex is in D[i] buckets
+		timer at;
 
+		size_t finished = 0, rho_alpha = 0, max_beta = 0;
+		while (finished != m_b) {
+			at.start();
+			auto ubkt = b.next_bucket();
+			at.stop();
+			max_beta = std::max(max_beta, ubkt.id);
+
+			if(ubkt.id == 0)
+				continue;
+			
+			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
+			finished += activeU.size(); // add to finished set
+
+			vertexSubset deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
+			vertexSubset movedU = nghCount (G, deleteV, cond_f, getUBuckets, em, no_dense);
+			at.start();
+			a.update_buckets(movedU);
+			at.stop();
+			rho_alpha++;
+		}
+		std::cout << "### rho_alha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
+		debug(at.reportTotal("bucket time"));
+		return D;
 	}
 
 } // namespace gbbs
