@@ -5,21 +5,24 @@ def ComShrDecom(U, V, E):
 	for b in range(1, delta+1):
 		peelByA(U, V, E, b)
 
+
 def histogram(tracker):
-	parallel filter(tracker,0) # filter out empty elements
+	parallel filter(tracker, 0)  # filter out empty elements
 	parallel sort(tracker)
 	hist = parallel freqCount(tracker)
 	return hist
 
-def prefixSums (x):
-	for d in range(0,(lg n)):
+
+def prefixSums(x):
+	for d in range(0, (lg n)):
 		parallel for i in range((2**d), n-1):
 			newx[i] = x[i-2**d] + x[i]
 		x = newx
 
+
 def max_unicore(V, E):
 	degbuckets = ParallelBucketArray(V)
-	# bucketqueue datastructure: a dynamic array of buckets 
+	# bucketqueue datastructure: a dynamic array of buckets
 	# where each bucket (implemented as dynamic arrays) stores vertices of a certain deg
 	max_deg = 0
 	# store exp search
@@ -27,10 +30,10 @@ def max_unicore(V, E):
 		cur_bucket = exponentialSearch(degbuckets)
 		# each bucket stores the deg it corresponds to
 		max_deg = max(max_deg, cur_bucket.deg)
-		while cur_bucket is not None: # need a wrapper because new vertices could be moved to cur_bucket
+		while cur_bucket is not None:  # need a wrapper because new vertices could be moved to cur_bucket
 			nextLayerTracker = []
 
-			parallel for i,v in enumerate(cur_bucket):
+			parallel for i, v in enumerate(cur_bucket):
 				indices[i] = deg(v)
       indices = parallel prefix_sum(indices)
 
