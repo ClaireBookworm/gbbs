@@ -229,4 +229,14 @@ namespace gbbs
 		return D;
 	}
 
+	template <class Graph>
+	inline bool checkInterval(arr) {
+  // this checks in O(1) span whether the interval contains a nonempty bucket
+		bool hasNext = False;
+		// parallel for bucket in arr:
+		// 	if bucket is not None:
+		// 		compare_and_swap(hasNext,True)
+		return hasNext
+	}
+
 } // namespace gbbs

@@ -73,7 +73,7 @@ def max_unicore(V, E):
 			cur_bucket = cur_bucket_new
 	return max_deg
 
-def peelByA(U, V, E, a):
+def peelByA(U, V, E, a): # peelFixB
 	# u correspond to a; v correspond to b
 	# we need Bmax(a, u) and Amax(b, v)
 	# U = set of vertices u 
