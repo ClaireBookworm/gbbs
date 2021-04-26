@@ -29,214 +29,215 @@
 namespace gbbs
 {
 
-	// bipartition gives the last vertex id in first partition
-	template <class Graph>
-	inline void BiCore(Graph &G, size_t num_buckets = 16, size_t = bipartition)
-	{
-		// ComShrDecom??
-		// delta = max_unicore(U+V, E)
-		// for a in range(1, delta+1):
-		//  peelByB(U, V, E, a)
-		// for b in range(1, delta+1):
-		// 	peelByA(U, V, E, b)
-	}
+// bipartition gives the last vertex id in first partition
+template <class Graph>
+inline void BiCore(Graph &G, size_t num_buckets = 16, size_t = bipartition)
+{
+	// ComShrDecom??
+	// delta = max_unicore(U+V, E)
+	// for a in range(1, delta+1):
+	//  peelByB(U, V, E, a)
+	// for b in range(1, delta+1):
+	// 	peelByA(U, V, E, b)
+}
 
-	template <class Graph>
-	inline void PeelFixA(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
-	{
+template <class Graph>
+inline void PeelFixA(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
+{
 
-		const size_t n = G.n;
-		const size_t n_b = n - bipartition - 1;
-		const size_t n_a = bipartition + 1;
+	const size_t n = G.n;
+	const size_t n_b = n - bipartition - 1;
+	const size_t n_a = bipartition + 1;
 
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
+	// [0, bipartition] interval for U
+	// [bipartition+1, n-1]  interval V
 
-		mask = sequence<bool>(n, [&](size_t i) {
-			return G.get_vertex(i).out_degree() < alpha;
-		});
-
-		uDel = vertexSubset(n, mask) auto cond_f = [](const uintE &u) { return D[u] > 0; };
-		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
-				-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[v];
-			uintE new_deg = deg - edgesRemoved;
-			D[v] = new_deg;
-			if (new_deg == 0)
-				return wrap(v, pbbslib::empty);
-			return std::nullopt;
-		};
-
-		auto clearU = [&](const std::tuple<uintE, uintE> &p)
-				-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[u];
-			uintE new_deg = deg - edgesRemoved;
-			D[u] = new_deg;
-			if (new_deg < alpha)
-				return wrap(u, pbbslib::empty);
-			return std::nullopt;
-		};
-
-		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
-				-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[v];
-			if (deg > max_beta)
-			{
-				uintE new_deg = std::max(deg - edgesRemoved, max_beta);
-				D[v] = new_deg;
-				return wrap(v, b.get_bucket(new_deg));
-			} // deg==k means it's effectually deleted and traversed on this round
-			return std::nullopt;
-		};
-
-		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
-		while (!uDel.isEmpty())
-		{
-			vertexSubset vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
-			uDel = nghCount(G, vDel, cond_f, clearU, em, no_dense);
-		}
-
-		auto D =
-				sequence<uintE>(n_b, [&](size_t i) {
-					return G.get_vertex(i + bipartition + 1).out_degree();
-				});
-
-		auto b = make_vertex_buckets(n_b, D, increasing, num_buckets);
-		// make num_buckets buckets such that each vertex i is in D[i] bucket
-		// note this i value is not real i value; realI = i+bipartition+1
-		timer bt;
-
-		size_t finished = 0, rho_alpha = 0, max_beta = 0;
-		while (finished != n_b)
-		{
-			bt.start();
-			auto vbkt = b.next_bucket();
-			bt.stop();
-			max_beta = std::max(max_beta, vbkt.id);
-
-			if (vbkt.id == 0)
-				continue;
-
-			auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
-			finished += activeV.size();
-
-			vertexSubset deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
-			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
-
-			vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense);
-														// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
-
-														bt.start();
-			b.update_buckets(movedV);
-			bt.stop();
-			rho_alpha++;
-		}
-		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
-		debug(bt.reportTotal("bucket time"));
-		return D;
-	}
-
-	template <class Graph>
-	inline void PeelFixB(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
-	{
-		const size_t m = G.m;
-		const size_t m_b = m - bipartition - 1;
-		const size_t m_a = bipartition + 1;
-
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.n / 50);
-
-		mask = sequence<bool>(m, [&](size_t i) {
-			return G.get_vertex(i).out_degree() < alpha;
-		});
-
-		vDel = vertexSubset(m, mask) auto cond_f = [](const uintE &u) {
-			return D[v] > 0;
-		};
-
-		// if the U list is empty
-		auto clearZeroU = [&](const std::tutple<uintE, uintE> &p)
-				-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE u = std::get<0>(p), edgesRemoved std::get<1>(p);
-			uintE deg = D[u];
-			uintE new_deg = deg - edgesRemoved;
-			D[u] = new_deg;
-			if (new_deg == 0)
-				return wrap(v, pbbslib::empty);
-			return std::nullopt;
-		};
-
-		auto clearV = [&](const std::tuple<uintE, uintE> &p)
-				-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[v];
-			uintE new_deg = deg - edgesRemoved;
-			D[v] = new_deg;
-			if (new_deg < alpha)
-				return wrap(v, pbbslib::empty);
-			return std::nullopt;
-		};
-		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
-				-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[u];
-			if (deg > max_beta)
-			{
-				uintE new_deg = std::max(deg - edgesRemoved, max_beta);
-				D[u] = new_deg;
-				return wrap(u, b.get_bucket(new_deg));
-			}
-			return std::nullopt;
-		};
-
-		// nghCount counts the # of neighbors
-		while (!vDel.isEmpty()) {
-			vertexSubset uDel = nghCount(G, vDel, cond_f, clearZeroU, em, no_dense);
-			vDel = nghCount(G, uDel, cond_f, clearV, em, no_dense);
-		}
-
-		auto D =
-			sequence<uintE>(m_b, [&](site_t i) {
-				return G.get_vertex(I + bipartition+1).out_degree();
+	auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
+	auto D =
+			sequence<uintE>(n, [&](size_t i) {
+				return G.get_vertex(i).out_degree();
 			});
-		auto a = make_vertex_buckets(m_b, D, increasing, num_buckets);
-		//# of buckets do that each i vertex is in D[i] buckets
-		timer bt;
 
-		size_t finished = 0, rho_alpha = 0, max_beta = 0;
-		while (finished != m_b) {
-			bt.start();
-			auto ubkt = b.next_bucket();
-			bt.stop();
-			max_beta = std::max(max_beta, ubkt.id);
+	mask = sequence<bool>(n, [&](size_t i) {
+		if(i>=n_a)
+			return false;
+		return G.get_vertex(i).out_degree() < alpha;
+	});
 
-			if(ubkt.id == 0)
-				continue;
-			
-			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
-			finished += activeU.size(); // add to finished set
+	uDel = vertexSubset(n, mask);
+	auto cond_f = [&D](const uintE &u) { return D[u] > 0; };
+	auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE, uintE>> {
+		uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+		uintE deg = D[v];
+		uintE new_deg = deg - edgesRemoved;
+		D[v] = new_deg;
+		if (new_deg == 0)
+			return wrap(v, pbbslib::empty);
+		return std::nullopt;
+	};
 
-			vertexSubset deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
-			vertexSubset movedU = nghCount (G, deleteV, cond_f, getUBuckets, em, no_dense);
-			bt.start();
-			a.update_buckets(movedU);
-			bt.stop();
-			rho_alpha++;
+	auto clearU = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE, uintE>> {
+		uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
+		uintE deg = D[u];
+		uintE new_deg = deg - edgesRemoved;
+		D[u] = new_deg;
+		if (new_deg < alpha)
+			return wrap(u, pbbslib::empty);
+		return std::nullopt;
+	};
+
+	auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE, uintE>> {
+		uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+		uintE deg = D[v];
+		if (deg > max_beta)
+		{
+			uintE new_deg = std::max(deg - edgesRemoved, max_beta);
+			D[v] = new_deg;
+			return wrap(v, b.get_bucket(new_deg));
+		} // deg==k means it's effectually deleted and traversed on this round
+		return std::nullopt;
+	};
+
+	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
+	while (!uDel.isEmpty())
+	{
+		vertexSubset vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
+		uDel = nghCount(G, vDel, cond_f, clearU, em, no_dense);
+	}
+
+	auto bbuckets = make_vertex_buckets(n_b, D, increasing, num_buckets);
+	// make num_buckets open buckets such that each vertex i is in D[i] bucket
+	// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
+	timer bt;
+
+	size_t finished = 0, rho_alpha = 0, max_beta = 0;
+	while (finished != n_b)
+	{
+		bt.start();
+		auto vbkt = bbuckets.next_bucket();
+		bt.stop();
+		max_beta = std::max(max_beta, vbkt.id);
+
+		if (vbkt.id == 0)
+			continue;
+
+		auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
+		finished += activeV.size();
+
+		vertexSubset deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
+		// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
+
+		vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense);
+													// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
+
+													bt.start();
+		bbuckets.update_buckets(movedV);
+		bt.stop();
+		rho_alpha++;
+	}
+	std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
+	debug(bt.reportTotal("bucket time"));
+	return D;
+}
+
+template <class Graph>
+inline void PeelFixB(Graph &G, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
+{
+	const size_t n = G.n;
+	const size_t n_b = n - bipartition - 1;
+	const size_t n_a = bipartition + 1;
+
+	auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.n / 50);
+	auto D =
+		sequence<uintE>(n, [&](site_t i) {
+			return G.get_vertex(i).out_degree();
+		});
+
+
+	mask = sequence<bool>(n, [&](size_t i) {
+		if(i<n_a)
+			return false;
+		return G.get_vertex(i).out_degree() < beta;
+	});
+
+	vDel = vertexSubset(n, mask);
+	auto cond_f = [&D](const uintE &u) {
+		return D[v] > 0;
+	};
+
+	// if the U list is empty
+	auto clearZeroU = [&](const std::tutple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE, uintE>> {
+		uintE u = std::get<0>(p), edgesRemoved std::get<1>(p);
+		uintE deg = D[u];
+		uintE new_deg = deg - edgesRemoved;
+		D[u] = new_deg;
+		if (new_deg == 0)
+			return wrap(u, pbbslib::empty);
+		return std::nullopt;
+	};
+
+	auto clearV = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE, uintE>> {
+		uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+		uintE deg = D[v];
+		uintE new_deg = deg - edgesRemoved;
+		D[v] = new_deg;
+		if (new_deg < beta)
+			return wrap(v, pbbslib::empty);
+		return std::nullopt;
+	};
+
+	auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE, uintE>> {
+		uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
+		uintE deg = D[u];
+		if (deg > max_alpha)
+		{
+			uintE new_deg = std::max(deg - edgesRemoved, max_alpha);
+			D[u] = new_deg;
+			return wrap(u, b.get_bucket(new_deg));
 		}
-		std::cout << "### rho_alha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
-		debug(bt.reportTotal("bucket time"));
-		return D;
+		return std::nullopt;
+	};
+
+	// nghCount counts the # of neighbors
+	while (!vDel.isEmpty()) {
+		vertexSubset uDel = nghCount(G, vDel, cond_f, clearZeroU, em, no_dense);
+		vDel = nghCount(G, uDel, cond_f, clearV, em, no_dense);
 	}
 
-	template <class Graph>
-	inline bool checkInterval(arr) {
-  // this checks in O(1) span whether the interval contains a nonempty bucket
-		bool hasNext = False;
-		// parallel for bucket in arr:
-		// 	if bucket is not None:
-		// 		compare_and_swap(hasNext,True)
-		return hasNext
+	auto abuckets = make_vertex_buckets(n_b, D, increasing, num_buckets);
+	// makes num_buckets open buckets
+	// for each vertex [0, n_b-1], it puts it in bucket D[i]
+	timer bt;
+
+	size_t finished = 0, rho_beta = 0, max_alpha = 0;
+	while (finished != n_b) {
+		bt.start();
+		auto ubkt = abuckets.next_bucket();
+		bt.stop();
+		max_alpha = std::max(max_alpha, ubkt.id);
+
+		if(ubkt.id == 0)
+			continue;
+
+		auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
+		finished += activeU.size(); // add to finished set
+
+		vertexSubset deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
+		vertexSubset movedU = nghCount (G, deleteV, cond_f, getUBuckets, em, no_dense);
+		bt.start();
+		abuckets.update_buckets(movedU);
+		bt.stop();
+		rho_beta++;
 	}
+	std::cout << "### rho_beta = " << rho_alpha << " alpha_{max} = " << max_beta << "\n";
+	debug(bt.reportTotal("bucket time"));
+	return D;
+}
 
 } // namespace gbbs
