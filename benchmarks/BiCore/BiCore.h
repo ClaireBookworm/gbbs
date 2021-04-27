@@ -62,13 +62,13 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<uintE>(n, [&](size_t i) {
+		auto mask = sequence<bool>(n, [&](size_t i) {
 			if (i >= n_a)
 				return false;
 			return G.get_vertex(i).out_degree() < alpha;
 		});
 
-		auto uDel = vertexSubsetData(n, mask);
+		auto uDel = vertexSubset(n, mask);
 		auto cond_f = [&D](const uintE &u) { return D[u] > 0; };
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE, uintE>> {
@@ -161,7 +161,7 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<uintE>(n, [&](size_t i) {
+		auto mask = sequence<bool>(n, [&](size_t i) {
 			if (i < n_a)
 				return false;
 			return G.get_vertex(i).out_degree() < beta;
@@ -233,8 +233,8 @@ namespace gbbs
 			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
 			finished += activeU.size(); // add to finished set
 
-			vertexSubsetData deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
-			vertexSubsetData movedU = nghCount(G, deleteV, cond_f, getUBuckets, em, no_dense);
+			vertexSubset deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
+			vertexSubset movedU = nghCount(G, deleteV, cond_f, getUBuckets, em, no_dense);
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
