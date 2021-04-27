@@ -45,7 +45,7 @@ double BiCore_runner(Graph& G, commandLine P) {
   std::cout << "### Threads: " << num_workers() << std::endl;
   std::cout << "### n: " << G.n << std::endl;
   std::cout << "### m: " << G.m << std::endl;
-  std::cout << "### Params: -nb (num_buckets) = " << num_buckets << " -fa (use fetch_and_add) = " << fa << std::endl;
+  std::cout << "### Params: -nb (num_buckets) = " << num_buckets << " -bi = " << bipartition << std::endl;
   std::cout << "### ------------------------------------" << std::endl;
   if (num_buckets != static_cast<size_t>((1 << pbbslib::log2_up(num_buckets)))) {
     std::cout << "Number of buckets must be a power of two."

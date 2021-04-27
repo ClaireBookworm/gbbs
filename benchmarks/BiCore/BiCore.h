@@ -77,7 +77,7 @@ namespace gbbs
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
 			if (new_deg == 0)
-				return wrap(v, pbbslib::empty<Graph>);
+				return wrap(v, pbbslib::empty);
 			return std::nullopt;
 		};
 
@@ -161,7 +161,7 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<bool>(n, [&](size_t i) {
+		auto mask = sequence<uintE>(n, [&](size_t i) {
 			if (i < n_a)
 				return false;
 			return G.get_vertex(i).out_degree() < beta;
@@ -180,7 +180,7 @@ namespace gbbs
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
 			if (new_deg == 0)
-				return wrap(u, pbbslib::empty<Graph>);
+				return wrap(u, pbbslib::empty);
 			return std::nullopt;
 		};
 
@@ -240,7 +240,7 @@ namespace gbbs
 			bt.stop();
 			rho_beta++;
 		}
-		std::cout << "### rho_alpha = " << rho_alpha << " alpha_{max} = " << max_beta << "\n";
+		std::cout << "### rho_alpha = " << rho_alpha << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
 		// return D; shouldn't return anything
 	}
