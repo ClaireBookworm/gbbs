@@ -31,6 +31,7 @@ namespace gbbs
 
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
+
 	// template <class Graph>
 	// inline void BiCore(Graph &G, size_t num_buckets = 16, size_t = bipartition)
 	// {
@@ -68,7 +69,7 @@ namespace gbbs
 			return G.get_vertex(i).out_degree() < alpha;
 		});
 
-		auto uDel = vertexSubset(n, mask);
+		auto uDel = vertexSubset(n, std::move(mask));
 		auto cond_f = [&D](const uintE &u) { return D[u] > 0; };
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE, uintE>> {
@@ -100,7 +101,7 @@ namespace gbbs
 			uintE deg = D[v];
 			if (deg > max_beta)
 			{
-				uintE new_deg = std::max(deg - edgesRemoved, max_beta);
+				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
 				D[v] = new_deg;
 				return wrap(v, b.get_bucket(new_deg));
 			} // deg==k means it's effectually deleted and traversed on this round
@@ -167,7 +168,7 @@ namespace gbbs
 			return G.get_vertex(i).out_degree() < beta;
 		});
 
-		auto vDel = vertexSubset(n, mask);
+		auto vDel = vertexSubset(n, std::move(mask));
 		auto cond_f = [&D](const uintE &u) {
 			return D[u] > 0;
 		};
@@ -180,7 +181,7 @@ namespace gbbs
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
 			if (new_deg == 0)
-				return wrap(u, pbbslib::empty);
+				return wrap(u, pbbslib::empty());
 			return std::nullopt;
 		};
 
@@ -191,17 +192,17 @@ namespace gbbs
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
 			if (new_deg < beta)
-				return wrap(v, pbbslib::empty);
+				return wrap(v, std::move(pbbslib::empty));
 			return std::nullopt;
 		};
-		size_t finished = 0, rho_beta = 0, max_alpha = 0;
+		size_t finished = 0, rho_alpha = 0, max_alpha = 0;
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
 			if (deg > max_alpha)
 			{
-				uintE new_deg = std::max(deg - edgesRemoved, max_alpha);
+				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
 				D[u] = new_deg;
 				return wrap(u, b.get_bucket(new_deg));
 			}
@@ -238,7 +239,7 @@ namespace gbbs
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
-			rho_beta++;
+			rho_alpha++;
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
