@@ -236,7 +236,7 @@ namespace gbbs
 		// parallel for bucket in arr:
 		// 	if bucket is not None:
 		// 		compare_and_swap(hasNext,True)
-		return hasNext
+		return hasNext;
 	}
 
 } // namespace gbbs

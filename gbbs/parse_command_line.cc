@@ -59,11 +59,12 @@ int commandLine::getOptionIntValue(
   return defaultValue;
 }
 
+// used to define graphs
 size_t commandLine::getOptionLongValue(
     const std::string& option, size_t defaultValue) const {
   for (int i = 1; i < argc - 1; i++)
     if ((std::string)argv[i] == option) {
-      long r = atol(argv[i + 1]);
+      long r = atol(argv[i + 1]); // string to long
       return r;
     }
   return defaultValue;
