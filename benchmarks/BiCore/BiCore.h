@@ -72,7 +72,7 @@ namespace gbbs
 			return G.get_vertex(i).out_degree() < alpha;
 		});
 
-		auto uDel = vertexSubsetData(n, std::move(mask));
+		auto uDel = vertexSubsetData<uintE>(n, std::move(mask));
 
 		auto cond_f = [&D](const uintE &u) { return D[u] > 0; };
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
