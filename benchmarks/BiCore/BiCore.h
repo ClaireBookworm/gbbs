@@ -66,10 +66,10 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<bool>(n, [&](size_t i) {
+		auto mask = sequence<std::tuple<bool,uintE>>(n, [&](size_t i) {
 			if (i >= n_a)
-				return false;
-			return G.get_vertex(i).out_degree() < alpha;
+				return wrap(false,0);
+			return wrap(G.get_vertex(i).out_degree() < alpha,0);
 		});
 
 		auto uDel = vertexSubsetData<uintE>(n, std::move(mask));
