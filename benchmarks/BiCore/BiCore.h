@@ -72,49 +72,37 @@ namespace gbbs
 			return G.get_vertex(i).out_degree() < alpha;
 		});
 
-		auto uDel = vertexSubset(n, std::move(mask));
+		auto uDel = vertexSubsetData(n, std::move(mask));
+
 		auto cond_f = [&D](const uintE &u) { return D[u] > 0; };
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
+			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[v];
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
 			if (new_deg == 0)
-				return wrap(v, pbbslib::empty);
+				return wrap(v,0);
 			return std::nullopt;
 		};
 
 		auto clearU = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
+			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
 			if (new_deg < alpha)
-				return wrap(u, pbbslib::empty);
+				return wrap(u,0);
 			return std::nullopt;
 		};
 
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 
-		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[v];
-			if (deg > max_beta)
-			{
-				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
-				D[v] = new_deg;
-				return wrap(v, b.get_bucket(new_deg));
-			} // deg==k means it's effectually deleted and traversed on this round
-			return std::nullopt;
-		};
-
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
-			vertexSubset vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
+			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
 			uDel = nghCount(G, vDel, cond_f, clearU, em, no_dense);
 		}
 
@@ -122,6 +110,19 @@ namespace gbbs
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 		timer bt;
+
+		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE,uintE>> {
+			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+			uintE deg = D[v];
+			if (deg > max_beta)
+			{
+				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
+				D[v] = new_deg;
+				return wrap(v, bbuckets.get_bucket(new_deg));
+			} // deg==k means it's effectually deleted and traversed on this round
+			return std::nullopt;
+		};
 
 		while (finished != n_b)
 		{
@@ -178,39 +179,27 @@ namespace gbbs
 
 		// if the U list is empty
 		auto clearZeroU = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
+			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
 			if (new_deg == 0)
-				return wrap(u, pbbslib::empty());
+				return wrap(u,0);
 			return std::nullopt;
 		};
 
 		auto clearV = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
+			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[v];
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
 			if (new_deg < beta)
-				return wrap(v, std::move(pbbslib::empty));
+				return wrap(v,0);
 			return std::nullopt;
 		};
 		size_t finished = 0, rho_alpha = 0, max_alpha = 0;
-		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[u];
-			if (deg > max_alpha)
-			{
-				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
-				D[u] = new_deg;
-				return wrap(u, b.get_bucket(new_deg));
-			}
-			return std::nullopt;
-		};
 
 		// nghCount counts the # of neighbors
 		while (!vDel.isEmpty())
@@ -223,6 +212,19 @@ namespace gbbs
 		// makes num_buckets open buckets
 		// for each vertex [0, n_b-1], it puts it in bucket D[i]
 		timer bt;
+
+		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
+			-> const std::optional<std::tuple<uintE,uintE>> {
+			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
+			uintE deg = D[u];
+			if (deg > max_alpha)
+			{
+				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
+				D[u] = new_deg;
+				return wrap(u, abuckets.get_bucket(new_deg));
+			}
+			return std::nullopt;
+		};
 
 		while (finished != n_b)
 		{

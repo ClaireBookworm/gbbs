@@ -56,7 +56,7 @@ double BiCore_runner(Graph& G, commandLine P) {
 
   // runs the fetch-and-add based implementation if set.
   timer t; t.start();
-  auto cores = BiCore(G,num_buckets,bipartition);
+  BiCore(G,num_buckets,bipartition);
   double tt = t.stop();
 
   std::cout << "### Running Time: " << tt << std::endl;
