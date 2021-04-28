@@ -32,16 +32,19 @@ namespace gbbs
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 
-	// template <class Graph>
-	// inline void BiCore(Graph &G, size_t num_buckets = 16, size_t = bipartition)
-	// {
-	// 	// ComShrDecom??
-	// 	// delta = max_unicore(U+V, E)
-	// 	// for a in range(1, delta+1):
-	// 	//  peelByB(U, V, E, a)
-	// 	// for b in range(1, delta+1):
-	// 	// 	peelByA(U, V, E, b)
-	// }
+	template <class Graph>
+	inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2)
+	{
+		size_t alpha = 5; // im' not sure what alpha is doing
+		// ComShrDecom??
+		// delta = max_unicore(U+V, E)
+		// for a in range(1, delta+1):
+		//  peelByB(U, V, E, a)
+		// for b in range(1, delta+1):
+		// 	peelByA(U, V, E, b)
+		PeelFixA(G, alpha, num_buckets, bipartition);
+		PeelFixB(G, alpha, num_buckets, bipartition);
+	}
 
 	template <class Graph>
 	inline void PeelFixA(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
@@ -133,10 +136,10 @@ namespace gbbs
 			auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
 			finished += activeV.size();
 
-			vertexSubset deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
+			vertexSubsetData deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 
-			vertexSubset movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense);
+			vertexSubsetData movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense);
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 
 			bt.start();
@@ -234,8 +237,8 @@ namespace gbbs
 			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
 			finished += activeU.size(); // add to finished set
 
-			vertexSubset deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
-			vertexSubset movedU = nghCount(G, deleteV, cond_f, getUBuckets, em, no_dense);
+			vertexSubsetData deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
+			vertexSubsetData movedU = nghCount(G, deleteV, cond_f, getUBuckets, em, no_dense);
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
