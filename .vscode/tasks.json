@@ -36,6 +36,8 @@
                 "-s",
                 "-rounds",
                 "${input:rounds}",
+                "-bi",
+                "${input:bi}",
                 "${workspaceFolder}/inputs/${input:graph}",
                 "${input:others}"
             ]
@@ -48,8 +50,9 @@
                 "-s",
                 "-rounds",
                 "${input:rounds}",
+                "-bi",
+                "${input:bi}",
                 "${workspaceFolder}/inputs/${input:graph}",
-                "${input:others}"
             ],
             "dependsOn": [
                 "build (make)",
@@ -68,6 +71,12 @@
             "id": "graph",
             "description": "graph name",
             "default": "rMatGraph_J_5_100",
+            "type": "promptString"
+        },
+        {
+            "id": "bi",
+            "description": "bipartite position arguments",
+            "default": "2",
             "type": "promptString"
         },
         {
