@@ -56,6 +56,8 @@ double BiCore_runner(Graph& G, commandLine P) {
 
   // runs the fetch-and-add based implementation if set.
   timer t; t.start();
+
+
   BiCore(G,num_buckets,bipartition);
   double tt = t.stop();
 

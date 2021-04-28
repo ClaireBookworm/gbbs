@@ -35,7 +35,9 @@ namespace gbbs
 	template <class Graph>
 	inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2)
 	{
-		size_t alpha = 5; // im' not sure what alpha is doing
+		std::cout<<"begin"<<std::endl;
+
+		size_t alpha = 2; // im' not sure what alpha is doing
 		// ComShrDecom??
 		// delta = max_unicore(U+V, E)
 		// for a in range(1, delta+1):
@@ -43,7 +45,7 @@ namespace gbbs
 		// for b in range(1, delta+1):
 		// 	peelByA(U, V, E, b)
 		PeelFixA(G, alpha, num_buckets, bipartition);
-		PeelFixB(G, alpha, num_buckets, bipartition);
+		//PeelFixB(G, alpha, num_buckets, bipartition);
 	}
 
 	template <class Graph>
@@ -68,8 +70,8 @@ namespace gbbs
 
 		auto mask = sequence<std::tuple<bool,uintE>>(n, [&](size_t i) {
 			if (i >= n_a)
-				return wrap(false,0);
-			return wrap(G.get_vertex(i).out_degree() < alpha,0);
+				return std::make_tuple<bool,uintE>(false,0);
+			return std::make_tuple<bool,uintE>(G.get_vertex(i).out_degree() < alpha,0);
 		});
 
 		auto uDel = vertexSubsetData<uintE>(n, std::move(mask));
@@ -99,17 +101,39 @@ namespace gbbs
 
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 
+		std::cout<<"initialization"<<std::endl;
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
+			std::cout<<"uDel.m "<<uDel.m<<std::endl;
 			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
+			std::cout<<"vDel.m "<<vDel.m<<std::endl;
 			uDel = nghCount(G, vDel, cond_f, clearU, em, no_dense);
 		}
 
-		auto bbuckets = make_vertex_buckets(n_b, D, increasing, num_buckets);
+		std::cout<<"initial peeling finished"<<std::endl;
+
+		size_t vCount = 0;
+
+		auto vD =
+			sequence<uintE>(n, [&](size_t i) {
+				if(i<=bipartition || D[i]==0)
+					return std::numeric_limits<uintE>::max();
+				return D[i];
+			});
+
+		auto bbuckets = make_vertex_buckets(n, vD, increasing, num_buckets);
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 		timer bt;
+
+		vCount = pbbslib::reduce_add(sequence<uintE>(n,[&](size_t i){
+			if(i<=bipartition || D[i]==0)
+				return 0;
+			return 1;
+		}));
+
+		std::cout<<"vCount is "<<vCount<<std::endl;
 
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE,uintE>> {
@@ -124,13 +148,13 @@ namespace gbbs
 			return std::nullopt;
 		};
 
-		while (finished != n_b)
+		while (finished != vCount)
 		{
 			bt.start();
 			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
 			max_beta = std::max(max_beta, vbkt.id);
-
+			std::cout<<"running beta value "<<vbkt.id<<std::endl;
 			if (vbkt.id == 0)
 				continue;
 
@@ -168,8 +192,8 @@ namespace gbbs
 
 		auto mask = sequence<std::tuple<bool,uintE>>(n, [&](size_t i) {
 			if (i < n_a)
-				return wrap(false,0);
-			return wrap(G.get_vertex(i).out_degree() < beta,0);
+				return std::make_tuple<bool,uintE>(false,0);
+			return std::make_tuple<bool,uintE>(G.get_vertex(i).out_degree() < beta,0);
 		});
 
 		auto vDel = vertexSubsetData<uintE>(n, std::move(mask));
@@ -208,7 +232,7 @@ namespace gbbs
 			vDel = nghCount(G, uDel, cond_f, clearV, em, no_dense);
 		}
 
-		auto abuckets = make_vertex_buckets(n_b, D, increasing, num_buckets);
+		auto abuckets = make_vertex_buckets(n_a, D, increasing, num_buckets);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_b-1], it puts it in bucket D[i]
 		timer bt;
