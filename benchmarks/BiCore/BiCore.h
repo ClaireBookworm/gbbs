@@ -166,13 +166,13 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<bool>(n, [&](size_t i) {
+		auto mask = sequence<std::tuple<bool,uintE>>(n, [&](size_t i) {
 			if (i < n_a)
-				return false;
-			return G.get_vertex(i).out_degree() < beta;
+				return wrap(false,0);
+			return wrap(G.get_vertex(i).out_degree() < beta,0);
 		});
 
-		auto vDel = vertexSubset(n, std::move(mask));
+		auto vDel = vertexSubsetData<uintE>(n, std::move(mask));
 		auto cond_f = [&D](const uintE &u) {
 			return D[u] > 0;
 		};
@@ -204,7 +204,7 @@ namespace gbbs
 		// nghCount counts the # of neighbors
 		while (!vDel.isEmpty())
 		{
-			vertexSubset uDel = nghCount(G, vDel, cond_f, clearZeroU, em, no_dense);
+			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_f, clearZeroU, em, no_dense);
 			vDel = nghCount(G, uDel, cond_f, clearV, em, no_dense);
 		}
 
