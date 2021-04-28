@@ -37,15 +37,14 @@ namespace gbbs
 	{
 		std::cout<<"begin"<<std::endl;
 
-		size_t alpha = 2; // im' not sure what alpha is doing
 		// ComShrDecom??
 		// delta = max_unicore(U+V, E)
 		// for a in range(1, delta+1):
 		//  peelByB(U, V, E, a)
 		// for b in range(1, delta+1):
 		// 	peelByA(U, V, E, b)
-		PeelFixA(G, alpha, num_buckets, bipartition);
-		//PeelFixB(G, alpha, num_buckets, bipartition);
+		//PeelFixA(G, 2, num_buckets, bipartition);
+		PeelFixB(G, 1, num_buckets, bipartition);
 	}
 
 	template <class Graph>
