@@ -86,7 +86,7 @@ struct buckets {
   //   d[i] is the bucket currently containing i
   //   d[i] = std::numeric_limits<bucket_id>::max() if i is not in any bucket
   buckets(size_t _n, D& _d, bucket_order _order, size_t _total_buckets)
-      : n(_n),
+      : n(_n), // note d.size is not used anywhere
         d(_d),// d is an arr of bucket_ids indicating where each item should go
         order(_order),
         open_buckets(_total_buckets - 1),
