@@ -173,7 +173,7 @@ namespace gbbs
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
 		debug(bt.reportTotal("bucket time"));
-		return D;
+		return sequence<uintE>(n_b,[&D](size_t i){return D[i+n_a]});
 	}
 
 	template <class Graph>
