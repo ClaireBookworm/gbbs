@@ -36,24 +36,28 @@ namespace gbbs
 	inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 		std::cout<<"begin"<<std::endl;
-
 		// ComShrDecom??
 		// delta = max_unicore(U+V, E)
 		// for a in range(1, delta+1):
 		//  peelByB(U, V, E, a)
 		// for b in range(1, delta+1):
 		// 	peelByA(U, V, E, b)
-		//PeelFixA(G, 2, num_buckets, bipartition);
-		PeelFixB(G, 1, num_buckets, bipartition);
+		auto D = PeelFixA(G, 2, num_buckets, bipartition);
+		//PeelFixB(G, 1, num_buckets, bipartition);
+		for(size_t i=0; i<D.size(); i++){
+			std::cout<<i<<" has max_beta: "<<D[i]<<std::endl;
+		}
 	}
 
 	template <class Graph>
-	inline void PeelFixA(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
+	inline sequence<uintE> PeelFixA(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
 		const size_t n_a = bipartition + 1;
+
+		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
@@ -75,7 +79,9 @@ namespace gbbs
 
 		auto uDel = vertexSubsetData<uintE>(n, std::move(mask));
 
-		auto cond_f = [&D](const uintE &u) { return D[u] > 0; };
+		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] > alpha; };
+		auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
+
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
@@ -98,16 +104,14 @@ namespace gbbs
 			return std::nullopt;
 		};
 
-		size_t finished = 0, rho_alpha = 0, max_beta = 0;
-
 		std::cout<<"initialization"<<std::endl;
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
 			std::cout<<"uDel.m "<<uDel.m<<std::endl;
-			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_f, clearZeroV, em, no_dense);
+			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
 			std::cout<<"vDel.m "<<vDel.m<<std::endl;
-			uDel = nghCount(G, vDel, cond_f, clearU, em, no_dense);
+			uDel = nghCount(G, vDel, [](const uintE &u){ return true;}, clearU, em, no_dense);
 		}
 
 		std::cout<<"initial peeling finished"<<std::endl;
@@ -138,13 +142,9 @@ namespace gbbs
 			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[v];
-			if (deg > max_beta)
-			{
-				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
-				D[v] = new_deg;
-				return wrap(v, bbuckets.get_bucket(new_deg));
-			} // deg==k means it's effectually deleted and traversed on this round
-			return std::nullopt;
+			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
+			D[v] = new_deg;
+			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
 
 		while (finished != vCount)
@@ -160,10 +160,10 @@ namespace gbbs
 			auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
 			finished += activeV.size();
 
-			vertexSubsetData deleteU = nghCount(G, activeV, cond_f, clearU, em, no_dense);
+			vertexSubsetData deleteU = nghCount(G, activeV, cond_fu, clearU, em, no_dense);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 
-			vertexSubsetData movedV = nghCount(G, deleteU, cond_f, getVBuckets, em, no_dense);
+			vertexSubsetData movedV = nghCount(G, deleteU, cond_fv, getVBuckets, em, no_dense);
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 
 			bt.start();
@@ -173,7 +173,7 @@ namespace gbbs
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
 		debug(bt.reportTotal("bucket time"));
-		// return D;
+		return D;
 	}
 
 	template <class Graph>
