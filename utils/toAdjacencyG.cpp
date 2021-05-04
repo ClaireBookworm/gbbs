@@ -50,7 +50,8 @@ AdjacencyGraph
 
 using namespace std;
 
-int main() {
+int main()
+{
     string temp;
     ifstream infile;
     ofstream outfile;
@@ -65,29 +66,34 @@ int main() {
     infile.ignore(256, '\n');
     outfile.open("adjData.txt");
     infile >> temp >> numEdges >> numVertexA >> numVertexB;
-    for (int i=0; i<numEdges; i++) {
+    for (int i = 0; i < numEdges; i++)
+    {
         infile >> vertexANumber >> vertexBNumber;
-        if (vertexANumber != prevVertexA) {
+        if (vertexANumber != prevVertexA)
+        {
             vertexOffset++;
             prevVertexA = vertexANumber;
             offset.push_back(vertexOffset);
         }
-        else {
+        else
+        {
             vertexOffset++;
         }
         edges.push_back(vertexBNumber + numVertexA - 1);
     }
     cout << "AdjacencyGraph\n";
     outfile << "AdjacencyGraph\n";
-    cout << numVertexA + numVertexB -1 << endl;
-    outfile << numVertexA + numVertexB -1 << endl;
+    cout << numVertexA + numVertexB - 1 << endl;
+    outfile << numVertexA + numVertexB - 1 << endl;
     cout << numEdges << endl;
     outfile << numEdges << endl;
-    for (int i=0; i<offset.size(); i++) {
+    for (int i = 0; i < offset.size(); i++)
+    {
         cout << offset.at(i) << endl;
         outfile << offset.at(i) << endl;
     }
-    for (int i=0; i<edges.size(); i++) {
+    for (int i = 0; i < edges.size(); i++)
+    {
         cout << edges.at(i) << endl;
         outfile << edges.at(i) << endl;
     }
