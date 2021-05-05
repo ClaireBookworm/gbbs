@@ -4,12 +4,12 @@
 import pandas
 
 ## file input
-f = open("graphfile.txt", "r") 
+f = open("graphfile.txt", "r")
 print(f.read())
 
 rows = []
 numbers = {} # dictionary for key value?
 
 for row in f:
-    rows += row;
+    rows += row
 
