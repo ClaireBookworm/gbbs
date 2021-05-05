@@ -45,10 +45,10 @@ namespace gbbs
 		auto D = PeelFixA(G, 2, num_buckets, bipartition);
 		//PeelFixB(G, 1, num_buckets, bipartition);
 		for(size_t i=0; i<D.size(); i++){
-			std::cout<<i+bipartition<<" has max_beta: "<<D[i]<<std::endl;
+			std::cout<<i+bipartition+1<<" has max_beta: "<<D[i]<<std::endl;
 		}
 
-		D = PeelFixB(G, 2, num_buckets, bipartition);
+		D = PeelFixB(G, 1, num_buckets, bipartition);
 		//PeelFixB(G, 1, num_buckets, bipartition);
 		for(size_t i=0; i<D.size(); i++){
 			std::cout<<i<<" has max_alpha: "<<D[i]<<std::endl;
@@ -183,13 +183,13 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline void PeelFixB(Graph &G, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
+	inline sequence<uintE> PeelFixB(Graph &G, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
 		const size_t n_a = bipartition + 1;
 
-		size_t finished = 0, rho_alpha = 0, max_alpha = 0;
+		size_t finished = 0, rho_beta = 0, max_alpha = 0;
 
 		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.n / 50);
 		auto D =
@@ -238,6 +238,8 @@ namespace gbbs
 			vDel = nghCount(G, uDel, cond_fv, clearV, em, no_dense);
 		}
 
+		size_t uCount = 0;
+
 		auto abuckets = make_vertex_buckets(n_a, D, increasing, num_buckets);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
@@ -252,7 +254,13 @@ namespace gbbs
 			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
-		while (finished != n_a)
+		uCount = pbbslib::reduce_add(sequence<uintE>(n,[&](size_t i){
+			if(i>bipartition || D[i]==0)
+				return 0;
+			return 1;
+		}));
+
+		while (finished != uCount)
 		{
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
@@ -270,9 +278,9 @@ namespace gbbs
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
-			rho_alpha++;
+			rho_beta++;
 		}
-		std::cout << "### rho_alpha = " << rho_alpha << " alpha_{max} = " << max_alpha << "\n";
+		std::cout << "### rho_beta = " << rho_beta << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
 		return sequence<uintE>(n_a,[&D](size_t i){return D[i];});
 	}
