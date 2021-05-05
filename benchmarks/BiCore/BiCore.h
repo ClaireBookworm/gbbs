@@ -45,7 +45,13 @@ namespace gbbs
 		auto D = PeelFixA(G, 2, num_buckets, bipartition);
 		//PeelFixB(G, 1, num_buckets, bipartition);
 		for(size_t i=0; i<D.size(); i++){
-			std::cout<<i<<" has max_beta: "<<D[i]<<std::endl;
+			std::cout<<i+bipartition<<" has max_beta: "<<D[i]<<std::endl;
+		}
+
+		D = PeelFixB(G, 2, num_buckets, bipartition);
+		//PeelFixB(G, 1, num_buckets, bipartition);
+		for(size_t i=0; i<D.size(); i++){
+			std::cout<<i<<" has max_alpha: "<<D[i]<<std::endl;
 		}
 	}
 
@@ -79,7 +85,7 @@ namespace gbbs
 
 		auto uDel = vertexSubsetData<uintE>(n, std::move(mask));
 
-		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] > alpha; };
+		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
 		auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
 
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
@@ -183,6 +189,8 @@ namespace gbbs
 		const size_t n_b = n - bipartition - 1;
 		const size_t n_a = bipartition + 1;
 
+		size_t finished = 0, rho_alpha = 0, max_alpha = 0;
+
 		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.n / 50);
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
@@ -196,9 +204,9 @@ namespace gbbs
 		});
 
 		auto vDel = vertexSubsetData<uintE>(n, std::move(mask));
-		auto cond_f = [&D](const uintE &u) {
-			return D[u] > 0;
-		};
+
+		auto cond_fv = [&D, &beta](const uintE &v) { return D[v] >= beta; };
+		auto cond_fu = [&D, &max_alpha](const uintE &u) { return D[u] > max_alpha; };
 
 		// if the U list is empty
 		auto clearZeroU = [&](const std::tuple<uintE, uintE> &p)
@@ -222,34 +230,29 @@ namespace gbbs
 				return wrap(v,0);
 			return std::nullopt;
 		};
-		size_t finished = 0, rho_alpha = 0, max_alpha = 0;
 
 		// nghCount counts the # of neighbors
 		while (!vDel.isEmpty())
 		{
-			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_f, clearZeroU, em, no_dense);
-			vDel = nghCount(G, uDel, cond_f, clearV, em, no_dense);
+			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_fu, clearZeroU, em, no_dense);
+			vDel = nghCount(G, uDel, cond_fv, clearV, em, no_dense);
 		}
 
 		auto abuckets = make_vertex_buckets(n_a, D, increasing, num_buckets);
 		// makes num_buckets open buckets
-		// for each vertex [0, n_b-1], it puts it in bucket D[i]
+		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		timer bt;
 
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
-			if (deg > max_alpha)
-			{
-				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
-				D[u] = new_deg;
-				return wrap(u, abuckets.get_bucket(new_deg));
-			}
-			return std::nullopt;
+			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
+			D[u] = new_deg;
+			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
-		while (finished != n_b)
+		while (finished != n_a)
 		{
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
@@ -262,8 +265,8 @@ namespace gbbs
 			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
 			finished += activeU.size(); // add to finished set
 
-			vertexSubsetData deleteV = nghCount(G, activeU, cond_f, clearV, em, no_dense);
-			vertexSubsetData movedU = nghCount(G, deleteV, cond_f, getUBuckets, em, no_dense);
+			vertexSubsetData deleteV = nghCount(G, activeU, cond_fv, clearV, em, no_dense);
+			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, em, no_dense);
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
@@ -271,7 +274,7 @@ namespace gbbs
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
-		// return D; shouldn't return anything
+		return sequence<uintE>(n_a,[&D](size_t i){return D[i];});
 	}
 
 } // namespace gbbs
