@@ -4,19 +4,19 @@ For example
 FROM
 % bip unweighted
 % 13 6 5
-1 1 
-1 2 
-1 3 
-2 1 
-2 3 
-3 4 
-3 3 
-4 1 
-4 3 
-5 5 
-5 2 
-6 1 
-6 2 
+1 1
+1 2
+1 3
+2 1
+2 3
+3 4
+3 3
+4 1
+4 3
+5 5
+5 2
+6 1
+6 2
 
 TO
 AdjacencyGraph
@@ -59,6 +59,7 @@ int main()
     int vertexOffset = -1;
     int vertexANumber;
     int prevVertexA = -1;
+    int prevVertexB = -1;
     int vertexBNumber;
     vector<int> offset;
     vector<int> edges;
@@ -80,6 +81,21 @@ int main()
             vertexOffset++;
         }
         edges.push_back(vertexBNumber + numVertexA - 1);
+    }
+    for (int i = 0; i < numEdges; i++)
+    {
+        infile >> vertexANumber >> vertexBNumber;
+        if (vertexBNumber != prevVertexB)
+        {
+            vertexOffset++;
+            prevVertexB = vertexBNumber;
+            offset.push_back(vertexOffset);
+        }
+        else
+        {
+            vertexOffset++;
+        }
+        edges.push_back(vertexANumber - 1);
     }
     cout << "AdjacencyGraph\n";
     outfile << "AdjacencyGraph\n";
