@@ -42,17 +42,14 @@ namespace gbbs
 		//  peelByB(U, V, E, a)
 		// for b in range(1, delta+1):
 		// 	peelByA(U, V, E, b)
-		auto D = PeelFixA(G, 2, num_buckets, bipartition);
+		auto D = PeelFixA(G, 1, num_buckets, bipartition);
 		//PeelFixB(G, 1, num_buckets, bipartition);
-		for(size_t i=0; i<D.size(); i++){
-			std::cout<<i+bipartition+1<<" has max_beta: "<<D[i]<<std::endl;
-		}
+		std::cout<<"complete PeelFixA"<<std::endl;
 
 		D = PeelFixB(G, 1, num_buckets, bipartition);
 		//PeelFixB(G, 1, num_buckets, bipartition);
-		for(size_t i=0; i<D.size(); i++){
-			std::cout<<i<<" has max_alpha: "<<D[i]<<std::endl;
-		}
+		std::cout<<"complete PeelFixB"<<std::endl;
+
 	}
 
 	template <class Graph>
@@ -110,17 +107,14 @@ namespace gbbs
 			return std::nullopt;
 		};
 
-		std::cout<<"initialization"<<std::endl;
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
-			std::cout<<"uDel.m "<<uDel.m<<std::endl;
+			std::cout<<"uDel size "<<uDel.size()<<std::endl;
 			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
-			std::cout<<"vDel.m "<<vDel.m<<std::endl;
-			uDel = nghCount(G, vDel, [](const uintE &u){ return true;}, clearU, em, no_dense);
+			std::cout<<"vDel size "<<vDel.size()<<std::endl;
+			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
 		}
-
-		std::cout<<"initial peeling finished"<<std::endl;
 
 		size_t vCount = 0;
 
@@ -142,8 +136,6 @@ namespace gbbs
 			return 1;
 		}));
 
-		std::cout<<"vCount is "<<vCount<<std::endl;
-
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE,uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
@@ -153,13 +145,14 @@ namespace gbbs
 			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
 
+		std::cout<<"initial peeling done, vCount left is "<<vCount<<std::endl;
+
 		while (finished != vCount)
 		{
 			bt.start();
 			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
 			max_beta = std::max(max_beta, vbkt.id);
-			std::cout<<"running beta value "<<vbkt.id<<std::endl;
 			if (vbkt.id == 0)
 				continue;
 
@@ -259,6 +252,8 @@ namespace gbbs
 				return 0;
 			return 1;
 		}));
+
+		std::cout<<"initial peeling done, uCount left is "<<uCount<<std::endl;
 
 		while (finished != uCount)
 		{

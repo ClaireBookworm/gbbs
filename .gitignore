@@ -23,3 +23,10 @@ node_modules/
 
 
 .vscode
+inputs/record_konect
+inputs/record_adj
+inputs/record_edgelist
+inputs/author_konect
+inputs/arXiv_konect
+inputs/arXiv_edgelist
+inputs/arXiv_adj

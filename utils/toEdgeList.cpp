@@ -52,24 +52,27 @@ using namespace std;
 
 int main(){
     ifstream infile;
-    infile.open("konect-southern.txt");
-    
+    string file_name = "arXiv";
+    infile.open("../inputs/"+file_name+"_konect");
     ofstream outfile;
-    outfile.open("southern.txt");
+    outfile.open("../inputs/"+file_name+"_edgelist");
     vector<int> edges;
     string skip1, skip2;
     int numEdge, numA, numB, first, second;
     infile.ignore(256, '\n');
     string temp;
-    infile >> temp >> numEdge >> numA >> numB;   
+    infile >> temp >> numEdge >> numA >> numB;
 
     for(int i=0;i<numEdge;i++){
         infile>>first>>second;
         first--;
         second--;
         second += numA;
-        outfile << first <<" "<< second<<endl;
+        outfile << first <<" "<< second <<endl;
+        outfile << second <<" "<< first <<endl;
     }
     infile.close();
     outfile.close();
+    string command = "./snap_converter -i ../inputs/"+file_name+"_edgelist"+" -o "+"../inputs/"+file_name+"_adj";
+    system(command.c_str());
 }

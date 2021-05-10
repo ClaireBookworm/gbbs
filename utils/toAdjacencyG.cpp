@@ -4,19 +4,19 @@ For example
 FROM
 % bip unweighted
 % 13 6 5
-1 1 
-1 2 
-1 3 
-2 1 
-2 3 
-3 4 
-3 3 
-4 1 
-4 3 
-5 5 
-5 2 
-6 1 
-6 2 
+1 1
+1 2
+1 3
+2 1
+2 3
+3 4
+3 3
+4 1
+4 3
+5 5
+5 2
+6 1
+6 2
 
 TO
 AdjacencyGraph
@@ -73,9 +73,9 @@ int main()
     vector<int> edges;
     vector<int> edgesB;
     vector<pair<int, int> > edgePair;
-    infile.open("konect-southern.txt");
+    infile.open("../inputs/record_konect");
     infile.ignore(256, '\n');
-    outfile.open("adjData.txt");
+    outfile.open("../inputs/record_adj");
     infile >> temp >> numEdges >> numVertexA >> numVertexB;
     for (int i = 0; i < numEdges; i++)
     {
