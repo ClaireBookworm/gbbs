@@ -30,3 +30,5 @@ inputs/author_konect
 inputs/arXiv_konect
 inputs/arXiv_edgelist
 inputs/arXiv_adj
+inputs/author_adj
+inputs/author_edgelist
