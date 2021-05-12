@@ -25,6 +25,7 @@
 
 #include "gbbs/gbbs.h"
 #include "gbbs/julienne.h"
+#include "benchmarks/KCore/JulienneDBS17/KCore.h"
 
 namespace gbbs
 {
@@ -35,25 +36,27 @@ namespace gbbs
 	template <class Graph>
 	inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2)
 	{
-		std::cout<<"begin"<<std::endl;
-		// ComShrDecom??
-		// delta = max_unicore(U+V, E)
-		// for a in range(1, delta+1):
-		//  peelByB(U, V, E, a)
-		// for b in range(1, delta+1):
-		// 	peelByA(U, V, E, b)
-		auto D = PeelFixA(G, 1, num_buckets, bipartition);
-		//PeelFixB(G, 1, num_buckets, bipartition);
-		std::cout<<"complete PeelFixA"<<std::endl;
+		std::cout << "begin" << std::endl;
 
-		D = PeelFixB(G, 1, num_buckets, bipartition);
-		//PeelFixB(G, 1, num_buckets, bipartition);
-		std::cout<<"complete PeelFixB"<<std::endl;
+		const size_t n = G.n;
+		const size_t n_b = n - bipartition - 1;
+		const size_t n_a = bipartition + 1;
+		auto ret = KCore(G, num_buckets);
+		uintE delta = pbbslib::reduce_max(ret);
 
+		auto AlphaMax = sequence<sequence<size_t>>(n_b + 1, [&n_b](size_t i) { return sequence<size_t>(n_b, [](size_t i) { return 0; }); });
+
+		auto BetaMax = sequence<sequence<size_t>>(n_a + 1, [&n_a](size_t i) { return sequence<size_t>(n_a, [](size_t i) { return 0; }); });
+
+		auto D = PeelFixA(G, BetaMax, AlphaMax, 1, num_buckets, bipartition);
+		std::cout << "complete PeelFixA" << std::endl;
+
+		D = PeelFixB(G, BetaMax, AlphaMax,1, num_buckets, bipartition);
+		std::cout << "complete PeelFixB" << std::endl;
 	}
 
 	template <class Graph>
-	inline sequence<uintE> PeelFixA(Graph &G, sequence<sequence<uintE>>& BetaMax, sequence<sequence<uintE>>& AlphaMax, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
+	inline sequence<uintE> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 
 		const size_t n = G.n;
@@ -74,10 +77,10 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<std::tuple<bool,uintE>>(n, [&](size_t i) {
+		auto mask = sequence<std::tuple<bool, uintE>>(n, [&](size_t i) {
 			if (i >= n_a)
-				return std::make_tuple<bool,uintE>(false,0);
-			return std::make_tuple<bool,uintE>(G.get_vertex(i).out_degree() < alpha,0);
+				return std::make_tuple<bool, uintE>(false, 0);
+			return std::make_tuple<bool, uintE>(G.get_vertex(i).out_degree() < alpha, 0);
 		});
 
 		auto uDel = vertexSubsetData<uintE>(n, std::move(mask));
@@ -87,25 +90,26 @@ namespace gbbs
 		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
 
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE,uintE>> {
+			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[v];
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
 			if (new_deg == 0)
-				return wrap(v,0);
+				return wrap(v, 0);
 			return std::nullopt;
 		};
 
 		auto clearU = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE,uintE>> {
+			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
-			if (new_deg < alpha){
+			if (new_deg < alpha)
+			{
 				BetaMax[alpha][u] = max_beta;
-				return wrap(u,0);
+				return wrap(u, 0);
 			}
 			return std::nullopt;
 		};
@@ -113,9 +117,9 @@ namespace gbbs
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
-			std::cout<<"uDel size "<<uDel.size()<<std::endl;
+			std::cout << "uDel size " << uDel.size() << std::endl;
 			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
-			std::cout<<"vDel size "<<vDel.size()<<std::endl;
+			std::cout << "vDel size " << vDel.size() << std::endl;
 			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
 		}
 
@@ -123,7 +127,7 @@ namespace gbbs
 
 		auto vD =
 			sequence<uintE>(n, [&](size_t i) {
-				if(i<=bipartition || D[i]==0)
+				if (i <= bipartition || D[i] == 0)
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
@@ -133,14 +137,14 @@ namespace gbbs
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 		timer bt;
 
-		vCount = pbbslib::reduce_add(sequence<uintE>(n,[&](size_t i){
-			if(i<=bipartition || D[i]==0)
+		vCount = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {
+			if (i <= bipartition || D[i] == 0)
 				return 0;
 			return 1;
 		}));
 
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE,uintE>> {
+			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[v];
 			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
@@ -148,7 +152,7 @@ namespace gbbs
 			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
 
-		std::cout<<"initial peeling done, vCount left is "<<vCount<<std::endl;
+		std::cout << "initial peeling done, vCount left is " << vCount << std::endl;
 
 		while (finished != vCount)
 		{
@@ -162,9 +166,9 @@ namespace gbbs
 			auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
 			finished += activeV.size();
 
-			parallel_for(0,activeV.size(),[&](size_t i){
-				parallel_for(1,max_beta,[&](size_t j){
-					AlphaMax[j]=std::max(AlphaMax[j],alpha);
+			parallel_for(0, activeV.size(), [&](size_t i) {
+				parallel_for(1, max_beta, [&](size_t j) {
+					AlphaMax[j][activeV.vtx(i)] = std::max(AlphaMax[j][activeV.vtx(i)], alpha);
 				});
 			});
 
@@ -181,11 +185,11 @@ namespace gbbs
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
 		debug(bt.reportTotal("bucket time"));
-		return sequence<uintE>(n_b,[&D, &n_a](size_t i){return D[i+n_a];});
+		return sequence<uintE>(n_b, [&D, &n_a](size_t i) { return D[i + n_a]; });
 	}
 
 	template <class Graph>
-	inline sequence<uintE> PeelFixB(Graph &G, sequence<sequence<uintE>>& BetaMax, sequence<sequence<uintE>>& AlphaMax, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
+	inline sequence<uintE> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
@@ -199,10 +203,10 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<std::tuple<bool,uintE>>(n, [&](size_t i) {
+		auto mask = sequence<std::tuple<bool, uintE>>(n, [&](size_t i) {
 			if (i < n_a)
-				return std::make_tuple<bool,uintE>(false,0);
-			return std::make_tuple<bool,uintE>(G.get_vertex(i).out_degree() < beta,0);
+				return std::make_tuple<bool, uintE>(false, 0);
+			return std::make_tuple<bool, uintE>(G.get_vertex(i).out_degree() < beta, 0);
 		});
 
 		auto vDel = vertexSubsetData<uintE>(n, std::move(mask));
@@ -212,25 +216,26 @@ namespace gbbs
 
 		// if the U list is empty
 		auto clearZeroU = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE,uintE>> {
+			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
 			if (new_deg == 0)
-				return wrap(u,0);
+				return wrap(u, 0);
 			return std::nullopt;
 		};
 
 		auto clearV = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE,uintE>> {
+			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[v];
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
-			if (new_deg < beta){
+			if (new_deg < beta)
+			{
 				AlphaMax[beta][v] = max_alpha;
-				return wrap(v,0);
+				return wrap(v, 0);
 			}
 			return std::nullopt;
 		};
@@ -250,7 +255,7 @@ namespace gbbs
 		timer bt;
 
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE,uintE>> {
+			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE deg = D[u];
 			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
@@ -258,13 +263,13 @@ namespace gbbs
 			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
-		uCount = pbbslib::reduce_add(sequence<uintE>(n,[&](size_t i){
-			if(i>bipartition || D[i]==0)
+		uCount = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {
+			if (i > bipartition || D[i] == 0)
 				return 0;
 			return 1;
 		}));
 
-		std::cout<<"initial peeling done, uCount left is "<<uCount<<std::endl;
+		std::cout << "initial peeling done, uCount left is " << uCount << std::endl;
 
 		while (finished != uCount)
 		{
@@ -279,9 +284,9 @@ namespace gbbs
 			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
 			finished += activeU.size(); // add to finished set
 
-			parallel_for(0,activeU.size(),[&](size_t i){
-				parallel_for(1,max_alpha,[&](size_t j){
-					BetaMax[j]=std::max(BetaMax[j],beta);
+			parallel_for(0, activeU.size(), [&](size_t i) {
+				parallel_for(1, max_alpha, [&](size_t j) {
+					BetaMax[j][activeU.vtx(i)] = std::max(BetaMax[j][activeU.vtx(i)], beta);
 				});
 			});
 
@@ -294,7 +299,7 @@ namespace gbbs
 		}
 		std::cout << "### rho_beta = " << rho_beta << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
-		return sequence<uintE>(n_a,[&D](size_t i){return D[i];});
+		return sequence<uintE>(n_a, [&D](size_t i) { return D[i]; });
 	}
 
 } // namespace gbbs
