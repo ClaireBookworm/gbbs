@@ -53,7 +53,7 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline sequence<uintE> PeelFixA(Graph &G, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
+	inline sequence<uintE> PeelFixA(Graph &G, sequence<sequence<uintE>>& BetaMax, sequence<sequence<uintE>>& AlphaMax, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 
 		const size_t n = G.n;
@@ -84,6 +84,7 @@ namespace gbbs
 
 		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
 		auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
+		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
 
 		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE,uintE>> {
@@ -102,8 +103,10 @@ namespace gbbs
 			uintE deg = D[u];
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
-			if (new_deg < alpha)
+			if (new_deg < alpha){
+				BetaMax[alpha][u] = max_beta;
 				return wrap(u,0);
+			}
 			return std::nullopt;
 		};
 
@@ -159,6 +162,12 @@ namespace gbbs
 			auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
 			finished += activeV.size();
 
+			parallel_for(0,activeV.size(),[&](size_t i){
+				parallel_for(1,max_beta,[&](size_t j){
+					AlphaMax[j]=std::max(AlphaMax[j],alpha);
+				});
+			});
+
 			vertexSubsetData deleteU = nghCount(G, activeV, cond_fu, clearU, em, no_dense);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 
@@ -176,7 +185,7 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline sequence<uintE> PeelFixB(Graph &G, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
+	inline sequence<uintE> PeelFixB(Graph &G, sequence<sequence<uintE>>& BetaMax, sequence<sequence<uintE>>& AlphaMax, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
@@ -219,8 +228,10 @@ namespace gbbs
 			uintE deg = D[v];
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
-			if (new_deg < beta)
+			if (new_deg < beta){
+				AlphaMax[beta][v] = max_alpha;
 				return wrap(v,0);
+			}
 			return std::nullopt;
 		};
 
@@ -267,6 +278,12 @@ namespace gbbs
 
 			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
 			finished += activeU.size(); // add to finished set
+
+			parallel_for(0,activeU.size(),[&](size_t i){
+				parallel_for(1,max_alpha,[&](size_t j){
+					BetaMax[j]=std::max(BetaMax[j],beta);
+				});
+			});
 
 			vertexSubsetData deleteV = nghCount(G, activeU, cond_fv, clearV, em, no_dense);
 			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, em, no_dense);
