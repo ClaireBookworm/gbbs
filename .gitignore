@@ -32,3 +32,9 @@ inputs/arXiv_edgelist
 inputs/arXiv_adj
 inputs/author_adj
 inputs/author_edgelist
+inputs/flickr_konect
+inputs/flickr_edgelist
+inputs/flickr_adj
+inputs/marvel_adj
+inputs/marvel_edgelist
+inputs/marvel_konect

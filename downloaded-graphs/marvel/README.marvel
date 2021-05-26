@@ -1,0 +1,61 @@
+Marvel network, part of the Koblenz Network Collection
+===========================================================================
+
+This directory contains the TSV and related files of the marvel network: This is the fictional collaboration network of characters in works of Marvel, a publisher of comic books based in the United States of America.  Nodes are characters and an edge is present when two characters appear in the same work.  The network is undirected.  The dataset takes works only into account if thy were published starting in 1961.  To cite the paper:  "We only consider here comics published after Issue 1 of Fantastic Four (dated November 1961), which is understood as the point of departure of the Marvel Age of Comics."  The data was extracted from the Marvel Chronology Project (MCP) created by Russ Chappell (www.chronologyproject.com).   The dataset does contain the names of the characters, even though a few a empty strings. 
+
+
+More information about the network is provided here: 
+http://konect.cc/networks/marvel
+
+Files: 
+    meta.marvel -- Metadata about the network 
+    out.marvel -- The adjacency matrix of the network in whitespace-separated values format, with one edge per line
+      The meaning of the columns in out.marvel are: 
+        First column: ID of from node 
+        Second column: ID of to node
+        Third column (if present): weight or multiplicity of edge
+        Fourth column (if present):  timestamp of edges Unix time
+
+
+Use the following References for citation:
+
+@MISC{konect:2017:marvel,
+    title = {Marvel network dataset -- {KONECT}},
+    month = nov,
+    year = {2017},
+    url = {http://konect.cc/networks/marvel}
+}
+
+@article{konect:marvel,
+	title = {{Marvel} Universe Looks Almost Like a Real Social Network},
+	author = {Ricardo Alberich and J. Miro-Julia and Francesc Rosselló},
+	year = {2002},
+	url = {https://arxiv.org/abs/cond-mat/0202174},
+}
+
+
+@inproceedings{konect,
+	title = {{KONECT} -- {The} {Koblenz} {Network} {Collection}},
+	author = {Jérôme Kunegis},
+	year = {2013},
+	booktitle = {Proc. Int. Conf. on World Wide Web Companion},
+	pages = {1343--1350},
+	url = {http://dl.acm.org/citation.cfm?id=2488173},
+	url_presentation = {https://www.slideshare.net/kunegis/presentationwow},
+	url_web = {http://konect.cc/},
+	url_citations = {https://scholar.google.com/scholar?cites=7174338004474749050},
+}
+
+@inproceedings{konect,
+	title = {{KONECT} -- {The} {Koblenz} {Network} {Collection}},
+	author = {Jérôme Kunegis},
+	year = {2013},
+	booktitle = {Proc. Int. Conf. on World Wide Web Companion},
+	pages = {1343--1350},
+	url = {http://dl.acm.org/citation.cfm?id=2488173},
+	url_presentation = {https://www.slideshare.net/kunegis/presentationwow},
+	url_web = {http://konect.cc/},
+	url_citations = {https://scholar.google.com/scholar?cites=7174338004474749050},
+}
+
+

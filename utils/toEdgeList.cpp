@@ -52,7 +52,7 @@ using namespace std;
 
 int main(){
     ifstream infile;
-    string file_name = "author";
+    string file_name = "marvel";
     infile.open("../inputs/"+file_name+"_konect");
     ofstream outfile;
     outfile.open("../inputs/"+file_name+"_edgelist");

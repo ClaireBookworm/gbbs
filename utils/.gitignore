@@ -5,3 +5,9 @@ snap_converter
 to_edge_list
 add_weights
 check_symmetric
+asoiaf.txt
+asoiaf-o.txt
+konect-southern.txt
+marvel-o.txt
+marvel-t.txt
+southern-o.txt
