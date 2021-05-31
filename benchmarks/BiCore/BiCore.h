@@ -30,6 +30,8 @@
 namespace gbbs
 {
 
+	using arr_dyn = pbbslib::dyn_arr<size_t>;
+
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 
@@ -44,19 +46,25 @@ namespace gbbs
 		auto ret = KCore(G, num_buckets);
 		uintE delta = pbbslib::reduce_max(ret);
 
-		auto AlphaMax = sequence<sequence<size_t>>(n_b + 1, [&n_b](size_t i) { return sequence<size_t>(n_b, [](size_t i) { return 0; }); });
+		// AlphaMax[v][B]
+		auto AlphaMax = sequence<arr_dyn>(n_b, [](size_t i){ return arr_dyn(16);});
+		// BetaMax[u][A]
+		auto BetaMax = sequence<arr_dyn>(n_a, [](size_t i){ return arr_dyn(16);});
 
-		auto BetaMax = sequence<sequence<size_t>>(n_a + 1, [&n_a](size_t i) { return sequence<size_t>(n_a, [](size_t i) { return 0; }); });
-
-		auto D = PeelFixA(G, BetaMax, AlphaMax, 1, num_buckets, bipartition);
+		PeelFixA(G, BetaMax, AlphaMax, 1, num_buckets, bipartition);
 		std::cout << "complete PeelFixA" << std::endl;
 
-		D = PeelFixB(G, BetaMax, AlphaMax,1, num_buckets, bipartition);
+		PeelFixB(G, BetaMax, AlphaMax,1, num_buckets, bipartition);
 		std::cout << "complete PeelFixB" << std::endl;
+
+		size_t size_AlphaMax = pbbslib::reduce_add(sequence<size_t>(n_b,[&AlphaMax](size_t i){return AlphaMax[i].size;}));
+		size_t size_BetaMax = pbbslib::reduce_add(sequence<size_t>(n_a,[&BetaMax](size_t i){return BetaMax[i].size;}));
+
+		std::cout<<size_AlphaMax<<"  "<<size_BetaMax<<std::endl;
 	}
 
 	template <class Graph>
-	inline sequence<uintE> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
+	inline void PeelFixA(Graph &G, sequence<arr_dyn> &BetaMax, sequence<arr_dyn> &AlphaMax, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 
 		const size_t n = G.n;
@@ -106,9 +114,14 @@ namespace gbbs
 			uintE deg = D[u];
 			uintE new_deg = deg - edgesRemoved;
 			D[u] = new_deg;
-			if (new_deg < alpha)
+			if (new_deg < alpha && max_beta>0)
 			{
-				BetaMax[alpha][u] = max_beta;
+				if(BetaMax[u].size<=alpha){
+					BetaMax[u].resize(alpha+1-BetaMax[u].size);
+					BetaMax[u].size=alpha+1;
+				}
+				BetaMax[u].A[alpha] = max_beta;
+
 				return wrap(u, 0);
 			}
 			return std::nullopt;
@@ -167,8 +180,14 @@ namespace gbbs
 			finished += activeV.size();
 
 			parallel_for(0, activeV.size(), [&](size_t i) {
+				size_t index = activeV.vtx(i)-n_a;
+				uintE expand_size = max_beta-(AlphaMax[index].size-1);
+				if(expand_size>0){
+					AlphaMax[index].resize(expand_size);
+					AlphaMax[index].size=max_beta+1;
+				}
 				parallel_for(1, max_beta, [&](size_t j) {
-					AlphaMax[j][activeV.vtx(i)] = std::max(AlphaMax[j][activeV.vtx(i)], alpha);
+					AlphaMax[index].A[j] = std::max(AlphaMax[index].A[j], alpha);
 				});
 			});
 
@@ -185,11 +204,11 @@ namespace gbbs
 		}
 		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
 		debug(bt.reportTotal("bucket time"));
-		return sequence<uintE>(n_b, [&D, &n_a](size_t i) { return D[i + n_a]; });
+		return;
 	}
 
 	template <class Graph>
-	inline sequence<uintE> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
+	inline void PeelFixB(Graph &G, sequence<arr_dyn> &BetaMax, sequence<arr_dyn> &AlphaMax, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
@@ -232,9 +251,13 @@ namespace gbbs
 			uintE deg = D[v];
 			uintE new_deg = deg - edgesRemoved;
 			D[v] = new_deg;
-			if (new_deg < beta)
+			if (new_deg < beta && max_alpha>0)
 			{
-				AlphaMax[beta][v] = max_alpha;
+				if(AlphaMax[v-n_a].size<=beta){
+					AlphaMax[v-n_a].resize(beta+1-AlphaMax[v-n_a].size);
+					AlphaMax[v-n_a].size=beta+1;
+				}
+				AlphaMax[v-n_a].A[beta] = max_alpha;
 				return wrap(v, 0);
 			}
 			return std::nullopt;
@@ -285,8 +308,14 @@ namespace gbbs
 			finished += activeU.size(); // add to finished set
 
 			parallel_for(0, activeU.size(), [&](size_t i) {
+				size_t index = activeU.vtx(i);
+				uintE expand_size = max_alpha-(BetaMax[index].size-1);
+				if(expand_size>0){
+					BetaMax[index].resize(expand_size);
+					BetaMax[index].size=max_alpha+1;
+				}
 				parallel_for(1, max_alpha, [&](size_t j) {
-					BetaMax[j][activeU.vtx(i)] = std::max(BetaMax[j][activeU.vtx(i)], beta);
+					BetaMax[index].A[j] = std::max(BetaMax[index].A[j], beta);
 				});
 			});
 
@@ -299,7 +328,6 @@ namespace gbbs
 		}
 		std::cout << "### rho_beta = " << rho_beta << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
-		return sequence<uintE>(n_a, [&D](size_t i) { return D[i]; });
 	}
 
 } // namespace gbbs
