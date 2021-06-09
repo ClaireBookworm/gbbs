@@ -38,3 +38,6 @@ inputs/flickr_adj
 inputs/marvel_adj
 inputs/marvel_edgelist
 inputs/marvel_konect
+inputs/actor_edgelist
+inputs/actor_adj
+inputs/actor_konect

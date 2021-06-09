@@ -52,19 +52,30 @@ using namespace std;
 
 int main(){
     ifstream infile;
-    string file_name = "flickr";
+    string file_name;
+    cin >> file_name;
     infile.open("../inputs/"+file_name+"_konect");
     ofstream outfile;
     outfile.open("../inputs/"+file_name+"_edgelist");
-    vector<int> edges;
-    string skip1, skip2;
     int numEdge, numA, numB, first, second;
     infile.ignore(256, '\n');
     string temp;
-    infile >> temp >> numEdge >> numA >> numB;
-
-    for(int i=0;i<numEdge;i++){
-        infile>>first>>second;
+    infile >> temp;
+    bool has_head = temp == "%";
+    if(has_head){
+        infile >> numEdge >> numA >> numB;
+    }else{
+        infile >> numB;
+        numA = stoi(temp);
+        while(infile>>first>>second){
+            numA = max(numA, first);
+            numB = max(numB, second);
+        }
+        infile.clear();
+        infile.seekg(0, std::ios::beg);
+        infile.ignore(256, '\n');
+    }
+    while(infile>>first>>second){
         first--;
         second--;
         second += numA;
@@ -73,6 +84,7 @@ int main(){
     }
     infile.close();
     outfile.close();
+    cout<<numA<<" "<<numB<<endl;
     string command = "./snap_converter -i ../inputs/"+file_name+"_edgelist"+" -o "+"../inputs/"+file_name+"_adj";
     system(command.c_str());
 }
