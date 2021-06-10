@@ -41,17 +41,19 @@ namespace gbbs
 		const size_t n_b = n - bipartition - 1;
 		const size_t n_a = bipartition + 1;
 
+		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
+
 		// AlphaMax[v][B]
 		auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){ return sequence<size_t>(1+G.get_vertex(i+n_a).out_degree());});
 		// BetaMax[u][A]
 		auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree());});
 
 		if(peel_core_alpha!=0){
-			PeelFixA(G, BetaMax, AlphaMax, peel_core_alpha, num_buckets, bipartition);
+			PeelFixA(G, BetaMax, AlphaMax, em, peel_core_alpha, num_buckets, bipartition);
 			std::cout << "complete PeelFixA" << std::endl;
 			return;
 		}else if(peel_core_beta!=0){
-			PeelFixB(G, BetaMax, AlphaMax, peel_core_beta, num_buckets, bipartition);
+			PeelFixB(G, BetaMax, AlphaMax, em, peel_core_beta, num_buckets, bipartition);
 			std::cout << "complete PeelFixB" << std::endl;
 			return;
 		}
@@ -60,19 +62,22 @@ namespace gbbs
 
 		for(size_t core=1;core<=delta;core++){
 			timer t_in; t_in.start();
-			PeelFixA(G, BetaMax, AlphaMax, core, num_buckets, bipartition);
+			PeelFixA(G, BetaMax, AlphaMax, em, core, num_buckets, bipartition);
+			par_for(0, (size_t)G.m/50, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
 			std::cout << "complete PeelFixA: "<<core<<"  Iteration time: "<<t_in.stop() << std::endl;
 		}
 
 		for(size_t core=1;core<=delta;core++){
 			timer t_in; t_in.start();
-			PeelFixB(G, BetaMax, AlphaMax,core, num_buckets, bipartition);
+			PeelFixB(G, BetaMax, AlphaMax, em, core, num_buckets, bipartition);
+			if(core<delta)
+				par_for(0, (size_t)G.m/50, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
 			std::cout << "complete PeelFixB: " <<core<<"  Iteration time: "<<t_in.stop() << std::endl;
 		}
 	}
 
 	template <class Graph>
-	inline void PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
+	inline void PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, hist_table<uintE, uintE>& em, size_t alpha, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 
 		const size_t n = G.n;
@@ -83,11 +88,9 @@ namespace gbbs
 
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
-
 		// uintE is vertex id
 		// uintT is edge id
 
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
@@ -206,7 +209,7 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline void PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
+	inline void PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, hist_table<uintE, uintE>& em, size_t beta, size_t num_buckets = 16, size_t bipartition = 2)
 	{
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
@@ -214,7 +217,6 @@ namespace gbbs
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
 
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.n / 50);
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
