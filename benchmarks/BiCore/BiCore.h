@@ -62,6 +62,7 @@ namespace gbbs
 
 		for(size_t core=1;core<=delta;core++){
 			timer t_in; t_in.start();
+			//memory leak
 			PeelFixA(G, BetaMax, AlphaMax, em, core, num_buckets, bipartition);
 			par_for(0, (size_t)G.m/50, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
 			std::cout << "complete PeelFixA: "<<core<<"  Iteration time: "<<t_in.stop() << std::endl;
@@ -69,6 +70,7 @@ namespace gbbs
 
 		for(size_t core=1;core<=delta;core++){
 			timer t_in; t_in.start();
+			//memory leak
 			PeelFixB(G, BetaMax, AlphaMax, em, core, num_buckets, bipartition);
 			if(core<delta)
 				par_for(0, (size_t)G.m/50, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
@@ -150,7 +152,7 @@ namespace gbbs
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
-
+		//memory leak
 		auto bbuckets = make_vertex_buckets(n, vD, increasing, num_buckets);
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
@@ -203,6 +205,8 @@ namespace gbbs
 			bt.stop();
 			rho_alpha++;
 		}
+		bbuckets.del();
+
 		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
 		debug(bt.reportTotal("bucket time"));
 		return;
@@ -267,7 +271,7 @@ namespace gbbs
 		}
 
 		size_t uCount = 0;
-
+		//memory leak!
 		auto abuckets = make_vertex_buckets(n_a, D, increasing, num_buckets);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
@@ -317,6 +321,8 @@ namespace gbbs
 			bt.stop();
 			rho_beta++;
 		}
+		abuckets.del();
+
 		std::cout << "### rho_beta = " << rho_beta << " alpha_{max} = " << max_alpha << "\n";
 		debug(bt.reportTotal("bucket time"));
 	}
