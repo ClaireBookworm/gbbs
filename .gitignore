@@ -41,3 +41,6 @@ inputs/marvel_konect
 inputs/actor_edgelist
 inputs/actor_adj
 inputs/actor_konect
+inputs/reuters_adj
+inputs/reuters_edgelist
+inputs/reuters_konect

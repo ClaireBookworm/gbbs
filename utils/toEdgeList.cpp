@@ -46,28 +46,32 @@ AdjacencyGraph
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <vector>
 
 using namespace std;
 
 int main(){
-    ifstream infile;
     string file_name;
     cin >> file_name;
-    infile.open("../inputs/"+file_name+"_konect");
+    ifstream infile("../inputs/"+file_name+"_konect",ios::in);
     ofstream outfile;
     outfile.open("../inputs/"+file_name+"_edgelist");
     int numEdge, numA, numB, first, second;
-    infile.ignore(256, '\n');
-    string temp;
-    infile >> temp;
-    bool has_head = temp == "%";
+    string line;
+    getline(infile,line);
+    getline(infile,line);
+    bool has_head = line.at(0) == '%';
     if(has_head){
-        infile >> numEdge >> numA >> numB;
+        istringstream ss(line);
+        string tmp;
+        ss >> tmp>> numEdge >> numA >> numB;
     }else{
-        infile >> numB;
-        numA = stoi(temp);
-        while(infile>>first>>second){
+        istringstream ss(line);
+        ss >> numA >> numB;
+        while(getline(infile,line)){
+            istringstream ss(line);
+            ss >> first >> second;
             numA = max(numA, first);
             numB = max(numB, second);
         }
@@ -75,7 +79,9 @@ int main(){
         infile.seekg(0, std::ios::beg);
         infile.ignore(256, '\n');
     }
-    while(infile>>first>>second){
+    while(getline(infile,line)){
+        istringstream ss(line);
+        ss >> first >> second;
         first--;
         second--;
         second += numA;
