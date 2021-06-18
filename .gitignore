@@ -23,24 +23,6 @@ node_modules/
 
 
 .vscode
-inputs/record_konect
-inputs/record_adj
-inputs/record_edgelist
-inputs/author_konect
-inputs/arXiv_konect
-inputs/arXiv_edgelist
-inputs/arXiv_adj
-inputs/author_adj
-inputs/author_edgelist
-inputs/flickr_konect
-inputs/flickr_edgelist
-inputs/flickr_adj
-inputs/marvel_adj
-inputs/marvel_edgelist
-inputs/marvel_konect
-inputs/actor_edgelist
-inputs/actor_adj
-inputs/actor_konect
-inputs/reuters_adj
-inputs/reuters_edgelist
-inputs/reuters_konect
+inputs/*_konect
+inputs/*_adj
+inputs/*_edgelist
