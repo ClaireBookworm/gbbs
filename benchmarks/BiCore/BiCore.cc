@@ -38,6 +38,7 @@
 namespace gbbs {
 template <class Graph>
 double BiCore_runner(Graph& G, commandLine P) {
+
   size_t num_buckets = P.getOptionLongValue("-nb", 16);
   size_t bipartition = P.getOptionLongValue("-bi", 2);
   size_t peel_by_alpha = P.getOptionLongValue("-a", 0);
@@ -64,7 +65,6 @@ double BiCore_runner(Graph& G, commandLine P) {
   double tt = t.stop();
 
   std::cout << "### Running Time: " << tt << std::endl;
-
   return tt;
 }
 }  // namespace gbbs

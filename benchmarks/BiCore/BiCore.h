@@ -26,9 +26,11 @@
 #include "gbbs/gbbs.h"
 #include "gbbs/julienne.h"
 #include "benchmarks/KCore/JulienneDBS17/KCore.h"
+#include <fstream>
 
 namespace gbbs
 {
+	std::ofstream fout("output_log");
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 
@@ -68,7 +70,7 @@ namespace gbbs
 			//memory leak
 			PeelFixA(G, BetaMax, AlphaMax, em, core, bbuckets, bipartition);
 			par_for(0, em.size, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
-			std::cout << "complete PeelFixA: "<<core<<"  Iteration time: "<<t_in.stop() << std::endl;
+			fout<<"coreA "<<core<<" time "<<t_in.stop()<<'\n';
 		}
 
 		for(size_t core=1;core<=delta;core++){
@@ -77,14 +79,15 @@ namespace gbbs
 			PeelFixB(G, BetaMax, AlphaMax, em, core, abuckets, bipartition);
 			if(core<delta)
 				par_for(0, em.size, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
-			std::cout << "complete PeelFixB: " <<core<<"  Iteration time: "<<t_in.stop() << std::endl;
+			fout<<"coreB "<<core<<" time "<<t_in.stop()<<'\n';
 		}
+		fout.close();
 	}
 
 	template <class Graph>
 	inline void PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, hist_table<uintE, uintE>& em, size_t alpha, buckets<sequence<uintE>, uintE, uintE>& bbuckets, size_t bipartition = 2)
 	{
-		timer bt,ft,pt,st;
+		timer bt,ft,pt;
 		pt.start();
 
 		const size_t n = G.n;
@@ -102,13 +105,11 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		st.start();
 		auto mask = sequence<std::tuple<bool, uintE>>(n_a, [&](size_t i) {
 			return std::make_tuple<bool, uintE>((G.get_vertex(i).out_degree() < alpha)&(i<n_a), 0);
 		});
 
 		auto uDel = vertexSubsetData<uintE>(n_a, std::move(mask));
-		st.stop();
 
 		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
 		auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
@@ -168,7 +169,6 @@ namespace gbbs
 			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
 		pt.stop();
-		std::cout << "initial peeling done, vCount left is " << vCount << std::endl;
 
 		while (finished != vCount)
 		{
@@ -201,11 +201,10 @@ namespace gbbs
 		}
 		//bbuckets.del();
 
-		std::cout << "### rho_alpha = " << rho_alpha << " beta_{max} = " << max_beta << "\n";
-		debug(bt.reportTotal("bucket time"));
-		debug(ft.reportTotal("layer processing time"));
-		debug(pt.reportTotal("preprocessing time"));
-		debug(st.reportTotal("first round time"));
+		fout << "rho_alpha " << rho_alpha << " beta_max " << max_beta << "\n";
+		debug(fout<<"bt "<<bt.total_time<<'\n');
+		debug(fout<<"ft "<<ft.total_time<<'\n');
+		debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
 
 	template <class Graph>
@@ -283,7 +282,6 @@ namespace gbbs
 
 		uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]>0);}));
 		pt.stop();
-		std::cout << "initial peeling done, uCount left is " << uCount << std::endl;
 
 		while (finished != uCount)
 		{
@@ -312,12 +310,11 @@ namespace gbbs
 			bt.stop();
 			rho_beta++;
 		}
-		//abuckets.del();
 
-		std::cout << "### rho_beta = " << rho_beta << " alpha_{max} = " << max_alpha << "\n";
-		debug(bt.reportTotal("bucket time"));
-		debug(ft.reportTotal("layer processing time"));
-		debug(pt.reportTotal("preprocessing time"));
+		fout << "rho_beta " << rho_beta << " alpha_max " << max_alpha << "\n";
+		debug(fout<<"bt "<<bt.total_time<<'\n');
+		debug(fout<<"ft "<<ft.total_time<<'\n');
+		debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
 
 } // namespace gbbs
