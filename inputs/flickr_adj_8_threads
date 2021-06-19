@@ -1,0 +1,1470 @@
+rho_alpha 1998 beta_max 34989
+bt 0.0613089
+ft 2.44007
+pt 0.0204341
+coreA 1 time 2.6118
+rho_alpha 1991 beta_max 34001
+bt 0.0616274
+ft 2.38005
+pt 0.0368881
+coreA 2 time 2.57337
+rho_alpha 1989 beta_max 33131
+bt 0.0606458
+ft 2.36704
+pt 0.0423579
+coreA 3 time 2.56463
+rho_alpha 1958 beta_max 32390
+bt 0.0610068
+ft 2.32632
+pt 0.0464261
+coreA 4 time 2.52612
+rho_alpha 1953 beta_max 31736
+bt 0.0615408
+ft 2.31497
+pt 0.049
+coreA 5 time 2.51733
+rho_alpha 1968 beta_max 31186
+bt 0.0608692
+ft 2.30163
+pt 0.0524719
+coreA 6 time 2.50602
+rho_alpha 1961 beta_max 30641
+bt 0.0602176
+ft 2.29305
+pt 0.054683
+coreA 7 time 2.5013
+rho_alpha 1948 beta_max 30143
+bt 0.0594029
+ft 2.28244
+pt 0.0583758
+coreA 8 time 2.50735
+rho_alpha 1956 beta_max 29638
+bt 0.0588973
+ft 2.26946
+pt 0.059449
+coreA 9 time 2.47816
+rho_alpha 1916 beta_max 29156
+bt 0.0589631
+ft 2.25339
+pt 0.060771
+coreA 10 time 2.4625
+rho_alpha 1914 beta_max 28762
+bt 0.0591331
+ft 2.2363
+pt 0.062506
+coreA 11 time 2.44777
+rho_alpha 1921 beta_max 28346
+bt 0.0594337
+ft 2.2197
+pt 0.0640361
+coreA 12 time 2.44545
+rho_alpha 1896 beta_max 27982
+bt 0.0590825
+ft 2.20789
+pt 0.0651181
+coreA 13 time 2.41972
+rho_alpha 1909 beta_max 27600
+bt 0.0587471
+ft 2.2077
+pt 0.0668468
+coreA 14 time 2.42168
+rho_alpha 1879 beta_max 27274
+bt 0.0583825
+ft 2.18751
+pt 0.067976
+coreA 15 time 2.40219
+rho_alpha 1887 beta_max 26962
+bt 0.0579162
+ft 2.17414
+pt 0.0703681
+coreA 16 time 2.38897
+rho_alpha 1887 beta_max 26628
+bt 0.0581851
+ft 2.16482
+pt 0.071219
+coreA 17 time 2.38111
+rho_alpha 1869 beta_max 26332
+bt 0.0575538
+ft 2.16249
+pt 0.0721409
+coreA 18 time 2.37915
+rho_alpha 1855 beta_max 26021
+bt 0.0575633
+ft 2.15118
+pt 0.0732651
+coreA 19 time 2.36822
+rho_alpha 1864 beta_max 25766
+bt 0.0571973
+ft 2.13924
+pt 0.0742259
+coreA 20 time 2.35666
+rho_alpha 1857 beta_max 25462
+bt 0.0562832
+ft 2.11995
+pt 0.0752571
+coreA 21 time 2.33706
+rho_alpha 1847 beta_max 25167
+bt 0.0565622
+ft 2.11783
+pt 0.0769398
+coreA 22 time 2.33694
+rho_alpha 1837 beta_max 24873
+bt 0.0555139
+ft 2.09322
+pt 0.0779722
+coreA 23 time 2.31188
+rho_alpha 1825 beta_max 24590
+bt 0.0550292
+ft 2.08256
+pt 0.0788221
+coreA 24 time 2.3013
+rho_alpha 1834 beta_max 24318
+bt 0.0557361
+ft 2.09605
+pt 0.0799558
+coreA 25 time 2.31672
+rho_alpha 1829 beta_max 24058
+bt 0.0554583
+ft 2.08296
+pt 0.0812061
+coreA 26 time 2.30393
+rho_alpha 1815 beta_max 23785
+bt 0.0541987
+ft 2.06395
+pt 0.0815349
+coreA 27 time 2.28474
+rho_alpha 1796 beta_max 23532
+bt 0.0548089
+ft 2.04623
+pt 0.0829921
+coreA 28 time 2.26759
+rho_alpha 1784 beta_max 23296
+bt 0.0539801
+ft 2.05383
+pt 0.0840161
+coreA 29 time 2.27559
+rho_alpha 1798 beta_max 23045
+bt 0.0537071
+ft 2.03792
+pt 0.0860689
+coreA 30 time 2.26126
+rho_alpha 1795 beta_max 22811
+bt 0.0545249
+ft 2.0226
+pt 0.086859
+coreA 31 time 2.24693
+rho_alpha 1781 beta_max 22581
+bt 0.0540869
+ft 2.01682
+pt 0.0878019
+coreA 32 time 2.2522
+rho_alpha 1769 beta_max 22350
+bt 0.054065
+ft 2.0119
+pt 0.090698
+coreA 33 time 2.25472
+rho_alpha 1764 beta_max 22115
+bt 0.0531495
+ft 1.99583
+pt 0.0896859
+coreA 34 time 2.22119
+rho_alpha 1757 beta_max 21886
+bt 0.0523636
+ft 1.98744
+pt 0.090065
+coreA 35 time 2.21216
+rho_alpha 1740 beta_max 21660
+bt 0.0519671
+ft 1.98257
+pt 0.090879
+coreA 36 time 2.20762
+rho_alpha 1734 beta_max 21454
+bt 0.0517666
+ft 1.97206
+pt 0.092664
+coreA 37 time 2.19744
+rho_alpha 1751 beta_max 21238
+bt 0.0528975
+ft 1.95976
+pt 0.0929461
+coreA 38 time 2.18738
+rho_alpha 1767 beta_max 21056
+bt 0.0527101
+ft 1.95032
+pt 0.0941041
+coreA 39 time 2.17852
+rho_alpha 1749 beta_max 20862
+bt 0.0525987
+ft 1.96135
+pt 0.0959599
+coreA 40 time 2.20601
+rho_alpha 1725 beta_max 20669
+bt 0.0521727
+ft 1.93618
+pt 0.095937
+coreA 41 time 2.16449
+rho_alpha 1704 beta_max 20472
+bt 0.0508692
+ft 1.90821
+pt 0.0964069
+coreA 42 time 2.13506
+rho_alpha 1718 beta_max 20254
+bt 0.0511479
+ft 1.9099
+pt 0.0974221
+coreA 43 time 2.13902
+rho_alpha 1707 beta_max 20042
+bt 0.050921
+ft 1.89246
+pt 0.098783
+coreA 44 time 2.12236
+rho_alpha 1688 beta_max 19867
+bt 0.0507357
+ft 1.88486
+pt 0.0990379
+coreA 45 time 2.11388
+rho_alpha 1703 beta_max 19671
+bt 0.0502446
+ft 1.87511
+pt 0.100109
+coreA 46 time 2.10393
+rho_alpha 1702 beta_max 19480
+bt 0.050396
+ft 1.87048
+pt 0.101571
+coreA 47 time 2.10168
+rho_alpha 1682 beta_max 19292
+bt 0.050106
+ft 1.85648
+pt 0.101646
+coreA 48 time 2.08649
+rho_alpha 1682 beta_max 19111
+bt 0.0494647
+ft 1.84379
+pt 0.102481
+coreA 49 time 2.07374
+rho_alpha 1675 beta_max 18933
+bt 0.049597
+ft 1.82801
+pt 0.10381
+coreA 50 time 2.0592
+rho_alpha 1665 beta_max 18754
+bt 0.0482888
+ft 1.81809
+pt 0.104282
+coreA 51 time 2.04892
+rho_alpha 1674 beta_max 18575
+bt 0.0482616
+ft 1.80583
+pt 0.105324
+coreA 52 time 2.03677
+rho_alpha 1672 beta_max 18398
+bt 0.0480456
+ft 1.80491
+pt 0.106016
+coreA 53 time 2.03624
+rho_alpha 1657 beta_max 18227
+bt 0.0484302
+ft 1.7883
+pt 0.106809
+coreA 54 time 2.02044
+rho_alpha 1647 beta_max 18066
+bt 0.0483184
+ft 1.77603
+pt 0.10719
+coreA 55 time 2.00808
+rho_alpha 1631 beta_max 17901
+bt 0.0486147
+ft 1.76767
+pt 0.108089
+coreA 56 time 1.99999
+rho_alpha 1645 beta_max 17715
+bt 0.0482709
+ft 1.7631
+pt 0.108911
+coreA 57 time 1.99611
+rho_alpha 1612 beta_max 17547
+bt 0.0484393
+ft 1.74186
+pt 0.109702
+coreA 58 time 1.97596
+rho_alpha 1639 beta_max 17384
+bt 0.0486865
+ft 1.73851
+pt 0.110628
+coreA 59 time 1.97366
+rho_alpha 1630 beta_max 17210
+bt 0.0476525
+ft 1.73047
+pt 0.110975
+coreA 60 time 1.96525
+rho_alpha 1618 beta_max 17049
+bt 0.0468907
+ft 1.72035
+pt 0.11145
+coreA 61 time 1.95439
+rho_alpha 1627 beta_max 16883
+bt 0.0460927
+ft 1.71509
+pt 0.143218
+coreA 62 time 2.00931
+rho_alpha 1603 beta_max 16714
+bt 0.0466468
+ft 1.70366
+pt 0.1126
+coreA 63 time 1.96744
+rho_alpha 1602 beta_max 16558
+bt 0.0464222
+ft 1.69045
+pt 0.113133
+coreA 64 time 1.95484
+rho_alpha 1589 beta_max 16394
+bt 0.0461595
+ft 1.68185
+pt 0.114189
+coreA 65 time 1.94624
+rho_alpha 1582 beta_max 16222
+bt 0.0456355
+ft 1.67358
+pt 0.114848
+coreA 66 time 1.93764
+rho_alpha 1580 beta_max 16078
+bt 0.0456638
+ft 1.66771
+pt 0.115597
+coreA 67 time 1.93235
+rho_alpha 1585 beta_max 15915
+bt 0.0451343
+ft 1.65633
+pt 0.116484
+coreA 68 time 1.92107
+rho_alpha 1575 beta_max 15769
+bt 0.0449908
+ft 1.65439
+pt 0.11789
+coreA 69 time 1.92072
+rho_alpha 1556 beta_max 15617
+bt 0.0443888
+ft 1.64852
+pt 0.117125
+coreA 70 time 1.91284
+rho_alpha 1568 beta_max 15462
+bt 0.0445175
+ft 1.64068
+pt 0.118328
+coreA 71 time 1.90645
+rho_alpha 1562 beta_max 15319
+bt 0.0447876
+ft 1.63385
+pt 0.118892
+coreA 72 time 1.90014
+rho_alpha 1561 beta_max 15155
+bt 0.044512
+ft 1.62346
+pt 0.119357
+coreA 73 time 1.88989
+rho_alpha 1540 beta_max 14980
+bt 0.0443568
+ft 1.61023
+pt 0.120456
+coreA 74 time 1.87687
+rho_alpha 1532 beta_max 14824
+bt 0.0442274
+ft 1.60498
+pt 0.121258
+coreA 75 time 1.87302
+rho_alpha 1545 beta_max 14663
+bt 0.0436981
+ft 1.59866
+pt 0.121827
+coreA 76 time 1.86523
+rho_alpha 1548 beta_max 14526
+bt 0.0438087
+ft 1.59618
+pt 0.122314
+coreA 77 time 1.86396
+rho_alpha 1523 beta_max 14379
+bt 0.04263
+ft 1.58248
+pt 0.122814
+coreA 78 time 1.84929
+rho_alpha 1522 beta_max 14246
+bt 0.043334
+ft 1.57895
+pt 0.123341
+coreA 79 time 1.84705
+rho_alpha 1507 beta_max 14118
+bt 0.0422361
+ft 1.57008
+pt 0.124786
+coreA 80 time 1.83814
+rho_alpha 1508 beta_max 13986
+bt 0.0422697
+ft 1.5615
+pt 0.1254
+coreA 81 time 1.82944
+rho_alpha 1516 beta_max 13841
+bt 0.0420916
+ft 1.55751
+pt 0.125869
+coreA 82 time 1.82526
+rho_alpha 1503 beta_max 13695
+bt 0.0418031
+ft 1.55196
+pt 0.126153
+coreA 83 time 1.82
+rho_alpha 1516 beta_max 13560
+bt 0.0416625
+ft 1.54481
+pt 0.127234
+coreA 84 time 1.81411
+rho_alpha 1486 beta_max 13432
+bt 0.0418413
+ft 1.53677
+pt 0.127002
+coreA 85 time 1.80592
+rho_alpha 1489 beta_max 13312
+bt 0.0421829
+ft 1.5355
+pt 0.12795
+coreA 86 time 1.80499
+rho_alpha 1475 beta_max 13213
+bt 0.0412755
+ft 1.52822
+pt 0.128541
+coreA 87 time 1.79727
+rho_alpha 1481 beta_max 13085
+bt 0.0406332
+ft 1.52318
+pt 0.128952
+coreA 88 time 1.79183
+rho_alpha 1479 beta_max 12989
+bt 0.0405405
+ft 1.51717
+pt 0.128865
+coreA 89 time 1.78572
+rho_alpha 1471 beta_max 12891
+bt 0.0403962
+ft 1.51165
+pt 0.12982
+coreA 90 time 1.7803
+rho_alpha 1466 beta_max 12770
+bt 0.0403774
+ft 1.49997
+pt 0.13049
+coreA 91 time 1.77001
+rho_alpha 1449 beta_max 12653
+bt 0.0407183
+ft 1.49612
+pt 0.131193
+coreA 92 time 1.76591
+rho_alpha 1445 beta_max 12556
+bt 0.040483
+ft 1.49048
+pt 0.131359
+coreA 93 time 1.76067
+rho_alpha 1447 beta_max 12454
+bt 0.0400283
+ft 1.48359
+pt 0.132038
+coreA 94 time 1.75369
+rho_alpha 1459 beta_max 12355
+bt 0.0400596
+ft 1.48382
+pt 0.132586
+coreA 95 time 1.75408
+rho_alpha 1445 beta_max 12255
+bt 0.0400066
+ft 1.47695
+pt 0.132527
+coreA 96 time 1.74758
+rho_alpha 1428 beta_max 12140
+bt 0.0395343
+ft 1.47446
+pt 0.132928
+coreA 97 time 1.74432
+rho_alpha 1427 beta_max 12048
+bt 0.039674
+ft 1.46354
+pt 0.134499
+coreA 98 time 1.73958
+rho_alpha 1432 beta_max 11954
+bt 0.0388515
+ft 1.45918
+pt 0.138361
+coreA 99 time 1.73351
+rho_alpha 1413 beta_max 11862
+bt 0.0392392
+ft 1.45305
+pt 0.13519
+coreA 100 time 1.7247
+rho_alpha 1415 beta_max 11768
+bt 0.0390546
+ft 1.45276
+pt 0.136079
+coreA 101 time 1.72457
+rho_alpha 1406 beta_max 11677
+bt 0.0389223
+ft 1.44404
+pt 0.135954
+coreA 102 time 1.71524
+rho_alpha 1412 beta_max 11573
+bt 0.039139
+ft 1.44414
+pt 0.136081
+coreA 103 time 1.71567
+rho_alpha 1400 beta_max 11486
+bt 0.0387459
+ft 1.43861
+pt 0.13757
+coreA 104 time 1.71179
+rho_alpha 1392 beta_max 11377
+bt 0.0383351
+ft 1.43362
+pt 0.137974
+coreA 105 time 1.70578
+rho_alpha 1393 beta_max 11291
+bt 0.0380769
+ft 1.42565
+pt 0.13834
+coreA 106 time 1.69761
+rho_alpha 1392 beta_max 11199
+bt 0.0379009
+ft 1.42466
+pt 0.138608
+coreA 107 time 1.69682
+rho_alpha 1362 beta_max 11122
+bt 0.0377572
+ft 1.41645
+pt 0.138833
+coreA 108 time 1.68842
+rho_alpha 1374 beta_max 11016
+bt 0.0375142
+ft 1.41118
+pt 0.139955
+coreA 109 time 1.68357
+rho_alpha 1392 beta_max 10925
+bt 0.0378256
+ft 1.40778
+pt 0.140051
+coreA 110 time 1.68105
+rho_alpha 1374 beta_max 10831
+bt 0.036577
+ft 1.40356
+pt 0.141034
+coreA 111 time 1.67607
+rho_alpha 1356 beta_max 10734
+bt 0.0366673
+ft 1.39789
+pt 0.141946
+coreA 112 time 1.67123
+rho_alpha 1347 beta_max 10658
+bt 0.036335
+ft 1.3946
+pt 0.14243
+coreA 113 time 1.66809
+rho_alpha 1346 beta_max 10563
+bt 0.0362072
+ft 1.39266
+pt 0.142743
+coreA 114 time 1.66614
+rho_alpha 1342 beta_max 10480
+bt 0.0368173
+ft 1.38606
+pt 0.143079
+coreA 115 time 1.66064
+rho_alpha 1347 beta_max 10379
+bt 0.0364766
+ft 1.38682
+pt 0.144361
+coreA 116 time 1.66167
+rho_alpha 1339 beta_max 10289
+bt 0.0362031
+ft 1.38025
+pt 0.143952
+coreA 117 time 1.65434
+rho_alpha 1302 beta_max 10216
+bt 0.0360246
+ft 1.37395
+pt 0.145256
+coreA 118 time 1.64875
+rho_alpha 1328 beta_max 10148
+bt 0.035918
+ft 1.37313
+pt 0.145767
+coreA 119 time 1.64883
+rho_alpha 1331 beta_max 10055
+bt 0.035718
+ft 1.37715
+pt 0.145914
+coreA 120 time 1.65221
+rho_alpha 1311 beta_max 9979
+bt 0.0354555
+ft 1.36265
+pt 0.146042
+coreA 121 time 1.63756
+rho_alpha 1297 beta_max 9896
+bt 0.0350068
+ft 1.35792
+pt 0.147119
+coreA 122 time 1.63322
+rho_alpha 1309 beta_max 9816
+bt 0.0347357
+ft 1.35252
+pt 0.14739
+coreA 123 time 1.62758
+rho_alpha 1306 beta_max 9727
+bt 0.0344315
+ft 1.35602
+pt 0.149404
+coreA 124 time 1.63281
+rho_alpha 1299 beta_max 9642
+bt 0.0344532
+ft 1.34726
+pt 0.148585
+coreA 125 time 1.62306
+rho_alpha 1279 beta_max 9562
+bt 0.0346251
+ft 1.34428
+pt 0.149184
+coreA 126 time 1.62075
+rho_alpha 1275 beta_max 9492
+bt 0.0345936
+ft 1.33981
+pt 0.150483
+coreA 127 time 1.61717
+rho_alpha 1290 beta_max 9397
+bt 0.0342631
+ft 1.33578
+pt 0.14974
+coreA 128 time 1.61207
+rho_alpha 1280 beta_max 9309
+bt 0.0340338
+ft 1.33178
+pt 0.149705
+coreA 129 time 1.60719
+rho_alpha 1274 beta_max 9235
+bt 0.0333724
+ft 1.33196
+pt 0.150723
+coreA 130 time 1.60796
+rho_alpha 1264 beta_max 9156
+bt 0.0338426
+ft 1.32604
+pt 0.151375
+coreA 131 time 1.60284
+rho_alpha 1254 beta_max 9078
+bt 0.0330429
+ft 1.3219
+pt 0.151474
+coreA 132 time 1.59789
+rho_alpha 1268 beta_max 9004
+bt 0.0334642
+ft 1.32043
+pt 0.152682
+coreA 133 time 1.59827
+rho_alpha 1258 beta_max 8945
+bt 0.0332036
+ft 1.31663
+pt 0.152531
+coreA 134 time 1.59333
+rho_alpha 1257 beta_max 8883
+bt 0.0331786
+ft 1.31475
+pt 0.152469
+coreA 135 time 1.59157
+rho_alpha 1244 beta_max 8800
+bt 0.0324254
+ft 1.31321
+pt 0.15359
+coreA 136 time 1.59067
+rho_alpha 1248 beta_max 8709
+bt 0.0323448
+ft 1.30791
+pt 0.154561
+coreA 137 time 1.58551
+rho_alpha 1252 beta_max 8645
+bt 0.0318189
+ft 1.30659
+pt 0.155045
+coreA 138 time 1.58427
+rho_alpha 1252 beta_max 8571
+bt 0.0317953
+ft 1.3048
+pt 0.191539
+coreA 139 time 1.6187
+rho_alpha 1224 beta_max 8506
+bt 0.031671
+ft 1.30137
+pt 0.192138
+coreA 140 time 1.61612
+rho_alpha 1239 beta_max 8436
+bt 0.0323501
+ft 1.29672
+pt 0.193254
+coreA 141 time 1.61216
+rho_alpha 1224 beta_max 8359
+bt 0.0322833
+ft 1.29762
+pt 0.193072
+coreA 142 time 1.61281
+rho_alpha 1221 beta_max 8297
+bt 0.0317323
+ft 1.29166
+pt 0.193673
+coreA 143 time 1.60692
+rho_alpha 1208 beta_max 8221
+bt 0.032001
+ft 1.28246
+pt 0.194768
+coreA 144 time 1.59909
+rho_alpha 1188 beta_max 8150
+bt 0.0316613
+ft 1.28266
+pt 0.194752
+coreA 145 time 1.59833
+rho_alpha 1195 beta_max 8084
+bt 0.0313523
+ft 1.27948
+pt 0.195347
+coreA 146 time 1.61687
+rho_alpha 1197 beta_max 8011
+bt 0.031009
+ft 1.27909
+pt 0.201676
+coreA 147 time 1.60195
+rho_beta 824 alpha_max 2186
+bt 0.0344946
+ft 1.52562
+pt 0.0195961
+coreB 1 time 1.69456
+rho_beta 823 alpha_max 2185
+bt 0.0370805
+ft 1.52458
+pt 0.0269859
+coreB 2 time 1.69961
+rho_beta 828 alpha_max 2183
+bt 0.0362988
+ft 1.51715
+pt 0.0296271
+coreB 3 time 1.69422
+rho_beta 829 alpha_max 2175
+bt 0.0361001
+ft 1.52212
+pt 0.0310481
+coreB 4 time 1.70092
+rho_beta 819 alpha_max 2171
+bt 0.0364463
+ft 1.5273
+pt 0.0332651
+coreB 5 time 1.70764
+rho_beta 820 alpha_max 2166
+bt 0.0368893
+ft 1.52684
+pt 0.034559
+coreB 6 time 1.70769
+rho_beta 822 alpha_max 2154
+bt 0.036386
+ft 1.52091
+pt 0.0360579
+coreB 7 time 1.70369
+rho_beta 809 alpha_max 2151
+bt 0.0370092
+ft 1.51426
+pt 0.0379159
+coreB 8 time 1.69915
+rho_beta 821 alpha_max 2141
+bt 0.0378516
+ft 1.51509
+pt 0.0392389
+coreB 9 time 1.70177
+rho_beta 818 alpha_max 2136
+bt 0.0381167
+ft 1.51405
+pt 0.0410931
+coreB 10 time 1.70241
+rho_beta 811 alpha_max 2127
+bt 0.0387824
+ft 1.50872
+pt 0.0419071
+coreB 11 time 1.69804
+rho_beta 811 alpha_max 2122
+bt 0.0381346
+ft 1.50542
+pt 0.0421598
+coreB 12 time 1.69462
+rho_beta 816 alpha_max 2116
+bt 0.0381732
+ft 1.50111
+pt 0.0440049
+coreB 13 time 1.69174
+rho_beta 807 alpha_max 2107
+bt 0.0380645
+ft 1.49781
+pt 0.0438211
+coreB 14 time 1.6887
+rho_beta 817 alpha_max 2100
+bt 0.0373402
+ft 1.48884
+pt 0.0448871
+coreB 15 time 1.67883
+rho_beta 817 alpha_max 2091
+bt 0.037492
+ft 1.48634
+pt 0.046196
+coreB 16 time 1.67737
+rho_beta 808 alpha_max 2082
+bt 0.0380616
+ft 1.48616
+pt 0.046674
+coreB 17 time 1.69039
+rho_beta 805 alpha_max 2076
+bt 0.0380235
+ft 1.47572
+pt 0.0475302
+coreB 18 time 1.66933
+rho_beta 810 alpha_max 2067
+bt 0.0386708
+ft 1.46792
+pt 0.048512
+coreB 19 time 1.66286
+rho_beta 802 alpha_max 2064
+bt 0.0383465
+ft 1.46843
+pt 0.048404
+coreB 20 time 1.66222
+rho_beta 799 alpha_max 2062
+bt 0.0382679
+ft 1.45742
+pt 0.0494089
+coreB 21 time 1.65204
+rho_beta 809 alpha_max 2060
+bt 0.0378015
+ft 1.44887
+pt 0.0503249
+coreB 22 time 1.6437
+rho_beta 797 alpha_max 2055
+bt 0.0387957
+ft 1.44563
+pt 0.0510271
+coreB 23 time 1.64202
+rho_beta 801 alpha_max 2053
+bt 0.0394089
+ft 1.43958
+pt 0.0514839
+coreB 24 time 1.63681
+rho_beta 794 alpha_max 2052
+bt 0.0395861
+ft 1.43514
+pt 0.052398
+coreB 25 time 1.63307
+rho_beta 809 alpha_max 2051
+bt 0.0395682
+ft 1.42432
+pt 0.0528901
+coreB 26 time 1.62274
+rho_beta 798 alpha_max 2045
+bt 0.039742
+ft 1.42063
+pt 0.0532999
+coreB 27 time 1.61976
+rho_beta 803 alpha_max 2042
+bt 0.0393033
+ft 1.41734
+pt 0.0541098
+coreB 28 time 1.61678
+rho_beta 802 alpha_max 2039
+bt 0.0399466
+ft 1.40524
+pt 0.055032
+coreB 29 time 1.60625
+rho_beta 798 alpha_max 2036
+bt 0.0401192
+ft 1.4048
+pt 0.0553112
+coreB 30 time 1.6057
+rho_beta 787 alpha_max 2036
+bt 0.0388768
+ft 1.39929
+pt 0.0553861
+coreB 31 time 1.59905
+rho_beta 791 alpha_max 2035
+bt 0.0391021
+ft 1.39231
+pt 0.05565
+coreB 32 time 1.59265
+rho_beta 799 alpha_max 2035
+bt 0.0399039
+ft 1.3897
+pt 0.056685
+coreB 33 time 1.59165
+rho_beta 794 alpha_max 2033
+bt 0.0396292
+ft 1.37997
+pt 0.057236
+coreB 34 time 1.5819
+rho_beta 796 alpha_max 2033
+bt 0.0396099
+ft 1.38024
+pt 0.057827
+coreB 35 time 1.58284
+rho_beta 794 alpha_max 2027
+bt 0.0387874
+ft 1.37701
+pt 0.058064
+coreB 36 time 1.57829
+rho_beta 789 alpha_max 2025
+bt 0.0389545
+ft 1.37613
+pt 0.059082
+coreB 37 time 1.57878
+rho_beta 794 alpha_max 2021
+bt 0.0386515
+ft 1.37419
+pt 0.0591011
+coreB 38 time 1.57671
+rho_beta 786 alpha_max 2020
+bt 0.0386405
+ft 1.37478
+pt 0.0600681
+coreB 39 time 1.57829
+rho_beta 796 alpha_max 2017
+bt 0.038404
+ft 1.36788
+pt 0.060674
+coreB 40 time 1.57219
+rho_beta 792 alpha_max 2016
+bt 0.0387542
+ft 1.36824
+pt 0.061038
+coreB 41 time 1.57304
+rho_beta 794 alpha_max 2012
+bt 0.0383499
+ft 1.36603
+pt 0.061095
+coreB 42 time 1.56976
+rho_beta 795 alpha_max 2009
+bt 0.0384538
+ft 1.36627
+pt 0.060926
+coreB 43 time 1.56983
+rho_beta 779 alpha_max 2003
+bt 0.0383742
+ft 1.36197
+pt 0.0618961
+coreB 44 time 1.56637
+rho_beta 786 alpha_max 2001
+bt 0.0389113
+ft 1.3613
+pt 0.0622821
+coreB 45 time 1.56695
+rho_beta 787 alpha_max 2000
+bt 0.0386162
+ft 1.35909
+pt 0.06253
+coreB 46 time 1.56425
+rho_beta 777 alpha_max 1994
+bt 0.0385692
+ft 1.3581
+pt 0.0631061
+coreB 47 time 1.56369
+rho_beta 777 alpha_max 1993
+bt 0.0384135
+ft 1.35573
+pt 0.0634649
+coreB 48 time 1.5619
+rho_beta 783 alpha_max 1991
+bt 0.0382643
+ft 1.35724
+pt 0.0638399
+coreB 49 time 1.56337
+rho_beta 774 alpha_max 1991
+bt 0.0385308
+ft 1.35443
+pt 0.0642018
+coreB 50 time 1.56122
+rho_beta 781 alpha_max 1985
+bt 0.0383439
+ft 1.35297
+pt 0.0642629
+coreB 51 time 1.55947
+rho_beta 774 alpha_max 1981
+bt 0.0381222
+ft 1.35469
+pt 0.064482
+coreB 52 time 1.561
+rho_beta 770 alpha_max 1977
+bt 0.0380263
+ft 1.34988
+pt 0.0648491
+coreB 53 time 1.55653
+rho_beta 781 alpha_max 1972
+bt 0.0378547
+ft 1.35284
+pt 0.065449
+coreB 54 time 1.55985
+rho_beta 770 alpha_max 1965
+bt 0.0382781
+ft 1.34879
+pt 0.0659099
+coreB 55 time 1.55632
+rho_beta 769 alpha_max 1955
+bt 0.0379033
+ft 1.34907
+pt 0.066108
+coreB 56 time 1.55661
+rho_beta 769 alpha_max 1950
+bt 0.0382154
+ft 1.3517
+pt 0.066431
+coreB 57 time 1.55998
+rho_beta 769 alpha_max 1948
+bt 0.0381978
+ft 1.34989
+pt 0.0670941
+coreB 58 time 1.55823
+rho_beta 768 alpha_max 1945
+bt 0.0391152
+ft 1.3499
+pt 0.0670741
+coreB 59 time 1.55943
+rho_beta 773 alpha_max 1941
+bt 0.038749
+ft 1.3478
+pt 0.0674269
+coreB 60 time 1.55744
+rho_beta 760 alpha_max 1934
+bt 0.0393734
+ft 1.34626
+pt 0.067724
+coreB 61 time 1.55696
+rho_beta 768 alpha_max 1928
+bt 0.0393748
+ft 1.34175
+pt 0.0684881
+coreB 62 time 1.55297
+rho_beta 765 alpha_max 1927
+bt 0.0385702
+ft 1.34032
+pt 0.0681021
+coreB 63 time 1.5502
+rho_beta 769 alpha_max 1924
+bt 0.0385671
+ft 1.33756
+pt 0.0692501
+coreB 64 time 1.5483
+rho_beta 762 alpha_max 1920
+bt 0.0383081
+ft 1.3392
+pt 0.068984
+coreB 65 time 1.54937
+rho_beta 766 alpha_max 1918
+bt 0.0392487
+ft 1.33705
+pt 0.0693529
+coreB 66 time 1.54878
+rho_beta 759 alpha_max 1914
+bt 0.0396156
+ft 1.33694
+pt 0.0696549
+coreB 67 time 1.5489
+rho_beta 763 alpha_max 1914
+bt 0.0391126
+ft 1.33502
+pt 0.0702381
+coreB 68 time 1.54739
+rho_beta 763 alpha_max 1913
+bt 0.0395672
+ft 1.33582
+pt 0.071152
+coreB 69 time 1.54919
+rho_beta 757 alpha_max 1903
+bt 0.0392184
+ft 1.3302
+pt 0.0709441
+coreB 70 time 1.54324
+rho_beta 762 alpha_max 1900
+bt 0.0390007
+ft 1.33411
+pt 0.071337
+coreB 71 time 1.54703
+rho_beta 767 alpha_max 1898
+bt 0.0388391
+ft 1.33305
+pt 0.0716341
+coreB 72 time 1.54616
+rho_beta 754 alpha_max 1890
+bt 0.0390687
+ft 1.33114
+pt 0.0718942
+coreB 73 time 1.54462
+rho_beta 758 alpha_max 1886
+bt 0.0387025
+ft 1.33226
+pt 0.0724339
+coreB 74 time 1.54637
+rho_beta 753 alpha_max 1880
+bt 0.0387864
+ft 1.3314
+pt 0.0734038
+coreB 75 time 1.54623
+rho_beta 761 alpha_max 1880
+bt 0.0388403
+ft 1.33117
+pt 0.0735209
+coreB 76 time 1.54606
+rho_beta 752 alpha_max 1875
+bt 0.0383804
+ft 1.3302
+pt 0.0741849
+coreB 77 time 1.54525
+rho_beta 744 alpha_max 1873
+bt 0.0390797
+ft 1.3292
+pt 0.074708
+coreB 78 time 1.54517
+rho_beta 753 alpha_max 1870
+bt 0.0382714
+ft 1.32145
+pt 0.0747809
+coreB 79 time 1.53732
+rho_beta 747 alpha_max 1867
+bt 0.038667
+ft 1.32247
+pt 0.0755851
+coreB 80 time 1.53903
+rho_beta 748 alpha_max 1863
+bt 0.0383046
+ft 1.32463
+pt 0.07565
+coreB 81 time 1.54084
+rho_beta 748 alpha_max 1857
+bt 0.0385284
+ft 1.32351
+pt 0.075876
+coreB 82 time 1.54007
+rho_beta 738 alpha_max 1852
+bt 0.0380118
+ft 1.31988
+pt 0.076618
+coreB 83 time 1.53713
+rho_beta 738 alpha_max 1851
+bt 0.0373228
+ft 1.32063
+pt 0.0767879
+coreB 84 time 1.53721
+rho_beta 746 alpha_max 1848
+bt 0.0382276
+ft 1.32144
+pt 0.0775151
+coreB 85 time 1.53916
+rho_beta 754 alpha_max 1846
+bt 0.0371368
+ft 1.32071
+pt 0.0775778
+coreB 86 time 1.53756
+rho_beta 745 alpha_max 1846
+bt 0.0376089
+ft 1.31917
+pt 0.0777249
+coreB 87 time 1.53674
+rho_beta 743 alpha_max 1844
+bt 0.0387545
+ft 1.31861
+pt 0.0779209
+coreB 88 time 1.53723
+rho_beta 740 alpha_max 1838
+bt 0.03807
+ft 1.31732
+pt 0.078124
+coreB 89 time 1.53578
+rho_beta 737 alpha_max 1836
+bt 0.0383186
+ft 1.31731
+pt 0.0784349
+coreB 90 time 1.53542
+rho_beta 736 alpha_max 1832
+bt 0.0376039
+ft 1.31362
+pt 0.0788531
+coreB 91 time 1.53206
+rho_beta 734 alpha_max 1828
+bt 0.0379045
+ft 1.31357
+pt 0.0790138
+coreB 92 time 1.53218
+rho_beta 735 alpha_max 1825
+bt 0.0377562
+ft 1.31189
+pt 0.0789711
+coreB 93 time 1.53011
+rho_beta 739 alpha_max 1819
+bt 0.037257
+ft 1.31291
+pt 0.0794148
+coreB 94 time 1.53133
+rho_beta 735 alpha_max 1816
+bt 0.0375724
+ft 1.31232
+pt 0.0800169
+coreB 95 time 1.5314
+rho_beta 738 alpha_max 1810
+bt 0.0372922
+ft 1.3131
+pt 0.0801079
+coreB 96 time 1.53192
+rho_beta 742 alpha_max 1799
+bt 0.0380521
+ft 1.31132
+pt 0.0803502
+coreB 97 time 1.53073
+rho_beta 733 alpha_max 1797
+bt 0.0374289
+ft 1.31152
+pt 0.0808029
+coreB 98 time 1.53133
+rho_beta 725 alpha_max 1792
+bt 0.0374815
+ft 1.31092
+pt 0.0809181
+coreB 99 time 1.53088
+rho_beta 733 alpha_max 1788
+bt 0.0381365
+ft 1.30909
+pt 0.080786
+coreB 100 time 1.52954
+rho_beta 726 alpha_max 1782
+bt 0.0383663
+ft 1.3089
+pt 0.081372
+coreB 101 time 1.52967
+rho_beta 735 alpha_max 1780
+bt 0.0381398
+ft 1.30925
+pt 0.082303
+coreB 102 time 1.5312
+rho_beta 732 alpha_max 1771
+bt 0.0387788
+ft 1.31537
+pt 0.0820949
+coreB 103 time 1.5375
+rho_beta 732 alpha_max 1767
+bt 0.0376315
+ft 1.30893
+pt 0.082793
+coreB 104 time 1.53082
+rho_beta 726 alpha_max 1763
+bt 0.038517
+ft 1.30426
+pt 0.0822098
+coreB 105 time 1.52607
+rho_beta 723 alpha_max 1752
+bt 0.0378077
+ft 1.30532
+pt 0.0835061
+coreB 106 time 1.52796
+rho_beta 727 alpha_max 1749
+bt 0.0377688
+ft 1.30438
+pt 0.082787
+coreB 107 time 1.52556
+rho_beta 729 alpha_max 1748
+bt 0.0380135
+ft 1.30459
+pt 0.083216
+coreB 108 time 1.52674
+rho_beta 730 alpha_max 1746
+bt 0.0383
+ft 1.30835
+pt 0.0834479
+coreB 109 time 1.53123
+rho_beta 721 alpha_max 1741
+bt 0.0386181
+ft 1.30272
+pt 0.0835302
+coreB 110 time 1.52588
+rho_beta 724 alpha_max 1736
+bt 0.038269
+ft 1.30112
+pt 0.0837171
+coreB 111 time 1.52387
+rho_beta 721 alpha_max 1733
+bt 0.0381467
+ft 1.30027
+pt 0.0842009
+coreB 112 time 1.52369
+rho_beta 718 alpha_max 1733
+bt 0.0386481
+ft 1.30177
+pt 0.0842459
+coreB 113 time 1.52515
+rho_beta 720 alpha_max 1729
+bt 0.0375175
+ft 1.29855
+pt 0.0846841
+coreB 114 time 1.52131
+rho_beta 719 alpha_max 1725
+bt 0.0383072
+ft 1.3032
+pt 0.0842829
+coreB 115 time 1.52708
+rho_beta 715 alpha_max 1720
+bt 0.0376937
+ft 1.29862
+pt 0.0850749
+coreB 116 time 1.5224
+rho_beta 719 alpha_max 1718
+bt 0.0377901
+ft 1.29888
+pt 0.085608
+coreB 117 time 1.52298
+rho_beta 720 alpha_max 1714
+bt 0.0377204
+ft 1.29592
+pt 0.085531
+coreB 118 time 1.51976
+rho_beta 714 alpha_max 1710
+bt 0.0379117
+ft 1.29776
+pt 0.085407
+coreB 119 time 1.52168
+rho_beta 716 alpha_max 1705
+bt 0.0376549
+ft 1.29569
+pt 0.0861678
+coreB 120 time 1.51981
+rho_beta 712 alpha_max 1701
+bt 0.0372748
+ft 1.29695
+pt 0.0864339
+coreB 121 time 1.5208
+rho_beta 708 alpha_max 1698
+bt 0.0372314
+ft 1.29762
+pt 0.0868509
+coreB 122 time 1.52185
+rho_beta 708 alpha_max 1695
+bt 0.0375133
+ft 1.29494
+pt 0.0872049
+coreB 123 time 1.52016
+rho_beta 715 alpha_max 1690
+bt 0.0372999
+ft 1.29437
+pt 0.086966
+coreB 124 time 1.51891
+rho_beta 709 alpha_max 1685
+bt 0.0375638
+ft 1.29528
+pt 0.087791
+coreB 125 time 1.52069
+rho_beta 715 alpha_max 1682
+bt 0.0373955
+ft 1.29406
+pt 0.0879121
+coreB 126 time 1.51955
+rho_beta 708 alpha_max 1676
+bt 0.0381632
+ft 1.29377
+pt 0.0877249
+coreB 127 time 1.52017
+rho_beta 703 alpha_max 1675
+bt 0.0380611
+ft 1.29334
+pt 0.0884368
+coreB 128 time 1.51981
+rho_beta 713 alpha_max 1671
+bt 0.0379789
+ft 1.29112
+pt 0.0880032
+coreB 129 time 1.51696
+rho_beta 705 alpha_max 1670
+bt 0.0372877
+ft 1.2909
+pt 0.08915
+coreB 130 time 1.51753
+rho_beta 703 alpha_max 1665
+bt 0.0379763
+ft 1.29178
+pt 0.088733
+coreB 131 time 1.51831
+rho_beta 704 alpha_max 1658
+bt 0.0376053
+ft 1.28938
+pt 0.0891001
+coreB 132 time 1.51601
+rho_beta 705 alpha_max 1657
+bt 0.0375421
+ft 1.29066
+pt 0.0893512
+coreB 133 time 1.51778
+rho_beta 713 alpha_max 1650
+bt 0.037513
+ft 1.29024
+pt 0.089206
+coreB 134 time 1.51712
+rho_beta 697 alpha_max 1645
+bt 0.0384023
+ft 1.28765
+pt 0.08991
+coreB 135 time 1.51585
+rho_beta 691 alpha_max 1640
+bt 0.0378647
+ft 1.29166
+pt 0.090354
+coreB 136 time 1.51988
+rho_beta 699 alpha_max 1638
+bt 0.0381196
+ft 1.29264
+pt 0.0922539
+coreB 137 time 1.52286
+rho_beta 700 alpha_max 1633
+bt 0.0376744
+ft 1.28881
+pt 0.0921671
+coreB 138 time 1.51821
+rho_beta 708 alpha_max 1630
+bt 0.0381434
+ft 1.28739
+pt 0.0933399
+coreB 139 time 1.5188
+rho_beta 693 alpha_max 1629
+bt 0.0379012
+ft 1.28581
+pt 0.0936911
+coreB 140 time 1.51746
+rho_beta 700 alpha_max 1627
+bt 0.0378146
+ft 1.2853
+pt 0.0937741
+coreB 141 time 1.51655
+rho_beta 699 alpha_max 1626
+bt 0.0373278
+ft 1.28325
+pt 0.0939231
+coreB 142 time 1.51385
+rho_beta 698 alpha_max 1623
+bt 0.0372772
+ft 1.28459
+pt 0.0941918
+coreB 143 time 1.51548
+rho_beta 701 alpha_max 1617
+bt 0.0375509
+ft 1.28311
+pt 0.094806
+coreB 144 time 1.51521
+rho_beta 697 alpha_max 1614
+bt 0.0379925
+ft 1.28381
+pt 0.094614
+coreB 145 time 1.5161
+rho_beta 689 alpha_max 1608
+bt 0.0375459
+ft 1.28108
+pt 0.0954518
+coreB 146 time 1.5135
+rho_beta 684 alpha_max 1607
+bt 0.0377097
+ft 1.2814
+pt 0.0955839
+coreB 147 time 1.45514
