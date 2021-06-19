@@ -1,0 +1,80 @@
+rho_alpha 17 beta_max 18
+bt 0.000145912
+ft 0.0185256
+pt 0.00353003
+coreA 1 time 0.024061
+rho_alpha 15 beta_max 15
+bt 0.000329018
+ft 0.0146341
+pt 0.00531983
+coreA 2 time 0.0219722
+rho_alpha 15 beta_max 15
+bt 0.000427961
+ft 0.013314
+pt 0.00623012
+coreA 3 time 0.0215411
+rho_alpha 14 beta_max 15
+bt 0.000490427
+ft 0.0122211
+pt 0.00728798
+coreA 4 time 0.0214961
+rho_alpha 13 beta_max 15
+bt 0.000488043
+ft 0.0111759
+pt 0.00779796
+coreA 5 time 0.0209091
+rho_alpha 13 beta_max 14
+bt 0.00045681
+ft 0.0104673
+pt 0.00859904
+coreA 6 time 0.0208511
+rho_alpha 11 beta_max 13
+bt 0.000440121
+ft 0.00952411
+pt 0.00975108
+coreA 7 time 0.021553
+rho_alpha 11 beta_max 12
+bt 0.000437737
+ft 0.00909233
+pt 0.00955796
+coreA 8 time 0.0207272
+rho_beta 56 alpha_max 116
+bt 0.00023365
+ft 0.0258479
+pt 0.00211596
+coreB 1 time 0.03074
+rho_beta 53 alpha_max 95
+bt 0.000607967
+ft 0.0217073
+pt 0.00411701
+coreB 2 time 0.0289421
+rho_beta 41 alpha_max 71
+bt 0.000660658
+ft 0.0143721
+pt 0.0066781
+coreB 3 time 0.0237651
+rho_beta 32 alpha_max 58
+bt 0.000439167
+ft 0.00952244
+pt 0.00972199
+coreB 4 time 0.0215509
+rho_beta 28 alpha_max 32
+bt 0.000294685
+ft 0.00650167
+pt 0.0134499
+coreB 5 time 0.022649
+rho_beta 21 alpha_max 30
+bt 0.000216961
+ft 0.00427771
+pt 0.0143549
+coreB 6 time 0.021246
+rho_beta 16 alpha_max 23
+bt 0.00016284
+ft 0.00300932
+pt 0.0151711
+coreB 7 time 0.0206358
+rho_beta 15 alpha_max 18
+bt 0.000120878
+ft 0.00207424
+pt 0.0158169
+coreB 8 time 0.018199
