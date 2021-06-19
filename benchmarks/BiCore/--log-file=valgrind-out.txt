@@ -1,0 +1,100 @@
+# n = 38741 m = 117190 len = 155933
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/arXiv_adj
+### Threads: 8
+### n: 38741
+### m: 117190
+### Params: -nb (num_buckets) = 16 -bi = 16725
+### ------------------------------------
+begin
+resized to: 16384
+resized to: 32768
+### rho = 46 k_{max} = 8
+# PBBS time: bucket time: 1.0479
+initial peeling done, vCount left is 22015
+resized to: 8192
+resized to: 32768
+### rho_alpha = 17 beta_{max} = 18
+# PBBS time: bucket time: 0.0249
+complete PeelFixA: 1  Iteration time: 8.417
+uDel size 7819
+vDel size 695
+initial peeling done, vCount left is 21320
+### rho_alpha = 15 beta_{max} = 15
+# PBBS time: bucket time: 0.1591
+complete PeelFixA: 2  Iteration time: 6.964
+uDel size 10700
+vDel size 1527
+initial peeling done, vCount left is 20488
+### rho_alpha = 15 beta_{max} = 15
+# PBBS time: bucket time: 0.0670
+complete PeelFixA: 3  Iteration time: 7.264
+uDel size 12269
+vDel size 2375
+initial peeling done, vCount left is 19640
+### rho_alpha = 14 beta_{max} = 15
+# PBBS time: bucket time: 0.2415
+complete PeelFixA: 4  Iteration time: 7.327
+uDel size 13244
+vDel size 3190
+initial peeling done, vCount left is 18825
+### rho_alpha = 13 beta_{max} = 15
+# PBBS time: bucket time: 0.1142
+complete PeelFixA: 5  Iteration time: 6.744
+uDel size 13911
+vDel size 4070
+initial peeling done, vCount left is 17945
+### rho_alpha = 13 beta_{max} = 14
+# PBBS time: bucket time: 0.0699
+complete PeelFixA: 6  Iteration time: 6.845
+uDel size 14434
+resized to: 65536
+vDel size 4937
+initial peeling done, vCount left is 17078
+### rho_alpha = 11 beta_{max} = 13
+# PBBS time: bucket time: 0.0902
+complete PeelFixA: 7  Iteration time: 6.432
+uDel size 14823
+vDel size 5853
+initial peeling done, vCount left is 16162
+### rho_alpha = 11 beta_{max} = 12
+# PBBS time: bucket time: 0.1408
+complete PeelFixA: 8  Iteration time: 6.503
+initial peeling done, uCount left is 16726
+### rho_beta = 56 alpha_{max} = 116
+# PBBS time: bucket time: 0.1116
+complete PeelFixB: 1  Iteration time: 9.775
+initial peeling done, uCount left is 16264
+### rho_beta = 93 alpha_{max} = 37
+# PBBS time: bucket time: 0.1428
+complete PeelFixB: 2  Iteration time: 9.336
+initial peeling done, uCount left is 13824
+### rho_beta = 61 alpha_{max} = 19
+# PBBS time: bucket time: 0.1363
+complete PeelFixB: 3  Iteration time: 7.463
+initial peeling done, uCount left is 10051
+### rho_beta = 40 alpha_{max} = 16
+# PBBS time: bucket time: 0.1751
+complete PeelFixB: 4  Iteration time: 6.955
+resized to: 131072
+initial peeling done, uCount left is 6765
+### rho_beta = 30 alpha_{max} = 12
+# PBBS time: bucket time: 0.0704
+complete PeelFixB: 5  Iteration time: 6.009
+initial peeling done, uCount left is 4597
+### rho_beta = 24 alpha_{max} = 11
+# PBBS time: bucket time: 0.0242
+complete PeelFixB: 6  Iteration time: 5.88
+initial peeling done, uCount left is 3129
+### rho_beta = 17 alpha_{max} = 11
+# PBBS time: bucket time: 0.0203
+complete PeelFixB: 7  Iteration time: 5.452
+initial peeling done, uCount left is 2102
+### rho_beta = 16 alpha_{max} = 10
+# PBBS time: bucket time: 0.0071
+complete PeelFixB: 8  Iteration time: 5.046
+### Running Time: 122
+# time per iter: 122
