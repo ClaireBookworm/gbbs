@@ -142,7 +142,7 @@ namespace gbbs
 		{
 			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
 			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
-		}1
+		}
 
 		size_t vCount = 0;
 
