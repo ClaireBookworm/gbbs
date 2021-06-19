@@ -30,7 +30,7 @@
 
 namespace gbbs
 {
-	std::ofstream fout("output_log");
+	std::ofstream fout;
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 
