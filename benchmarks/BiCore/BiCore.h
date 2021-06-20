@@ -81,7 +81,6 @@ namespace gbbs
 				par_for(0, em.size, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
 			fout<<"coreB "<<core<<" time "<<t_in.stop()<<'\n';
 		}
-		fout.close();
 	}
 
 	template <class Graph>

@@ -55,6 +55,7 @@ double BiCore_runner(Graph& G, commandLine P) {
               << "\n";
     exit(-1);
   }
+  
   assert(P.getOption("-s"));
   std::string graph_name(P.getArgument(0));
   fout.open(graph_name+"_"+std::to_string(num_workers())+"_threads");
@@ -67,6 +68,8 @@ double BiCore_runner(Graph& G, commandLine P) {
   double tt = t.stop();
 
   std::cout << "### Running Time: " << tt << std::endl;
+  fout<<"total "<<tt<<'\n';
+  fout.close();
   return tt;
 }
 }  // namespace gbbs
