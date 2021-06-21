@@ -43,48 +43,52 @@ namespace gbbs
 		const size_t n_b = n - bipartition - 1;
 		const size_t n_a = bipartition + 1;
 
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
-		auto emptySeq = sequence<uintE>();
-		auto bbuckets = buckets<sequence<uintE>, uintE, uintE>(emptySeq, increasing, num_buckets);
-		auto abuckets = buckets<sequence<uintE>, uintE, uintE>(emptySeq, increasing, num_buckets);
-
 		// AlphaMax[v][B]
 		auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){ return sequence<size_t>(1+G.get_vertex(i+n_a).out_degree());});
 		// BetaMax[u][A]
 		auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree());});
 
 		if(peel_core_alpha!=0){
-			PeelFixA(G, BetaMax, AlphaMax, em, peel_core_alpha, bbuckets, bipartition);
+			PeelFixA(G, BetaMax, AlphaMax, peel_core_alpha, bipartition, num_buckets);
 			std::cout << "complete PeelFixA" << std::endl;
 			return;
 		}else if(peel_core_beta!=0){
-			PeelFixB(G, BetaMax, AlphaMax, em, peel_core_beta, abuckets, bipartition);
+			PeelFixB(G, BetaMax, AlphaMax, peel_core_beta, bipartition, num_buckets);
 			std::cout << "complete PeelFixB" << std::endl;
 			return;
 		}
 		auto ret = KCore(G, num_buckets);
-		uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
+		const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 
-		for(size_t core=1;core<=delta;core++){
-			timer t_in; t_in.start();
-			//memory leak
-			PeelFixA(G, BetaMax, AlphaMax, em, core, bbuckets, bipartition);
-			par_for(0, em.size, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
-			fout<<"coreA "<<core<<" time "<<t_in.stop()<<'\n';
-		}
+		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
+		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 
-		for(size_t core=1;core<=delta;core++){
-			timer t_in; t_in.start();
-			//memory leak
-			PeelFixB(G, BetaMax, AlphaMax, em, core, abuckets, bipartition);
-			if(core<delta)
-				par_for(0, em.size, 1024, [&] (size_t i) { em.table[i] = std::make_tuple(UINT_E_MAX, 0); });
-			fout<<"coreB "<<core<<" time "<<t_in.stop()<<'\n';
-		}
+		auto PeelFixAllA = [&](){
+			par_for(1,delta+1,[&](size_t core){
+				timer t_in; t_in.start();
+				auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			});
+		};
+
+		auto PeelFixAllB = [&](){
+			par_for(1,delta+1,[&](size_t core){
+				timer t_in; t_in.start();
+				auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+			});
+		};
+
+		par_do(PeelFixAllA,PeelFixAllB);
+
+		debug(for(size_t core=1; core<=delta; ++core) fout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
+		debug(for(size_t core=1; core<=delta; ++core) fout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
 	}
 
 	template <class Graph>
-	inline void PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, hist_table<uintE, uintE>& em, size_t alpha, buckets<sequence<uintE>, uintE, uintE>& bbuckets, size_t bipartition = 2)
+	inline std::pair<size_t,size_t> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, 
+	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
+	 size_t bipartition = 2, size_t num_buckets=16)
 	{
 		timer bt,ft,pt;
 		pt.start();
@@ -98,6 +102,7 @@ namespace gbbs
 		// [bipartition+1, n-1]  interval V
 		// uintE is vertex id
 		// uintT is edge id
+		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
 
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
@@ -131,7 +136,7 @@ namespace gbbs
 			D[u] = new_deg;
 			if (new_deg < alpha && max_beta>0)
 			{
-				BetaMax[u][alpha] = max_beta;
+				pbbslib::write_max(&BetaMax[u][alpha],max_beta);
 				return wrap(u, 0);
 			}
 			return std::nullopt;
@@ -152,8 +157,8 @@ namespace gbbs
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
-		//memory leak
-		bbuckets.reinitialize(n,vD);
+
+		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
@@ -183,7 +188,7 @@ namespace gbbs
 			par_for(0, activeV.size(), [&](size_t i) {
 				size_t index = activeV.vtx(i)-n_a;
 				par_for(1, max_beta, [&](size_t j) {
-					AlphaMax[index][j] = std::max(AlphaMax[index][j], alpha);
+					pbbslib::write_max(&AlphaMax[index][j],alpha);
 				});
 			});
 			ft.start();
@@ -198,16 +203,17 @@ namespace gbbs
 			bt.stop();
 			rho_alpha++;
 		}
-		//bbuckets.del();
-
-		fout << "rho_alpha " << rho_alpha << " beta_max " << max_beta << "\n";
-		debug(fout<<"bt "<<bt.total_time<<'\n');
-		debug(fout<<"ft "<<ft.total_time<<'\n');
-		debug(fout<<"pt "<<pt.total_time<<'\n');
+		bbuckets.del();
+		return std::pair<size_t,size_t>(rho_alpha,max_beta);
+		// debug(fout<<"bt "<<bt.total_time<<'\n');
+		// debug(fout<<"ft "<<ft.total_time<<'\n');
+		// debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
 
 	template <class Graph>
-	inline void PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, sequence<sequence<size_t>> &AlphaMax, hist_table<uintE, uintE>& em, size_t beta, buckets<sequence<uintE>, uintE, uintE>& abuckets, size_t bipartition = 2)
+	inline std::pair<size_t,size_t> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, 
+	sequence<sequence<size_t>> &AlphaMax, size_t beta,
+	size_t bipartition = 2, size_t num_buckets=16)
 	{
 		timer bt,ft,pt;
 		pt.start();
@@ -216,6 +222,8 @@ namespace gbbs
 		const size_t n_a = bipartition + 1;
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
+
+		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
 
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
@@ -251,7 +259,7 @@ namespace gbbs
 			D[v] = new_deg;
 			if (new_deg < beta && max_alpha>0)
 			{
-				AlphaMax[v-n_a][beta] = max_alpha;
+				pbbslib::write_max(&AlphaMax[v-n_a][beta],max_alpha);
 				return std::make_tuple(v, 0);
 			}
 			return std::nullopt;
@@ -267,7 +275,7 @@ namespace gbbs
 		size_t uCount = 0;
 
 		//memory leak!
-		abuckets.reinitialize(n_a,D);
+		auto abuckets = make_vertex_buckets(n_a,D,increasing,num_buckets);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -297,7 +305,7 @@ namespace gbbs
 			par_for(0, activeU.size(), [&](size_t i) {
 				size_t index = activeU.vtx(i);
 				par_for(1, max_alpha, [&](size_t j) {
-					BetaMax[index][j] = std::max(BetaMax[index][j], beta);
+					pbbslib::write_max(&BetaMax[index][j],beta);
 				});
 			});
 			ft.start();
@@ -309,11 +317,11 @@ namespace gbbs
 			bt.stop();
 			rho_beta++;
 		}
-
-		fout << "rho_beta " << rho_beta << " alpha_max " << max_alpha << "\n";
-		debug(fout<<"bt "<<bt.total_time<<'\n');
-		debug(fout<<"ft "<<ft.total_time<<'\n');
-		debug(fout<<"pt "<<pt.total_time<<'\n');
+		abuckets.del();
+		return std::pair<size_t,size_t>(rho_beta,max_alpha);
+		// debug(fout<<"bt "<<bt.total_time<<'\n');
+		// debug(fout<<"ft "<<ft.total_time<<'\n');
+		// debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
 
 } // namespace gbbs
