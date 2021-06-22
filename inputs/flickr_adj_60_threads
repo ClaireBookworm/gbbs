@@ -1,1470 +1,295 @@
-rho_alpha 1998 beta_max 34989
-bt 0.0802197
-ft 2.67974
-pt 0.00522709
-coreA 1 time 2.9184
-rho_alpha 1991 beta_max 34001
-bt 0.0796597
-ft 2.63607
-pt 0.0107939
-coreA 2 time 2.77935
-rho_alpha 1989 beta_max 33131
-bt 0.0779133
-ft 2.65321
-pt 0.0126998
-coreA 3 time 2.79663
-rho_alpha 1958 beta_max 32390
-bt 0.0785806
-ft 2.60557
-pt 0.014693
-coreA 4 time 2.7515
-rho_alpha 1953 beta_max 31736
-bt 0.079499
-ft 2.60954
-pt 0.0154078
-coreA 5 time 2.75656
-rho_alpha 1968 beta_max 31186
-bt 0.0784242
-ft 2.60922
-pt 0.016489
-coreA 6 time 2.75632
-rho_alpha 1961 beta_max 30641
-bt 0.0784461
-ft 2.6028
-pt 0.016757
-coreA 7 time 2.7495
-rho_alpha 1948 beta_max 30143
-bt 0.0775118
-ft 2.59716
-pt 0.017355
-coreA 8 time 2.74413
-rho_alpha 1956 beta_max 29638
-bt 0.0775392
-ft 2.59847
-pt 0.0184908
-coreA 9 time 2.74629
-rho_alpha 1916 beta_max 29156
-bt 0.0775049
-ft 2.58263
-pt 0.0187528
-coreA 10 time 2.73025
-rho_alpha 1914 beta_max 28762
-bt 0.0764132
-ft 2.55121
-pt 0.0198829
-coreA 11 time 2.69849
-rho_alpha 1921 beta_max 28346
-bt 0.0779448
-ft 2.54412
-pt 0.0198119
-coreA 12 time 2.69321
-rho_alpha 1896 beta_max 27982
-bt 0.0788345
-ft 2.54128
-pt 0.02057
-coreA 13 time 2.69179
-rho_alpha 1909 beta_max 27600
-bt 0.0775294
-ft 2.5537
-pt 0.0212171
-coreA 14 time 2.70324
-rho_alpha 1879 beta_max 27274
-bt 0.0766053
-ft 2.51429
-pt 0.021523
-coreA 15 time 2.66277
-rho_alpha 1887 beta_max 26962
-bt 0.0754628
-ft 2.51231
-pt 0.0219991
-coreA 16 time 2.66027
-rho_alpha 1887 beta_max 26628
-bt 0.0756786
-ft 2.50852
-pt 0.0223548
-coreA 17 time 2.65719
-rho_alpha 1869 beta_max 26332
-bt 0.076406
-ft 2.50838
-pt 0.0233171
-coreA 18 time 2.65836
-rho_alpha 1855 beta_max 26021
-bt 0.0747967
-ft 2.50771
-pt 0.0230401
-coreA 19 time 2.6555
-rho_alpha 1864 beta_max 25766
-bt 0.0741072
-ft 2.49816
-pt 0.02373
-coreA 20 time 2.64599
-rho_alpha 1857 beta_max 25462
-bt 0.0740306
-ft 2.47012
-pt 0.0234749
-coreA 21 time 2.61732
-rho_alpha 1847 beta_max 25167
-bt 0.0740311
-ft 2.46927
-pt 0.0238988
-coreA 22 time 2.61726
-rho_alpha 1837 beta_max 24873
-bt 0.0720811
-ft 2.43703
-pt 0.0244739
-coreA 23 time 2.58311
-rho_alpha 1825 beta_max 24590
-bt 0.0723734
-ft 2.44448
-pt 0.024771
-coreA 24 time 2.59105
-rho_alpha 1834 beta_max 24318
-bt 0.0740426
-ft 2.45708
-pt 0.025321
-coreA 25 time 2.60588
-rho_alpha 1829 beta_max 24058
-bt 0.0724201
-ft 2.43942
-pt 0.0252922
-coreA 26 time 2.58608
-rho_alpha 1815 beta_max 23785
-bt 0.0714934
-ft 2.41908
-pt 0.0258539
-coreA 27 time 2.56584
-rho_alpha 1796 beta_max 23532
-bt 0.0711312
-ft 2.39416
-pt 0.0263441
-coreA 28 time 2.54044
-rho_alpha 1784 beta_max 23296
-bt 0.0702815
-ft 2.38066
-pt 0.0266881
-coreA 29 time 2.52655
-rho_alpha 1798 beta_max 23045
-bt 0.0700839
-ft 2.38252
-pt 0.0264251
-coreA 30 time 2.52777
-rho_alpha 1795 beta_max 22811
-bt 0.0711756
-ft 2.36001
-pt 0.026763
-coreA 31 time 2.50648
-rho_alpha 1781 beta_max 22581
-bt 0.0698559
-ft 2.3463
-pt 0.0270588
-coreA 32 time 2.49145
-rho_alpha 1769 beta_max 22350
-bt 0.0702717
-ft 2.33952
-pt 0.0274651
-coreA 33 time 2.48524
-rho_alpha 1764 beta_max 22115
-bt 0.0687339
-ft 2.32582
-pt 0.028672
-coreA 34 time 2.47125
-rho_alpha 1757 beta_max 21886
-bt 0.0686278
-ft 2.30868
-pt 0.0276999
-coreA 35 time 2.45261
-rho_alpha 1740 beta_max 21660
-bt 0.067883
-ft 2.31013
-pt 0.0283742
-coreA 36 time 2.45355
-rho_alpha 1734 beta_max 21454
-bt 0.0682716
-ft 2.29508
-pt 0.0293741
-coreA 37 time 2.44011
-rho_alpha 1751 beta_max 21238
-bt 0.0694091
-ft 2.28791
-pt 0.0293071
-coreA 38 time 2.43405
-rho_alpha 1767 beta_max 21056
-bt 0.0695035
-ft 2.27494
-pt 0.029593
-coreA 39 time 2.42135
-rho_alpha 1749 beta_max 20862
-bt 0.0687399
-ft 2.26978
-pt 0.0299392
-coreA 40 time 2.41547
-rho_alpha 1725 beta_max 20669
-bt 0.0682991
-ft 2.24587
-pt 0.0303562
-coreA 41 time 2.39115
-rho_alpha 1704 beta_max 20472
-bt 0.067729
-ft 2.21496
-pt 0.0301831
-coreA 42 time 2.3589
-rho_alpha 1718 beta_max 20254
-bt 0.0667992
-ft 2.21451
-pt 0.0308251
-coreA 43 time 2.35847
-rho_alpha 1707 beta_max 20042
-bt 0.0670104
-ft 2.19176
-pt 0.031059
-coreA 44 time 2.33889
-rho_alpha 1688 beta_max 19867
-bt 0.0659885
-ft 2.18656
-pt 0.0304129
-coreA 45 time 2.32842
-rho_alpha 1703 beta_max 19671
-bt 0.0659523
-ft 2.17704
-pt 0.031265
-coreA 46 time 2.32023
-rho_alpha 1702 beta_max 19480
-bt 0.0663741
-ft 2.16633
-pt 0.0320451
-coreA 47 time 2.31009
-rho_alpha 1682 beta_max 19292
-bt 0.0654533
-ft 2.14866
-pt 0.032419
-coreA 48 time 2.29219
-rho_alpha 1682 beta_max 19111
-bt 0.0645206
-ft 2.13307
-pt 0.032794
-coreA 49 time 2.27561
-rho_alpha 1675 beta_max 18933
-bt 0.0636687
-ft 2.11753
-pt 0.033026
-coreA 50 time 2.26014
-rho_alpha 1665 beta_max 18754
-bt 0.063529
-ft 2.12473
-pt 0.032979
-coreA 51 time 2.26671
-rho_alpha 1674 beta_max 18575
-bt 0.0637062
-ft 2.10156
-pt 0.0335641
-coreA 52 time 2.24424
-rho_alpha 1672 beta_max 18398
-bt 0.0629754
-ft 2.09169
-pt 0.0330911
-coreA 53 time 2.23247
-rho_alpha 1657 beta_max 18227
-bt 0.0636752
-ft 2.07135
-pt 0.0334721
-coreA 54 time 2.21337
-rho_alpha 1647 beta_max 18066
-bt 0.0629618
-ft 2.06323
-pt 0.0336099
-coreA 55 time 2.20439
-rho_alpha 1631 beta_max 17901
-bt 0.0641785
-ft 2.04041
-pt 0.0344529
-coreA 56 time 2.1832
-rho_alpha 1645 beta_max 17715
-bt 0.062953
-ft 2.03968
-pt 0.033983
-coreA 57 time 2.18063
-rho_alpha 1612 beta_max 17547
-bt 0.0628786
-ft 2.00841
-pt 0.034143
-coreA 58 time 2.14905
-rho_alpha 1639 beta_max 17384
-bt 0.0630467
-ft 2.00091
-pt 0.036556
-coreA 59 time 2.14389
-rho_alpha 1630 beta_max 17210
-bt 0.0629392
-ft 2.0016
-pt 0.0351729
-coreA 60 time 2.14346
-rho_alpha 1618 beta_max 17049
-bt 0.0625074
-ft 1.97873
-pt 0.0355041
-coreA 61 time 2.12019
-rho_alpha 1627 beta_max 16883
-bt 0.0616417
-ft 1.98512
-pt 0.0468459
-coreA 62 time 2.14274
-rho_alpha 1603 beta_max 16714
-bt 0.0612712
-ft 1.96548
-pt 0.0358689
-coreA 63 time 2.1119
-rho_alpha 1602 beta_max 16558
-bt 0.060802
-ft 1.94189
-pt 0.035943
-coreA 64 time 2.08789
-rho_alpha 1589 beta_max 16394
-bt 0.06091
-ft 1.93595
-pt 0.0357521
-coreA 65 time 2.0816
-rho_alpha 1582 beta_max 16222
-bt 0.0600102
-ft 1.92394
-pt 0.0360761
-coreA 66 time 2.0687
-rho_alpha 1580 beta_max 16078
-bt 0.0597882
-ft 1.91983
-pt 0.036339
-coreA 67 time 2.06483
-rho_alpha 1585 beta_max 15915
-bt 0.0588493
-ft 1.89919
-pt 0.0365431
-coreA 68 time 2.04294
-rho_alpha 1575 beta_max 15769
-bt 0.058975
-ft 1.8955
-pt 0.0365701
-coreA 69 time 2.03951
-rho_alpha 1556 beta_max 15617
-bt 0.0577092
-ft 1.89552
-pt 0.0367091
-coreA 70 time 2.03867
-rho_alpha 1568 beta_max 15462
-bt 0.05793
-ft 1.88102
-pt 0.0369129
-coreA 71 time 2.02402
-rho_alpha 1562 beta_max 15319
-bt 0.0587649
-ft 1.86723
-pt 0.0371139
-coreA 72 time 2.01052
-rho_alpha 1561 beta_max 15155
-bt 0.0584836
-ft 1.85904
-pt 0.0373638
-coreA 73 time 2.00224
-rho_alpha 1540 beta_max 14980
-bt 0.0581627
-ft 1.83862
-pt 0.0368428
-coreA 74 time 1.98055
-rho_alpha 1532 beta_max 14824
-bt 0.0577052
-ft 1.83762
-pt 0.0378668
-coreA 75 time 1.98031
-rho_alpha 1545 beta_max 14663
-bt 0.0580332
-ft 1.83342
-pt 0.0378671
-coreA 76 time 1.97627
-rho_alpha 1548 beta_max 14526
-bt 0.0572104
-ft 1.83324
-pt 0.0384879
-coreA 77 time 1.97604
-rho_alpha 1523 beta_max 14379
-bt 0.0561695
-ft 1.80944
-pt 0.0406501
-coreA 78 time 1.95314
-rho_alpha 1522 beta_max 14246
-bt 0.0565627
-ft 1.80035
-pt 0.038523
-coreA 79 time 1.94174
-rho_alpha 1507 beta_max 14118
-bt 0.0559659
-ft 1.7897
-pt 0.0392489
-coreA 80 time 1.93113
-rho_alpha 1508 beta_max 13986
-bt 0.0556765
-ft 1.77963
-pt 0.03933
-coreA 81 time 1.92061
-rho_alpha 1516 beta_max 13841
-bt 0.0548019
-ft 1.77303
-pt 0.039161
-coreA 82 time 1.91332
-rho_alpha 1503 beta_max 13695
-bt 0.0551367
-ft 1.7803
-pt 0.03952
-coreA 83 time 1.92086
-rho_alpha 1516 beta_max 13560
-bt 0.0546477
-ft 1.77264
-pt 0.0397339
-coreA 84 time 1.91286
-rho_alpha 1486 beta_max 13432
-bt 0.0546122
-ft 1.75184
-pt 0.039783
-coreA 85 time 1.89204
-rho_alpha 1489 beta_max 13312
-bt 0.0549834
-ft 1.74779
-pt 0.042258
-coreA 86 time 1.89036
-rho_alpha 1475 beta_max 13213
-bt 0.0539291
-ft 1.7376
-pt 0.0402479
-coreA 87 time 1.87688
-rho_alpha 1481 beta_max 13085
-bt 0.0536296
-ft 1.73538
-pt 0.0399079
-coreA 88 time 1.87419
-rho_alpha 1479 beta_max 12989
-bt 0.0533941
-ft 1.72927
-pt 0.040483
-coreA 89 time 1.86874
-rho_alpha 1471 beta_max 12891
-bt 0.0525239
-ft 1.72183
-pt 0.0414059
-coreA 90 time 1.86127
-rho_alpha 1466 beta_max 12770
-bt 0.0524251
-ft 1.71011
-pt 0.0410058
-coreA 91 time 1.84824
-rho_alpha 1449 beta_max 12653
-bt 0.0534885
-ft 1.70597
-pt 0.0410509
-coreA 92 time 1.8455
-rho_alpha 1445 beta_max 12556
-bt 0.0524528
-ft 1.69196
-pt 0.0413399
-coreA 93 time 1.83072
-rho_alpha 1447 beta_max 12454
-bt 0.0527408
-ft 1.68436
-pt 0.04146
-coreA 94 time 1.82299
-rho_alpha 1459 beta_max 12355
-bt 0.052201
-ft 1.68554
-pt 0.0423739
-coreA 95 time 1.82456
-rho_alpha 1445 beta_max 12255
-bt 0.0526361
-ft 1.67364
-pt 0.041641
-coreA 96 time 1.81222
-rho_alpha 1428 beta_max 12140
-bt 0.0513604
-ft 1.66912
-pt 0.0419269
-coreA 97 time 1.8066
-rho_alpha 1427 beta_max 12048
-bt 0.0520511
-ft 1.66297
-pt 0.0419559
-coreA 98 time 1.80079
-rho_alpha 1432 beta_max 11954
-bt 0.0511994
-ft 1.65768
-pt 0.0421429
-coreA 99 time 1.79502
-rho_alpha 1413 beta_max 11862
-bt 0.0513787
-ft 1.63775
-pt 0.041172
-coreA 100 time 1.77348
-rho_alpha 1415 beta_max 11768
-bt 0.0519433
-ft 1.65981
-pt 0.042578
-coreA 101 time 1.79829
-rho_alpha 1406 beta_max 11677
-bt 0.0513666
-ft 1.64496
-pt 0.0427129
-coreA 102 time 1.78318
-rho_alpha 1412 beta_max 11573
-bt 0.0504065
-ft 1.63514
-pt 0.042968
-coreA 103 time 1.77227
-rho_alpha 1400 beta_max 11486
-bt 0.0505731
-ft 1.62832
-pt 0.0429709
-coreA 104 time 1.76494
-rho_alpha 1392 beta_max 11377
-bt 0.0503678
-ft 1.62174
-pt 0.04304
-coreA 105 time 1.75934
-rho_alpha 1393 beta_max 11291
-bt 0.0503337
-ft 1.61281
-pt 0.0435848
-coreA 106 time 1.74945
-rho_alpha 1392 beta_max 11199
-bt 0.0496371
-ft 1.60924
-pt 0.0436091
-coreA 107 time 1.74557
-rho_alpha 1362 beta_max 11122
-bt 0.0492849
-ft 1.59964
-pt 0.0434849
-coreA 108 time 1.73485
-rho_alpha 1374 beta_max 11016
-bt 0.0500762
-ft 1.59897
-pt 0.0424378
-coreA 109 time 1.73378
-rho_alpha 1392 beta_max 10925
-bt 0.0490696
-ft 1.60125
-pt 0.04427
-coreA 110 time 1.74594
-rho_alpha 1374 beta_max 10831
-bt 0.0486171
-ft 1.59369
-pt 0.044313
-coreA 111 time 1.73487
-rho_alpha 1356 beta_max 10734
-bt 0.0487571
-ft 1.5795
-pt 0.044287
-coreA 112 time 1.71449
-rho_alpha 1347 beta_max 10658
-bt 0.0481055
-ft 1.57902
-pt 0.044399
-coreA 113 time 1.71345
-rho_alpha 1346 beta_max 10563
-bt 0.0471909
-ft 1.5702
-pt 0.0449851
-coreA 114 time 1.70414
-rho_alpha 1342 beta_max 10480
-bt 0.0480947
-ft 1.5624
-pt 0.044749
-coreA 115 time 1.69668
-rho_alpha 1347 beta_max 10379
-bt 0.0485928
-ft 1.56509
-pt 0.0448389
-coreA 116 time 1.70017
-rho_alpha 1339 beta_max 10289
-bt 0.0475986
-ft 1.5576
-pt 0.0454299
-coreA 117 time 1.69195
-rho_alpha 1302 beta_max 10216
-bt 0.0476403
-ft 1.54801
-pt 0.0449259
-coreA 118 time 1.68183
-rho_alpha 1328 beta_max 10148
-bt 0.0476019
-ft 1.54619
-pt 0.0447299
-coreA 119 time 1.67968
-rho_alpha 1331 beta_max 10055
-bt 0.0476704
-ft 1.54941
-pt 0.0458829
-coreA 120 time 1.6838
-rho_alpha 1311 beta_max 9979
-bt 0.0468469
-ft 1.53937
-pt 0.045676
-coreA 121 time 1.67309
-rho_alpha 1297 beta_max 9896
-bt 0.0461984
-ft 1.52899
-pt 0.0459361
-coreA 122 time 1.66182
-rho_alpha 1309 beta_max 9816
-bt 0.0459671
-ft 1.52402
-pt 0.0442641
-coreA 123 time 1.65447
-rho_alpha 1306 beta_max 9727
-bt 0.0464649
-ft 1.52954
-pt 0.046267
-coreA 124 time 1.66346
-rho_alpha 1299 beta_max 9642
-bt 0.0463679
-ft 1.51546
-pt 0.048821
-coreA 125 time 1.65102
-rho_alpha 1279 beta_max 9562
-bt 0.0457232
-ft 1.51208
-pt 0.0460341
-coreA 126 time 1.64378
-rho_alpha 1275 beta_max 9492
-bt 0.0450566
-ft 1.5088
-pt 0.046037
-coreA 127 time 1.63979
-rho_alpha 1290 beta_max 9397
-bt 0.0452356
-ft 1.5075
-pt 0.046818
-coreA 128 time 1.63999
-rho_alpha 1280 beta_max 9309
-bt 0.0451872
-ft 1.5023
-pt 0.0468409
-coreA 129 time 1.63418
-rho_alpha 1274 beta_max 9235
-bt 0.0456276
-ft 1.49894
-pt 0.0466881
-coreA 130 time 1.63082
-rho_alpha 1264 beta_max 9156
-bt 0.0448089
-ft 1.49587
-pt 0.0472112
-coreA 131 time 1.6276
-rho_alpha 1254 beta_max 9078
-bt 0.0442879
-ft 1.49039
-pt 0.0468121
-coreA 132 time 1.62098
-rho_alpha 1268 beta_max 9004
-bt 0.0431948
-ft 1.48816
-pt 0.0475068
-coreA 133 time 1.61855
-rho_alpha 1258 beta_max 8945
-bt 0.0444665
-ft 1.48245
-pt 0.0475199
-coreA 134 time 1.61383
-rho_alpha 1257 beta_max 8883
-bt 0.0437148
-ft 1.48349
-pt 0.048753
-coreA 135 time 1.61516
-rho_alpha 1244 beta_max 8800
-bt 0.043304
-ft 1.48158
-pt 0.048084
-coreA 136 time 1.61178
-rho_alpha 1248 beta_max 8709
-bt 0.0431688
-ft 1.47845
-pt 0.0481551
-coreA 137 time 1.60913
-rho_alpha 1252 beta_max 8645
-bt 0.0422359
-ft 1.47052
-pt 0.0486691
-coreA 138 time 1.60045
-rho_alpha 1252 beta_max 8571
-bt 0.0420969
-ft 1.4681
-pt 0.057689
-coreA 139 time 1.60674
-rho_alpha 1224 beta_max 8506
-bt 0.0418475
-ft 1.47254
-pt 0.0590711
-coreA 140 time 1.61235
-rho_alpha 1239 beta_max 8436
-bt 0.0438182
-ft 1.47554
-pt 0.0560331
-coreA 141 time 1.6142
-rho_alpha 1224 beta_max 8359
-bt 0.0430305
-ft 1.45464
-pt 0.0573649
-coreA 142 time 1.59364
-rho_alpha 1221 beta_max 8297
-bt 0.0420439
-ft 1.45329
-pt 0.055989
-coreA 143 time 1.58968
-rho_alpha 1208 beta_max 8221
-bt 0.0420752
-ft 1.44697
-pt 0.055326
-coreA 144 time 1.58239
-rho_alpha 1188 beta_max 8150
-bt 0.0422256
-ft 1.44284
-pt 0.057116
-coreA 145 time 1.58029
-rho_alpha 1195 beta_max 8084
-bt 0.0415194
-ft 1.43978
-pt 0.0569201
-coreA 146 time 1.57607
-rho_alpha 1197 beta_max 8011
-bt 0.0416284
-ft 1.44263
-pt 0.0597279
-coreA 147 time 1.58167
-rho_beta 824 alpha_max 2186
-bt 0.0370164
-ft 1.54436
-pt 0.00543189
-coreB 1 time 1.62949
-rho_beta 823 alpha_max 2185
-bt 0.0355861
-ft 1.52186
-pt 0.00860596
-coreB 2 time 1.60376
-rho_beta 828 alpha_max 2183
-bt 0.0361989
-ft 1.51598
-pt 0.00921893
-coreB 3 time 1.59893
-rho_beta 829 alpha_max 2175
-bt 0.0412912
-ft 1.52792
-pt 0.0102479
-coreB 4 time 1.61716
-rho_beta 819 alpha_max 2171
-bt 0.0403624
-ft 1.53766
-pt 0.011009
-coreB 5 time 1.62613
-rho_beta 820 alpha_max 2166
-bt 0.0408857
-ft 1.53734
-pt 0.0119429
-coreB 6 time 1.62842
-rho_beta 822 alpha_max 2154
-bt 0.0413072
-ft 1.53984
-pt 0.0120912
-coreB 7 time 1.63151
-rho_beta 809 alpha_max 2151
-bt 0.0414293
-ft 1.53223
-pt 0.013274
-coreB 8 time 1.62556
-rho_beta 821 alpha_max 2141
-bt 0.0413625
-ft 1.5444
-pt 0.013886
-coreB 9 time 1.64006
-rho_beta 818 alpha_max 2136
-bt 0.0405488
-ft 1.5436
-pt 0.017556
-coreB 10 time 1.64102
-rho_beta 811 alpha_max 2127
-bt 0.0407073
-ft 1.5363
-pt 0.0144489
-coreB 11 time 1.63051
-rho_beta 811 alpha_max 2122
-bt 0.0405576
-ft 1.53381
-pt 0.0151532
-coreB 12 time 1.62809
-rho_beta 816 alpha_max 2116
-bt 0.0413282
-ft 1.53528
-pt 0.01577
-coreB 13 time 1.63044
-rho_beta 807 alpha_max 2107
-bt 0.041573
-ft 1.53057
-pt 0.015996
-coreB 14 time 1.62614
-rho_beta 817 alpha_max 2100
-bt 0.0414317
-ft 1.58619
-pt 0.016088
-coreB 15 time 1.71157
-rho_beta 817 alpha_max 2091
-bt 0.0421586
-ft 1.52449
-pt 0.0182331
-coreB 16 time 1.62641
-rho_beta 808 alpha_max 2082
-bt 0.0420382
-ft 1.52344
-pt 0.0169458
-coreB 17 time 1.61958
-rho_beta 805 alpha_max 2076
-bt 0.041852
-ft 1.51504
-pt 0.017535
-coreB 18 time 1.61156
-rho_beta 810 alpha_max 2067
-bt 0.041853
-ft 1.5149
-pt 0.0195899
-coreB 19 time 1.61369
-rho_beta 802 alpha_max 2064
-bt 0.0416613
-ft 1.51562
-pt 0.0178609
-coreB 20 time 1.61198
-rho_beta 799 alpha_max 2062
-bt 0.0422413
-ft 1.50081
-pt 0.0182269
-coreB 21 time 1.59809
-rho_beta 809 alpha_max 2060
-bt 0.0420535
-ft 1.49322
-pt 0.0192909
-coreB 22 time 1.59136
-rho_beta 797 alpha_max 2055
-bt 0.0429373
-ft 1.49363
-pt 0.0185549
-coreB 23 time 1.59181
-rho_beta 801 alpha_max 2053
-bt 0.0441253
-ft 1.48899
-pt 0.0191679
-coreB 24 time 1.58888
-rho_beta 794 alpha_max 2052
-bt 0.0442665
-ft 1.48289
-pt 0.0199051
-coreB 25 time 1.58374
-rho_beta 809 alpha_max 2051
-bt 0.044142
-ft 1.47519
-pt 0.0204539
-coreB 26 time 1.57652
-rho_beta 798 alpha_max 2045
-bt 0.0439091
-ft 1.46642
-pt 0.020474
-coreB 27 time 1.56729
-rho_beta 803 alpha_max 2042
-bt 0.044091
-ft 1.47082
-pt 0.0206599
-coreB 28 time 1.57242
-rho_beta 802 alpha_max 2039
-bt 0.0440431
-ft 1.45274
-pt 0.020776
-coreB 29 time 1.554
-rho_beta 798 alpha_max 2036
-bt 0.0438137
-ft 1.45326
-pt 0.0214019
-coreB 30 time 1.55489
-rho_beta 787 alpha_max 2036
-bt 0.0442257
-ft 1.44861
-pt 0.0212591
-coreB 31 time 1.55028
-rho_beta 791 alpha_max 2035
-bt 0.0447538
-ft 1.44302
-pt 0.0213621
-coreB 32 time 1.54599
-rho_beta 799 alpha_max 2035
-bt 0.0442491
-ft 1.44163
-pt 0.0215449
-coreB 33 time 1.54384
-rho_beta 794 alpha_max 2033
-bt 0.0457475
-ft 1.43712
-pt 0.021487
-coreB 34 time 1.54092
-rho_beta 796 alpha_max 2033
-bt 0.0461807
-ft 1.44279
-pt 0.0220511
-coreB 35 time 1.54758
-rho_beta 794 alpha_max 2027
-bt 0.0433064
-ft 1.43109
-pt 0.02227
-coreB 36 time 1.53326
-rho_beta 789 alpha_max 2025
-bt 0.0424421
-ft 1.42846
-pt 0.0218081
-coreB 37 time 1.52915
-rho_beta 794 alpha_max 2021
-bt 0.0420468
-ft 1.42519
-pt 0.0221519
-coreB 38 time 1.52554
-rho_beta 786 alpha_max 2020
-bt 0.0417285
-ft 1.42922
-pt 0.022625
-coreB 39 time 1.52971
-rho_beta 796 alpha_max 2017
-bt 0.0421352
-ft 1.42812
-pt 0.0229001
-coreB 40 time 1.52965
-rho_beta 792 alpha_max 2016
-bt 0.041995
-ft 1.42701
-pt 0.0227671
-coreB 41 time 1.52785
-rho_beta 794 alpha_max 2012
-bt 0.0420511
-ft 1.42457
-pt 0.0229402
-coreB 42 time 1.52537
-rho_beta 795 alpha_max 2009
-bt 0.0422633
-ft 1.4271
-pt 0.023279
-coreB 43 time 1.52843
-rho_beta 779 alpha_max 2003
-bt 0.0422041
-ft 1.42412
-pt 0.0232711
-coreB 44 time 1.52531
-rho_beta 786 alpha_max 2001
-bt 0.0423858
-ft 1.42615
-pt 0.023423
-coreB 45 time 1.52841
-rho_beta 787 alpha_max 2000
-bt 0.0421815
-ft 1.42149
-pt 0.028085
-coreB 46 time 1.52787
-rho_beta 777 alpha_max 1994
-bt 0.0423701
-ft 1.41935
-pt 0.023458
-coreB 47 time 1.52114
-rho_beta 777 alpha_max 1993
-bt 0.0426631
-ft 1.41859
-pt 0.0239089
-coreB 48 time 1.52087
-rho_beta 783 alpha_max 1991
-bt 0.0424385
-ft 1.41629
-pt 0.0238299
-coreB 49 time 1.51842
-rho_beta 774 alpha_max 1991
-bt 0.0426753
-ft 1.42497
-pt 0.0240071
-coreB 50 time 1.53127
-rho_beta 781 alpha_max 1985
-bt 0.0424855
-ft 1.43087
-pt 0.0277579
-coreB 51 time 1.55117
-rho_beta 774 alpha_max 1981
-bt 0.0423517
-ft 1.41747
-pt 0.0244591
-coreB 52 time 1.52005
-rho_beta 770 alpha_max 1977
-bt 0.0424912
-ft 1.41263
-pt 0.024559
-coreB 53 time 1.51523
-rho_beta 781 alpha_max 1972
-bt 0.0417264
-ft 1.41224
-pt 0.0247869
-coreB 54 time 1.51418
-rho_beta 770 alpha_max 1965
-bt 0.0422454
-ft 1.41045
-pt 0.024775
-coreB 55 time 1.51283
-rho_beta 769 alpha_max 1955
-bt 0.0425203
-ft 1.40773
-pt 0.025034
-coreB 56 time 1.51069
-rho_beta 769 alpha_max 1950
-bt 0.0418112
-ft 1.41068
-pt 0.0250928
-coreB 57 time 1.51289
-rho_beta 769 alpha_max 1948
-bt 0.0418673
-ft 1.41204
-pt 0.0253029
-coreB 58 time 1.51463
-rho_beta 768 alpha_max 1945
-bt 0.0430324
-ft 1.40767
-pt 0.025444
-coreB 59 time 1.51146
-rho_beta 773 alpha_max 1941
-bt 0.0432222
-ft 1.41026
-pt 0.025517
-coreB 60 time 1.51444
-rho_beta 760 alpha_max 1934
-bt 0.0430481
-ft 1.40516
-pt 0.025593
-coreB 61 time 1.50928
-rho_beta 768 alpha_max 1928
-bt 0.043117
-ft 1.40361
-pt 0.0252011
-coreB 62 time 1.50763
-rho_beta 765 alpha_max 1927
-bt 0.0431819
-ft 1.39893
-pt 0.0260339
-coreB 63 time 1.50355
-rho_beta 769 alpha_max 1924
-bt 0.0431387
-ft 1.40102
-pt 0.0261369
-coreB 64 time 1.50547
-rho_beta 762 alpha_max 1920
-bt 0.0428176
-ft 1.39533
-pt 0.0261271
-coreB 65 time 1.4994
-rho_beta 766 alpha_max 1918
-bt 0.0431724
-ft 1.39974
-pt 0.0265539
-coreB 66 time 1.50468
-rho_beta 759 alpha_max 1914
-bt 0.0439551
-ft 1.39943
-pt 0.0262599
-coreB 67 time 1.50486
-rho_beta 763 alpha_max 1914
-bt 0.0431297
-ft 1.39429
-pt 0.0264919
-coreB 68 time 1.49929
-rho_beta 763 alpha_max 1913
-bt 0.0430262
-ft 1.39671
-pt 0.0264759
-coreB 69 time 1.50152
-rho_beta 757 alpha_max 1903
-bt 0.0435059
-ft 1.39211
-pt 0.026974
-coreB 70 time 1.49753
-rho_beta 762 alpha_max 1900
-bt 0.043179
-ft 1.39703
-pt 0.0265069
-coreB 71 time 1.5016
-rho_beta 767 alpha_max 1898
-bt 0.0428481
-ft 1.39223
-pt 0.0268142
-coreB 72 time 1.49698
-rho_beta 754 alpha_max 1890
-bt 0.043082
-ft 1.391
-pt 0.026854
-coreB 73 time 1.49582
-rho_beta 758 alpha_max 1886
-bt 0.0432215
-ft 1.3951
-pt 0.0268431
-coreB 74 time 1.50028
-rho_beta 753 alpha_max 1880
-bt 0.0428655
-ft 1.38996
-pt 0.027225
-coreB 75 time 1.49492
-rho_beta 761 alpha_max 1880
-bt 0.0430307
-ft 1.3899
-pt 0.0276639
-coreB 76 time 1.49572
-rho_beta 752 alpha_max 1875
-bt 0.0429571
-ft 1.39088
-pt 0.0270841
-coreB 77 time 1.496
-rho_beta 744 alpha_max 1873
-bt 0.0438292
-ft 1.39752
-pt 0.0277121
-coreB 78 time 1.50421
-rho_beta 753 alpha_max 1870
-bt 0.0437999
-ft 1.39608
-pt 0.028836
-coreB 79 time 1.50403
-rho_beta 747 alpha_max 1867
-bt 0.0431204
-ft 1.38178
-pt 0.029237
-coreB 80 time 1.48914
-rho_beta 748 alpha_max 1863
-bt 0.0427012
-ft 1.3872
-pt 0.028338
-coreB 81 time 1.49284
-rho_beta 748 alpha_max 1857
-bt 0.0424032
-ft 1.3849
-pt 0.028753
-coreB 82 time 1.4908
-rho_beta 738 alpha_max 1852
-bt 0.0426574
-ft 1.38014
-pt 0.0285861
-coreB 83 time 1.48597
-rho_beta 738 alpha_max 1851
-bt 0.0417564
-ft 1.38216
-pt 0.0288782
-coreB 84 time 1.48744
-rho_beta 746 alpha_max 1848
-bt 0.0419183
-ft 1.38049
-pt 0.028903
-coreB 85 time 1.48583
-rho_beta 754 alpha_max 1846
-bt 0.0414674
-ft 1.38178
-pt 0.028908
-coreB 86 time 1.48658
-rho_beta 745 alpha_max 1846
-bt 0.0416961
-ft 1.38277
-pt 0.029145
-coreB 87 time 1.48797
-rho_beta 743 alpha_max 1844
-bt 0.0423064
-ft 1.38033
-pt 0.0292981
-coreB 88 time 1.48637
-rho_beta 740 alpha_max 1838
-bt 0.0416532
-ft 1.37878
-pt 0.0291889
-coreB 89 time 1.48423
-rho_beta 737 alpha_max 1836
-bt 0.0423334
-ft 1.37983
-pt 0.0293899
-coreB 90 time 1.48594
-rho_beta 736 alpha_max 1832
-bt 0.0420027
-ft 1.3772
-pt 0.029609
-coreB 91 time 1.48314
-rho_beta 734 alpha_max 1828
-bt 0.041748
-ft 1.37808
-pt 0.029778
-coreB 92 time 1.48383
-rho_beta 735 alpha_max 1825
-bt 0.0418451
-ft 1.37637
-pt 0.0296609
-coreB 93 time 1.48244
-rho_beta 739 alpha_max 1819
-bt 0.0416243
-ft 1.3756
-pt 0.029979
-coreB 94 time 1.4817
-rho_beta 735 alpha_max 1816
-bt 0.0417678
-ft 1.37724
-pt 0.029757
-coreB 95 time 1.48298
-rho_beta 738 alpha_max 1810
-bt 0.0418029
-ft 1.37452
-pt 0.0300801
-coreB 96 time 1.48087
-rho_beta 742 alpha_max 1799
-bt 0.0421941
-ft 1.37265
-pt 0.0302422
-coreB 97 time 1.47945
-rho_beta 733 alpha_max 1797
-bt 0.0418096
-ft 1.37511
-pt 0.0300841
-coreB 98 time 1.48118
-rho_beta 725 alpha_max 1792
-bt 0.0419133
-ft 1.3723
-pt 0.030627
-coreB 99 time 1.47902
-rho_beta 733 alpha_max 1788
-bt 0.043129
-ft 1.37817
-pt 0.030458
-coreB 100 time 1.48619
-rho_beta 726 alpha_max 1782
-bt 0.0428071
-ft 1.36937
-pt 0.0304589
-coreB 101 time 1.4767
-rho_beta 735 alpha_max 1780
-bt 0.0423617
-ft 1.37192
-pt 0.030477
-coreB 102 time 1.4788
-rho_beta 732 alpha_max 1771
-bt 0.0421615
-ft 1.37726
-pt 0.0308139
-coreB 103 time 1.48452
-rho_beta 732 alpha_max 1767
-bt 0.0428987
-ft 1.37251
-pt 0.0315039
-coreB 104 time 1.48113
-rho_beta 726 alpha_max 1763
-bt 0.0426769
-ft 1.36917
-pt 0.0310512
-coreB 105 time 1.47718
-rho_beta 723 alpha_max 1752
-bt 0.0427382
-ft 1.36963
-pt 0.0308568
-coreB 106 time 1.47712
-rho_beta 727 alpha_max 1749
-bt 0.0430734
-ft 1.36975
-pt 0.030935
-coreB 107 time 1.47793
-rho_beta 729 alpha_max 1748
-bt 0.042454
-ft 1.37137
-pt 0.0303609
-coreB 108 time 1.47832
-rho_beta 730 alpha_max 1746
-bt 0.0428796
-ft 1.37057
-pt 0.031462
-coreB 109 time 1.4786
-rho_beta 721 alpha_max 1741
-bt 0.0425651
-ft 1.36745
-pt 0.031477
-coreB 110 time 1.47537
-rho_beta 724 alpha_max 1736
-bt 0.0427308
-ft 1.36452
-pt 0.0315301
-coreB 111 time 1.47279
-rho_beta 721 alpha_max 1733
-bt 0.0421579
-ft 1.36296
-pt 0.031565
-coreB 112 time 1.47015
-rho_beta 718 alpha_max 1733
-bt 0.041873
-ft 1.36343
-pt 0.031754
-coreB 113 time 1.47062
-rho_beta 720 alpha_max 1729
-bt 0.0425646
-ft 1.36118
-pt 0.0317409
-coreB 114 time 1.46948
-rho_beta 719 alpha_max 1725
-bt 0.0420201
-ft 1.36422
-pt 0.0314541
-coreB 115 time 1.47116
-rho_beta 715 alpha_max 1720
-bt 0.0419831
-ft 1.36369
-pt 0.0315709
-coreB 116 time 1.47088
-rho_beta 719 alpha_max 1718
-bt 0.0419922
-ft 1.36073
-pt 0.032027
-coreB 117 time 1.46815
-rho_beta 720 alpha_max 1714
-bt 0.0423708
-ft 1.35897
-pt 0.031965
-coreB 118 time 1.46686
-rho_beta 714 alpha_max 1710
-bt 0.0420768
-ft 1.36053
-pt 0.0320899
-coreB 119 time 1.46825
-rho_beta 716 alpha_max 1705
-bt 0.0418818
-ft 1.35776
-pt 0.0321341
-coreB 120 time 1.4654
-rho_beta 712 alpha_max 1701
-bt 0.0422072
-ft 1.35647
-pt 0.0322011
-coreB 121 time 1.46407
-rho_beta 708 alpha_max 1698
-bt 0.0424418
-ft 1.36673
-pt 0.032212
-coreB 122 time 1.47463
-rho_beta 708 alpha_max 1695
-bt 0.0428672
-ft 1.37177
-pt 0.0326722
-coreB 123 time 1.48079
-rho_beta 715 alpha_max 1690
-bt 0.0425851
-ft 1.36849
-pt 0.0333281
-coreB 124 time 1.47794
-rho_beta 709 alpha_max 1685
-bt 0.0421221
-ft 1.35791
-pt 0.0325601
-coreB 125 time 1.46616
-rho_beta 715 alpha_max 1682
-bt 0.0418367
-ft 1.35908
-pt 0.0328929
-coreB 126 time 1.4674
-rho_beta 708 alpha_max 1676
-bt 0.0426993
-ft 1.35907
-pt 0.0328832
-coreB 127 time 1.46797
-rho_beta 703 alpha_max 1675
-bt 0.0423532
-ft 1.35767
-pt 0.032891
-coreB 128 time 1.46604
-rho_beta 713 alpha_max 1671
-bt 0.0428498
-ft 1.35725
-pt 0.0333481
-coreB 129 time 1.46698
-rho_beta 705 alpha_max 1670
-bt 0.0425205
-ft 1.35465
-pt 0.033211
-coreB 130 time 1.46335
-rho_beta 703 alpha_max 1665
-bt 0.0426106
-ft 1.35589
-pt 0.0332031
-coreB 131 time 1.46501
-rho_beta 704 alpha_max 1658
-bt 0.0426731
-ft 1.35455
-pt 0.0329731
-coreB 132 time 1.463
-rho_beta 705 alpha_max 1657
-bt 0.0422912
-ft 1.35455
-pt 0.0332539
-coreB 133 time 1.46345
-rho_beta 713 alpha_max 1650
-bt 0.041949
-ft 1.35654
-pt 0.0333281
-coreB 134 time 1.4651
-rho_beta 697 alpha_max 1645
-bt 0.0424309
-ft 1.35493
-pt 0.033638
-coreB 135 time 1.46381
-rho_beta 691 alpha_max 1640
-bt 0.0432644
-ft 1.35576
-pt 0.0335801
-coreB 136 time 1.46557
-rho_beta 699 alpha_max 1638
-bt 0.0425169
-ft 1.35337
-pt 0.0333941
-coreB 137 time 1.46242
-rho_beta 700 alpha_max 1633
-bt 0.0428147
-ft 1.35468
-pt 0.0331841
-coreB 138 time 1.46371
-rho_beta 708 alpha_max 1630
-bt 0.0425417
-ft 1.34992
-pt 0.0354421
-coreB 139 time 1.46087
-rho_beta 693 alpha_max 1629
-bt 0.0425122
-ft 1.35771
-pt 0.035341
-coreB 140 time 1.477
-rho_beta 700 alpha_max 1627
-bt 0.0424144
-ft 1.35021
-pt 0.036226
-coreB 141 time 1.4628
-rho_beta 699 alpha_max 1626
-bt 0.0426064
-ft 1.3488
-pt 0.0353839
-coreB 142 time 1.45963
-rho_beta 698 alpha_max 1623
-bt 0.0427537
-ft 1.35153
-pt 0.035625
-coreB 143 time 1.46254
-rho_beta 701 alpha_max 1617
-bt 0.0424833
-ft 1.35015
-pt 0.0360141
-coreB 144 time 1.46127
-rho_beta 697 alpha_max 1614
-bt 0.0423265
-ft 1.35457
-pt 0.03597
-coreB 145 time 1.46578
-rho_beta 689 alpha_max 1608
-bt 0.0426216
-ft 1.35989
-pt 0.0363169
-coreB 146 time 1.4724
-rho_beta 684 alpha_max 1607
-bt 0.0428729
-ft 1.34859
-pt 0.0359769
-coreB 147 time 1.44826
+coreA 1 1998 34989 4.86174
+coreA 2 1991 34001 7.19669
+coreA 3 1989 33131 7.11034
+coreA 4 1958 32390 20.2191
+coreA 5 1953 31736 16.3725
+coreA 6 1968 31186 9.58179
+coreA 7 1961 30641 18.9792
+coreA 8 1948 30143 9.70907
+coreA 9 1956 29638 9.43707
+coreA 10 1916 29156 8.3525
+coreA 11 1914 28762 6.89225
+coreA 12 1921 28346 9.4065
+coreA 13 1896 27982 8.70047
+coreA 14 1909 27600 13.0811
+coreA 15 1879 27274 8.85365
+coreA 16 1887 26962 12.2986
+coreA 17 1887 26628 6.55624
+coreA 18 1869 26332 16.253
+coreA 19 1855 26021 18.9424
+coreA 20 1864 25766 22.1562
+coreA 21 1857 25462 9.20582
+coreA 22 1847 25167 6.67116
+coreA 23 1837 24873 6.64713
+coreA 24 1825 24590 14.7911
+coreA 25 1834 24318 6.89324
+coreA 26 1829 24058 6.70443
+coreA 27 1815 23785 6.9279
+coreA 28 1796 23532 6.82096
+coreA 29 1784 23296 6.63956
+coreA 30 1798 23045 9.38393
+coreA 31 1795 22811 8.66298
+coreA 32 1781 22581 9.20469
+coreA 33 1769 22350 12.8816
+coreA 34 1764 22115 6.37267
+coreA 35 1757 21886 9.85646
+coreA 36 1740 21660 14.2085
+coreA 37 1734 21454 14.7598
+coreA 38 1751 21238 18.6773
+coreA 39 1767 21056 6.57365
+coreA 40 1749 20862 6.31533
+coreA 41 1725 20669 6.34281
+coreA 42 1704 20472 6.57577
+coreA 43 1718 20254 17.1737
+coreA 44 1707 20042 6.25555
+coreA 45 1688 19867 13.4579
+coreA 46 1703 19671 6.4743
+coreA 47 1702 19480 13.1741
+coreA 48 1682 19292 6.2575
+coreA 49 1682 19111 6.24015
+coreA 50 1675 18933 6.29556
+coreA 51 1665 18754 6.41786
+coreA 52 1674 18575 15.6742
+coreA 53 1672 18398 15.6987
+coreA 54 1657 18227 6.43159
+coreA 55 1647 18066 18.13
+coreA 56 1631 17901 13.9706
+coreA 57 1645 17715 6.32291
+coreA 58 1612 17547 14.5994
+coreA 59 1639 17384 6.13758
+coreA 60 1630 17210 6.09014
+coreA 61 1618 17049 5.99263
+coreA 62 1627 16883 6.65796
+coreA 63 1603 16714 6.48343
+coreA 64 1602 16558 6.48206
+coreA 65 1589 16394 6.27537
+coreA 66 1582 16222 25.6498
+coreA 67 1580 16078 6.24561
+coreA 68 1585 15915 6.42913
+coreA 69 1575 15769 6.38522
+coreA 70 1556 15617 8.52661
+coreA 71 1568 15462 6.40552
+coreA 72 1562 15319 13.5734
+coreA 73 1561 15155 6.29387
+coreA 74 1540 14980 6.43553
+coreA 75 1532 14824 6.51554
+coreA 76 1545 14663 6.04831
+coreA 77 1548 14526 6.39364
+coreA 78 1523 14379 26.053
+coreA 79 1522 14246 6.11157
+coreA 80 1507 14118 6.36221
+coreA 81 1508 13986 6.16865
+coreA 82 1516 13841 16.5175
+coreA 83 1503 13695 26.1418
+coreA 84 1516 13560 6.19575
+coreA 85 1486 13432 6.11512
+coreA 86 1489 13312 22.4988
+coreA 87 1475 13213 6.29779
+coreA 88 1481 13085 12.6165
+coreA 89 1479 12989 15.5173
+coreA 90 1471 12891 6.27301
+coreA 91 1466 12770 15.3459
+coreA 92 1449 12653 7.64267
+coreA 93 1445 12556 11.7808
+coreA 94 1447 12454 11.6639
+coreA 95 1459 12355 6.21099
+coreA 96 1445 12255 8.46027
+coreA 97 1428 12140 11.5761
+coreA 98 1427 12048 12.6143
+coreA 99 1432 11954 7.6041
+coreA 100 1413 11862 6.34629
+coreA 101 1415 11768 15.6761
+coreA 102 1406 11677 7.7642
+coreA 103 1412 11573 12.3887
+coreA 104 1400 11486 6.08066
+coreA 105 1392 11377 6.05427
+coreA 106 1393 11291 12.1825
+coreA 107 1392 11199 6.83339
+coreA 108 1362 11122 12.5805
+coreA 109 1374 11016 5.99973
+coreA 110 1392 10925 17.0706
+coreA 111 1374 10831 7.51566
+coreA 112 1356 10734 7.41473
+coreA 113 1347 10658 6.16225
+coreA 114 1346 10563 12.58
+coreA 115 1342 10480 7.9967
+coreA 116 1347 10379 7.76946
+coreA 117 1339 10289 6.10382
+coreA 118 1302 10216 8.34105
+coreA 119 1328 10148 17.1128
+coreA 120 1331 10055 6.13309
+coreA 121 1311 9979 6.11841
+coreA 122 1297 9896 8.13054
+coreA 123 1309 9816 6.78231
+coreA 124 1306 9727 6.10749
+coreA 125 1299 9642 6.25773
+coreA 126 1279 9562 6.52131
+coreA 127 1275 9492 7.29088
+coreA 128 1290 9397 7.01212
+coreA 129 1280 9309 7.35739
+coreA 130 1274 9235 6.58613
+coreA 131 1264 9156 6.87648
+coreA 132 1254 9078 6.43193
+coreA 133 1268 9004 6.45282
+coreA 134 1258 8945 6.17101
+coreA 135 1257 8883 11.056
+coreA 136 1244 8800 12.391
+coreA 137 1248 8709 11.3489
+coreA 138 1252 8645 11.5036
+coreA 139 1252 8571 11.0375
+coreA 140 1224 8506 11.1975
+coreA 141 1239 8436 6.77464
+coreA 142 1224 8359 14.3024
+coreA 143 1221 8297 7.49788
+coreA 144 1208 8221 10.9334
+coreA 145 1188 8150 6.97723
+coreA 146 1195 8084 11.2023
+coreA 147 1197 8011 6.11808
+coreB 1 824 2186 1.71029
+coreB 2 1047 928 6.81889
+coreB 3 1088 751 6.54499
+coreB 4 1137 657 6.99376
+coreB 5 1154 603 6.61866
+coreB 6 1160 561 6.5809
+coreB 7 1157 525 6.89985
+coreB 8 1182 501 30.1949
+coreB 9 1170 479 6.56972
+coreB 10 1195 458 25.6154
+coreB 11 1156 444 6.54895
+coreB 12 1139 429 6.55506
+coreB 13 1160 416 6.79681
+coreB 14 1162 403 6.54194
+coreB 15 1173 391 6.75681
+coreB 16 1151 381 13.6811
+coreB 17 1099 374 6.61278
+coreB 18 1116 367 6.78129
+coreB 19 1148 360 6.57012
+coreB 20 1158 353 6.74838
+coreB 21 1122 345 35.5744
+coreB 22 1116 341 6.63934
+coreB 23 1110 335 6.73199
+coreB 24 1132 331 6.65456
+coreB 25 1115 326 6.80439
+coreB 26 1107 321 6.575
+coreB 27 1105 317 33.4085
+coreB 28 1133 313 6.39324
+coreB 29 1122 309 12.8198
+coreB 30 1119 304 6.91484
+coreB 31 1105 300 6.77786
+coreB 32 1103 296 20.4988
+coreB 33 1105 293 6.67886
+coreB 34 1105 289 6.60091
+coreB 35 1118 285 28.0473
+coreB 36 1074 282 6.79703
+coreB 37 1073 278 6.74721
+coreB 38 1063 275 6.84117
+coreB 39 1064 273 6.56866
+coreB 40 1062 270 6.53655
+coreB 41 1089 267 6.7313
+coreB 42 1083 265 6.72752
+coreB 43 1043 263 6.72841
+coreB 44 1033 260 6.51942
+coreB 45 1035 258 6.53295
+coreB 46 1019 256 22.3668
+coreB 47 1020 253 24.3234
+coreB 48 1012 251 39.322
+coreB 49 1037 248 6.52046
+coreB 50 1040 246 6.30387
+coreB 51 1033 244 6.80452
+coreB 52 1010 242 27.9038
+coreB 53 1026 240 6.4689
+coreB 54 1016 238 39.4926
+coreB 55 1011 237 6.66444
+coreB 56 1000 235 6.82542
+coreB 57 1001 233 6.57383
+coreB 58 1010 232 6.66219
+coreB 59 977 230 6.45642
+coreB 60 1004 228 6.38278
+coreB 61 978 226 37.0437
+coreB 62 979 225 6.60787
+coreB 63 965 223 6.66442
+coreB 64 935 222 6.3837
+coreB 65 990 220 6.68893
+coreB 66 1002 219 6.7499
+coreB 67 957 218 34.4277
+coreB 68 947 216 6.32552
+coreB 69 937 215 6.34592
+coreB 70 936 214 6.61222
+coreB 71 942 212 6.37557
+coreB 72 931 211 34.9232
+coreB 73 926 209 6.60826
+coreB 74 927 208 6.65446
+coreB 75 932 207 6.49996
+coreB 76 962 205 24.5936
+coreB 77 956 204 6.5753
+coreB 78 955 203 6.6485
+coreB 79 911 202 6.36446
+coreB 80 941 201 6.39556
+coreB 81 927 200 6.54336
+coreB 82 890 199 33.6493
+coreB 83 931 197 6.44329
+coreB 84 921 196 6.36183
+coreB 85 903 195 6.38042
+coreB 86 911 194 6.57193
+coreB 87 925 193 6.51036
+coreB 88 898 192 6.32594
+coreB 89 897 191 6.31915
+coreB 90 885 190 6.1297
+coreB 91 879 189 6.44753
+coreB 92 876 188 6.3927
+coreB 93 854 187 6.44557
+coreB 94 860 186 6.69184
+coreB 95 897 185 6.41993
+coreB 96 876 184 6.64502
+coreB 97 851 183 6.45503
+coreB 98 878 182 6.44949
+coreB 99 889 181 29.5413
+coreB 100 854 180 6.4228
+coreB 101 865 180 6.45201
+coreB 102 873 179 6.39559
+coreB 103 821 178 6.49335
+coreB 104 810 177 6.15579
+coreB 105 843 176 6.41333
+coreB 106 839 176 6.73041
+coreB 107 868 175 6.46564
+coreB 108 819 174 6.66396
+coreB 109 850 173 6.56188
+coreB 110 867 173 25.3836
+coreB 111 859 172 26.6734
+coreB 112 811 171 6.19118
+coreB 113 827 170 6.23318
+coreB 114 811 169 31.9685
+coreB 115 780 169 6.64771
+coreB 116 791 168 6.21026
+coreB 117 799 167 6.34374
+coreB 118 798 166 32.0682
+coreB 119 794 166 32.7093
+coreB 120 789 165 6.51906
+coreB 121 792 164 6.38303
+coreB 122 785 163 6.6011
+coreB 123 826 163 14.8114
+coreB 124 829 162 15.0013
+coreB 125 801 161 6.51721
+coreB 126 756 161 7.09314
+coreB 127 782 160 6.57183
+coreB 128 781 160 11.9251
+coreB 129 764 159 6.33572
+coreB 130 774 158 7.32898
+coreB 131 786 157 6.53372
+coreB 132 758 157 6.12378
+coreB 133 748 156 6.5024
+coreB 134 800 156 6.81797
+coreB 135 730 155 6.71183
+coreB 136 775 154 6.30316
+coreB 137 733 154 6.31635
+coreB 138 728 153 6.51777
+coreB 139 769 152 17.5746
+coreB 140 707 152 6.31262
+coreB 141 730 151 15.2022
+coreB 142 697 150 6.46349
+coreB 143 762 150 6.27812
+coreB 144 711 149 28.1856
+coreB 145 742 148 33.205
+coreB 146 726 148 6.47026
+coreB 147 704 147 6.50727
+total 44.4729
