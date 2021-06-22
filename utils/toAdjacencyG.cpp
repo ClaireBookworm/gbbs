@@ -93,7 +93,7 @@ int main()
         }
         edges.push_back(vertexBNumber + numVertexA - 1);
     }
-    sort(edgePair.begin(), edgePair.end(), sortbysec);
+    qsort(edgePair.begin(), edgePair.end(), sortbysec);
     for (int i = 0; i < numEdges; i++)
     {
         vertexBNumber = edgePair.at(i).second;
