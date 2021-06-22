@@ -204,6 +204,7 @@ namespace gbbs
 			rho_alpha++;
 		}
 		bbuckets.del();
+		em.del();
 		return std::pair<size_t,size_t>(rho_alpha,max_beta);
 		// debug(fout<<"bt "<<bt.total_time<<'\n');
 		// debug(fout<<"ft "<<ft.total_time<<'\n');
@@ -318,6 +319,7 @@ namespace gbbs
 			rho_beta++;
 		}
 		abuckets.del();
+		em.del();
 		return std::pair<size_t,size_t>(rho_beta,max_alpha);
 		// debug(fout<<"bt "<<bt.total_time<<'\n');
 		// debug(fout<<"ft "<<ft.total_time<<'\n');
