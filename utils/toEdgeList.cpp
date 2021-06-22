@@ -93,4 +93,5 @@ int main(){
     cout<<numA<<" "<<numB<<endl;
     string command = "./snap_converter -i ../inputs/"+file_name+"_edgelist"+" -o "+"../inputs/"+file_name+"_adj";
     system(command.c_str());
+    return 1;
 }
