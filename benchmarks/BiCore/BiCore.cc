@@ -58,8 +58,7 @@ double BiCore_runner(Graph& G, commandLine P) {
   
   assert(P.getOption("-s"));
   std::string graph_name(P.getArgument(0));
-  fout.open(graph_name+"_"+std::to_string(num_workers())+"_threads");
-
+  fout.open(graph_name+"_"+std::to_string(num_workers())+"_threads",std::fstream::app);
   // runs the fetch-and-add based implementation if set.
   timer t; t.start();
 
