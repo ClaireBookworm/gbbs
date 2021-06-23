@@ -59,7 +59,6 @@ make &&
 ./BiCore -s -bi 255 -rounds 10 ../../inputs/tgwiki_adj
 export NUM_THREADS=30 &&
 make &&
-<<<<<<< HEAD
 ./BiCore -s -bi 255 -rounds 10 ../../inputs/tgwiki_adj
 export NUM_THREADS=16 &&
 make &&

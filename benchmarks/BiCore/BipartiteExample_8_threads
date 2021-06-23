@@ -1,0 +1,152 @@
+# list_alloc init_blocks: 1000
+# list_alloc init_blocks: 1000
+# after init: 
+# after init: 
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/BipartiteExample
+### Threads: 8
+### n: 6
+### m: 14
+### Params: -nb (num_buckets) = 16 -bi = 2
+### ------------------------------------
+begin
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/BipartiteExample
+### Threads: 8
+### n: 6
+### m: 14
+### Params: -nb (num_buckets) = 16 -bi = 2
+### ------------------------------------
+begin
+resized to: 2
+resized to: 8
+### rho = 3 k_{max} = 2
+# PBBS time: bucket time: 0.0000
+resized to: 2
+resized to: 8
+### rho = 3 k_{max} = 2
+# PBBS time: bucket time: 0.0000
+resized to: 2
+resized to: 8
+resized to: 8
+resized to: 2
+resized to: 8
+resized to: 2
+resized to: 8
+coreA 1 2 3 0.0001149
+coreA 2 2 3 4.005e-05
+coreB 1 2 3 0.0001268
+coreB 2 1 2 5.388e-05
+### Running Time: 0.000427
+### Application: BiCore
+resized to: 2
+resized to: 8
+resized to: 8
+resized to: 2
+resized to: 8
+resized to: 2
+resized to: 8
+coreA 1 2 3 0.0001149
+coreA 2 2 3 4.005e-05
+coreB 1 2 3 0.0001268
+coreB 2 1 2 5.388e-05
+### Running Time: 0.000427
+### Application: BiCore
+### Graph: ../../inputs/BipartiteExample
+### Threads: 8
+### n: 6
+### m: 14
+### Params: -nb (num_buckets) = 16 -bi = 2
+### ------------------------------------
+begin
+### Graph: ../../inputs/BipartiteExample
+### Threads: 8
+### n: 6
+### m: 14
+### Params: -nb (num_buckets) = 16 -bi = 2
+### ------------------------------------
+begin
+resized to: 2
+resized to: 8
+### rho = 3 k_{max} = 2
+# PBBS time: bucket time: 0.0000
+resized to: 2
+resized to: 8
+### rho = 3 k_{max} = 2
+# PBBS time: bucket time: 0.0000
+resized to: 2
+resized to: 8
+resized to: 8
+resized to: 2
+resized to: 8
+resized to: 2
+resized to: 8
+coreA 1 2 3 4.506e-05
+coreA 2 2 3 4.005e-05
+coreB 1 2 3 6.7e-05
+coreB 2 1 2 4.792e-05
+### Running Time: 0.000196
+resized to: 2
+resized to: 8
+resized to: 8
+resized to: 2
+resized to: 8
+resized to: 2
+resized to: 8
+coreA 1 2 3 4.506e-05
+coreA 2 2 3 4.005e-05
+coreB 1 2 3 6.7e-05
+coreB 2 1 2 4.792e-05
+### Running Time: 0.000196
+### Application: BiCore
+### Graph: ../../inputs/BipartiteExample
+### Threads: 8
+### n: 6
+### m: 14
+### Params: -nb (num_buckets) = 16 -bi = 2
+### ------------------------------------
+begin
+### Application: BiCore
+### Graph: ../../inputs/BipartiteExample
+### Threads: 8
+### n: 6
+### m: 14
+### Params: -nb (num_buckets) = 16 -bi = 2
+### ------------------------------------
+begin
+resized to: 2
+resized to: 8
+### rho = 3 k_{max} = 2
+# PBBS time: bucket time: 0.0000
+resized to: 2
+resized to: 8
+### rho = 3 k_{max} = 2
+# PBBS time: bucket time: 0.0000
+resized to: 2
+resized to: 8
+resized to: 8
+resized to: 2
+resized to: 8
+resized to: 2
+resized to: 8
+coreA 1 2 3 4.005e-05
+coreA 2 2 3 3.481e-05
+coreB 1 2 3 6.008e-05
+coreB 2 1 2 3.386e-05
+### Running Time: 0.0001631
+resized to: 2
+resized to: 8
+resized to: 8
+resized to: 2
+resized to: 8
+resized to: 2
+resized to: 8
+coreA 1 2 3 4.005e-05
+coreA 2 2 3 3.481e-05
+coreB 1 2 3 6.008e-05
+coreB 2 1 2 3.386e-05
+### Running Time: 0.0001631
+# time per iter: 0.000262
+# time per iter: 0.000262
