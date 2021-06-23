@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 unset NUM_THREADS
 unset SERIAL
 
@@ -8,31 +7,22 @@ make &&
 export NUM_THREADS=30 &&
 make &&
 ./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
-=======
-export NUM_THREADS=60 &&
-make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
-export NUM_THREADS=30 &&
-make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
->>>>>>> f1968d38deea70cbacc391ec6fb08999298c6e7b
 export NUM_THREADS=16 &&
 make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
+./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
 export NUM_THREADS=8 &&
 make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
+./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
 export NUM_THREADS=4 &&
 make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
+./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
 export NUM_THREADS=2 &&
 make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
+./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
 unset NUM_THREADS &&
 export SERIAL=1 &&
 make &&
-./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
-
+./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
 
 unset NUM_THREADS
 unset SERIAL
@@ -58,11 +48,7 @@ make &&
 unset NUM_THREADS &&
 export SERIAL=1 &&
 make &&
-<<<<<<< HEAD
 ./BiCore -s -bi 367 -rounds 10 ../../inputs/sqwiki_adj
-=======
-./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
->>>>>>> f1968d38deea70cbacc391ec6fb08999298c6e7b
 
 
 unset NUM_THREADS
