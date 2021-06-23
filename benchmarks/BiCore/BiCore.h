@@ -81,6 +81,8 @@ namespace gbbs
 
 		par_do(PeelFixAllA,PeelFixAllB);
 
+		// change this!! 
+
 		debug(for(size_t core=1; core<=delta; ++core) fout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
 		debug(for(size_t core=1; core<=delta; ++core) fout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
 	}
@@ -325,5 +327,5 @@ namespace gbbs
 		// debug(fout<<"ft "<<ft.total_time<<'\n');
 		// debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
-
+	
 } // namespace gbbs
