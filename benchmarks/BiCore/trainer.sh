@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 unset NUM_THREADS
 unset SERIAL
 
@@ -7,22 +8,30 @@ make &&
 export NUM_THREADS=30 &&
 make &&
 ./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
+=======
+export NUM_THREADS=60 &&
+make &&
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
+export NUM_THREADS=30 &&
+make &&
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
+>>>>>>> f1968d38deea70cbacc391ec6fb08999298c6e7b
 export NUM_THREADS=16 &&
 make &&
-./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
 export NUM_THREADS=8 &&
 make &&
-./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
 export NUM_THREADS=4 &&
 make &&
-./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
 export NUM_THREADS=2 &&
 make &&
-./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
 unset NUM_THREADS &&
 export SERIAL=1 &&
 make &&
-./BiCore -s -bi 395978 -rounds 10 ../../inputs/flickr_adj
+./BiCore -s -bi 781264 -rounds 3 ../../inputs/reuter_adj
 
 
 unset NUM_THREADS
@@ -49,7 +58,11 @@ make &&
 unset NUM_THREADS &&
 export SERIAL=1 &&
 make &&
+<<<<<<< HEAD
 ./BiCore -s -bi 367 -rounds 10 ../../inputs/sqwiki_adj
+=======
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+>>>>>>> f1968d38deea70cbacc391ec6fb08999298c6e7b
 
 
 unset NUM_THREADS
@@ -60,6 +73,7 @@ make &&
 ./BiCore -s -bi 255 -rounds 10 ../../inputs/tgwiki_adj
 export NUM_THREADS=30 &&
 make &&
+<<<<<<< HEAD
 ./BiCore -s -bi 255 -rounds 10 ../../inputs/tgwiki_adj
 export NUM_THREADS=16 &&
 make &&
@@ -293,3 +307,48 @@ unset NUM_THREADS &&
 export SERIAL=1 &&
 make &&
 ./BiCore -s -bi 299751 -rounds 3 ../../inputs/nytime_adj
+=======
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+export NUM_THREADS=16 &&
+make &&
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+export NUM_THREADS=8 &&
+make &&
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+export NUM_THREADS=4 &&
+make &&
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+export NUM_THREADS=2 &&
+make &&
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+unset NUM_THREADS &&
+export SERIAL=1 &&
+make &&
+./BiCore -s -bi 16725 -rounds 10 ../../inputs/arXiv_adj
+
+unset SERIAL &&
+unset NUM_THREADS &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+
+export NUM_THREADS=30 &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+export NUM_THREADS=16 &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+export NUM_THREADS=8 &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+export NUM_THREADS=4 &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+export NUM_THREADS=2 &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+
+unset NUM_THREADS &&
+export SERIAL=1 &&
+make &&
+./BiCore -s -bi 1953084 -rounds 5 ../../inputs/dblp_adj
+>>>>>>> f1968d38deea70cbacc391ec6fb08999298c6e7b
