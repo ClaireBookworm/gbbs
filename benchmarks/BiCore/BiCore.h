@@ -30,7 +30,6 @@
 
 namespace gbbs
 {
-	std::ofstream fout;
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 
@@ -81,8 +80,8 @@ namespace gbbs
 
 		par_do(PeelFixAllA,PeelFixAllB);
 
-		debug(for(size_t core=1; core<=delta; ++core) fout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
-		debug(for(size_t core=1; core<=delta; ++core) fout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
+		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
+		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
 	}
 
 	template <class Graph>
@@ -206,9 +205,6 @@ namespace gbbs
 		bbuckets.del();
 		em.del();
 		return std::pair<size_t,size_t>(rho_alpha,max_beta);
-		// debug(fout<<"bt "<<bt.total_time<<'\n');
-		// debug(fout<<"ft "<<ft.total_time<<'\n');
-		// debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
 
 	template <class Graph>
@@ -321,9 +317,6 @@ namespace gbbs
 		abuckets.del();
 		em.del();
 		return std::pair<size_t,size_t>(rho_beta,max_alpha);
-		// debug(fout<<"bt "<<bt.total_time<<'\n');
-		// debug(fout<<"ft "<<ft.total_time<<'\n');
-		// debug(fout<<"pt "<<pt.total_time<<'\n');
 	}
-
+	
 } // namespace gbbs
