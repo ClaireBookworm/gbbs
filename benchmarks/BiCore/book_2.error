@@ -1,0 +1,935 @@
+# n = 445801 m = 2299478 len = 2745281
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 7168, node size: 16392, bytes: 117497856
+### Application: BiCore
+### Graph: ../../inputs/book_adj
+### Threads: 2
+### n: 445801
+### m: 2299478
+### Params: -nb (num_buckets) = 16 -bi = 105277
+### ------------------------------------
+begin
+resized to: 524288
+### rho = 381 k_{max} = 41
+# PBBS time: bucket time: 0.0262
+resized to: 131072
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 2097152
+coreA 1 332 2502 0.929
+coreA 2 321 2037 0.8754
+coreA 3 317 1851 0.8801
+coreA 4 300 1752 0.8661
+coreA 5 303 1686 0.8636
+coreA 6 302 1605 0.9247
+coreA 7 289 1550 0.8495
+coreA 8 290 1502 0.8465
+coreA 9 280 1464 0.8498
+coreA 10 286 1419 0.858
+coreA 11 280 1387 0.8442
+coreA 12 273 1357 0.8378
+coreA 13 273 1327 0.8477
+coreA 14 274 1308 0.839
+coreA 15 270 1292 0.8377
+coreA 16 275 1270 0.8621
+coreA 17 265 1248 0.8374
+coreA 18 264 1230 0.8365
+coreA 19 268 1213 0.8458
+coreA 20 259 1197 0.8376
+coreA 21 263 1184 0.8351
+coreA 22 260 1162 0.8479
+coreA 23 259 1150 0.8381
+coreA 24 249 1139 0.8365
+coreA 25 254 1120 0.837
+coreA 26 251 1100 0.8379
+coreA 27 254 1083 0.8591
+coreA 28 241 1063 0.849
+coreA 29 245 1047 0.8356
+coreA 30 247 1030 0.8369
+coreA 31 246 1014 0.8357
+coreA 32 245 1009 0.8334
+coreA 33 242 999 0.8429
+coreA 34 249 989 0.8466
+coreA 35 235 982 0.835
+coreA 36 239 967 0.8375
+coreA 37 237 950 0.8346
+coreA 38 237 944 0.8369
+coreA 39 241 931 0.8304
+coreA 40 231 924 0.8422
+coreA 41 236 916 0.846
+coreB 1 681 13601 1.123
+coreB 2 622 13562 0.973
+coreB 3 577 10589 0.9252
+coreB 4 542 8928 0.91
+coreB 5 519 7941 0.9158
+coreB 6 516 7208 0.8883
+coreB 7 498 6603 0.8688
+coreB 8 478 6112 0.8579
+coreB 9 472 5738 0.8588
+coreB 10 457 5399 0.8636
+coreB 11 446 5120 0.8472
+coreB 12 425 4857 0.8694
+coreB 13 412 4608 0.8436
+coreB 14 410 4392 0.8378
+coreB 15 404 4190 0.8912
+coreB 16 404 4023 0.8353
+coreB 17 390 3873 0.8591
+coreB 18 392 3735 0.8715
+coreB 19 380 3615 0.862
+coreB 20 370 3484 0.8534
+coreB 21 380 3361 0.8734
+coreB 22 371 3270 0.8595
+coreB 23 359 3172 0.8538
+coreB 24 357 3067 0.8488
+coreB 25 346 2965 0.8505
+coreB 26 345 2869 0.8579
+coreB 27 342 2776 0.8579
+coreB 28 339 2697 0.8439
+coreB 29 333 2626 0.8426
+coreB 30 325 2560 0.8403
+coreB 31 318 2480 0.8394
+coreB 32 316 2416 0.8409
+coreB 33 311 2354 0.8543
+coreB 34 309 2298 0.8407
+coreB 35 299 2237 0.8395
+coreB 36 301 2183 0.8389
+coreB 37 309 2137 0.8393
+coreB 38 294 2085 0.8376
+coreB 39 292 2034 0.8433
+coreB 40 283 1978 0.8475
+coreB 41 289 1935 0.5733
+### Running Time: 35.86
+### Application: BiCore
+### Graph: ../../inputs/book_adj
+### Threads: 2
+### n: 445801
+### m: 2299478
+### Params: -nb (num_buckets) = 16 -bi = 105277
+### ------------------------------------
+begin
+resized to: 524288
+### rho = 381 k_{max} = 41
+# PBBS time: bucket time: 0.0256
+resized to: 131072
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+coreA 1 332 2502 0.8876
+coreA 2 321 2037 0.863
+coreA 3 317 1851 0.8566
+coreA 4 300 1752 0.8527
+coreA 5 303 1686 0.8535
+coreA 6 302 1605 0.8614
+coreA 7 289 1550 0.8496
+coreA 8 290 1502 0.8519
+coreA 9 280 1464 0.8495
+coreA 10 286 1419 0.847
+coreA 11 280 1387 0.8384
+coreA 12 273 1357 0.838
+coreA 13 273 1327 0.8383
+coreA 14 274 1308 0.8372
+coreA 15 270 1292 0.8505
+coreA 16 275 1270 0.8377
+coreA 17 265 1248 0.8387
+coreA 18 264 1230 0.8383
+coreA 19 268 1213 0.8393
+coreA 20 259 1197 0.8387
+coreA 21 263 1184 0.8379
+coreA 22 260 1162 0.8382
+coreA 23 259 1150 0.8376
+coreA 24 249 1139 0.8394
+coreA 25 254 1120 0.8389
+coreA 26 251 1100 0.8355
+coreA 27 254 1083 0.8377
+coreA 28 241 1063 0.8353
+coreA 29 245 1047 0.8361
+coreA 30 247 1030 0.8365
+coreA 31 246 1014 0.8374
+coreA 32 245 1009 0.8342
+coreA 33 242 999 0.8355
+coreA 34 249 989 0.8347
+coreA 35 235 982 0.8427
+coreA 36 239 967 0.8358
+coreA 37 237 950 0.8371
+coreA 38 237 944 0.8418
+coreA 39 241 931 0.8404
+coreA 40 231 924 0.8438
+coreA 41 236 916 0.8452
+coreB 1 681 13601 1.03
+coreB 2 622 13562 0.9554
+coreB 3 577 10589 0.9058
+coreB 4 542 8928 0.8981
+coreB 5 519 7941 0.9015
+coreB 6 516 7208 0.8818
+coreB 7 498 6603 0.8656
+coreB 8 478 6112 0.8579
+coreB 9 472 5738 0.8547
+coreB 10 457 5399 0.8534
+coreB 11 446 5120 0.8416
+coreB 12 425 4857 0.8439
+coreB 13 412 4608 0.8419
+coreB 14 410 4392 0.8632
+coreB 15 404 4190 0.8332
+coreB 16 404 4023 0.8301
+coreB 17 390 3873 0.8543
+coreB 18 392 3735 0.8539
+coreB 19 380 3615 0.8546
+coreB 20 370 3484 0.8503
+coreB 21 380 3361 0.8487
+coreB 22 371 3270 0.8466
+coreB 23 359 3172 0.8439
+coreB 24 357 3067 0.842
+coreB 25 346 2965 0.8417
+coreB 26 345 2869 0.8425
+coreB 27 342 2776 0.8391
+coreB 28 339 2697 0.8401
+coreB 29 333 2626 0.8419
+coreB 30 325 2560 0.8383
+coreB 31 318 2480 0.8338
+coreB 32 316 2416 0.8377
+coreB 33 311 2354 0.8364
+coreB 34 309 2298 0.8417
+coreB 35 299 2237 0.8348
+coreB 36 301 2183 0.8343
+coreB 37 309 2137 0.8361
+coreB 38 294 2085 0.8408
+coreB 39 292 2034 0.8373
+coreB 40 283 1978 0.8335
+coreB 41 289 1935 0.6747
+### Running Time: 35.52
+### Application: BiCore
+### Graph: ../../inputs/book_adj
+### Threads: 2
+### n: 445801
+### m: 2299478
+### Params: -nb (num_buckets) = 16 -bi = 105277
+### ------------------------------------
+begin
+resized to: 524288
+### rho = 381 k_{max} = 41
+# PBBS time: bucket time: 0.0261
+resized to: 131072
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+coreA 1 332 2502 0.898
+coreA 2 321 2037 0.8725
+coreA 3 317 1851 0.87
+coreA 4 300 1752 0.8645
+coreA 5 303 1686 0.8611
+coreA 6 302 1605 0.8566
+coreA 7 289 1550 0.8532
+coreA 8 290 1502 0.8523
+coreA 9 280 1464 0.8549
+coreA 10 286 1419 0.8528
+coreA 11 280 1387 0.8417
+coreA 12 273 1357 0.8429
+coreA 13 273 1327 0.8409
+coreA 14 274 1308 0.8396
+coreA 15 270 1292 0.8533
+coreA 16 275 1270 0.8404
+coreA 17 265 1248 0.8358
+coreA 18 264 1230 0.8364
+coreA 19 268 1213 0.834
+coreA 20 259 1197 0.8341
+coreA 21 263 1184 0.8344
+coreA 22 260 1162 0.836
+coreA 23 259 1150 0.832
+coreA 24 249 1139 0.8346
+coreA 25 254 1120 0.838
+coreA 26 251 1100 0.8331
+coreA 27 254 1083 0.8584
+coreA 28 241 1063 0.8376
+coreA 29 245 1047 0.8318
+coreA 30 247 1030 0.832
+coreA 31 246 1014 0.8347
+coreA 32 245 1009 0.8334
+coreA 33 242 999 0.8349
+coreA 34 249 989 0.8337
+coreA 35 235 982 0.8364
+coreA 36 239 967 0.8315
+coreA 37 237 950 0.8352
+coreA 38 237 944 0.8342
+coreA 39 241 931 0.8338
+coreA 40 231 924 0.8401
+coreA 41 236 916 0.8322
+coreB 1 681 13601 1.021
+coreB 2 622 13562 0.9509
+coreB 3 577 10589 0.9189
+coreB 4 542 8928 0.8989
+coreB 5 519 7941 0.8821
+coreB 6 516 7208 0.8711
+coreB 7 498 6603 0.8628
+coreB 8 478 6112 0.8519
+coreB 9 472 5738 0.8476
+coreB 10 457 5399 0.8481
+coreB 11 446 5120 0.8383
+coreB 12 425 4857 0.8402
+coreB 13 412 4608 0.837
+coreB 14 410 4392 0.8322
+coreB 15 404 4190 0.837
+coreB 16 404 4023 0.8355
+coreB 17 390 3873 0.858
+coreB 18 392 3735 0.8575
+coreB 19 380 3615 0.8581
+coreB 20 370 3484 0.8546
+coreB 21 380 3361 0.8507
+coreB 22 371 3270 0.8518
+coreB 23 359 3172 0.8501
+coreB 24 357 3067 0.8518
+coreB 25 346 2965 0.8505
+coreB 26 345 2869 0.8481
+coreB 27 342 2776 0.8546
+coreB 28 339 2697 0.8455
+coreB 29 333 2626 0.8442
+coreB 30 325 2560 0.8424
+coreB 31 318 2480 0.842
+coreB 32 316 2416 0.8428
+coreB 33 311 2354 0.8395
+coreB 34 309 2298 0.8391
+coreB 35 299 2237 0.8424
+coreB 36 301 2183 0.8397
+coreB 37 309 2137 0.8371
+coreB 38 294 2085 0.8391
+coreB 39 292 2034 0.8419
+coreB 40 283 1978 0.8375
+coreB 41 289 1935 0.6666
+### Running Time: 35.54
+### Application: BiCore
+### Graph: ../../inputs/book_adj
+### Threads: 2
+### n: 445801
+### m: 2299478
+### Params: -nb (num_buckets) = 16 -bi = 105277
+### ------------------------------------
+begin
+resized to: 524288
+### rho = 381 k_{max} = 41
+# PBBS time: bucket time: 0.0255
+resized to: 131072
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 2097152
+coreA 1 332 2502 0.881
+coreA 2 321 2037 0.8606
+coreA 3 317 1851 0.8526
+coreA 4 300 1752 0.8508
+coreA 5 303 1686 0.851
+coreA 6 302 1605 0.847
+coreA 7 289 1550 0.845
+coreA 8 290 1502 0.8435
+coreA 9 280 1464 0.8435
+coreA 10 286 1419 0.842
+coreA 11 280 1387 0.8475
+coreA 12 273 1357 0.8339
+coreA 13 273 1327 0.8313
+coreA 14 274 1308 0.8333
+coreA 15 270 1292 0.833
+coreA 16 275 1270 0.83
+coreA 17 265 1248 0.8323
+coreA 18 264 1230 0.8341
+coreA 19 268 1213 0.8291
+coreA 20 259 1197 0.83
+coreA 21 263 1184 0.8291
+coreA 22 260 1162 0.8301
+coreA 23 259 1150 0.8287
+coreA 24 249 1139 0.8319
+coreA 25 254 1120 0.8312
+coreA 26 251 1100 0.8301
+coreA 27 254 1083 0.8329
+coreA 28 241 1063 0.8301
+coreA 29 245 1047 0.8257
+coreA 30 247 1030 0.8281
+coreA 31 246 1014 0.8319
+coreA 32 245 1009 0.8313
+coreA 33 242 999 0.832
+coreA 34 249 989 0.8311
+coreA 35 235 982 0.8317
+coreA 36 239 967 0.8315
+coreA 37 237 950 0.8285
+coreA 38 237 944 0.8285
+coreA 39 241 931 0.8329
+coreA 40 231 924 0.8364
+coreA 41 236 916 0.8314
+coreB 1 681 13601 1.031
+coreB 2 622 13562 0.9583
+coreB 3 577 10589 0.9121
+coreB 4 542 8928 0.9038
+coreB 5 519 7941 0.8871
+coreB 6 516 7208 0.88
+coreB 7 498 6603 0.8693
+coreB 8 478 6112 0.8547
+coreB 9 472 5738 0.8537
+coreB 10 457 5399 0.8634
+coreB 11 446 5120 0.8463
+coreB 12 425 4857 0.8448
+coreB 13 412 4608 0.84
+coreB 14 410 4392 0.8354
+coreB 15 404 4190 0.8358
+coreB 16 404 4023 0.8336
+coreB 17 390 3873 0.857
+coreB 18 392 3735 0.8563
+coreB 19 380 3615 0.8593
+coreB 20 370 3484 0.855
+coreB 21 380 3361 0.8591
+coreB 22 371 3270 0.8515
+coreB 23 359 3172 0.8519
+coreB 24 357 3067 0.848
+coreB 25 346 2965 0.8522
+coreB 26 345 2869 0.8518
+coreB 27 342 2776 0.8503
+coreB 28 339 2697 0.8506
+coreB 29 333 2626 0.848
+coreB 30 325 2560 0.8478
+coreB 31 318 2480 0.8513
+coreB 32 316 2416 0.8493
+coreB 33 311 2354 0.8502
+coreB 34 309 2298 0.8457
+coreB 35 299 2237 0.8441
+coreB 36 301 2183 0.8445
+coreB 37 309 2137 0.8426
+coreB 38 294 2085 0.8484
+coreB 39 292 2034 0.8417
+coreB 40 283 1978 0.8407
+coreB 41 289 1935 0.6009
+### Running Time: 35.47
+### Application: BiCore
+### Graph: ../../inputs/book_adj
+### Threads: 2
+### n: 445801
+### m: 2299478
+### Params: -nb (num_buckets) = 16 -bi = 105277
+### ------------------------------------
+begin
+resized to: 524288
+### rho = 381 k_{max} = 41
+# PBBS time: bucket time: 0.0261
+resized to: 131072
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 524288
+resized to: 131072
+resized to: 524288
+resized to: 524288
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 262144
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 524288
+resized to: 2097152
+resized to: 2097152
+coreA 1 332 2502 0.8853
+coreA 2 321 2037 0.8645
+coreA 3 317 1851 0.8546
+coreA 4 300 1752 0.8531
+coreA 5 303 1686 0.8505
+coreA 6 302 1605 0.8464
+coreA 7 289 1550 0.8466
+coreA 8 290 1502 0.8454
+coreA 9 280 1464 0.8465
+coreA 10 286 1419 0.8424
+coreA 11 280 1387 0.8354
+coreA 12 273 1357 0.838
+coreA 13 273 1327 0.8382
+coreA 14 274 1308 0.8385
+coreA 15 270 1292 0.8342
+coreA 16 275 1270 0.8315
+coreA 17 265 1248 0.8321
+coreA 18 264 1230 0.8307
+coreA 19 268 1213 0.8329
+coreA 20 259 1197 0.8314
+coreA 21 263 1184 0.8309
+coreA 22 260 1162 0.8291
+coreA 23 259 1150 0.8282
+coreA 24 249 1139 0.8339
+coreA 25 254 1120 0.8357
+coreA 26 251 1100 0.8301
+coreA 27 254 1083 0.833
+coreA 28 241 1063 0.8363
+coreA 29 245 1047 0.8396
+coreA 30 247 1030 0.8369
+coreA 31 246 1014 0.8428
+coreA 32 245 1009 0.8359
+coreA 33 242 999 0.8353
+coreA 34 249 989 0.8302
+coreA 35 235 982 0.8333
+coreA 36 239 967 0.8313
+coreA 37 237 950 0.8349
+coreA 38 237 944 0.8323
+coreA 39 241 931 0.8314
+coreA 40 231 924 0.8329
+coreA 41 236 916 0.8356
+coreB 1 681 13601 1.034
+coreB 2 622 13562 0.9542
+coreB 3 577 10589 0.9103
+coreB 4 542 8928 0.9021
+coreB 5 519 7941 0.8895
+coreB 6 516 7208 0.8776
+coreB 7 498 6603 0.8713
+coreB 8 478 6112 0.8613
+coreB 9 472 5738 0.8555
+coreB 10 457 5399 0.8539
+coreB 11 446 5120 0.8479
+coreB 12 425 4857 0.8573
+coreB 13 412 4608 0.8397
+coreB 14 410 4392 0.839
+coreB 15 404 4190 0.8401
+coreB 16 404 4023 0.837
+coreB 17 390 3873 0.8619
+coreB 18 392 3735 0.8637
+coreB 19 380 3615 0.86
+coreB 20 370 3484 0.8553
+coreB 21 380 3361 0.8505
+coreB 22 371 3270 0.849
+coreB 23 359 3172 0.8512
+coreB 24 357 3067 0.8511
+coreB 25 346 2965 0.8521
+coreB 26 345 2869 0.8529
+coreB 27 342 2776 0.8606
+coreB 28 339 2697 0.8525
+coreB 29 333 2626 0.8512
+coreB 30 325 2560 0.8503
+coreB 31 318 2480 0.845
+coreB 32 316 2416 0.8439
+coreB 33 311 2354 0.8452
+coreB 34 309 2298 0.8436
+coreB 35 299 2237 0.846
+coreB 36 301 2183 0.8435
+coreB 37 309 2137 0.8429
+coreB 38 294 2085 0.8424
+coreB 39 292 2034 0.8401
+coreB 40 283 1978 0.8396
+coreB 41 289 1935 0.5621
+### Running Time: 35.52
+# time per iter: 35.58
