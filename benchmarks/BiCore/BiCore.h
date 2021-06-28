@@ -319,5 +319,5 @@ namespace gbbs
 		em.del();
 		return std::pair<size_t,size_t>(rho_beta,max_alpha);
 	}
-
+	
 } // namespace gbbs
