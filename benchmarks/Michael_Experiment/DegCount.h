@@ -38,9 +38,13 @@ namespace gbbs
                     if (p == i)
                         pbbslib::atomic_compare_and_swap(&isSymmetric, false, true);
                 });
+                if(!isSymmetric){
+                    std::cout<<"false"<<std::endl;
+                }
                 assert(isSymmetric);
             });
         });
+        std::cout<<"true"<<std::endl;
     }
 
     template <class Graph>

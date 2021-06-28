@@ -73,9 +73,9 @@ int main()
     vector<int> edges;
     vector<int> edgesB;
     vector<pair<int, int> > edgePair;
-    infile.open("../inputs/record_konect");
+    infile.open("../inputs/arXiv_konect");
     infile.ignore(256, '\n');
-    outfile.open("../inputs/record_adj");
+    outfile.open("../inputs/arXiv_adj2");
     infile >> temp >> numEdges >> numVertexA >> numVertexB;
     for (int i = 0; i < numEdges; i++)
     {
@@ -93,7 +93,7 @@ int main()
         }
         edges.push_back(vertexBNumber + numVertexA - 1);
     }
-    qsort(edgePair.begin(), edgePair.end(), sortbysec);
+    sort(edgePair.begin(), edgePair.end(), sortbysec);
     for (int i = 0; i < numEdges; i++)
     {
         vertexBNumber = edgePair.at(i).second;
