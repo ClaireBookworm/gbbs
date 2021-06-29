@@ -43,9 +43,9 @@ namespace gbbs
 		const size_t n_a = bipartition + 1;
 
 		// AlphaMax[v][B]
-		auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){ return sequence<size_t>(1+G.get_vertex(i+n_a).out_degree());});
+		auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){ return sequence<size_t>(1+G.get_vertex(i+n_a).out_degree(),[](size_t i){return 0;}); });
 		// BetaMax[u][A]
-		auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree());});
+		auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree(),[](size_t i){return 0;}); });
 
 		if(peel_core_alpha!=0){
 			PeelFixA(G, BetaMax, AlphaMax, peel_core_alpha, bipartition, num_buckets);
@@ -99,8 +99,6 @@ namespace gbbs
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
-		// uintE is vertex id
-		// uintT is edge id
 		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
 
 		auto D =
@@ -133,9 +131,10 @@ namespace gbbs
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE new_deg = D[u] - edgesRemoved;
 			D[u] = new_deg;
-			if (new_deg < alpha && max_beta>0)
+			if (new_deg < alpha)
 			{
-				pbbslib::write_max(&BetaMax[u][alpha],max_beta);
+				if(max_beta>0)
+					pbbslib::write_max(&BetaMax[u][alpha],max_beta);
 				return wrap(u, 0);
 			}
 			return std::nullopt;
@@ -228,11 +227,9 @@ namespace gbbs
 			});
 
 		auto mask = sequence<std::tuple<bool, uintE>>(n, [&](size_t i) {
-			if (i < n_a)
-				return std::make_tuple<bool, uintE>(false, 0);
+			if (i < n_a) return std::make_tuple<bool, uintE>(false, 0);
 			return std::make_tuple<bool, uintE>(G.get_vertex(i).out_degree() < beta, 0);
 		});
-
 		auto vDel = vertexSubsetData<uintE>(n, std::move(mask));
 
 		auto cond_fv = [&D, &beta](const uintE &v) { return D[v] >= beta; };
@@ -245,7 +242,7 @@ namespace gbbs
 			uintE new_deg = D[u] - edgesRemoved;
 			D[u] = new_deg;
 			if (new_deg == 0)
-				return std::make_tuple(u, 0);
+				return wrap(u, 0);
 			return std::nullopt;
 		};
 
@@ -254,10 +251,11 @@ namespace gbbs
 			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE new_deg = D[v] - edgesRemoved;
 			D[v] = new_deg;
-			if (new_deg < beta && max_alpha>0)
+			if (new_deg < beta)
 			{
-				pbbslib::write_max(&AlphaMax[v-n_a][beta],max_alpha);
-				return std::make_tuple(v, 0);
+				if(max_alpha>0)
+					pbbslib::write_max(&AlphaMax[v-n_a][beta],max_alpha);
+				return wrap(v, 0);
 			}
 			return std::nullopt;
 		};
@@ -269,24 +267,27 @@ namespace gbbs
 			vDel = nghCount(G, uDel, cond_fv, clearV, em, no_dense);
 		}
 
-		size_t uCount = 0;
+		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]>0);}));
 
-		//memory leak!
-		auto abuckets = make_vertex_buckets(n_a,D,increasing,num_buckets);
+		auto Du =
+			sequence<uintE>(n, [&](size_t i) {
+				if (i > bipartition || D[i] == 0)
+					return std::numeric_limits<uintE>::max();
+				return D[i];
+			});
+
+		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE, uintE>> {
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[u];
-			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_alpha));
+			uintE new_deg = std::max(D[u] - edgesRemoved, static_cast<uintE>(max_alpha));
 			D[u] = new_deg;
 			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
-		uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]>0);}));
 		pt.stop();
-
 		while (finished != uCount)
 		{
 			bt.start();
@@ -296,7 +297,6 @@ namespace gbbs
 
 			if (ubkt.id == 0)
 				continue;
-
 			auto activeU = vertexSubset(n, std::move(ubkt.identifiers));
 			finished += activeU.size(); // add to finished set
 			par_for(0, activeU.size(), [&](size_t i) {
@@ -305,6 +305,7 @@ namespace gbbs
 					pbbslib::write_max(&BetaMax[index][j],beta);
 				});
 			});
+			
 			ft.start();
 			vertexSubsetData deleteV = nghCount(G, activeU, cond_fv, clearV, em, no_dense);
 			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, em, no_dense);
@@ -318,5 +319,5 @@ namespace gbbs
 		em.del();
 		return std::pair<size_t,size_t>(rho_beta,max_alpha);
 	}
-	
+
 } // namespace gbbs
