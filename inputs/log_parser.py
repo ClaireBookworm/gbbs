@@ -6,10 +6,10 @@ rho = []
 times = []
 
 # filein = input("Log File Name (no extension): ")
-filein = "/arXiv_adj_1_threads.txt"
+filein = input("enter file name with no extension: ")
 # filein = "../inputs/" + filein 
 
-for line in fileinput.input(files=filein):
+for line in fileinput(files=filein):
 	line = line[:-1]
 	# lines.append(line)
 	if ("total" in line):
