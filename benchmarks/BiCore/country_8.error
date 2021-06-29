@@ -1,0 +1,200 @@
+# n = 592414 m = 1248804 len = 1841220
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/country_adj
+### Threads: 8
+### n: 592414
+### m: 1248804
+### Params: -nb (num_buckets) = 16 -bi = 590111
+### ------------------------------------
+begin
+resized to: 1048576
+### rho = 34 k_{max} = 6
+# PBBS time: bucket time: 0.0016
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 32768
+resized to: resized to: 1048576
+1048576
+resized to: 1048576
+resized to: 65536
+resized to: 131072
+resized to: 262144
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+coreA 1 283 110602 0.7576
+coreA 2 117 19558 0.5517
+coreA 3 75 6144 0.4872
+coreA 4 30 91 0.466
+coreA 5 20 48 0.4573
+coreA 6 16 31 0.4661
+coreB 1 21 34 0.1814
+coreB 2 19 24 0.5131
+coreB 3 19 24 0.5463
+coreB 4 19 24 0.5589
+coreB 5 19 24 0.5336
+coreB 6 19 24 0.4913
+### Running Time: 1.469
+### Application: BiCore
+### Graph: ../../inputs/country_adj
+### Threads: 8
+### n: 592414
+### m: 1248804
+### Params: -nb (num_buckets) = 16 -bi = 590111
+### ------------------------------------
+begin
+resized to: 1048576
+### rho = 34 k_{max} = 6
+# PBBS time: bucket time: 0.0015
+resized to: 1048576
+resized to: 1048576
+resized to: 32768
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 65536
+resized to: 1048576
+resized to: 131072
+resized to: 262144
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+coreA 1 283 110602 0.7756
+coreA 2 117 19558 0.4514
+coreA 3 75 6144 0.4807
+coreA 4 30 91 0.4356
+coreA 5 20 48 0.4377
+coreA 6 16 31 0.4212
+coreB 1 21 34 0.2072
+coreB 2 19 24 0.5017
+coreB 3 19 24 0.5406
+coreB 4 19 24 0.4495
+coreB 5 19 24 0.5357
+coreB 6 19 24 0.5429
+### Running Time: 1.381
+### Application: BiCore
+### Graph: ../../inputs/country_adj
+### Threads: 8
+### n: 592414
+### m: 1248804
+### Params: -nb (num_buckets) = 16 -bi = 590111
+### ------------------------------------
+begin
+resized to: 1048576
+### rho = 34 k_{max} = 6
+# PBBS time: bucket time: 0.0013
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 32768
+resized to: 65536
+resized to: 131072
+resized to: 262144
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+coreA 1 283 110602 0.8205
+coreA 2 117 19558 0.4842
+coreA 3 75 6144 0.4257
+coreA 4 30 91 0.4632
+coreA 5 20 48 0.4844
+coreA 6 16 31 0.4424
+coreB 1 21 34 0.1843
+coreB 2 19 24 0.4395
+coreB 3 19 24 0.4557
+coreB 4 19 24 0.456
+coreB 5 19 24 0.5004
+coreB 6 19 24 0.4757
+### Running Time: 1.419
+### Application: BiCore
+### Graph: ../../inputs/country_adj
+### Threads: 8
+### n: 592414
+### m: 1248804
+### Params: -nb (num_buckets) = 16 -bi = 590111
+### ------------------------------------
+begin
+resized to: 1048576
+### rho = 34 k_{max} = 6
+# PBBS time: bucket time: 0.0014
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 32768
+resized to: 65536
+resized to: 131072
+resized to: 262144
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+coreA 1 283 110602 0.6607
+coreA 2 117 19558 0.4847
+coreA 3 75 6144 0.4495
+coreA 4 30 91 0.4357
+coreA 5 20 48 0.4318
+coreA 6 16 31 0.4535
+coreB 1 21 34 0.1827
+coreB 2 19 24 0.4071
+coreB 3 19 24 0.4459
+coreB 4 19 24 1.07
+coreB 5 19 24 0.4153
+coreB 6 19 24 0.4485
+### Running Time: 1.372
+### Application: BiCore
+### Graph: ../../inputs/country_adj
+### Threads: 8
+### n: 592414
+### m: 1248804
+### Params: -nb (num_buckets) = 16 -bi = 590111
+### ------------------------------------
+begin
+resized to: 1048576
+### rho = 34 k_{max} = 6
+# PBBS time: bucket time: 0.0014
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 32768
+resized to: 65536
+resized to: 131072
+resized to: 262144
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+resized to: 1048576
+coreA 1 283 110602 0.7849
+coreA 2 117 19558 0.4686
+coreA 3 75 6144 0.4406
+coreA 4 30 91 0.4399
+coreA 5 20 48 0.4581
+coreA 6 16 31 0.447
+coreB 1 21 34 0.1841
+coreB 2 19 24 0.4752
+coreB 3 19 24 0.4799
+coreB 4 19 24 0.4918
+coreB 5 19 24 0.4918
+coreB 6 19 24 0.4697
+### Running Time: 1.371
+# time per iter: 1.402

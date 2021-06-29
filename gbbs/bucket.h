@@ -97,32 +97,7 @@ struct buckets {
         allocated(true) {
     // Initialize array consisting of the materialized buckets.
     bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
-    initialize();
-  }
 
-  buckets(D& _d, bucket_order _order, size_t _total_buckets)
-      : d(_d),
-        order(_order),
-        open_buckets(_total_buckets - 1),
-        total_buckets(_total_buckets),
-        cur_bkt(0),
-        max_bkt(_total_buckets),
-        num_elms(0),
-        allocated(true) {
-    // Initialize array consisting of the materialized buckets.
-    bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
-  }
-
-  inline void reinitialize(size_t _n, D& _d){
-    n = _n;
-    d = _d;
-    cur_bkt = 0;
-    num_elms = 0;
-    for(size_t i=0;i<total_buckets;i++) bkts[i].clear();
-    initialize();
-  }
-
-  inline void initialize(){
     // Set the current range being processed based on the order.
     if (order == increasing) {
       auto imap_f = [&](size_t i) { return d[i]; };
@@ -149,7 +124,7 @@ struct buckets {
     // Update buckets with all (id, bucket) pairs. Identifiers with bkt =
     // null_bkt are ignored by update_buckets.
     auto get_id_and_bkt = [&](ident_t i) -> std::optional<std::tuple<ident_t, bucket_id> > {
-      bucket_id bkt = d[i];
+      bucket_id bkt = _d[i];
       if (bkt != null_bkt) {
         bkt = to_range(bkt);
       }
