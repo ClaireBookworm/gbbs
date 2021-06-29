@@ -1,25 +1,35 @@
 import fileinput
 import csv
 
-lines = [[]]
-rho = []
-times = []
+linesA = [[]]
+linesB = [[]]
+rhoA = []
+rhoB = []
+timesA = []
+timesB = []
 
-# filein = input("Log File Name (no extension): ")
-filein = input("enter file name with no extension: ")
-# filein = "../inputs/" + filein 
 
-for line in fileinput(files=filein):
+filein = input("Log File Name (no extension): ")
+
+for line in fileinput.input(files=filein):
 	line = line[:-1]
 	# lines.append(line)
 	if ("total" in line):
 		print("total:" + line)
 		continue;
-	
-	lines.append(line.split(' '))
 	print(line.split(' '))
-	rho.append(line.split(' ')[2])
-	times.append(line.split(' ')[4])
+	if line.split(' ')[0] == "coreA":
+		linesA.append(line.split(' '))
+		rhoA.append(line.split(' ')[2])
+		timesA.append(line.split(' ')[4])
+	elif line.split(' ')[0] == "coreB":
+		linesB.append(line.split(' '))
+		rhoB.append(line.split(' ')[2])
+		timesB.append(line.split(' ')[4])
+	else:
+		"Error"
+	# rho.append(line.split(' ')[2])
+	# times.append(line.split(' ')[4])
 
 graph_title = input("Enter Graph Title: ")
 
@@ -34,4 +44,5 @@ def write_results(file, xlabel, ylabel):
 
 # print(lines)
 
-write_results(graph_title + ".csv", rho, times)
+write_results(graph_title + "-A.csv", rhoA, timesA)
+write_results(graph_title + "-B.csv", rhoB, timesB)
