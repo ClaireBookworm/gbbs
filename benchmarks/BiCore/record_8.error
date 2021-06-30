@@ -1,0 +1,15 @@
+# n = 186689 m = 466572 len = 653263
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/record_adj
+### Threads: 8
+### n: 186689
+### m: 466572
+### Params: -nb (num_buckets) = 16 -bi = 168267
+### ------------------------------------
+begin
+resized to: 262144
+### rho = 75 k_{max} = 6
+# PBBS time: bucket time: 0.0030
