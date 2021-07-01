@@ -20,6 +20,8 @@ filein = input("Log File Name (no extension): ")
 
 for line in fileinput.input(files=filein):
 	line = line[:-1]
+	if "coreA" not in line and "coreB" not in line and "total" not in line:
+		continue
 	lines.append(line)
 	if "coreA" in line and not stopped:
 		deltaC+=1
