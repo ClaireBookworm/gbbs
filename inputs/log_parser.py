@@ -1,5 +1,6 @@
 import fileinput
 import csv
+import os
 
 # linesA = [[]]
 # linesB = [[]]
@@ -12,12 +13,18 @@ rho = []
 times = []
 sum = 0
 count = 0
-
+deltaC = 0
+stopped = False
+print(os.getcwd())
 filein = input("Log File Name (no extension): ")
 
 for line in fileinput.input(files=filein):
 	line = line[:-1]
 	lines.append(line)
+	if "coreA" in line and not stopped:
+		deltaC+=1
+	if "coreB" in line:
+		stopped=True
 	if ("total" in line):
 		print("total:" + line)
 		sum += float(line.split(' ')[1])
@@ -37,6 +44,9 @@ for line in fileinput.input(files=filein):
 	rho.append(line.split(' ')[2])
 	times.append(line.split(' ')[4])
 
+print ("Rho max: "+str(max(rho)))
+print ("delta: "+str(deltaC))
+
 graph_title = input("Enter Graph Title: ")
 
 def write_results(file, xlabel, ylabel):
@@ -52,6 +62,6 @@ def write_results(file, xlabel, ylabel):
 write_results(graph_title + ".csv", rho, times)
 print(sum)
 print (sum / float(count))
-print ("Count: " + count)
+print ("Count: " + str(count))
 # write_results(graph_title + "-A.csv", rhoA, timesA)
 # write_results(graph_title + "-B.csv", rhoB, timesB)
