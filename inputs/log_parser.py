@@ -31,7 +31,12 @@ for line in fileinput.input(files=filein):
 		print("total:" + line)
 		sum += float(line.split(' ')[1])
 		count += 1
-		continue;
+		continue
+	if "time per iter" in line:
+		print("total:" + line)
+		sum += float(line.split(' ')[1])
+		count += 1
+		continue
 	print(line.split(' '))
 	# if line.split(' ')[0] == "coreA":
 	# 	linesA.append(line.split(' '))
