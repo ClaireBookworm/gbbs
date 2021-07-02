@@ -1,0 +1,111 @@
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/actor_adj
+### Threads: 8
+### n: 1199919
+### m: 7564926
+### Params: -nb (num_buckets) = 16 -bi = 303616
+### ------------------------------------
+begin
+resized to: 1048576
+### rho = 691 k_{max} = 23
+# PBBS time: bucket time: 0.1459
+resized to: 1048576
+resized to: 262144
+resized to: 1048576
+resized to: 2097152
+resized to: 2097152
+resized to: 2097152
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 2097152
+resized to: 2097152
+resized to: 4194304
+resized to: 2097152
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: resized to: 1048576
+2097152
+resized to: 1048576
+resized to: 262144
+resized to: 1048576
+resized to: 1048576
+resized to: 2097152
+resized to: 2097152
+resized to: 2097152
+resized to: 4194304
+resized to: 4194304
+resized to: 1048576
+resized to: 524288
+resized to: 1048576
+resized to: 2097152
+resized to: 2097152
+resized to: 2097152
+resized to: 4194304
+resized to: 4194304
+resized to: 4194304
+resized to: 1048576
+resized to: 2097152
+resized to: 2097152
+resized to: 524288
+resized to: 1048576
+resized to: 1048576
+coreA 1 395 1590 11.1
+coreA 2 395 1590 5.279
+coreA 3 378 1587 1.106
+coreA 4 379 1575 5.225
+coreA 5 367 1561 5.216
+coreA 6 370 1523 2.387
+coreA 7 356 1465 5.184
+coreA 8 354 1315 5.163
+coreA 9 343 1144 2.43
+coreA 10 335 947 5.124
+coreA 11 320 785 5.077
+coreA 12 313 663 2.491
+coreA 13 313 652 5.06
+coreA 14 302 648 4.934
+coreA 15 292 645 5.018
+coreA 16 289 636 4.932
+coreA 17 278 630 2.566
+coreA 18 274 621 4.952
+coreA 19 267 606 4.922
+coreA 20 261 600 5.007
+coreA 21 255 585 4.926
+coreA 22 253 575 4.953
+coreA 23 249 568 4.854
+coreB 1 287 1334 1.433
+coreB 2 254 1002 4.803
+coreB 3 239 938 5.43
+coreB 4 233 877 4.62
+coreB 5 221 820 5.274
+coreB 6 218 770 4.526
+coreB 7 207 726 5.167
+coreB 8 204 677 4.96
+coreB 9 194 639 4.4
+coreB 10 195 591 5.208
+coreB 11 186 563 4.05
+coreB 12 182 519 4.421
+coreB 13 178 495 5.132
+coreB 14 181 467 4.386
+coreB 15 176 448 5.099
+coreB 16 170 419 4.069
+coreB 17 170 385 4.362
+coreB 18 166 370 5.013
+coreB 19 161 345 4.042
+coreB 20 163 327 4.305
+coreB 21 159 311 5.032
+coreB 22 153 296 4.05
+coreB 23 149 282 2.824
+### Running Time: 31.32
+# time per iter: 31.32
