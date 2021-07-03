@@ -1,0 +1,17 @@
+# n = 499610 m = 17090614 len = 17590226
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 36864, node size: 16392, bytes: 604274688
+### Application: BiCore
+### Graph: ../../inputs/flickr_adj
+### Threads: 60
+### n: 499610
+### m: 17090614
+### Params: -nb (num_buckets) = 16 -bi = 395978
+### ------------------------------------
+begin
+resized to: 524288
+resized to: 1048576
+resized to: 2097152
+### rho = 1251 k_{max} = 147
+# PBBS time: bucket time: 0.0652
