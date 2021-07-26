@@ -73,23 +73,17 @@ namespace gbbs
 	 	// 	auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 	 	// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 		// }
-		auto PeelFixAllA = [&](){
-			par_for(1,delta+1,[&](size_t core){
-				timer t_in; t_in.start();
-				auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
-				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-			});
-		};
+		par_for(1,delta+1,[&](size_t core){
+			timer t_in; t_in.start();
+			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+		});
 
-		auto PeelFixAllB = [&](){
-			par_for(1,delta+1,[&](size_t core){
-				timer t_in; t_in.start();
-				auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
-				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-			});
-		};
-
-		par_do(PeelFixAllA,PeelFixAllB);
+		par_for(1,delta+1,[&](size_t core){
+			timer t_in; t_in.start();
+			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+		});
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
