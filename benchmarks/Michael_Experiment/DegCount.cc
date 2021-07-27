@@ -2,6 +2,13 @@
 
 namespace gbbs
 {
+    struct Storage{
+        int a;
+        Storage(){}
+        void alloc(int id){
+            a = id;
+        }
+    };
     template <class Graph>
     double DegCount_runner(Graph &G, commandLine P)
     {
@@ -12,17 +19,21 @@ namespace gbbs
         std::cout << "### m: " << G.m << std::endl;
         std::cout << "### ------------------------------------" << std::endl;
         std::cout << "### ------------------------------------" << std::endl;
-
-        isSymmetry(G);
-        timer t;
-        t.start();
-        DegCount1(G);
-        double tt = t.stop();
-        std::cout << "### Running Time 1: " << tt << std::endl;
-        t.start();
-        DegCount2(G);
-        tt = t.stop();
-        std::cout << "### Running Time 2: " << tt << std::endl;
+        auto init_f = [&](Storage* stor){stor->alloc(worker_id());};
+        auto finish_f = [&](Storage* stor){return;};
+        parallel_for_alloc<Storage>(init_f, finish_f, 0, 40, [&](size_t i, Storage* stor){
+            std::cout<< i << " " << worker_id()<< " "<< stor->a << " " << stor <<std::endl;
+        });
+        // isSymmetry(G);
+        // timer t;
+        // t.start();
+        // DegCount1(G);
+        double tt = 0;
+        // std::cout << "### Running Time 1: " << tt << std::endl;
+        // t.start();
+        // DegCount2(G);
+        // tt = t.stop();
+        // std::cout << "### Running Time 2: " << tt << std::endl;
         return tt;
     }
 
