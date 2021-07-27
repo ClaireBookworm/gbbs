@@ -81,18 +81,24 @@ namespace gbbs
 		// }
 		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m/50);};
 		auto finish_f = [&](PeelingMemory* mem){mem->~PeelingMemory();};
-		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
+		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,2*delta+1,[&](size_t core, PeelingMemory* mem){
 			timer t_in; t_in.start();
-			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
-			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			if(core%2==1){
+				core = (core+1)/2;
+				auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
+				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			}else{
+				core /= 2;
+				auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
+				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+			}
 		});
 
-		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
-			timer t_in; t_in.start();
-			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
-			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-		});
-
+		// parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
+		// 	timer t_in; t_in.start();
+		// 	auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
+		// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+		// });
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
