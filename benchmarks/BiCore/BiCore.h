@@ -115,7 +115,6 @@ namespace gbbs
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m/50);
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
@@ -158,8 +157,8 @@ namespace gbbs
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
-			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
-			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
+			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, mem->em, no_dense);
+			uDel = nghCount(G, vDel, cond_fu, clearU, mem->em, no_dense);
 		}
 
 		size_t vCount = 0;
@@ -205,10 +204,10 @@ namespace gbbs
 				});
 			});
 			ft.start();
-			vertexSubsetData deleteU = nghCount(G, activeV, cond_fu, clearU, em, no_dense);
+			vertexSubsetData deleteU = nghCount(G, activeV, cond_fu, clearU, mem->em, no_dense);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 
-			vertexSubsetData movedV = nghCount(G, deleteU, cond_fv, getVBuckets, em, no_dense);
+			vertexSubsetData movedV = nghCount(G, deleteU, cond_fv, getVBuckets, mem->em, no_dense);
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			ft.stop();
 			bt.start();
@@ -233,8 +232,6 @@ namespace gbbs
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
 
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m/50);
-		
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
@@ -277,8 +274,8 @@ namespace gbbs
 		// nghCount counts the # of neighbors
 		while (!vDel.isEmpty())
 		{
-			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_fu, clearZeroU, em, no_dense);
-			vDel = nghCount(G, uDel, cond_fv, clearV, em, no_dense);
+			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_fu, clearZeroU, mem->em, no_dense);
+			vDel = nghCount(G, uDel, cond_fv, clearV, mem->em, no_dense);
 		}
 
 		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]>0);}));
@@ -321,8 +318,8 @@ namespace gbbs
 			});
 			
 			ft.start();
-			vertexSubsetData deleteV = nghCount(G, activeU, cond_fv, clearV, em, no_dense);
-			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, em, no_dense);
+			vertexSubsetData deleteV = nghCount(G, activeU, cond_fv, clearV, mem->em, no_dense);
+			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, mem->em, no_dense);
 			ft.stop();
 			bt.start();
 			abuckets.update_buckets(movedU);
