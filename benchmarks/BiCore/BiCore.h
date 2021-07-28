@@ -83,8 +83,8 @@ namespace gbbs
 	 	// 	auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 	 	// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 		// }
-		// auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m/50);};
-		// auto finish_f = [&](PeelingMemory* mem){return;};
+		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m/50);};
+		auto finish_f = [&](PeelingMemory* mem){return;};
 		// PeelingMemory* mem = new PeelingMemory();
 		// mem->alloc((size_t)G.m/50);
 		// for(size_t core = 1; core<=delta*2; core++){
