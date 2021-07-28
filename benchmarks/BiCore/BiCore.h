@@ -81,7 +81,7 @@ namespace gbbs
 	 	// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 		// }
 		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m/50);};
-		auto finish_f = [&](PeelingMemory* mem){mem->~PeelingMemory();};
+		auto finish_f = [&](PeelingMemory* mem){return;};
 
 		
 		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta*2+1,[&](size_t core, PeelingMemory* mem){
