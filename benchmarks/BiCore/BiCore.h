@@ -34,11 +34,16 @@ namespace gbbs
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 	struct PeelingMemory{
 		hist_table<uintE, uintE> em;//, em_b;
+		buckets<sequence<uintE>, uintE, uintE>* vertexBuckets;
 		PeelingMemory(){}
-		void alloc(size_t size){ em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); }
+		void alloc(size_t size, size_t num_buckets){ 
+			em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); 
+			auto seq = sequence<uintE>(0);
+			vertexBuckets = new buckets<sequence<uintE>, uintE, uintE>(sequence<uintE>(),increasing,num_buckets);
+		}
 		void init(){ 
 			auto empty = std::make_tuple(UINT_E_MAX, 0); 
-			par_for(0, em.size, 2048, [&] (size_t i) { em.table[i] = empty; }); 
+			par_for(0, em.size, 2048, [&] (size_t i) { em.table[i] = empty; });
 		}
 		~PeelingMemory(){ em.del(); }
 	};
@@ -72,56 +77,19 @@ namespace gbbs
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 
-		// for(size_t core = 1; core<=delta; core++){
-		// 	timer t_in; t_in.start();
-		// 	auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
-		// 	msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-		// }
-
-		// for(size_t core = 1; core<=delta; core++){
-		// 	timer t_in; t_in.start();
-	 	// 	auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
-	 	// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-		// }
-		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m);};
+		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets);};
 		auto finish_f = [&](PeelingMemory* mem){return;};
-		// PeelingMemory* mem = new PeelingMemory();
-		// mem->alloc((size_t)G.m/50);
-		// for(size_t core = 1; core<=delta*2; core++){
-		// 	timer t_in; t_in.start();
-		//  	mem->init();
-		// 	if(core % 2 == 1){
-		// 		size_t coreA = (core+1)/2;
-		// 		auto retA = PeelFixA(G, BetaMax, AlphaMax, coreA, bipartition, num_buckets, mem);
-		// 		msgA[coreA]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-		// 	}else{
-		// 		size_t coreB = core / 2;
-		// 		auto retB = PeelFixB(G, BetaMax, AlphaMax, coreB, bipartition, num_buckets, mem);
-		// 	 	msgB[coreB]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-		// 	}
-		// }
 
-		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta*2+1,[&](size_t core, PeelingMemory* mem){
+		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
 			timer t_in; t_in.start();
 			mem->init();
-			if(core % 2 == 1){
-				core = (core+1)/2;
-				auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
-				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-			}else{
-				core /= 2;
-				auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
-				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-			}
+			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
+			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			mem->init();
+			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
+			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+			
 		});
-
-		// parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
-		// 	timer t_in; t_in.start();
-		// 	mem->init();
-		// 	auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
-		// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-		// });
-
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
@@ -132,7 +100,7 @@ namespace gbbs
 	template <class Graph>
 	inline std::pair<size_t,size_t> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, 
 	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
-	 size_t bipartition = 2, size_t num_buckets=16, PeelingMemory* mem = nullptr)
+	 size_t bipartition = 2, PeelingMemory* mem = nullptr)
 	{
 		timer bt,ft,pt;
 		pt.start();
@@ -192,14 +160,15 @@ namespace gbbs
 
 		size_t vCount = 0;
 
-		auto vD =
+		auto Dv =
 			sequence<uintE>(n, [&](size_t i) {
 				if (i <= bipartition || D[i] == 0)
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
 
-		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
+		//auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
+		mem->vertexBuckets->init(n,std::move(Dv));
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
@@ -211,14 +180,14 @@ namespace gbbs
 			uintE deg = D[v];
 			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
 			D[v] = new_deg;
-			return wrap(v, bbuckets.get_bucket(new_deg));
+			return wrap(v, mem->vertexBuckets->get_bucket(new_deg));
 		};
 		pt.stop();
 
 		while (finished != vCount)
 		{
 			bt.start();
-			auto vbkt = bbuckets.next_bucket();
+			auto vbkt = mem->vertexBuckets->next_bucket();
 			bt.stop();
 			max_beta = std::max(max_beta, vbkt.id);
 			if (vbkt.id == 0)
@@ -240,18 +209,18 @@ namespace gbbs
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			ft.stop();
 			bt.start();
-			bbuckets.update_buckets(movedV);
+			mem->vertexBuckets->update_buckets(movedV);
 			bt.stop();
 			rho_alpha++;
 		}
-		bbuckets.del();
+		//bbuckets.del();
 		return std::pair<size_t,size_t>(rho_alpha,max_beta);
 	}
 
 	template <class Graph>
 	inline std::pair<size_t,size_t> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, 
 	sequence<sequence<size_t>> &AlphaMax, size_t beta,
-	size_t bipartition = 2, size_t num_buckets=16, PeelingMemory* mem = nullptr)
+	size_t bipartition = 2, PeelingMemory* mem = nullptr)
 	{
 		timer bt,ft,pt;
 		pt.start();
@@ -316,7 +285,8 @@ namespace gbbs
 				return D[i];
 			});
 
-		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
+		//auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
+		mem->vertexBuckets->init(n,std::move(Du));
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -324,14 +294,14 @@ namespace gbbs
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE new_deg = std::max(D[u] - edgesRemoved, static_cast<uintE>(max_alpha));
 			D[u] = new_deg;
-			return wrap(u, abuckets.get_bucket(new_deg));
+			return wrap(u, mem->vertexBuckets->get_bucket(new_deg));
 		};
 
 		pt.stop();
 		while (finished != uCount)
 		{
 			bt.start();
-			auto ubkt = abuckets.next_bucket();
+			auto ubkt = mem->vertexBuckets->next_bucket();
 			bt.stop();
 			max_alpha = std::max(max_alpha, ubkt.id);
 
@@ -351,11 +321,11 @@ namespace gbbs
 			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, mem->em, no_dense);
 			ft.stop();
 			bt.start();
-			abuckets.update_buckets(movedU);
+			mem->vertexBuckets->update_buckets(movedU);
 			bt.stop();
 			rho_beta++;
 		}
-		abuckets.del();
+		//abuckets.del();
 		return std::pair<size_t,size_t>(rho_beta,max_alpha);
 	}
 
