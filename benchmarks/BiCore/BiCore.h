@@ -35,10 +35,8 @@ namespace gbbs
 	struct PeelingMemory{
 		hist_table<uintE, uintE> em;//, em_b;
 		PeelingMemory(){}
-		void alloc(size_t size){ 
-			em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); 
-			//em_b = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); 
-		}
+		void alloc(size_t size){ em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); }
+		void init(){ auto empty = std::make_tuple(UINT_E_MAX, 0); par_for(0, em.size, 2048, [&] (size_t i) { em.table[i] = empty; }); }
 		~PeelingMemory(){ em.del(); }
 	};
 
@@ -88,6 +86,7 @@ namespace gbbs
 		
 		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta*2+1,[&](size_t core, PeelingMemory* mem){
 			timer t_in; t_in.start();
+			mem->init();
 			if(core%2==1){
 				core = (core+1)/2;
 				auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
