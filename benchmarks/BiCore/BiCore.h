@@ -106,7 +106,7 @@ namespace gbbs
 			mem->init();
 			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-			mem->init();
+			mem->alloc((size_t)G.m/50);
 			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets, mem);
 			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 		});
