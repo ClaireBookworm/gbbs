@@ -88,11 +88,11 @@ namespace gbbs
 			timer t_in; t_in.start();
 		 	mem->init();
 			if(core % 2 == 1){
-				coreA = (core+1)/2;
+				size_t coreA = (core+1)/2;
 				auto retA = PeelFixA(G, BetaMax, AlphaMax, coreA, bipartition, num_buckets, mem);
 				msgA[coreA]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			}else{
-				coreB = core / 2;
+				size_t coreB = core / 2;
 				auto retB = PeelFixB(G, BetaMax, AlphaMax, coreB, bipartition, num_buckets, mem);
 			 	msgB[coreB]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 			}
