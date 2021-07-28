@@ -34,18 +34,23 @@ namespace gbbs
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 	struct PeelingMemory{
 		hist_table<uintE, uintE> em;//, em_b;
-		buckets<sequence<uintE>, uintE, uintE>* vertexBuckets;
+		buckets<sequence<uintE>, uintE, uintE>* bbuckets;
+		buckets<sequence<uintE>, uintE, uintE>* abuckets;
+		sequence<uintE> seq_b;
+		sequence<uintE> seq_a;
 		PeelingMemory(){}
-		void alloc(size_t size, size_t num_buckets){ 
+		void alloc(const size_t size, const size_t num_buckets, const size_t n_a, const size_t n_b){ 
 			em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); 
-			auto seq = sequence<uintE>(0);
-			vertexBuckets = new buckets<sequence<uintE>, uintE, uintE>(sequence<uintE>(),increasing,num_buckets);
+			seq_b = sequence<uintE>(n_b);
+			seq_a = sequence<uintE>(n_a);
+			bbuckets = new buckets<sequence<uintE>, uintE, uintE>(n_b,seq_b,increasing,num_buckets);
+			abuckets = new buckets<sequence<uintE>, uintE, uintE>(n_a,seq_a,increasing,num_buckets);
 		}
 		void init(){ 
 			auto empty = std::make_tuple(UINT_E_MAX, 0); 
 			par_for(0, em.size, 2048, [&] (size_t i) { em.table[i] = empty; });
 		}
-		~PeelingMemory(){ em.del(); }
+		~PeelingMemory(){ em.del(); bbuckets->del(); abuckets->del(); }
 	};
 
 	template <class Graph>
@@ -77,7 +82,7 @@ namespace gbbs
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 
-		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets);};
+		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets,n,n);};
 		auto finish_f = [&](PeelingMemory* mem){return;};
 
 		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
@@ -168,7 +173,7 @@ namespace gbbs
 			});
 
 		//auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
-		mem->vertexBuckets->init(n,std::move(Dv));
+		mem->bbuckets->init(n,Dv);
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
@@ -180,14 +185,14 @@ namespace gbbs
 			uintE deg = D[v];
 			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
 			D[v] = new_deg;
-			return wrap(v, mem->vertexBuckets->get_bucket(new_deg));
+			return wrap(v, mem->bbuckets->get_bucket(new_deg));
 		};
 		pt.stop();
 
 		while (finished != vCount)
 		{
 			bt.start();
-			auto vbkt = mem->vertexBuckets->next_bucket();
+			auto vbkt = mem->bbuckets->next_bucket();
 			bt.stop();
 			max_beta = std::max(max_beta, vbkt.id);
 			if (vbkt.id == 0)
@@ -209,7 +214,7 @@ namespace gbbs
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			ft.stop();
 			bt.start();
-			mem->vertexBuckets->update_buckets(movedV);
+			mem->bbuckets->update_buckets(movedV);
 			bt.stop();
 			rho_alpha++;
 		}
@@ -286,7 +291,7 @@ namespace gbbs
 			});
 
 		//auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
-		mem->vertexBuckets->init(n,std::move(Du));
+		mem->abuckets->init(n,Du);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -294,14 +299,14 @@ namespace gbbs
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE new_deg = std::max(D[u] - edgesRemoved, static_cast<uintE>(max_alpha));
 			D[u] = new_deg;
-			return wrap(u, mem->vertexBuckets->get_bucket(new_deg));
+			return wrap(u, mem->abuckets->get_bucket(new_deg));
 		};
 
 		pt.stop();
 		while (finished != uCount)
 		{
 			bt.start();
-			auto ubkt = mem->vertexBuckets->next_bucket();
+			auto ubkt = mem->abuckets->next_bucket();
 			bt.stop();
 			max_alpha = std::max(max_alpha, ubkt.id);
 
@@ -321,7 +326,7 @@ namespace gbbs
 			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, mem->em, no_dense);
 			ft.stop();
 			bt.start();
-			mem->vertexBuckets->update_buckets(movedU);
+			mem->abuckets->update_buckets(movedU);
 			bt.stop();
 			rho_beta++;
 		}
