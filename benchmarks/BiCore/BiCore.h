@@ -54,8 +54,8 @@ namespace gbbs
 		}
 		~PeelingMemory(){ 
 			em.del();
-			// for (size_t i = 0; i < total_buckets; i++) bkts[i].clear();
-			// pbbslib::free_array(bkts);
+			for (size_t i = 0; i < total_buckets; i++) bkts[i].clear();
+			pbbslib::free_array(bkts);
 		}
 	};
 
@@ -89,7 +89,7 @@ namespace gbbs
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 
 		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets);};
-		auto finish_f = [&](PeelingMemory* mem){return;};
+		auto finish_f = [&](PeelingMemory* mem){mem->~PeelingMemory();};
 		// block serialization
 		// estimate work
 		// prefix sum + greedy blocking
