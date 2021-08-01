@@ -101,13 +101,14 @@ struct buckets {
     init();
   }
 
-  buckets(size_t _n, D& _d, id_dyn_arr* _bkts, bucket_order _order)
+  buckets(size_t _n, D& _d, id_dyn_arr* _bkts, bucket_order _order, size_t _total_buckets)
       : n(_n), // note d.size is not used anywhere
         d(_d),// d is an arr of bucket_ids indicating where each item should go
         order(_order),
-        open_buckets(total_buckets - 1),
+        open_buckets(_total_buckets - 1),
+        total_buckets(_total_buckets),
         cur_bkt(0),
-        max_bkt(total_buckets),
+        max_bkt(_total_buckets),
         num_elms(0),
         allocated(true) {
     // Initialize array consisting of the materialized buckets.
@@ -499,8 +500,8 @@ inline buckets<D, uintE, uintE> make_vertex_buckets(size_t n, D& d, bucket_order
 
 template <class D, class E>
 inline buckets<D, uintE, uintE> make_vertex_buckets(size_t n, D& d, E* bkts, bucket_order 
-      order) {
-  return buckets<D, uintE, uintE>(n, d, bkts, order);
+                                order, size_t total_buckets = 128) {
+  return buckets<D, uintE, uintE>(n, d, bkts, order, total_buckets);
 }
 
 // ident_t := uintE, bucket_t := bucket_t

@@ -188,7 +188,7 @@ namespace gbbs
 				return D[i];
 			});
 
-		auto bbuckets = make_vertex_buckets(n,Dv,mem->bkts,increasing);
+		auto bbuckets = make_vertex_buckets(n,Dv,mem->bkts,increasing,mem->total_buckets);
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
@@ -309,7 +309,7 @@ namespace gbbs
 			});
 
 		//auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
-		auto abuckets = make_vertex_buckets(n,Du,mem->bkts,increasing);
+		auto abuckets = make_vertex_buckets(n,Du,mem->bkts,increasing,mem->total_buckets);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
