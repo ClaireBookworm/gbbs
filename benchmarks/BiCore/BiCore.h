@@ -34,23 +34,29 @@ namespace gbbs
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 	struct PeelingMemory{
 		hist_table<uintE, uintE> em;//, em_b;
-		buckets<sequence<uintE>, uintE, uintE>* bbuckets;
-		buckets<sequence<uintE>, uintE, uintE>* abuckets;
-		sequence<uintE> seq_b;
-		sequence<uintE> seq_a;
+		using id_dyn_arr = pbbslib::dyn_arr<uintE>; 
+		id_dyn_arr* bkts;
+		size_t total_buckets = 0;
+
 		PeelingMemory(){}
-		void alloc(const size_t size, const size_t num_buckets, const size_t n_a, const size_t n_b){ 
+
+		void alloc(const size_t size, const size_t num_buckets){ 
 			em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), size); 
-			seq_b = sequence<uintE>(n_b);
-			seq_a = sequence<uintE>(n_a);
-			bbuckets = new buckets<sequence<uintE>, uintE, uintE>(n_b,seq_b,increasing,num_buckets);
-			abuckets = new buckets<sequence<uintE>, uintE, uintE>(n_a,seq_a,increasing,num_buckets);
+			bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
+			total_buckets = num_buckets;
 		}
 		void init(){ 
 			auto empty = std::make_tuple(UINT_E_MAX, 0); 
 			par_for(0, em.size, 2048, [&] (size_t i) { em.table[i] = empty; });
+			// allocate more space to record which position of hist table is changed
+			// use array_filled (with size larger than the max operation we can make to hist table)
+			// atomically increase current_step
 		}
-		~PeelingMemory(){ em.del(); bbuckets->del(); abuckets->del(); }
+		~PeelingMemory(){ 
+			em.del();
+			for (size_t i = 0; i < total_buckets; i++) bkts[i].clear();
+			pbbslib::free_array(bkts);
+		}
 	};
 
 	template <class Graph>
@@ -82,18 +88,25 @@ namespace gbbs
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 
-		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets,n,n);};
+		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets);};
 		auto finish_f = [&](PeelingMemory* mem){return;};
-
+		// block serialization
+		// estimate work
+		// prefix sum + greedy blocking
+		// for{
+		// 	par_for{
+		// 		//estimate work and use it to inform the size of par_for so each run of par_for is similar
+		// 	}
+		// }
 		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
 			timer t_in; t_in.start();
 			mem->init();
+			// keep the array and reconstruct bucket each time
 			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			mem->init();
 			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-			
 		});
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
@@ -157,6 +170,9 @@ namespace gbbs
 		};
 
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
+		// (0,0) --> (a,0)
+		// (0,0) --> (a-1,0) (blocked parallelism)
+		// O(delta * n)
 		while (!uDel.isEmpty())
 		{
 			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, mem->em, no_dense);
@@ -172,11 +188,13 @@ namespace gbbs
 				return D[i];
 			});
 
-		//auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
-		mem->bbuckets->init(n,Dv);
+		auto bbuckets = make_vertex_buckets(n,Dv,mem->bkts,increasing);
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
+		// delayed_sequence (fake sequence that acts like sequence but doesn't allocate memory)
+		// lambda wrapper
+		// reduce_add(delayed_seq.slice())
 		vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));
 
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -185,14 +203,14 @@ namespace gbbs
 			uintE deg = D[v];
 			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
 			D[v] = new_deg;
-			return wrap(v, mem->bbuckets->get_bucket(new_deg));
+			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
 		pt.stop();
 
 		while (finished != vCount)
 		{
 			bt.start();
-			auto vbkt = mem->bbuckets->next_bucket();
+			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
 			max_beta = std::max(max_beta, vbkt.id);
 			if (vbkt.id == 0)
@@ -214,7 +232,7 @@ namespace gbbs
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			ft.stop();
 			bt.start();
-			mem->bbuckets->update_buckets(movedV);
+			bbuckets.update_buckets(movedV);
 			bt.stop();
 			rho_alpha++;
 		}
@@ -291,7 +309,7 @@ namespace gbbs
 			});
 
 		//auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
-		mem->abuckets->init(n,Du);
+		auto abuckets = make_vertex_buckets(n,Du,mem->bkts,increasing);
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -299,14 +317,14 @@ namespace gbbs
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE new_deg = std::max(D[u] - edgesRemoved, static_cast<uintE>(max_alpha));
 			D[u] = new_deg;
-			return wrap(u, mem->abuckets->get_bucket(new_deg));
+			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
 		pt.stop();
 		while (finished != uCount)
 		{
 			bt.start();
-			auto ubkt = mem->abuckets->next_bucket();
+			auto ubkt = abuckets.next_bucket();
 			bt.stop();
 			max_alpha = std::max(max_alpha, ubkt.id);
 
@@ -326,7 +344,7 @@ namespace gbbs
 			vertexSubsetData movedU = nghCount(G, deleteV, cond_fu, getUBuckets, mem->em, no_dense);
 			ft.stop();
 			bt.start();
-			mem->abuckets->update_buckets(movedU);
+			abuckets.update_buckets(movedU);
 			bt.stop();
 			rho_beta++;
 		}

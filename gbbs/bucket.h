@@ -85,6 +85,7 @@ struct buckets {
   //   For an identifier i:
   //   d[i] is the bucket currently containing i
   //   d[i] = std::numeric_limits<bucket_id>::max() if i is not in any bucket
+
   buckets(size_t _n, D& _d, bucket_order _order, size_t _total_buckets)
       : n(_n), // note d.size is not used anywhere
         d(_d),// d is an arr of bucket_ids indicating where each item should go
@@ -97,7 +98,25 @@ struct buckets {
         allocated(true) {
     // Initialize array consisting of the materialized buckets.
     bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
+    init();
+  }
 
+  buckets(size_t _n, D& _d, id_dyn_arr* _bkts, bucket_order _order)
+      : n(_n), // note d.size is not used anywhere
+        d(_d),// d is an arr of bucket_ids indicating where each item should go
+        order(_order),
+        open_buckets(total_buckets - 1),
+        cur_bkt(0),
+        max_bkt(total_buckets),
+        num_elms(0),
+        allocated(true) {
+    // Initialize array consisting of the materialized buckets.
+    bkts = _bkts;
+    for(size_t i = 0; i < total_buckets; i++){ bkts[i].size = 0; }
+    init();
+  }
+
+  inline void init() {
     // Set the current range being processed based on the order.
     if (order == increasing) {
       auto imap_f = [&](size_t i) { return d[i]; };
@@ -124,7 +143,7 @@ struct buckets {
     // Update buckets with all (id, bucket) pairs. Identifiers with bkt =
     // null_bkt are ignored by update_buckets.
     auto get_id_and_bkt = [&](ident_t i) -> std::optional<std::tuple<ident_t, bucket_id> > {
-      bucket_id bkt = _d[i];
+      bucket_id bkt = d[i];
       if (bkt != null_bkt) {
         bkt = to_range(bkt);
       }
@@ -476,6 +495,12 @@ template <class D>
 inline buckets<D, uintE, uintE> make_vertex_buckets(size_t n, D& d, bucket_order
       order, size_t total_buckets = 128) {
   return buckets<D, uintE, uintE>(n, d, order, total_buckets);
+}
+
+template <class D, class E>
+inline buckets<D, uintE, uintE> make_vertex_buckets(size_t n, D& d, E* bkts, bucket_order 
+      order) {
+  return buckets<D, uintE, uintE>(n, d, bkts, order);
 }
 
 // ident_t := uintE, bucket_t := bucket_t
