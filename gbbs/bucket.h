@@ -115,7 +115,7 @@ struct buckets {
     bkts = _bkts;
     size_t sum_size = 0;
     for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
-    std::cout << sum_size << std::endl;
+    std::cout << total_buckets << " " << sum_size << std::endl;
     for(size_t i = 0; i < total_buckets; i++){ bkts[i].size = 0; }
     init();
   }
