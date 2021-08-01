@@ -113,6 +113,9 @@ struct buckets {
         allocated(true) {
     // Initialize array consisting of the materialized buckets.
     bkts = _bkts;
+    size_t sum_size = 0;
+    for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
+    std::cout << sum_size << std::endl;
     for(size_t i = 0; i < total_buckets; i++){ bkts[i].size = 0; }
     init();
   }
