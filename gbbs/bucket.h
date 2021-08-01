@@ -113,9 +113,9 @@ struct buckets {
         allocated(true) {
     // Initialize array consisting of the materialized buckets.
     bkts = _bkts;
-    size_t sum_size = 0;
-    for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
-    std::cout << total_buckets << " " << sum_size << std::endl;
+    // size_t sum_size = 0;
+    // for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
+    // std::cout << total_buckets << " " << sum_size << std::endl;
     for(size_t i = 0; i < total_buckets; i++){ bkts[i].size = 0; }
     init();
   }
@@ -215,6 +215,9 @@ struct buckets {
   }
 
   inline size_t update_buckets(vertexSubsetData<uintE>& VS) {
+    size_t sum_size = 0;
+    for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
+    std::cout << total_buckets << " " << sum_size << std::endl;
     if (VS.dense()) {
       return update_buckets(VS.get_fn_repr(), VS.n);
       // get_fn_repr returns a function which gives (index, data)
