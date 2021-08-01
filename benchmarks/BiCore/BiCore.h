@@ -54,8 +54,8 @@ namespace gbbs
 		}
 		~PeelingMemory(){ 
 			em.del();
-			for (size_t i = 0; i < total_buckets; i++) bkts[i].clear();
-			pbbslib::free_array(bkts);
+			// for (size_t i = 0; i < total_buckets; i++) bkts[i].clear();
+			// pbbslib::free_array(bkts);
 		}
 	};
 
