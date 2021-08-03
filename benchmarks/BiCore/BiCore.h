@@ -102,7 +102,7 @@ namespace gbbs
 	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
 	 size_t bipartition = 2, size_t num_buckets=16)
 	{
-		timer bt,ft,pt;
+		timer bt,ft,pt; // bt: begin time, ft: finish time, pt: processing time
 		pt.start();
 
 		const size_t n = G.n;

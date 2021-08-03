@@ -29,11 +29,16 @@ template <class Graph> inline std::pair<size_t, size_t> PeelFixA (Graph &G, size
     timer bt, ft, pt; /// bt: begin time, ft: finish time, pt: processing time
     pt.start();
     // get degree of all vertices in A and delete all with degree < max_alpha
+    // then, decrement degree of all neighboring vertices in A by 1
     for (auto v : G.vertices()) {
         if (G.get_vertex(v).out_degree() < max_alpha) {
             G.remove_vertex(v);
+            // ngh count
         }
     }
+    auto msgA="complete PeelFixA";
 
 }
+
+template <class Graph> inlie ngh
 
