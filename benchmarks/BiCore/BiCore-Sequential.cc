@@ -15,4 +15,20 @@ template <class Graph> inline void BiCore(Graph &G) {
             // max_alpha = G.degree(v);
         }
     }
+
+    auto ret = KCore(G, num_buckets);
+	const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
+
+    auto PeelFixAllA = [&]() {
+        for (int i = 0; i < delta+1; ++i) {
+            timer t_in; t_in.start();
+            auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+    }
 }
+template <class Graph> inline std::pair<size_t, size_t> PeelFixA (Graph &G, size_t max_beta, size_t max_alpha, size_t core, size_t bipartition = 2, size_t num_buckets = 16) {
+    timer bt, ft, pt; /// bt: begin time, ft: finish time, pt: processing time
+    pt.start();
+
+
+}
+
