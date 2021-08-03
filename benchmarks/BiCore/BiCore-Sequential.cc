@@ -28,7 +28,12 @@ template <class Graph> inline void BiCore(Graph &G) {
 template <class Graph> inline std::pair<size_t, size_t> PeelFixA (Graph &G, size_t max_beta, size_t max_alpha, size_t core, size_t bipartition = 2, size_t num_buckets = 16) {
     timer bt, ft, pt; /// bt: begin time, ft: finish time, pt: processing time
     pt.start();
-
+    // get degree of all vertices in A and delete all with degree < max_alpha
+    for (auto v : G.vertices()) {
+        if (G.get_vertex(v).out_degree() < max_alpha) {
+            G.remove_vertex(v);
+        }
+    }
 
 }
 
