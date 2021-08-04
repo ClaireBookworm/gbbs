@@ -58,6 +58,7 @@ namespace gbbs
 		}
 		auto ret = KCore(G, num_buckets);
 		const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
+		// max unicor 
 
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);

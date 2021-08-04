@@ -18,7 +18,7 @@ template <class Graph> inline void BiCore(Graph &G) {
 
     auto ret = KCore(G, num_buckets);
 	const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
-
+    // delta is the max unicore
     auto PeelFixAllA = [&]() {
         for (int i = 0; i < delta+1; ++i) {
             timer t_in; t_in.start();
@@ -40,5 +40,7 @@ template <class Graph> inline std::pair<size_t, size_t> PeelFixA (Graph &G, size
 
 }
 
-template <class Graph> inlie ngh
+template <class Graph> inlie nghCount (Graph &G) {
+
+}
 
