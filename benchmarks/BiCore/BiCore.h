@@ -62,7 +62,8 @@ namespace gbbs
 
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
-
+		auto timeA = sequence<double>(delta, 0);
+		auto timeB = sequence<double>(delta, 0);
 		// for(size_t core = 1; core<=delta; core++){
 		// 	timer t_in; t_in.start();
 		// 	auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
@@ -77,7 +78,10 @@ namespace gbbs
 		auto PeelFixAllA = [&](){
 			par_for(1,delta+1,[&](size_t core){
 				timer t_in; t_in.start();
-				auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+				auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+				double inittime = std::get<1>(ret);
+				timeA[core-1] = inittime;
+				auto retA = std::get<0>(ret);
 				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			});
 		};
@@ -85,7 +89,10 @@ namespace gbbs
 		auto PeelFixAllB = [&](){
 			par_for(1,delta+1,[&](size_t core){
 				timer t_in; t_in.start();
-				auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+				auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+				double inittime = std::get<1>(ret);
+				timeB[core-1] = inittime;
+				auto retB = std::get<0>(ret);
 				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 			});
 		};
@@ -96,6 +103,9 @@ namespace gbbs
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
 		pbbslib::free_array(msgA);
 		pbbslib::free_array(msgB);
+
+		double inittime = pbbslib::reduce_add(timeA) + pbbslib::reduce_add(timeB);
+		debug(std::cout<< "inittime: " << inittime <<std::endl);
 	}
 
 	template <class Graph>
@@ -222,7 +232,7 @@ namespace gbbs
 		em.del();
 		it.stop();
 		debug(it.reportTotal("initialize time"));
-		return std::pair<size_t,size_t>(rho_alpha,max_beta);
+		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),it.get_total());
 	}
 
 	template <class Graph>
@@ -340,7 +350,7 @@ namespace gbbs
 		em.del();
 		it.stop();
 		debug(it.reportTotal("initialize time"));
-		return std::pair<size_t,size_t>(rho_beta,max_alpha);
+		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),it.get_total());
 	}
 
 } // namespace gbbs
