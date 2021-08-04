@@ -105,6 +105,7 @@ namespace gbbs
 		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
 			timer t_in; t_in.start();
 			// keep the array and reconstruct bucket each time
+			mem->init();
 			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			mem->init();
