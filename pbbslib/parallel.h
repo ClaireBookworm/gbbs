@@ -227,14 +227,15 @@ template <typename A, typename Af, typename Df, typename F>
 inline void parallel_for_alloc(Af init_alloc, Df finish_alloc, long start,
                                long end, F f, long granularity,
                                bool conservative) {
-  static thread_local A* alloc = new A();
   parallel_for(start, end,
                [&](long i) {
-                 init_alloc(alloc);
-                 f(i, alloc);
+                  static thread_local std::unique_ptr<A> alloc(new A());
+                  //static thread_local A* alloc = new A();
+                  init_alloc(alloc.get());
+                  f(i, alloc.get());
                },
                granularity, conservative);
-  finish_alloc(alloc);
+  //finish_alloc(alloc);
 }
 
 inline int num_workers() { return pbbs::global_scheduler.num_workers(); }
