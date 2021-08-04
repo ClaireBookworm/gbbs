@@ -220,7 +220,7 @@ namespace gbbs
 		it.start();
 		bbuckets.del();
 		em.del();
-		it.end();
+		it.stop();
 		debug(it.reportTotal("initialize time"));
 		return std::pair<size_t,size_t>(rho_alpha,max_beta);
 	}
