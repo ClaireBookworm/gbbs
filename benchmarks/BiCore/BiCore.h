@@ -62,8 +62,8 @@ namespace gbbs
 
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
-		auto timeA = sequence<double>(delta, 0);
-		auto timeB = sequence<double>(delta, 0);
+		auto timeA = sequence<double>(delta, 0.0);
+		auto timeB = sequence<double>(delta, 0.0);
 		// for(size_t core = 1; core<=delta; core++){
 		// 	timer t_in; t_in.start();
 		// 	auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
@@ -109,7 +109,7 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline std::pair<size_t,size_t> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, 
+	inline std::pair<std::pair<size_t,size_t>,double> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, 
 	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
 	 size_t bipartition = 2, size_t num_buckets=16)
 	{
@@ -236,7 +236,7 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline std::pair<size_t,size_t> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, 
+	inline std::pair<std::pair<size_t,size_t>,double> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, 
 	sequence<sequence<size_t>> &AlphaMax, size_t beta,
 	size_t bipartition = 2, size_t num_buckets=16)
 	{
