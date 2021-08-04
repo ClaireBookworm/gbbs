@@ -46,8 +46,9 @@ namespace gbbs
 				em = new hist_table<uintE, uintE>(empty, size);
 			else
 				par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
-			if(bkts == nullptr) 
-				bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
+
+			//if(bkts == nullptr) 
+			bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
 			total_buckets = num_buckets;
 		}
 		~PeelingMemory(){ 
