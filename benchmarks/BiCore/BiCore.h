@@ -37,19 +37,23 @@ namespace gbbs
 		using id_dyn_arr = pbbslib::dyn_arr<uintE>; 
 		id_dyn_arr* bkts = nullptr;
 		size_t total_buckets = 0;
-
-		PeelingMemory(){}
+		std::tuple<uintE> empty; 
+		PeelingMemory(){
+			empty = = std::make_tuple(UINT_E_MAX, 0);
+		}
 
 		void alloc(const size_t size, const size_t num_buckets){ 
-			auto empty = std::make_tuple(UINT_E_MAX, 0); 
 			if(em == nullptr)
 				em = new hist_table<uintE, uintE>(empty, size);
 			else
-				par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
+				init();
 
 			//if(bkts == nullptr) 
 			bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
 			total_buckets = num_buckets;
+		}
+		inline void init(){
+			par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
 		}
 		~PeelingMemory(){ 
 			em->del();
@@ -103,6 +107,7 @@ namespace gbbs
 			// keep the array and reconstruct bucket each time
 			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			mem->init();
 			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 		});
