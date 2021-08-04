@@ -37,7 +37,7 @@ namespace gbbs
 		using id_dyn_arr = pbbslib::dyn_arr<uintE>; 
 		id_dyn_arr* bkts = nullptr;
 		size_t total_buckets = 0;
-		std::tuple<uintE> empty; 
+		std::tuple<uintE,size_t> empty; 
 		PeelingMemory(){
 			empty = std::make_tuple(UINT_E_MAX, 0);
 		}
