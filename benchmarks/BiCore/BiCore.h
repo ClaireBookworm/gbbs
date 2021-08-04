@@ -103,7 +103,7 @@ namespace gbbs
 	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
 	 size_t bipartition = 2, size_t num_buckets=16)
 	{
-		timer bt,ft,pt; // bt: begin time, ft: finish time, pt: processing time
+		timer bt,ft,pt,it; // bt: begin time, ft: finish time, pt: processing time
 		pt.start();
 
 		const size_t n = G.n;
@@ -113,8 +113,9 @@ namespace gbbs
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
+		it.start();
 		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
-
+		it.stop();
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
@@ -169,8 +170,9 @@ namespace gbbs
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
-
+		it.start();
 		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
+		it.stop();
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
@@ -215,8 +217,11 @@ namespace gbbs
 			bt.stop();
 			rho_alpha++;
 		}
+		it.start();
 		bbuckets.del();
 		em.del();
+		it.end();
+		debug(it.reportTotal("initialize time"));
 		return std::pair<size_t,size_t>(rho_alpha,max_beta);
 	}
 
@@ -225,16 +230,16 @@ namespace gbbs
 	sequence<sequence<size_t>> &AlphaMax, size_t beta,
 	size_t bipartition = 2, size_t num_buckets=16)
 	{
-		timer bt,ft,pt;
+		timer bt,ft,pt,it;
 		pt.start();
 		const size_t n = G.n;
 		const size_t n_b = n - bipartition - 1;
 		const size_t n_a = bipartition + 1;
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
-
+		it.start();
 		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
-
+		it.stop();
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
@@ -289,8 +294,9 @@ namespace gbbs
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
-
+		it.start();
 		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
+		it.stop();
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -329,8 +335,11 @@ namespace gbbs
 			bt.stop();
 			rho_beta++;
 		}
+		it.start();
 		abuckets.del();
 		em.del();
+		it.stop();
+		debug(it.reportTotal("initialize time"));
 		return std::pair<size_t,size_t>(rho_beta,max_alpha);
 	}
 
