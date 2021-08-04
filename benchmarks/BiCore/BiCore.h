@@ -39,7 +39,7 @@ namespace gbbs
 		size_t total_buckets = 0;
 		std::tuple<uintE> empty; 
 		PeelingMemory(){
-			empty = = std::make_tuple(UINT_E_MAX, 0);
+			empty = std::make_tuple(UINT_E_MAX, 0);
 		}
 
 		void alloc(const size_t size, const size_t num_buckets){ 
