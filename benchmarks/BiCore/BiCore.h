@@ -60,7 +60,7 @@ namespace gbbs
 			std::cout<<em->size<<std::endl;
 			par_for(0, em->size, 2048, [&] (size_t i) { 
 				if(em->table[i] != empty){
-					std::cout<<std::get<0>(em->table[i])<<" "<<std::get<1>(em->table[i])<<std::endl;
+					std::cout<<i<<" "<<std::get<0>(em->table[i])<<" "<<std::get<1>(em->table[i])<<std::endl;
 				}
 				assert(em->table[i]==empty);
 			});
