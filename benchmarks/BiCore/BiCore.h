@@ -43,7 +43,7 @@ namespace gbbs
 			bkts = nullptr;
 			empty = std::make_tuple(UINT_E_MAX, 0);
 		}
-		void alloc(const size_t size, const size_t num_buckets){ 
+		void allocate(const size_t size, const size_t num_buckets){ 
 			if(em == nullptr)
 				em = new hist_table<uintE, uintE>(empty, size);
 			else{
@@ -104,7 +104,7 @@ namespace gbbs
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 
-		auto init_f = [&](PeelingMemory* mem){mem->alloc((size_t)G.m,num_buckets);};
+		auto init_f = [&](PeelingMemory* mem){mem->allocate((size_t)G.m,num_buckets);};
 		auto finish_f = [&](PeelingMemory* mem){mem->~PeelingMemory();};
 		// block serialization
 		// estimate work
