@@ -230,9 +230,9 @@ inline void parallel_for_alloc(Af init_alloc, Df finish_alloc, long start,
   parallel_for(start, end,
                [&](long i) {
                   //static thread_local std::unique_ptr<A> alloc(new A());
-                  static thread_local A allocated();
-                  init_alloc(&allocated);
-                  f(i, &allocated);
+                  static thread_local A alloc = A();
+                  init_alloc(&alloc);
+                  f(i, &alloc);
                },
                granularity, conservative);
   //finish_alloc(alloc);
