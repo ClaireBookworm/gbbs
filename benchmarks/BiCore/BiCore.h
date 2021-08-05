@@ -42,6 +42,11 @@ namespace gbbs
 			auto empty = std::make_tuple(UINT_E_MAX, 0);
 			if(em == nullptr)
 				em = new hist_table<uintE, uintE>(empty, size);
+			else{
+				em->empty = empty;
+				em->size = size;
+			}
+
 			//if(bkts == nullptr) 
 			bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
 			//std::cout<<std::get<0>(empty)<<" "<<std::get<1>(empty)<<std::endl;
