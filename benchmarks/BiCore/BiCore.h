@@ -42,8 +42,6 @@ namespace gbbs
 			auto empty = std::make_tuple(UINT_E_MAX, 0);
 			if(em == nullptr)
 				em = new hist_table<uintE, uintE>(empty, size);
-			else
-				is_empty();
 			//if(bkts == nullptr) 
 			bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
 			//std::cout<<std::get<0>(empty)<<" "<<std::get<1>(empty)<<std::endl;
@@ -122,9 +120,11 @@ namespace gbbs
 			timer t_in; t_in.start();
 			// keep the array and reconstruct bucket each time
 			mem->init();
+			mem->is_empty();
 			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			mem->init();
+			mem->is_empty();
 			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
 			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 		});
