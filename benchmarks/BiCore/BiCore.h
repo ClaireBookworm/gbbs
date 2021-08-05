@@ -48,7 +48,7 @@ namespace gbbs
 				em = new hist_table<uintE, uintE>(empty, size);
 			else{
 				em->empty = empty;
-				em->size = size;
+				//em->size = size;
 			}
 
 			//if(bkts == nullptr) 
