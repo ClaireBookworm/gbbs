@@ -98,20 +98,9 @@ namespace gbbs
 		// 		//estimate work and use it to inform the size of par_for so each run of par_for is similar
 		// 	}
 		// }
-		PeelingMemory* mem = new PeelingMemory();
-		init_f(mem);
-		for(int core = 1; core <= delta; core++){
-			timer t_in; t_in.start();
-			// keep the array and reconstruct bucket each time
-			mem->init();
-			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
-			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-			mem->init();
-			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
-			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-		}
-		finish_f(mem);
-		// parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
+		// PeelingMemory* mem = new PeelingMemory();
+		// init_f(mem);
+		// for(int core = 1; core <= delta; core++){
 		// 	timer t_in; t_in.start();
 		// 	// keep the array and reconstruct bucket each time
 		// 	mem->init();
@@ -120,7 +109,18 @@ namespace gbbs
 		// 	mem->init();
 		// 	auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
 		// 	msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-		// });
+		// }
+		// finish_f(mem);
+		parallel_for_alloc<PeelingMemory>(init_f, finish_f, 1,delta+1,[&](size_t core, PeelingMemory* mem){
+			timer t_in; t_in.start();
+			// keep the array and reconstruct bucket each time
+			mem->init();
+			auto retA = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, mem);
+			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			mem->init();
+			auto retB = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, mem);
+			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+		});
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
