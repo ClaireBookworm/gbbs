@@ -120,6 +120,7 @@ struct buckets {
       bkts[i] = id_dyn_arr(5);
       //bkts[i].clear();
     }
+    bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
     init();
   }
 
