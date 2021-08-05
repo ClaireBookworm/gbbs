@@ -57,8 +57,12 @@ namespace gbbs
 			total_buckets = num_buckets;
 		}
 		inline void is_empty(){
+			std::cout<<em->size<<std::endl;
 			par_for(0, em->size, 2048, [&] (size_t i) { 
-				assert(em->table[i] == empty); 
+				if(em->table[i] != empty){
+					std::cout<<em->table[i]<<std::endl;
+				}
+				assert(em->table[i]==empty);
 			});
 		}
 		inline void init(){
