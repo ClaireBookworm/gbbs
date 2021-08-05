@@ -188,8 +188,8 @@ namespace gbbs
 		// O(delta * n)
 		while (!uDel.isEmpty())
 		{
-			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, *(mem.em), no_dense);
-			uDel = nghCount(G, vDel, cond_fu, clearU, *(mem.em), no_dense);
+			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, mem->em, no_dense);
+			uDel = nghCount(G, vDel, cond_fu, clearU, mem->em, no_dense);
 		}
 
 		size_t vCount = 0;
