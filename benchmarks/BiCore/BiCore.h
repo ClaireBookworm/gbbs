@@ -46,6 +46,7 @@ namespace gbbs
 			if(em == nullptr)
 				em = new hist_table<uintE, uintE>(empty, size);
 			//if(bkts == nullptr) 
+			std::cout<<std::get<0>(empty)<<" "<<std::get<1>(empty)<<std::endl;
 			bkts = pbbslib::new_array<id_dyn_arr>(num_buckets);
 			total_buckets = num_buckets;
 		}
