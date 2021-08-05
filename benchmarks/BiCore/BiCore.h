@@ -296,6 +296,7 @@ namespace gbbs
 		while (!vDel.isEmpty())
 		{
 			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_fu, clearZeroU, *(mem->em), no_dense);
+			std::cout<<"debug size: "<<mem->em->size<<std::endl;
 			vDel = nghCount(G, uDel, cond_fv, clearV, *(mem->em), no_dense);
 		}
 
