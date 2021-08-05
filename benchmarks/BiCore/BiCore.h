@@ -38,9 +38,9 @@ namespace gbbs
 	{
 		std::cout << "begin" << std::endl;
 
-		const size_t n = G.n;
-		const size_t n_b = n - bipartition - 1;
-		const size_t n_a = bipartition + 1;
+		const size_t n = G.n; // number of vertices
+		const size_t n_b = n - bipartition - 1; // number of vertices in first partition
+		const size_t n_a = bipartition + 1; // number of vertices in second partition
 
 		// AlphaMax[v][B]
 		auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){ return sequence<size_t>(1+G.get_vertex(i+n_a).out_degree(),[](size_t i){return 0;}); });
