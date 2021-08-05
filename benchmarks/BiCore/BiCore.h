@@ -37,9 +37,13 @@ namespace gbbs
 		using id_dyn_arr = pbbslib::dyn_arr<uintE>; 
 		id_dyn_arr* bkts = nullptr;
 		size_t total_buckets = 0;
-		PeelingMemory(){em = nullptr; bkts = nullptr;}
+		std::tuple<uintE,uintE> empty;
+		PeelingMemory(){
+			em = nullptr; 
+			bkts = nullptr;
+			empty = std::make_tuple(UINT_E_MAX, 0);
+		}
 		void alloc(const size_t size, const size_t num_buckets){ 
-			auto empty = std::make_tuple(UINT_E_MAX, 0);
 			if(em == nullptr)
 				em = new hist_table<uintE, uintE>(empty, size);
 			else{
@@ -53,13 +57,11 @@ namespace gbbs
 			total_buckets = num_buckets;
 		}
 		inline void is_empty(){
-			auto empty = std::make_tuple(UINT_E_MAX, 0);
 			par_for(0, em->size, 2048, [&] (size_t i) { 
 				assert(em->table[i] == empty); 
 			});
 		}
 		inline void init(){
-			auto empty = std::make_tuple(UINT_E_MAX, 0);
 			par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
 		}
 		~PeelingMemory(){ 
