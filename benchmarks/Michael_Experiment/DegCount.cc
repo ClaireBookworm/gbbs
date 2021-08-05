@@ -1,4 +1,5 @@
 #include "DegCount.h"
+#include <stdlib.h> 
 
 namespace gbbs
 {
@@ -21,9 +22,23 @@ namespace gbbs
         std::cout << "### ------------------------------------" << std::endl;
         auto init_f = [&](Storage* stor){stor->alloc(worker_id());};
         auto finish_f = [&](Storage* stor){return;};
+
+        std::string msgs[40]; 
+        timer it; it.start();
         parallel_for_alloc<Storage>(init_f, finish_f, 0, 40, [&](size_t i, Storage* stor){
-            std::cout<< i << " " << worker_id()<< " "<< stor->a << " " << stor <<std::endl;
+            msgs[i] = std::to_string(i) + " " + std::to_string(worker_id()) + " " + std::to_string(stor->a);
+            msgs[i] += std::string(" ") + std::to_string(it.stop());
+            std::cout<<"start "<<msgs[i]<<std::endl;
+            int* hello = new int[500000];
+            par_for(0,5000,[&](size_t i){
+                par_for(0,500000,[&](size_t j){
+                    hello[j]=0;
+                });
+            });
+            std::cout<<"end "<<msgs[i]<<std::endl;
         });
+        for(int i=0;i<40;i++)
+            std::cout<<msgs[i]<<std::endl;
         // isSymmetry(G);
         // timer t;
         // t.start();
