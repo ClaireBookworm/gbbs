@@ -33,11 +33,11 @@ namespace gbbs
 	// bipartition gives the last vertex id in first partition
 	// size_t bipartition = P.getOptionLongValue("-bi", 2);
 	struct PeelingMemory{
-		hist_table<uintE, uintE>* em;//, em_b;
+		hist_table<uintE, uintE>* em = nullptr;//, em_b;
 		using id_dyn_arr = pbbslib::dyn_arr<uintE>; 
 		id_dyn_arr* bkts = nullptr;
 		size_t total_buckets = 0;
-		PeelingMemory(){}
+		PeelingMemory(){em = nullptr; bkts = nullptr;}
 		void alloc(const size_t size, const size_t num_buckets){ 
 			auto empty = std::make_tuple(UINT_E_MAX, 0);
 			if(em == nullptr)
