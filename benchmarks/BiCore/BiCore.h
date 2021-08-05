@@ -52,7 +52,7 @@ namespace gbbs
 			par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
 		}
 		~PeelingMemory(){ 
-			em.del();
+			em->del();
 			//delete em;
 			for (size_t i = 0; i < total_buckets; i++) bkts[i].clear();
 			pbbslib::free_array(bkts);
