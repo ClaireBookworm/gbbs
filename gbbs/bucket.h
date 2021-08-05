@@ -115,12 +115,12 @@ struct buckets {
     bkts = _bkts;
     // size_t sum_size = 0;
     // for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
-    std::cout << total_buckets << std::endl;
+    //std::cout << total_buckets << std::endl;
     for(size_t i = 0; i < total_buckets; i++){
-      bkts[i] = id_dyn_arr(5);
-      //bkts[i].clear();
+      //bkts[i] = id_dyn_arr(5);
+      bkts[i].clear();
     }
-    bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
+    //bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
     init();
   }
 
