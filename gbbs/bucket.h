@@ -117,7 +117,7 @@ struct buckets {
     // for(size_t i = 0; i < total_buckets; i++){ sum_size += bkts[i].size; }
     std::cout << total_buckets << std::endl;
     for(size_t i = 0; i < total_buckets; i++){
-      bkts[i] = new id_dyn_arr(5);
+      bkts[i] = id_dyn_arr(5);
       //bkts[i].clear();
     }
     init();
