@@ -2,22 +2,16 @@
 #include <iostream>
 
 template <class Graph>
-inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0) {
+inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
+{
     std::cout << "begin" << std::endl;
-    std::cin >> 
-    auto G = graph; // imagine this is the graph you want to run the algorithm on
-    // take in the graph and find any vertices with degree less than max alpha or beta
-    // for each such vertex, find the neighbors of that vertex
-    // for the neighbors decrement the degree of the vertex by 1
-    // repeat until all vertices have degree less than max alpha or beta
-    size_t max_alpha = peel_core_alpha;
-    size_t max_beta = peel_core_beta;
-    for (auto v : G.vertices()) {
-        if (G.degree(v) > max_alpha)
-        {
-            // max_alpha = G.degree(v);
-        }
-    }
+    auto G = graph; 
+    auto changed = false;
+    
+    // AlphaMax[v][B]
+    auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){return sequence<size_t>(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i){return 0;});});
+    // BetaMax[u][A]
+    auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i) { return sequence<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i) { return 0; }); });
 
     auto ret = KCore(G, num_buckets);
     const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
@@ -43,14 +37,14 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, size_t max_beta, size_t max_
     {
         if (G.get_vertex(v).out_degree() < max_alpha)
         {
+            
+            auto ngh = G.get_vertex(v).edgeMapCount_sparse(); 
             G.remove_vertex(v);
-            // ngh count
         }
     }
     auto msgA = "complete PeelFixA";
 }
 
 template <class Graph>
-inline nghCount(Graph &G)
-{
-}
+
+
