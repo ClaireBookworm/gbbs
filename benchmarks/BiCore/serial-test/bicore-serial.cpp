@@ -3,8 +3,7 @@
 #include <utility>
 #include <algorithm>
 
-int main()
-{
+int main() {
 	std::ifstream fin("test-graph.txt");
 	std::string graphType;
 	fin >> graphType;
@@ -38,10 +37,7 @@ int main()
 		// p[pairCount].first = uGraph[i];
 		// int topVal = uGraph[i];
 		std::cout << "VALUE OF U: " << uGraph[i] << std::endl;
-		for (int j = 0; j < w; j++)
-		{
-			// p[pairCount].first = all[i];
-			std::cout << "looking at w: " << wGraph[j] << std::endl;
+		for (int j = 0; j < w; j++) {
 			if (wGraph[j] > 0)
 			{
 				p[pairCount].first = all[i];
@@ -62,6 +58,9 @@ int main()
 		}
 		// std::cout << "END OF U: " << uGraph[i] << std::endl;
 	}
+	fin.close();
+	// std::ofstream fout;
+	// fout.open("test-graph.out"); // for some reason this keeps giving segmentation fault
 	for (int i = 0; i < (sum); i++)
 	{
 		std::cout << p[i].first << ", " << p[i].second << std::endl;
