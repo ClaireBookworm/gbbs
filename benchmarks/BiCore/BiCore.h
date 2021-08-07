@@ -66,9 +66,9 @@ namespace gbbs
 			});
 		}
 		inline void init(){
-			for(size_t i=0; i<em->size; i++)
-				em->table[i] = empty;
-			//par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
+			// for(size_t i=0; i<em->size; i++)
+			// 	em->table[i] = empty;
+			par_for(0, em->size, 2048, [&] (size_t i) { em->table[i] = empty; });
 		}
 		~PeelingMemory(){ 
 			em->del();
