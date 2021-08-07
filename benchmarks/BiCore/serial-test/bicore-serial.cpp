@@ -3,17 +3,17 @@
 #include <utility>
 #include <algorithm>
 
-int main() {
-	std::ifstream fin("test-graph.txt");
+std::pair<int, int> getPairs(std::string fileName) {
+	std::ifstream fin(fileName);
 	std::string graphType;
 	fin >> graphType;
 	int u, w;
 	int sum = 0;
 
-
-	std::pair<int, int> p[u + w];
-	fin >> u >> w; // sizes of bipartite node groups
-	int all[u+w];
+	auto p = new std::pair<int, int>[u + w];
+	// std::pair<int, int> p = new std::pair[u + w];
+	fin >> u >> w;// sizes of bipartite node groups
+	int** all = new int*[u+w];
 	int uGraph[u];
 	for (int i = 0; i < u; i++)
 	{
@@ -28,7 +28,7 @@ int main() {
 	std::sort(uGraph, uGraph + u, std::greater<int>());
 	std::sort(wGraph, wGraph + w, std::greater<int>());
 
-	std::copy(wGraph, wGraph + w, std::copy(uGraph, uGraph + u, all));
+	std::copy(wGraph, wGraph + w, std::copy(uGraph, uGraph + u, *all));
 
 	// sorts correctly
 	int pairCount = 0;
@@ -40,8 +40,8 @@ int main() {
 		for (int j = 0; j < w; j++) {
 			if (wGraph[j] > 0)
 			{
-				p[pairCount].first = all[i];
-				p[pairCount].second = all[u+j];
+				p[pairCount].first = *all[i];
+				p[pairCount].second = *all[u+j];
 				// std::cout << "looking at w: " << wGraph[j] << std::endl;
 				wGraph[j]--;
 				uGraph[i]--;
@@ -65,4 +65,9 @@ int main() {
 	{
 		std::cout << p[i].first << ", " << p[i].second << std::endl;
 	}
+	return *p;
+}
+
+int main() {
+	getPairs("test-graph.txt");
 }
