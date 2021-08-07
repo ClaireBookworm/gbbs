@@ -71,3 +71,5 @@ double BiCore_runner(Graph& G, commandLine P) {
 }  // namespace gbbs
 
 generate_symmetric_main(gbbs::BiCore_runner, false);
+
+// change branch  git checkout --track origin/bicore-optimize
