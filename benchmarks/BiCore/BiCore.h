@@ -58,12 +58,18 @@ namespace gbbs
 		}
 		inline void is_empty(){
 			std::cout<<em->size<<std::endl;
-			par_for(0, em->size, 2048, [&] (size_t i) { 
+			for(size_t i = 0; i<em->size; i++){
 				if(em->table[i] != empty){
 					std::cout<<i<<" "<<std::get<0>(em->table[i])<<" "<<std::get<1>(em->table[i])<<std::endl;
 				}
 				assert(em->table[i]==empty);
-			});
+			}
+			// par_for(0, em->size, 2048, [&] (size_t i) { 
+			// 	if(em->table[i] != empty){
+			// 		std::cout<<i<<" "<<std::get<0>(em->table[i])<<" "<<std::get<1>(em->table[i])<<std::endl;
+			// 	}
+			// 	assert(em->table[i]==empty);
+			// });
 		}
 		inline void init(){
 			// for(size_t i=0; i<em->size; i++)
