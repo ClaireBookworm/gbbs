@@ -69,5 +69,5 @@ double BiCore_runner(Graph& G, commandLine P) {
   return tt;
 }
 }  // namespace gbbs
-
+// test
 generate_symmetric_main(gbbs::BiCore_runner, false);
