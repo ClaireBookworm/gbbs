@@ -94,7 +94,7 @@ namespace gbbs
 				auto retA = std::get<0>(ret);
 				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			}
-			t_in.reportTotal("range runtime");
+			t_in.reportTotal(std::string("range ")+std::to_string(breakptrs[idx-1]+1)+" to "+std::to_string(breakptrs[idx])+" runtime");
 		});
 
 		par_for(1,breakptrs.size(),[&](size_t idx){
@@ -108,7 +108,7 @@ namespace gbbs
 				auto retB = std::get<0>(ret);
 				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 			}
-			t_in.reportTotal("range runtime");
+			t_in.reportTotal(std::string("range ")+std::to_string(breakptrs[idx-1]+1)+" to "+std::to_string(breakptrs[idx])+" runtime");
 		});
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
