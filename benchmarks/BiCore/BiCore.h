@@ -65,7 +65,7 @@ namespace gbbs
 		auto timeA = sequence<double>(delta, 0.0);
 		auto timeB = sequence<double>(delta, 0.0);
 
-		par_for(1,delta+1,2048,[&](size_t core){
+		par_for(1,delta+1,3,[&](size_t core){
 			timer t_in; t_in.start();
 			auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 			double inittime = std::get<1>(ret);
@@ -74,7 +74,7 @@ namespace gbbs
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 		});
 
-		par_for(1,delta+1,2048,[&](size_t core){
+		par_for(1,delta+1,3,[&](size_t core){
 			timer t_in; t_in.start();
 			auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 			double inittime = std::get<1>(ret);
