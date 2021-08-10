@@ -67,7 +67,7 @@ namespace gbbs
 		auto timeB = sequence<double>(delta, 0.0);
 
 		double slope = 5;
-		double thread_ratio = 1; //each worker gets assigned thread_ratio/num_workers() percent of depth
+		double thread_ratio = 0.2; //each worker gets assigned thread_ratio/num_workers() percent of depth
 		double avgSpan = (slope+1)/2*delta/num_workers()*thread_ratio;
 		double curSpan = 0;
 		std::vector<size_t> breakptrs;
@@ -84,17 +84,22 @@ namespace gbbs
 			breakptrs.push_back(delta);
 		std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<std::endl;
 		par_for(1,breakptrs.size(),[&](size_t idx){
+			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
+			timer t_in;
 			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
-				timer t_in; t_in.start();
+				t_in.start();
 				auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 				double inittime = std::get<1>(ret);
 				timeA[core-1] = inittime;
 				auto retA = std::get<0>(ret);
 				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			}
+			t_in.reportTotal("range runtime");
 		});
 
 		par_for(1,breakptrs.size(),[&](size_t idx){
+			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
+			timer t_in;
 			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 				timer t_in; t_in.start();
 				auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
@@ -103,6 +108,7 @@ namespace gbbs
 				auto retB = std::get<0>(ret);
 				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
 			}
+			t_in.reportTotal("range runtime");
 		});
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
