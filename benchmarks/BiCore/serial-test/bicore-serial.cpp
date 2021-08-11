@@ -90,6 +90,14 @@ inline void BiCore(Graph &G, size_t bipartition = 2, size_t peel_core_alpha = 0,
 											  { return sequence<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i)
 																		{ return 0; }); });
 	bool done = true;
+	/*
+  	uncompressed_neighbors<W> in_neighbors() {
+    	return uncompressed_neighbors<W>(id, degree, neighbors); }
+  	uncompressed_neighbors<W> out_neighbors() { return in_neighbors(); }
+	*/
+// The classes have two templates, W and C:
+// W : the weight type of the underlying graph (pbbslib::empty if unweighted)
+// C : the compression format used. See encodings/decoders.h.
 	for (int i = 0; i < n_b; i++)
 	{
 		// out_neighbors
@@ -97,9 +105,10 @@ inline void BiCore(Graph &G, size_t bipartition = 2, size_t peel_core_alpha = 0,
 		if (G.get_vertex(i).out_degree() < AlphaMax)
 		{
 			G.get_vertex(i).remove_vertex();
-			auto i_n = G.get_vertex(i).out_neighbors()
+			auto i_n = G.get_vertex(i).out_neighbors();
+			// out_neighbors gives the id, degree, and neighbors in tuple form
 			for (n : i_n) {
-				n.decreaseVertexDegree();
+				n[3].out_neighbors()[1].decreaseVertexDegree();
 			}
 			done = false;
 		}
