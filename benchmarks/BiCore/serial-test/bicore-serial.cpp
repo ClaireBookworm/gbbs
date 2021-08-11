@@ -86,9 +86,12 @@ inline void BiCore(Graph &G, size_t bipartition = 2, size_t peel_core_alpha = 0,
 	// BetaMax[u][A]
 	auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree(),[](size_t i){return 0;}); });
 
-	for (v : G.vertices()) {
-		if (v.get_degree < AlphaMax) {
-			G.remove(v);
+	for (int i = 0; i < n_b; i++) {
+		// out_neighbors
+		// definitions in graph_filter.h
+		if (G.get_vertex(i).out_degree() < AlphaMax) {
+			G.get_vertex(i).remove_vertex();
+			G.get_vertex(i).neighbors().decreaseVertexDegree();
 		}
 	}
 }
