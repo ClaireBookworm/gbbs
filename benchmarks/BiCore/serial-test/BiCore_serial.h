@@ -92,7 +92,7 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::vector<size_t> AlphaMax = (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
 	// BetaMax[u][A]
 	std::vector<size_t> BetaMax = (n_a, [&G](size_t i)
-											  { return (1 + G.get_vertex(i).out_degree(), [](size_t i)
+											  { return std::vector<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i)
 																		{ return 0; }); });
 }
 
