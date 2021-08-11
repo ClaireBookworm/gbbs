@@ -94,5 +94,13 @@ inline void BiCore(Graph &G, size_t bipartition = 2, size_t peel_core_alpha = 0,
 			G.get_vertex(i).neighbors().decreaseVertexDegree();
 		}
 	}
+	for (int i = n_b; i < n; i++) {
+		// out_neighbors
+		// definitions in graph_filter.h
+		if (G.get_vertex(i).out_degree() < BetaMax) {
+			G.get_vertex(i).remove_vertex();
+			G.get_vertex(i).neighbors().decreaseVertexDegree();
+		}
+	}
 }
 
