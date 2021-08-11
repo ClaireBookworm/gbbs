@@ -82,25 +82,40 @@ inline void BiCore(Graph &G, size_t bipartition = 2, size_t peel_core_alpha = 0,
 	const size_t n_a = bipartition + 1;		// number of vertices in second partition
 
 	// alphamax is max degree in first partition
-	auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i){ return sequence<size_t>(1+G.get_vertex(i+n_a).out_degree(),[](size_t i){return 0;}); });
+	auto AlphaMax = sequence<sequence<size_t>>(n_b, [&G, &n_a](size_t i)
+											   { return sequence<size_t>(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i)
+																		 { return 0; }); });
 	// BetaMax[u][A]
-	auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree(),[](size_t i){return 0;}); });
-
-	for (int i = 0; i < n_b; i++) {
+	auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i)
+											  { return sequence<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i)
+																		{ return 0; }); });
+	bool done = true;
+	for (int i = 0; i < n_b; i++)
+	{
 		// out_neighbors
 		// definitions in graph_filter.h
-		if (G.get_vertex(i).out_degree() < AlphaMax) {
+		if (G.get_vertex(i).out_degree() < AlphaMax)
+		{
 			G.get_vertex(i).remove_vertex();
-			G.get_vertex(i).neighbors().decreaseVertexDegree();
+			auto i_n = G.get_vertex(i).out_neighbors()
+			for (n : i_n) {
+				n.decreaseVertexDegree();
+			}
+			done = false;
 		}
 	}
-	for (int i = n_b; i < n; i++) {
+	for (int i = n_b; i < n; i++)
+	{
 		// out_neighbors
 		// definitions in graph_filter.h
-		if (G.get_vertex(i).out_degree() < BetaMax) {
+		if (G.get_vertex(i).out_degree() < BetaMax)
+		{
 			G.get_vertex(i).remove_vertex();
-			G.get_vertex(i).neighbors().decreaseVertexDegree();
+			auto i_n = G.get_vertex(i).out_neighbors()
+			for (n : i_n) {
+				n.decreaseVertexDegree();
+			}
+			done = false;
 		}
 	}
 }
-
