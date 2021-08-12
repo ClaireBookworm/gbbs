@@ -66,7 +66,7 @@ namespace gbbs
 		auto timeA = sequence<double>(delta, 0.0);
 		auto timeB = sequence<double>(delta, 0.0);
 
-		double slope = 5;
+		double slope = 2;
 		double thread_ratio = 0.5; //each worker gets assigned thread_ratio/num_workers() percent of depth
 		double avgSpan = (slope+1)/2*delta/num_workers()*thread_ratio;
 		double curSpan = 0;
@@ -149,38 +149,35 @@ namespace gbbs
 
 		auto uDel = vertexSubsetData<uintE>(n_a, std::move(mask));
 
-		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
-		auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
-		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
-
-		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE new_deg = D[v] - edgesRemoved;
-			D[v] = new_deg;
-			if (new_deg == 0)
-				return wrap(v, 0);
-			return std::nullopt;
-		};
-
-		auto clearU = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE new_deg = D[u] - edgesRemoved;
-			D[u] = new_deg;
-			if (new_deg < alpha)
-			{
-				if(max_beta>0)
-					pbbslib::write_max(&BetaMax[u][alpha],max_beta);
-				return wrap(u, 0);
-			}
-			return std::nullopt;
-		};
-
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
+			auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
+			// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
+			auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
+				-> const std::optional<std::tuple<uintE, uintE>> {
+				uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+				uintE new_deg = D[v] - edgesRemoved;
+				D[v] = new_deg;
+				if (new_deg == 0)
+					return wrap(v, 0);
+				return std::nullopt;
+			};
 			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
+			auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
+			auto clearU = [&](const std::tuple<uintE, uintE> &p)
+				-> const std::optional<std::tuple<uintE, uintE>> {
+				uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
+				uintE new_deg = D[u] - edgesRemoved;
+				D[u] = new_deg;
+				if (new_deg < alpha)
+				{
+					if(max_beta>0)
+						pbbslib::write_max(&BetaMax[u][alpha],max_beta);
+					return wrap(u, 0);
+				}
+				return std::nullopt;
+			};
 			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
 		}
 
@@ -199,15 +196,6 @@ namespace gbbs
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
 		vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));
-
-		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[v];
-			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
-			D[v] = new_deg;
-			return wrap(v, bbuckets.get_bucket(new_deg));
-		};
 		pt.stop();
 
 		while (finished != vCount)
@@ -228,9 +216,31 @@ namespace gbbs
 				});
 			});
 			ft.start();
+			auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
+			auto clearU = [&](const std::tuple<uintE, uintE> &p)
+				-> const std::optional<std::tuple<uintE, uintE>> {
+				uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
+				uintE new_deg = D[u] - edgesRemoved;
+				D[u] = new_deg;
+				if (new_deg < alpha)
+				{
+					if(max_beta>0)
+						pbbslib::write_max(&BetaMax[u][alpha],max_beta);
+					return wrap(u, 0);
+				}
+				return std::nullopt;
+			};
 			vertexSubsetData deleteU = nghCount(G, activeV, cond_fu, clearU, em, no_dense);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
-
+			auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
+				-> const std::optional<std::tuple<uintE, uintE>> {
+				uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
+				uintE deg = D[v];
+				uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
+				D[v] = new_deg;
+				return wrap(v, bbuckets.get_bucket(new_deg));
+			};
+			auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
 			vertexSubsetData movedV = nghCount(G, deleteU, cond_fv, getVBuckets, em, no_dense);
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			ft.stop();
