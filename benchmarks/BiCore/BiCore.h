@@ -89,8 +89,8 @@ namespace gbbs
 			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 				t_in.start();
 				auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
-				double inittime = std::get<1>(ret);
-				timeA[core-1] = inittime;
+				double preptime = std::get<1>(ret);
+				timeA[core-1] = preptime;
 				auto retA = std::get<0>(ret);
 				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
 			}
@@ -116,8 +116,8 @@ namespace gbbs
 		pbbslib::free_array(msgA);
 		pbbslib::free_array(msgB);
 
-		double inittime = pbbslib::reduce_add(timeA) + pbbslib::reduce_add(timeB);
-		debug(std::cout<< "inittime: " << inittime <<std::endl);
+		double preptime = pbbslib::reduce_add(timeA);
+		debug(std::cout<< "preptime: " << preptime <<std::endl);
 	}
 
 	template <class Graph>
@@ -184,6 +184,8 @@ namespace gbbs
 			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
 		}
 
+		pt.stop();
+
 		size_t vCount = 0;
 
 		auto vD =
@@ -208,7 +210,6 @@ namespace gbbs
 			D[v] = new_deg;
 			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
-		pt.stop();
 
 		while (finished != vCount)
 		{
@@ -243,8 +244,8 @@ namespace gbbs
 		bbuckets.del();
 		em.del();
 		it.stop();
-		debug(it.reportTotal("initialize time"));
-		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),it.get_total());
+		debug(pt.reportTotal("prep time"));
+		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),pt.get_total());
 	}
 
 	template <class Graph>
@@ -307,6 +308,7 @@ namespace gbbs
 			vertexSubsetData<uintE> uDel = nghCount(G, vDel, cond_fu, clearZeroU, em, no_dense);
 			vDel = nghCount(G, uDel, cond_fv, clearV, em, no_dense);
 		}
+		pt.stop();
 
 		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]>0);}));
 
@@ -329,7 +331,6 @@ namespace gbbs
 			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
-		pt.stop();
 		while (finished != uCount)
 		{
 			bt.start();
@@ -361,8 +362,8 @@ namespace gbbs
 		abuckets.del();
 		em.del();
 		it.stop();
-		debug(it.reportTotal("initialize time"));
-		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),it.get_total());
+		debug(pt.reportTotal("prep time"));
+		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),pt.get_total());
 	}
 
 } // namespace gbbs
