@@ -83,7 +83,7 @@ namespace gbbs
 		if(breakptrs[breakptrs.size()-1]!=delta)
 			breakptrs.push_back(delta);
 		std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<std::endl;
-		par_for(1,breakptrs.size(),[&](size_t idx){
+		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			timer t_in;
 			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
@@ -97,7 +97,7 @@ namespace gbbs
 			t_in.reportTotal(std::string("range ")+std::to_string(breakptrs[idx-1]+1)+" to "+std::to_string(breakptrs[idx])+" runtime");
 		});
 
-		par_for(1,breakptrs.size(),[&](size_t idx){
+		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			timer t_in;
 			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
