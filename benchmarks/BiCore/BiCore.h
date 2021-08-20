@@ -28,6 +28,7 @@
 #include "benchmarks/KCore/JulienneDBS17/KCore.h"
 #include <fstream>
 #include <vector>
+#include <unordered_set>
 
 namespace gbbs
 {
@@ -120,6 +121,46 @@ namespace gbbs
 		debug(std::cout<< "preptime: " << preptime <<std::endl);
 	}
 
+	template <class Graph, class Apply>
+	inline vertexSubsetData<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff, Apply apply_f)
+	{
+		//everything less than cutoff is deleted
+		std::unordered_set<uintE> eChange;
+		for (size_t i = 0; i < del.size; i++){
+			auto neighbors = G.get_vertex(del[i]).out_neighbors();
+			// out_neighbors gives the id, degree, and neighbors in tuple form
+			for (int j = 0; j < neighbors.degree; j++){
+				uintE id = neighbors.get_neighbor(j);
+				if(D[id]>=cutoff){
+					eChange.insert(id);
+					D[id]--;
+				}
+			}
+		}
+		sequence<uintE> changeArr(eChange.size());
+		size_t i = 0;
+		for(uintE id : eChange) {
+			changeArr[i++] = apply_f(std::make_tuple(id, D[id]));
+		}
+		return vertexSubsetData<uintE>(G.n, std::move(changeArr));
+	}
+
+	template <class Graph>
+	inline pbbslib::dyn_arr<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
+		pbbslib::dyn_arr<uintE> delOther(del.size);
+		for (size_t i = 0; i < del.size; i++){
+			auto neighbors = G.get_vertex(del[i]).out_neighbors();
+			for (int j = 0; j < neighbors.degree; j++){
+				uintE id = neighbors.get_neighbor(j);
+				if(D[id]>=cutoff){
+					D[id]--;
+					if(D[id]<cutoff) {delOther.resize(1); delOther.push_back(id);}
+				}
+			}
+		}
+		return delOther;
+	}
+
 	template <class Graph>
 	inline std::pair<std::pair<size_t,size_t>,double> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, 
 	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
@@ -135,53 +176,31 @@ namespace gbbs
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
-		it.start();
-		auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
-		it.stop();
+		// it.start();
+		// auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
+		// it.stop();
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
 			});
 
-		auto mask = sequence<std::tuple<bool, uintE>>(n_a, [&](size_t i) {
-			return std::make_tuple<bool, uintE>((G.get_vertex(i).out_degree() < alpha)&(i<n_a), 0);
-		});
+		std::vector<uintE> uDel;
+		for(size_t i=0; i<n_a; i++)
+			if(D[i]<alpha) uDel.push_back(i);
+		// auto mask = sequence<std::tuple<bool, uintE>>(n_a, [&](size_t i) {
+		// 	return std::make_tuple<bool, uintE>(D[i] < alpha, 0);
+		// });
 
-		auto uDel = vertexSubsetData<uintE>(n_a, std::move(mask));
+		// auto uDel = vertexSubsetData<uintE>(n_a, std::move(mask));
 
 		auto cond_fu = [&D, &alpha](const uintE &u) { return D[u] >= alpha; };
 		auto cond_fv = [&D, &max_beta](const uintE &v) { return D[v] > max_beta; };
 		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
-
-		auto clearZeroV = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE new_deg = D[v] - edgesRemoved;
-			D[v] = new_deg;
-			if (new_deg == 0)
-				return wrap(v, 0);
-			return std::nullopt;
-		};
-
-		auto clearU = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE new_deg = D[u] - edgesRemoved;
-			D[u] = new_deg;
-			if (new_deg < alpha)
-			{
-				if(max_beta>0)
-					pbbslib::write_max(&BetaMax[u][alpha],max_beta);
-				return wrap(u, 0);
-			}
-			return std::nullopt;
-		};
-
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		while (!uDel.isEmpty())
 		{
-			vertexSubsetData<uintE> vDel = nghCount(G, uDel, cond_fv, clearZeroV, em, no_dense);
-			uDel = nghCount(G, vDel, cond_fu, clearU, em, no_dense);
+			pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
+			uDel = nghCount(G, vDel, D, alpha);
 		}
 
 		pt.stop();
@@ -200,15 +219,22 @@ namespace gbbs
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 
-		vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));
+		for(size_t i=n_a; i<n_b; i++)
+			if(D[i]>0) vCount++;
+		//vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));
 
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
-			-> const std::optional<std::tuple<uintE, uintE>> {
-			uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-			uintE deg = D[v];
-			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
+			-> const std::tuple<uintE, uintE> {
+			uintE v = std::get<0>(p), new_deg = std::get<1>(p);
+			new_deg = std::max(new_deg, static_cast<uintE>(max_beta));
 			D[v] = new_deg;
-			return wrap(v, bbuckets.get_bucket(new_deg));
+			uintE buck = bbuckets.get_bucket(new_deg)
+			assert(buck!=UINT_E_MAX);
+			return std::make_tuple(v, buck);
+		};
+
+		auto updateBeta = [&](const uintE& u){
+			pbbslib::write_max(&BetaMax[u][alpha],max_beta);
 		};
 
 		while (finished != vCount)
@@ -219,20 +245,20 @@ namespace gbbs
 			max_beta = std::max(max_beta, vbkt.id);
 			if (vbkt.id == 0)
 				continue;
-			auto activeV = vertexSubset(n, std::move(vbkt.identifiers)); // container of vertices
-			finished += activeV.size();
+			pbbslib::dyn_arr<uintE> activeV(vbkt.identifiers.s, vbkt.identifiers.n, vbkt.identifiers.n, true);
+			finished += activeV.size;
 
-			par_for(0, activeV.size(), [&](size_t i) {
-				size_t index = activeV.vtx(i)-n_a;
+			par_for(0, activeV.size, [&](size_t i) {
+				size_t index = activeV[i]-n_a;
 				par_for(1, max_beta, [&](size_t j) {
 					pbbslib::write_max(&AlphaMax[index][j],alpha);
 				});
 			});
 			ft.start();
-			vertexSubsetData deleteU = nghCount(G, activeV, cond_fu, clearU, em, no_dense);
+			pbbslib::dyn_arr<uintE> deleteU = nghCount(G, activeV, D, alpha);
+			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
-
-			vertexSubsetData movedV = nghCount(G, deleteU, cond_fv, getVBuckets, em, no_dense);
+			vertexSubsetData<uintE> movedV = nghCount(G, deleteU, D, max_beta+1, getVBuckets);
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			ft.stop();
 			bt.start();

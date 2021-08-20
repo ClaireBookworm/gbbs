@@ -45,6 +45,33 @@ namespace pbbslib {
     dyn_arr(E* _A, long _size, long _capacity, bool _alloc)
         : A(_A), size(_size), capacity(_capacity), alloc(_alloc) {}
 
+    // move constructor
+    dyn_arr(dyn_arr&& other) : A(other.A), size(other.size), capacity(other.capacity), alloc(other.alloc) {
+      other.A = nullptr;
+      other.size = 0;
+      other.capacity = 0;
+      other.alloc = false;
+    }
+
+    // move assignment
+    dyn_arr& operator=(dyn_arr&& other) {
+      if (this != &other) {
+        del();
+        A = other.A;
+        size = other.size;
+        capacity = other.capacity;
+        alloc = other.alloc;
+        other.A = nullptr;
+        other.size = 0;
+        other.capacity = 0;
+        other.alloc = false;
+      }
+      return *this;
+    }
+
+    const E &operator[](const size_t i) const { return A[i]; }
+    E &operator[](const size_t i) { return A[i]; }
+
     void del() {
       if (alloc) {
         pbbslib::free_array(A);
