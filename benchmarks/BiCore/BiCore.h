@@ -67,7 +67,7 @@ namespace gbbs
 		auto timeA = sequence<double>(delta, 0.0);
 		auto timeB = sequence<double>(delta, 0.0);
 
-		// double slope = 2;
+		// double slope = 1.5;
 		// double thread_ratio = 1; //each worker gets assigned thread_ratio/num_workers() percent of depth
 		// double avgSpan = (slope+1)/2*delta/num_workers()*thread_ratio;
 		// double curSpan = 0;
