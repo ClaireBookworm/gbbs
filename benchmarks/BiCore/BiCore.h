@@ -75,7 +75,7 @@ namespace gbbs
 		breakptrs.push_back(0);
 		for(size_t i=1; i<=delta; i++){
 			curSpan += slope-(slope-1)/delta*i;
-			if(curSpan>=avgSpan){
+			if(curSpan>=avgSpan*0.9){
 				curSpan = 0;
 				breakptrs.push_back(i);
 				std::cout<<"breakptr at "<<i<<std::endl;
