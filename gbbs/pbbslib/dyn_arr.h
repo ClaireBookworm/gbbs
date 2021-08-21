@@ -45,6 +45,9 @@ namespace pbbslib {
     dyn_arr(E* _A, long _size, long _capacity, bool _alloc)
         : A(_A), size(_size), capacity(_capacity), alloc(_alloc) {}
 
+    // shallow copy constructor
+    dyn_arr(dyn_arr& other) 
+      : A(other.A), size(other.size), capacity(other.capacity), alloc(other.alloc) {}
     // move constructor
     dyn_arr(dyn_arr&& other) : A(other.A), size(other.size), capacity(other.capacity), alloc(other.alloc) {
       other.A = nullptr;
