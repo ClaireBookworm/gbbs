@@ -311,7 +311,7 @@ namespace gbbs
 				return G.get_vertex(i).out_degree();
 			});
 
-		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<0;}));
+		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<beta;}));
 		pbbslib::dyn_arr<uintE> vDel(initSize);
 		for(size_t i=n_a; i<n; i++)
 			if(D[i]<beta){ vDel.push_back(i); }
