@@ -139,12 +139,12 @@ namespace gbbs
 		pbbslib::free_array(msgA);
 		pbbslib::free_array(msgB);
 
-		// double peeltimeA = pbbslib::reduce_add(timeA);
-		// double peeltimeB = pbbslib::reduce_add(timeB);
-		// double totalTime = pbbslib::reduce_add(tTimeA) + pbbslib::reduce_add(tTimeB);
-		// debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
-		// debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
-		// debug(std::cout<< "totaltime: " << totalTime <<std::endl);
+		double peeltimeA = pbbslib::reduce_add(timeA);
+		double peeltimeB = pbbslib::reduce_add(timeB);
+		double totalTime = pbbslib::reduce_add(tTimeA) + pbbslib::reduce_add(tTimeB);
+		debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
+		debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
+		debug(std::cout<< "totaltime: " << totalTime <<std::endl);
 	}
 
 	template <class Graph, class Apply>
@@ -173,7 +173,7 @@ namespace gbbs
 
 	template <class Graph>
 	inline pbbslib::dyn_arr<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
-		pbbslib::dyn_arr<uintE> delOther(del.capacity);
+		pbbslib::dyn_arr<uintE> delOther(del.size);
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
 			for (uintE j = 0; j < neighbors.degree; j++){
@@ -288,9 +288,9 @@ namespace gbbs
 		it.start();
 		bbuckets.del();
 		it.stop();
-		// debug(pt.reportTotal("prep time"));
-		// debug(ft.reportTotal("nghCount time"));
-		// debug(bt.reportTotal("bucket time"));
+		debug(pt.reportTotal("prep time"));
+		debug(ft.reportTotal("nghCount time"));
+		debug(bt.reportTotal("bucket time"));
 		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),ft.get_total());
 	}
 
@@ -315,6 +315,7 @@ namespace gbbs
 		pbbslib::dyn_arr<uintE> vDel(initSize);
 		for(size_t i=n_a; i<n; i++)
 			if(D[i]<beta){ vDel.push_back(i); }
+
 
 		// nghCount counts the # of neighbors
 		ft.start();
@@ -389,7 +390,7 @@ namespace gbbs
 		abuckets.del();
 		//em.del();
 		it.stop();
-		//debug(pt.reportTotal("prep time"));
+		debug(pt.reportTotal("prep time"));
 		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),ft.get_total());
 	}
 
