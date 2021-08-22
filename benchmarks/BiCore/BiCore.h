@@ -151,7 +151,7 @@ namespace gbbs
 	inline vertexSubsetData<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff, Apply apply_f)
 	{
 		//everything less than cutoff is deleted
-		std::unordered_set<uintE> eChange;
+		std::unordered_set<uintE> eChange(del.size);
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
 			// out_neighbors gives the id, degree, and neighbors in tuple form
