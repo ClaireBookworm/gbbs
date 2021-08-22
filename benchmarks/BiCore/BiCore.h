@@ -202,40 +202,35 @@ namespace gbbs
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
-		ft.start();
-		sequence<uintE> D(n);
-		for(size_t i=0; i<n; i++)
-			D[i] = G.get_vertex(i).out_degree();
+		auto D =
+			sequence<uintE>(n, [&](size_t i) {
+				return G.get_vertex(i).out_degree();
+			});
 
-		size_t firstDel = 0;
-		for(size_t i=0; i<n_a; i++)
-			if(D[i]<alpha)
-				firstDel++;
+		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<alpha;}));
 
-		pbbslib::dyn_arr<uintE> uDel(firstDel);
+		pbbslib::dyn_arr<uintE> uDel(initSize);
 		for(size_t i=0; i<n_a; i++)
 			if(D[i]<alpha){uDel.push_back(i);}
 
 		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
+		ft.start();
 		while (uDel.size>0){
 			pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
 			uDel = nghCount(G, vDel, D, alpha);
 		}
+		ft.stop();
 
 		pt.stop();
 
-		sequence<uintE> vD = sequence<uintE>(n);
-		for(size_t i=0;i<n_a;i++)
-			vD[i] = std::numeric_limits<uintE>::max();
-		for(size_t i=n_a;i<n;i++)
-			vD[i] = (D[i] == 0) ? std::numeric_limits<uintE>::max() : D[i];
-		// auto vD =
-		// 	sequence<uintE>(n, [&](size_t i) {
-		// 		if (i <= bipartition || D[i] == 0)
-		// 			return std::numeric_limits<uintE>::max();
-		// 		return D[i];
-		// 	});
+		auto vD =
+			sequence<uintE>(n, [&](size_t i) {
+				if (i <= bipartition || D[i] == 0)
+					return std::numeric_limits<uintE>::max();
+				return D[i];
+			});
+
 		it.start();
 		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
 		it.stop();
@@ -243,7 +238,6 @@ namespace gbbs
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
 		size_t vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));;
 		//vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));
-		ft.stop();
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE, uintE> > {
 			uintE v = std::get<0>(p), new_deg = std::get<1>(p);
@@ -312,14 +306,15 @@ namespace gbbs
 		const size_t n_a = bipartition + 1;
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
-		ft.start();
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
 			});
-		pbbslib::dyn_arr<uintE> vDel(16);
+
+		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<0;}));
+		pbbslib::dyn_arr<uintE> vDel(initSize);
 		for(size_t i=n_a; i<n; i++)
-			if(D[i]<beta){vDel.resize(1); vDel.push_back(i);}
+			if(D[i]<beta){ vDel.push_back(i); }
 
 		// auto cond_fv = [&D, &beta](const uintE &v) { return D[v] >= beta; };
 		// auto cond_fu = [&D, &max_alpha](const uintE &u) { return D[u] > max_alpha; };
@@ -350,11 +345,12 @@ namespace gbbs
 		// };
 
 		// nghCount counts the # of neighbors
+		ft.start();
 		while (vDel.size>0){
 			pbbslib::dyn_arr<uintE> uDel = nghCount(G, vDel, D, 1);
 			vDel = nghCount(G, uDel, D, beta);
 		}
-
+		ft.stop();
 		pt.stop();
 
 		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>0;}));
@@ -368,7 +364,6 @@ namespace gbbs
 		it.start();
 		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
 		it.stop();
-		ft.stop();
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
