@@ -166,14 +166,14 @@ namespace gbbs
 		pbbslib::dyn_arr<std::tuple<uintE,uintE> > changeArr(eChange.size());
 		for(uintE id : eChange) {
 			std::optional<std::tuple<uintE, uintE> > ret = apply_f(std::make_tuple(id, D[id]));
-			if(ret) {changeArr.push_back(*apply_f(std::make_tuple(id, D[id])));}
+			if(ret) changeArr.push_back(*ret);
 		}
 		return vertexSubsetData<uintE>(G.n, std::move(changeArr.to_seq()));
 	}
 
 	template <class Graph>
 	inline pbbslib::dyn_arr<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
-		pbbslib::dyn_arr<uintE> delOther(del.size);
+		pbbslib::dyn_arr<uintE> delOther(del.capacity);
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
 			for (uintE j = 0; j < neighbors.degree; j++){
