@@ -29,6 +29,8 @@
 #include <fstream>
 #include <vector>
 #include <unordered_set>
+#include <chrono>
+#include <thread>
 
 namespace gbbs
 {
@@ -109,6 +111,7 @@ namespace gbbs
 
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			timer t_in;
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				t_in.start();
@@ -126,6 +129,7 @@ namespace gbbs
 
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			timer t_in;
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				t_in.start();
