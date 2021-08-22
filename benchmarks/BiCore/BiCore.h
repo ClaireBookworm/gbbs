@@ -139,12 +139,12 @@ namespace gbbs
 		pbbslib::free_array(msgA);
 		pbbslib::free_array(msgB);
 
-		double peeltimeA = pbbslib::reduce_add(timeA);
-		double peeltimeB = pbbslib::reduce_add(timeB);
-		double totalTime = pbbslib::reduce_add(tTimeA) + pbbslib::reduce_add(tTimeB);
-		debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
-		debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
-		debug(std::cout<< "totaltime: " << totalTime <<std::endl);
+		// double peeltimeA = pbbslib::reduce_add(timeA);
+		// double peeltimeB = pbbslib::reduce_add(timeB);
+		// double totalTime = pbbslib::reduce_add(tTimeA) + pbbslib::reduce_add(tTimeB);
+		// debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
+		// debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
+		// debug(std::cout<< "totaltime: " << totalTime <<std::endl);
 	}
 
 	template <class Graph, class Apply>
@@ -288,9 +288,9 @@ namespace gbbs
 		it.start();
 		bbuckets.del();
 		it.stop();
-		debug(pt.reportTotal("prep time"));
-		debug(ft.reportTotal("nghCount time"));
-		debug(bt.reportTotal("bucket time"));
+		// debug(pt.reportTotal("prep time"));
+		// debug(ft.reportTotal("nghCount time"));
+		// debug(bt.reportTotal("bucket time"));
 		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),ft.get_total());
 	}
 
@@ -315,34 +315,6 @@ namespace gbbs
 		pbbslib::dyn_arr<uintE> vDel(initSize);
 		for(size_t i=n_a; i<n; i++)
 			if(D[i]<beta){ vDel.push_back(i); }
-
-		// auto cond_fv = [&D, &beta](const uintE &v) { return D[v] >= beta; };
-		// auto cond_fu = [&D, &max_alpha](const uintE &u) { return D[u] > max_alpha; };
-
-		// // if the U list is empty
-		// auto clearZeroU = [&](const std::tuple<uintE, uintE> &p)
-		// 	-> const std::optional<std::tuple<uintE, uintE>> {
-		// 	uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
-		// 	uintE new_deg = D[u] - edgesRemoved;
-		// 	D[u] = new_deg;
-		// 	if (new_deg == 0)
-		// 		return wrap(u, 0);
-		// 	return std::nullopt;
-		// };
-
-		// auto clearV = [&](const std::tuple<uintE, uintE> &p)
-		// 	-> const std::optional<std::tuple<uintE, uintE> > {
-		// 	uintE v = std::get<0>(p), edgesRemoved = std::get<1>(p);
-		// 	uintE new_deg = D[v] - edgesRemoved;
-		// 	D[v] = new_deg;
-		// 	if (new_deg < beta)
-		// 	{
-		// 		if(max_alpha>0)
-		// 			pbbslib::write_max(&AlphaMax[v-n_a][beta],max_alpha);
-		// 		return wrap(v, 0);
-		// 	}
-		// 	return std::nullopt;
-		// };
 
 		// nghCount counts the # of neighbors
 		ft.start();
@@ -417,7 +389,7 @@ namespace gbbs
 		abuckets.del();
 		//em.del();
 		it.stop();
-		debug(pt.reportTotal("prep time"));
+		//debug(pt.reportTotal("prep time"));
 		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),ft.get_total());
 	}
 
