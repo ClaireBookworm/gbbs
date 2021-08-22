@@ -92,10 +92,9 @@ namespace gbbs
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
-			timer t_in; t_in.start();
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				t_in.start();
+				timer t_in; t_in.start();
 				auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 				double preptime = std::get<1>(ret);
 				timeA[core-1] = preptime;
@@ -105,7 +104,7 @@ namespace gbbs
 			});};
 			auto peelAllFixB = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				t_in.start();
+				timer t_in; t_in.start();
 				auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 				double inittime = std::get<1>(ret);
 				timeB[core-1] = inittime;
@@ -114,7 +113,7 @@ namespace gbbs
 				tTimeB[core-1] = t_in.get_total();
 			});};
 			par_do(peelAllFixA,peelAllFixB);
-			t_in.reportTotal(std::string("range ")+std::to_string(breakptrs[idx-1]+1)+" to "+std::to_string(breakptrs[idx])+" runtime");
+			std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
 		});
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
