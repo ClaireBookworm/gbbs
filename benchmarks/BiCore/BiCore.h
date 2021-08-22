@@ -66,6 +66,8 @@ namespace gbbs
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
 		auto timeA = sequence<double>(delta, 0.0);
 		auto timeB = sequence<double>(delta, 0.0);
+		auto tTimeA = sequence<double>(delta, 0.0);
+		auto tTimeB = sequence<double>(delta, 0.0);
 
 		// double slope = 1.5;
 		// double thread_ratio = 1; //each worker gets assigned thread_ratio/num_workers() percent of depth
@@ -91,15 +93,17 @@ namespace gbbs
 			timeA[core-1] = preptime;
 			auto retA = std::get<0>(ret);
 			msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
+			tTimeA[core-1] = t_in.get_total();
 		});
 
 		par_for(1, delta+1, 1, [&](size_t core){
 			timer t_in; t_in.start();
 			auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
-			double inittime = std::get<1>(ret);
-			timeB[core-1] = inittime;
+			double preptime = std::get<1>(ret);
+			timeB[core-1] = preptime;
 			auto retB = std::get<0>(ret);
 			msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
+			tTimeB[core-1] = t_in.get_total();
 		});
 
 		// par_for(1,breakptrs.size(),1,[&](size_t idx){
@@ -135,8 +139,12 @@ namespace gbbs
 		pbbslib::free_array(msgA);
 		pbbslib::free_array(msgB);
 
-		double preptime = pbbslib::reduce_add(timeA);
-		debug(std::cout<< "preptime: " << preptime <<std::endl);
+		double peeltimeA = pbbslib::reduce_add(timeA);
+		double peeltimeB = pbbslib::reduce_add(timeB);
+		double totalTime = pbbslib::reduce_add(tTimeA) + pbbslib::reduce_add(tTimeB);
+		debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
+		debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
+		debug(std::cout<< "totaltime: " << totalTime <<std::endl);
 	}
 
 	template <class Graph, class Apply>
@@ -194,14 +202,19 @@ namespace gbbs
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
 		// [bipartition+1, n-1]  interval V
-		auto D =
-			sequence<uintE>(n, [&](size_t i) {
-				return G.get_vertex(i).out_degree();
-			});
+		ft.start();
+		sequence<uintE> D(n);
+		for(size_t i=0; i<n; i++)
+			D[i] = G.get_vertex(i).out_degree();
 
-		pbbslib::dyn_arr<uintE> uDel(16);
+		size_t firstDel = 0;
 		for(size_t i=0; i<n_a; i++)
-			if(D[i]<alpha){uDel.resize(1); uDel.push_back(i);}
+			if(D[i]<alpha)
+				firstDel++;
+
+		pbbslib::dyn_arr<uintE> uDel(firstDel);
+		for(size_t i=0; i<n_a; i++)
+			if(D[i]<alpha){uDel.push_back(i);}
 
 		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
@@ -212,24 +225,25 @@ namespace gbbs
 
 		pt.stop();
 
-		size_t vCount = 0;
-
-		auto vD =
-			sequence<uintE>(n, [&](size_t i) {
-				if (i <= bipartition || D[i] == 0)
-					return std::numeric_limits<uintE>::max();
-				return D[i];
-			});
+		sequence<uintE> vD = sequence<uintE>(n);
+		for(size_t i=0;i<n_a;i++)
+			vD[i] = std::numeric_limits<uintE>::max();
+		for(size_t i=n_a;i<n;i++)
+			vD[i] = (D[i] == 0) ? std::numeric_limits<uintE>::max() : D[i];
+		// auto vD =
+		// 	sequence<uintE>(n, [&](size_t i) {
+		// 		if (i <= bipartition || D[i] == 0)
+		// 			return std::numeric_limits<uintE>::max();
+		// 		return D[i];
+		// 	});
 		it.start();
 		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
 		it.stop();
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
-
-		for(size_t i=n_a; i<n; i++)
-			if(D[i]>0) vCount++;
+		size_t vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));;
 		//vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));
-
+		ft.stop();
 		auto getVBuckets = [&](const std::tuple<uintE, uintE> &p)
 			-> const std::optional<std::tuple<uintE, uintE> > {
 			uintE v = std::get<0>(p), new_deg = std::get<1>(p);
@@ -245,6 +259,7 @@ namespace gbbs
 
 		while (finished != vCount)
 		{
+			ft.start();
 			bt.start();
 			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
@@ -254,14 +269,17 @@ namespace gbbs
 				continue;
 			pbbslib::dyn_arr<uintE> activeV(vbkt.identifiers.begin(), vbkt.identifiers.size(), vbkt.identifiers.size(), true);
 			finished += activeV.size;
-
-			par_for(0, activeV.size, [&](size_t i) {
+			for(uintE i=0; i<activeV.size; i++){
 				size_t index = activeV[i]-n_a;
-				par_for(1, max_beta, [&](size_t j) {
+				for(uintE j=1; j<max_beta; j++)
 					pbbslib::write_max(&AlphaMax[index][j],alpha);
-				});
-			});
-			ft.start();
+			}
+			// par_for(0, activeV.size, [&](size_t i) {
+			// 	size_t index = activeV[i]-n_a;
+			// 	par_for(1, max_beta, [&](size_t j) {
+			// 		pbbslib::write_max(&AlphaMax[index][j],alpha);
+			// 	});
+			// });
 			pbbslib::dyn_arr<uintE> deleteU = nghCount(G, activeV, D, alpha);
 			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
@@ -277,7 +295,9 @@ namespace gbbs
 		bbuckets.del();
 		it.stop();
 		debug(pt.reportTotal("prep time"));
-		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),pt.get_total());
+		debug(ft.reportTotal("nghCount time"));
+		debug(bt.reportTotal("bucket time"));
+		return std::make_pair(std::pair<size_t,size_t>(rho_alpha,max_beta),ft.get_total());
 	}
 
 	template <class Graph>
@@ -292,12 +312,11 @@ namespace gbbs
 		const size_t n_a = bipartition + 1;
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
-
+		ft.start();
 		auto D =
 			sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
 			});
-
 		pbbslib::dyn_arr<uintE> vDel(16);
 		for(size_t i=n_a; i<n; i++)
 			if(D[i]<beta){vDel.resize(1); vDel.push_back(i);}
@@ -338,9 +357,7 @@ namespace gbbs
 
 		pt.stop();
 
-		size_t uCount = 0;
-		for(size_t i=0; i<n_a; i++)
-			if(D[i]>0) uCount++;
+		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>0;}));
 
 		auto Du =
 			sequence<uintE>(n, [&](size_t i) {
@@ -351,6 +368,7 @@ namespace gbbs
 		it.start();
 		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
 		it.stop();
+		ft.stop();
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
 		auto getUBuckets = [&](const std::tuple<uintE, uintE> &p)
@@ -367,6 +385,7 @@ namespace gbbs
 
 		while (finished != uCount)
 		{
+			ft.start();
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
 			bt.stop();
@@ -376,14 +395,18 @@ namespace gbbs
 				continue;
 			pbbslib::dyn_arr<uintE> activeU(ubkt.identifiers.begin(), ubkt.identifiers.size(), ubkt.identifiers.size(), true);
 			finished += activeU.size; // add to finished set
-			par_for(0, activeU.size, [&](size_t i) {
+			for(uintE i=0; i<activeU.size; i++){
 				size_t index = activeU[i];
-				par_for(1, max_alpha, [&](size_t j) {
+				for(uintE j=1; j<max_alpha; j++)
 					pbbslib::write_max(&BetaMax[index][j],beta);
-				});
-			});
+			}
+			// par_for(0, activeU.size, [&](size_t i) {
+			// 	size_t index = activeU[i];
+			// 	par_for(1, max_alpha, [&](size_t j) {
+			// 		pbbslib::write_max(&BetaMax[index][j],beta);
+			// 	});
+			// });
 			
-			ft.start();
 			pbbslib::dyn_arr<uintE> deleteV = nghCount(G, activeU, D, beta);
 			for(size_t i=0; i<deleteV.size; i++) updateAlpha(deleteV[i]);
 			// "deleteV" is a wrapper storing a sequence id of deleted vertices in V
@@ -400,7 +423,7 @@ namespace gbbs
 		//em.del();
 		it.stop();
 		debug(pt.reportTotal("prep time"));
-		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),pt.get_total());
+		return std::make_pair(std::pair<size_t,size_t>(rho_beta,max_alpha),ft.get_total());
 	}
 
 } // namespace gbbs
