@@ -77,7 +77,7 @@ namespace gbbs
 		breakptrs.push_back(0);
 		for(size_t i=1; i<=delta; i++){
 			curSpan += slope-(slope-1)/delta*i;
-			if(curSpan>=avgSpan*0.9){
+			if(curSpan>=avgSpan*0.97){
 				curSpan = 0;
 				breakptrs.push_back(i);
 				std::cout<<"breakptr at "<<i<<std::endl;
@@ -86,7 +86,7 @@ namespace gbbs
 		if(breakptrs[breakptrs.size()-1]!=delta)
 			breakptrs.push_back(delta);
 		std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<std::endl;
-		
+
 		// par_for(1, delta+1, 1, [&](size_t core){
 		// 	timer t_in; t_in.start();
 		// 	auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
@@ -110,28 +110,34 @@ namespace gbbs
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			timer t_in;
-			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
+			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				t_in.start();
 				auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 				double preptime = std::get<1>(ret);
 				timeA[core-1] = preptime;
 				auto retA = std::get<0>(ret);
 				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-			}
+				tTimeA[core-1] = t_in.get_total();
+			});
+			// for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
+			// }
 			t_in.reportTotal(std::string("range ")+std::to_string(breakptrs[idx-1]+1)+" to "+std::to_string(breakptrs[idx])+" runtime");
 		});
 
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			timer t_in;
-			for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
+			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				t_in.start();
 				auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
 				double inittime = std::get<1>(ret);
 				timeB[core-1] = inittime;
 				auto retB = std::get<0>(ret);
 				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-			}
+				tTimeB[core-1] = t_in.get_total();
+			});
+			// for(size_t core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
+			// }
 			t_in.reportTotal(std::string("range ")+std::to_string(breakptrs[idx-1]+1)+" to "+std::to_string(breakptrs[idx])+" runtime");
 		});
 
