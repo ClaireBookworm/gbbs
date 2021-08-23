@@ -31,6 +31,7 @@
 #include <unordered_set>
 #include <chrono>
 #include <thread>
+#include <stdlib.h>
 
 
 namespace gbbs
@@ -131,10 +132,10 @@ namespace gbbs
 	}
 
 	template <class Graph, class Apply>
-	inline vertexSubsetData<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff, Apply apply_f)
+	inline vertexSubsetData<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff, Apply apply_f, size_t iter_id, uintE* peelAt)
 	{
 		//everything less than cutoff is deleted
-		std::unordered_set<uintE> eChange;
+		std::vector<uintE> eChange;
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
 			uintE deg = neighbors.degree;
@@ -142,13 +143,16 @@ namespace gbbs
 			for (uintE j = 0; j < deg; j++){
 				uintE id = neighbors.get_neighbor(j);
 				if(D[id]>=cutoff){
-					eChange.insert(id);
+					if(peelAt[id] < iter_id){
+						eChange.push_back(id);
+						peelAt[id] = iter_id;
+					}
 					D[id]--;
 				}
 			}
 		}
 		pbbslib::dyn_arr<std::tuple<uintE,uintE> > changeArr(eChange.size());
-		for(uintE id : eChange) {
+		for(uintE& id : eChange) {
 			std::optional<std::tuple<uintE, uintE> > ret = apply_f(std::make_tuple(id, D[id]));
 			if(ret) changeArr.push_back(*ret);
 		}
@@ -237,6 +241,9 @@ namespace gbbs
 			pbbslib::write_max(&BetaMax[u][alpha],max_beta);
 		};
 
+		uintE* peelAt = (uintE*)std::calloc(G.n, sizeof(uintE));
+		size_t iter_id = 0;
+
 		while (finished != vCount)
 		{
 			bt.start();
@@ -263,7 +270,7 @@ namespace gbbs
 			pbbslib::dyn_arr<uintE> deleteU = nghCount(G, activeV, D, alpha);
 			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
-			vertexSubsetData<uintE> movedV = nghCount(G, deleteU, D, max_beta+1, getVBuckets);
+			vertexSubsetData<uintE> movedV = nghCount(G, deleteU, D, max_beta+1, getVBuckets, ++iter_id, peelAt);
 			ft.stop();
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			bt.start();
@@ -274,6 +281,7 @@ namespace gbbs
 		it.start();
 		bbuckets.del();
 		it.stop();
+		delete[] peelAt;
 		debug(pt.reportTotal("prep time"));
 		debug(ft.reportTotal("nghCount time"));
 		debug(bt.reportTotal("bucket time"));
@@ -337,6 +345,9 @@ namespace gbbs
 			pbbslib::write_max(&AlphaMax[v-n_a][beta],max_alpha);
 		};
 
+		uintE* peelAt = (uintE*)std::calloc(G.n, sizeof(uintE));
+		size_t iter_id = 0;
+
 		while (finished != uCount)
 		{
 			bt.start();
@@ -363,7 +374,7 @@ namespace gbbs
 			pbbslib::dyn_arr<uintE> deleteV = nghCount(G, activeU, D, beta);
 			for(size_t i=0; i<deleteV.size; i++) updateAlpha(deleteV[i]);
 			// "deleteV" is a wrapper storing a sequence id of deleted vertices in V
-			vertexSubsetData<uintE> movedU = nghCount(G, deleteV, D, max_alpha+1, getUBuckets);
+			vertexSubsetData<uintE> movedU = nghCount(G, deleteV, D, max_alpha+1, getUBuckets, ++iter_id, peelAt);
 			ft.stop();
 			bt.start();
 			abuckets.update_buckets(movedU);
