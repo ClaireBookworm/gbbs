@@ -155,22 +155,20 @@ namespace gbbs
 
 	template <class Graph>
 	inline pbbslib::dyn_arr<uintE> nghCount(timer& tt,Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
+		tt.start();
 		pbbslib::dyn_arr<uintE> delOther(16);
 		for (uintE i = 0; i < del.size; i++){
-			auto neighbors = G.get_vertex(del[i]).out_neighbors();
-			for (uintE j = 0; j < neighbors.degree; j++){
-				uintE id = neighbors.get_neighbor(j);
-				if(D[id]>=cutoff){
-					D[id]--;
-					tt.start();
-					if(D[id]<cutoff) {
-						delOther.resize(1);
-						delOther.push_back(id);
-					}
-					tt.stop();
+			auto nghIter = G.get_vertex(del[i]).out_neighbors().get_iter();
+			while (nghIter.has_next()){
+				uintE id = std::get<0>(nghIter.next());
+				if(D[id]==cutoff){
+					delOther.resize(1);
+					delOther.push_back(id);
 				}
+				D[id]--;
 			}
 		}
+		tt.stop();
 		return delOther;
 	}
 
