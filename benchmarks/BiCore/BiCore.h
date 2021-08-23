@@ -162,12 +162,12 @@ namespace gbbs
 				uintE id = neighbors.get_neighbor(j);
 				if(D[id]>=cutoff){
 					D[id]--;
+					tt.start();
 					if(D[id]<cutoff) {
-						tt.start();
 						delOther.resize(1);
 						delOther.push_back(id);
-						tt.stop();
 					}
+					tt.stop();
 				}
 			}
 		}
