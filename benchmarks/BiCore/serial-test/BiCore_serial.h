@@ -80,7 +80,7 @@
 // }
 namespace gbbs{
 // use max alpha and beta
-template <class Graph>
+template <class Graph> 
 inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
 {
 	std::cout << "starting" << std::endl;
@@ -89,11 +89,13 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
 
 	// alphamax is max degree in first partition
-	std::vector<size_t> AlphaMax = (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
-	// BetaMax[u][A]
-	std::vector<size_t> BetaMax = (n_a, [&G](size_t i)
-											  { return std::vector<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i)
-																		{ return 0; }); });
+	// std::vector<size_t> AlphaMax (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
+	std::vector<size_t> AlphaMax (n_b, [&G, &n_a](size_t i){std::tuple(1 + G.get_vertex(i + n_a).out_degree(), 0 });
+	// BetaMax[u][A
+	std::vector<size_t> temp = [&G](size_t i) { return std::vector<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i) { return 0; }); };
+	std::vector<size_t> BetaMax (n_a, temp);
+
+
 }
 
 template <class Graph>
@@ -196,6 +198,7 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	// debug(it.reportTotal("initialize time"));
 	return std::pair<size_t, size_t>(rho_alpha, max_beta);
 }
+
 /*
   	uncompressed_neighbors<W> in_neighbors() {
     	return uncompressed_neighbors<W>(id, degree, neighbors); }
