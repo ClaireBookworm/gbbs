@@ -259,10 +259,10 @@ namespace gbbs
 			// });
 			ft.start();
 			pbbslib::dyn_arr<uintE> deleteU = nghCount(G, activeV, D, alpha);
-			ft.stop();
 			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 			vertexSubsetData<uintE> movedV = nghCount(G, deleteU, D, max_beta+1, getVBuckets);
+			ft.stop();
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			bt.start();
 			bbuckets.update_buckets(movedV);
@@ -359,11 +359,10 @@ namespace gbbs
 			// });
 			ft.start();
 			pbbslib::dyn_arr<uintE> deleteV = nghCount(G, activeU, D, beta);
-			ft.stop();
 			for(size_t i=0; i<deleteV.size; i++) updateAlpha(deleteV[i]);
 			// "deleteV" is a wrapper storing a sequence id of deleted vertices in V
 			vertexSubsetData<uintE> movedU = nghCount(G, deleteV, D, max_alpha+1, getUBuckets);
-
+			ft.stop();
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
