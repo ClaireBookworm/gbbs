@@ -32,6 +32,7 @@
 #include <chrono>
 #include <thread>
 
+
 namespace gbbs
 {
 	// bipartition gives the last vertex id in first partition
@@ -133,8 +134,8 @@ namespace gbbs
 	inline vertexSubsetData<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff, Apply apply_f)
 	{
 		//everything less than cutoff is deleted
-		std::vector<uintE> eChange(16);
-		bool* empty = new bool[G.n]{true};
+		std::vector<uintE> eChange;
+		bool* empty = new bool[G.n]; std::fill(empty, empty+G.n, 1);
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
 			uintE deg = neighbors.degree;
@@ -152,6 +153,7 @@ namespace gbbs
 		}
 		delete[] empty;
 		pbbslib::dyn_arr<std::tuple<uintE,uintE> > changeArr(eChange.size());
+		std::cout<<eChange.size()<<std::endl;
 		for(uintE i = 0; i < eChange.size(); i++) {
 			uintE id = eChange[i];
 			std::optional<std::tuple<uintE, uintE> > ret = apply_f(std::make_tuple(id, D[id]));
