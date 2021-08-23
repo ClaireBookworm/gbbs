@@ -207,8 +207,10 @@ namespace gbbs
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		//ft.start();
 		while (uDel.size>0){
+			ft.start();
 			pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
 			uDel = nghCount(G, vDel, D, alpha);
+			ft.stop();
 		}
 		//ft.stop();
 
@@ -314,8 +316,10 @@ namespace gbbs
 		// nghCount counts the # of neighbors
 		//ft.start();
 		while (vDel.size>0){
+			ft.start();
 			pbbslib::dyn_arr<uintE> uDel = nghCount(G, vDel, D, 1);
 			vDel = nghCount(G, uDel, D, beta);
+			ft.stop();
 		}
 		//ft.stop();
 		pt.stop();
@@ -383,6 +387,7 @@ namespace gbbs
 		}
 		it.start();
 		abuckets.del();
+		delete[] peelAt;
 		//em.del();
 		it.stop();
 		debug(pt.reportTotal("prep time"));
