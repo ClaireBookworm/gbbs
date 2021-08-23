@@ -157,16 +157,17 @@ namespace gbbs
 	inline pbbslib::dyn_arr<uintE> nghCount(timer& tt,Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
 		pbbslib::dyn_arr<uintE> delOther(16);
 		for (uintE i = 0; i < del.size; i++){
-			tt.start();
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
-			tt.stop();
 			for (uintE j = 0; j < neighbors.degree; j++){
-				tt.start();
 				uintE id = neighbors.get_neighbor(j);
-				tt.stop();
 				if(D[id]>=cutoff){
 					D[id]--;
-					if(D[id]<cutoff) {delOther.resize(1); delOther.push_back(id);}
+					if(D[id]<cutoff) {
+						tt.start();
+						delOther.resize(1);
+						delOther.push_back(id);
+						tt.stop();
+					}
 				}
 			}
 		}
