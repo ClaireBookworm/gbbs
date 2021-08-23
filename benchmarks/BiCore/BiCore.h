@@ -154,12 +154,12 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline pbbslib::dyn_arr<uintE> nghCount(timer& tt,Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
-		tt.start();
+	inline pbbslib::dyn_arr<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff){
 		pbbslib::dyn_arr<uintE> delOther(16);
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
-			for (uintE j=0; j<neighbors.degree; j++){
+			uintE deg = neighbors.degree;
+			for (uintE j=0; j<deg; j++){
 				uintE id = neighbors.get_neighbor(j);
 				if(D[id]==cutoff){
 					delOther.resize(1);
@@ -168,7 +168,6 @@ namespace gbbs
 				D[id]--;
 			}
 		}
-		tt.stop();
 		return delOther;
 	}
 
@@ -202,8 +201,8 @@ namespace gbbs
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		//ft.start();
 		while (uDel.size>0){
-			pbbslib::dyn_arr<uintE> vDel = nghCount(ft,G, uDel, D, 1);
-			uDel = nghCount(ft,G, vDel, D, alpha);
+			pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
+			uDel = nghCount(G, vDel, D, alpha);
 		}
 		//ft.stop();
 
@@ -258,7 +257,9 @@ namespace gbbs
 			// 		pbbslib::write_max(&AlphaMax[index][j],alpha);
 			// 	});
 			// });
-			pbbslib::dyn_arr<uintE> deleteU = nghCount(ft, G, activeV, D, alpha);
+			ft.start();
+			pbbslib::dyn_arr<uintE> deleteU = nghCount(G, activeV, D, alpha);
+			ft.stop();
 			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 			vertexSubsetData<uintE> movedV = nghCount(G, deleteU, D, max_beta+1, getVBuckets);
@@ -303,8 +304,8 @@ namespace gbbs
 		// nghCount counts the # of neighbors
 		//ft.start();
 		while (vDel.size>0){
-			pbbslib::dyn_arr<uintE> uDel = nghCount(it,G, vDel, D, 1);
-			vDel = nghCount(it,G, uDel, D, beta);
+			pbbslib::dyn_arr<uintE> uDel = nghCount(G, vDel, D, 1);
+			vDel = nghCount(G, uDel, D, beta);
 		}
 		//ft.stop();
 		pt.stop();
@@ -356,8 +357,9 @@ namespace gbbs
 			// 		pbbslib::write_max(&BetaMax[index][j],beta);
 			// 	});
 			// });
-			
-			pbbslib::dyn_arr<uintE> deleteV = nghCount(ft,G, activeU, D, beta);
+			ft.start();
+			pbbslib::dyn_arr<uintE> deleteV = nghCount(G, activeU, D, beta);
+			ft.stop();
 			for(size_t i=0; i<deleteV.size; i++) updateAlpha(deleteV[i]);
 			// "deleteV" is a wrapper storing a sequence id of deleted vertices in V
 			vertexSubsetData<uintE> movedU = nghCount(G, deleteV, D, max_alpha+1, getUBuckets);
