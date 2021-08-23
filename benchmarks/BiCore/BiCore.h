@@ -150,6 +150,7 @@ namespace gbbs
 				}
 			}
 		}
+		delete[] empty;
 		pbbslib::dyn_arr<std::tuple<uintE,uintE> > changeArr(eChange.size());
 		for(uintE i = 0; i < eChange.size(); i++) {
 			uintE id = eChange[i];
