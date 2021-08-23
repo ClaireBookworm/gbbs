@@ -134,8 +134,7 @@ namespace gbbs
 	inline vertexSubsetData<uintE> nghCount(Graph &G, pbbslib::dyn_arr<uintE>& del, sequence<uintE>& D, size_t cutoff, Apply apply_f)
 	{
 		//everything less than cutoff is deleted
-		std::vector<uintE> eChange;
-		bool* empty = new bool[G.n]; std::fill(empty, empty+G.n, 1);
+		std::unordered_set<uintE> eChange;
 		for (uintE i = 0; i < del.size; i++){
 			auto neighbors = G.get_vertex(del[i]).out_neighbors();
 			uintE deg = neighbors.degree;
@@ -143,19 +142,13 @@ namespace gbbs
 			for (uintE j = 0; j < deg; j++){
 				uintE id = neighbors.get_neighbor(j);
 				if(D[id]>=cutoff){
-					if(empty[id]){
-						eChange.push_back(id);
-						empty[id]=false;
-					}
+					eChange.insert(id);
 					D[id]--;
 				}
 			}
 		}
-		delete[] empty;
 		pbbslib::dyn_arr<std::tuple<uintE,uintE> > changeArr(eChange.size());
-		//std::cout<<eChange.size()<<std::endl;
-		for(uintE i = 0; i < eChange.size(); i++) {
-			uintE id = eChange[i];
+		for(uintE id : eChange) {
 			std::optional<std::tuple<uintE, uintE> > ret = apply_f(std::make_tuple(id, D[id]));
 			if(ret) changeArr.push_back(*ret);
 		}
