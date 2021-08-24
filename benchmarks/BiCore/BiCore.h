@@ -258,10 +258,8 @@ namespace gbbs
 			pbbslib::dyn_arr<uintE> activeV(vbkt.identifiers.begin(), vbkt.identifiers.size(), vbkt.identifiers.size(), true);
 			ft.start();
 			finished += activeV.size;
-			for(uintE i=0; i<activeV.size; i++){
-				assert(max_beta>=1);
+			for(uintE i=0; i<activeV.size; i++)
 				pbbslib::write_max(&AlphaMax[activeV[i]-n_a][max_beta-1],alpha);
-			}
 			// par_for(0, activeV.size, [&](size_t i) {
 			// 	size_t index = activeV[i]-n_a;
 			// 	par_for(1, max_beta, [&](size_t j) {
@@ -363,11 +361,9 @@ namespace gbbs
 			pbbslib::dyn_arr<uintE> activeU(ubkt.identifiers.begin(), ubkt.identifiers.size(), ubkt.identifiers.size(), true);
 			ft.start();
 			finished += activeU.size; // add to finished set
-			for(uintE i=0; i<activeU.size; i++){
-				// use prefix max later for j<max_alpha-1
-				assert(max_alpha>=1);
+			for(uintE i=0; i<activeU.size; i++)
 				pbbslib::write_max(&BetaMax[activeU[i]][max_alpha-1],beta);
-			}
+				// use prefix max later for j<max_alpha-1
 			// par_for(0, activeU.size, [&](size_t i) {
 			// 	size_t index = activeU[i];
 			// 	par_for(1, max_alpha, [&](size_t j) {
