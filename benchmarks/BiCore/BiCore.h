@@ -251,12 +251,12 @@ namespace gbbs
 			bt.start();
 			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
+			ft.start();
 			max_beta = std::max(max_beta, vbkt.id);
 
 			if (vbkt.id == 0)
 				continue;
 			pbbslib::dyn_arr<uintE> activeV(vbkt.identifiers.begin(), vbkt.identifiers.size(), vbkt.identifiers.size(), true);
-			ft.start();
 			finished += activeV.size;
 			for(uintE i=0; i<activeV.size; i++)
 				pbbslib::write_max(&AlphaMax[activeV[i]-n_a][max_beta-1],alpha);
@@ -354,12 +354,12 @@ namespace gbbs
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
 			bt.stop();
+			ft.start();
 			max_alpha = std::max(max_alpha, ubkt.id);
 
 			if (ubkt.id == 0)
 				continue;
 			pbbslib::dyn_arr<uintE> activeU(ubkt.identifiers.begin(), ubkt.identifiers.size(), ubkt.identifiers.size(), true);
-			ft.start();
 			finished += activeU.size; // add to finished set
 			for(uintE i=0; i<activeU.size; i++)
 				pbbslib::write_max(&BetaMax[activeU[i]][max_alpha-1],beta);
