@@ -255,14 +255,13 @@ namespace gbbs
 
 			if (vbkt.id == 0)
 				continue;
-			ft.start();
 			pbbslib::dyn_arr<uintE> activeV(vbkt.identifiers.begin(), vbkt.identifiers.size(), vbkt.identifiers.size(), true);
+			ft.start();
 			finished += activeV.size;
 			for(uintE i=0; i<activeV.size; i++){
 				size_t index = activeV[i]-n_a;
 				for(uintE j=1; j<max_beta; j++)
-					AlphaMax[index][j] = std::max(AlphaMax[index][j],alpha);
-					//pbbslib::write_max(&AlphaMax[index][j],alpha);
+					pbbslib::write_max(&AlphaMax[index][j],alpha);
 			}
 			// par_for(0, activeV.size, [&](size_t i) {
 			// 	size_t index = activeV[i]-n_a;
@@ -362,14 +361,13 @@ namespace gbbs
 
 			if (ubkt.id == 0)
 				continue;
-			ft.start();
 			pbbslib::dyn_arr<uintE> activeU(ubkt.identifiers.begin(), ubkt.identifiers.size(), ubkt.identifiers.size(), true);
+			ft.start();
 			finished += activeU.size; // add to finished set
 			for(uintE i=0; i<activeU.size; i++){
 				size_t index = activeU[i];
 				for(uintE j=1; j<max_alpha; j++)
-					BetaMax[index][j] = std::max(BetaMax[index][j],beta);
-					//pbbslib::write_max(&BetaMax[index][j],beta);
+					pbbslib::write_max(&BetaMax[index][j],beta);
 			}
 			// par_for(0, activeU.size, [&](size_t i) {
 			// 	size_t index = activeU[i];
