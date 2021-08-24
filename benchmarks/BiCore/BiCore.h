@@ -248,10 +248,10 @@ namespace gbbs
 
 		while (finished != vCount)
 		{
+			ft.start();
 			bt.start();
 			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
-			ft.start();
 			max_beta = std::max(max_beta, vbkt.id);
 
 			if (vbkt.id == 0)
@@ -270,11 +270,11 @@ namespace gbbs
 			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
 			vertexSubsetData<uintE> movedV = nghCount(G, deleteU, D, max_beta+1, getVBuckets, ++iter_id, peelAt);
-			ft.stop();
 			// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
 			bt.start();
 			bbuckets.update_buckets(movedV);
 			bt.stop();
+			ft.stop();
 			rho_alpha++;
 		}
 		it.start();
@@ -351,10 +351,10 @@ namespace gbbs
 
 		while (finished != uCount)
 		{
+			ft.start();
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
 			bt.stop();
-			ft.start();
 			max_alpha = std::max(max_alpha, ubkt.id);
 
 			if (ubkt.id == 0)
@@ -374,10 +374,10 @@ namespace gbbs
 			for(size_t i=0; i<deleteV.size; i++) updateAlpha(deleteV[i]);
 			// "deleteV" is a wrapper storing a sequence id of deleted vertices in V
 			vertexSubsetData<uintE> movedU = nghCount(G, deleteV, D, max_alpha+1, getUBuckets, ++iter_id, peelAt);
-			ft.stop();
 			bt.start();
 			abuckets.update_buckets(movedU);
 			bt.stop();
+			ft.stop();
 			rho_beta++;
 		}
 		it.start();
