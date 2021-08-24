@@ -248,10 +248,10 @@ namespace gbbs
 
 		while (finished != vCount)
 		{
-			ft.start();
 			bt.start();
 			auto vbkt = bbuckets.next_bucket();
 			bt.stop();
+			ft.start();
 			max_beta = std::max(max_beta, vbkt.id);
 
 			if (vbkt.id == 0)
@@ -351,10 +351,10 @@ namespace gbbs
 
 		while (finished != uCount)
 		{
-			ft.start();
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
 			bt.stop();
+			ft.start();
 			max_alpha = std::max(max_alpha, ubkt.id);
 
 			if (ubkt.id == 0)
