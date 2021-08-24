@@ -259,9 +259,8 @@ namespace gbbs
 			ft.start();
 			finished += activeV.size;
 			for(uintE i=0; i<activeV.size; i++){
-				size_t index = activeV[i]-n_a;
-				for(uintE j=1; j<max_beta; j++)
-					pbbslib::write_max(&AlphaMax[index][j],alpha);
+				assert(max_beta>=1);
+				pbbslib::write_max(&AlphaMax[activeV[i]-n_a][max_beta-1],alpha);
 			}
 			// par_for(0, activeV.size, [&](size_t i) {
 			// 	size_t index = activeV[i]-n_a;
@@ -365,9 +364,9 @@ namespace gbbs
 			ft.start();
 			finished += activeU.size; // add to finished set
 			for(uintE i=0; i<activeU.size; i++){
-				size_t index = activeU[i];
-				for(uintE j=1; j<max_alpha; j++)
-					pbbslib::write_max(&BetaMax[index][j],beta);
+				// use prefix max later for j<max_alpha-1
+				assert(max_alpha>=1);
+				pbbslib::write_max(&BetaMax[activeU[i]][max_alpha-1],beta);
 			}
 			// par_for(0, activeU.size, [&](size_t i) {
 			// 	size_t index = activeU[i];
