@@ -90,10 +90,23 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 
 	// alphamax is max degree in first partition
 	// std::vector<size_t> AlphaMax (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
-	std::vector<size_t> AlphaMax (n_b, [&G, &n_a](size_t i){std::tuple(1 + G.get_vertex(i + n_a).out_degree(), 0 });
+	auto degreeA = [&G, &n_a](size_t i){return (1 + G.get_vertex(i + n_a).out_degree()); };
+	auto maxA = 0;
+	for (int i = 0; i < n_a; i++) {
+		maxA = maxA < degreeA(i) ? degreeA(i) : maxA;
+	}
+	std::vector<size_t> AlphaMax;
+	AlphaMax.push_back(n_b);
+	AlphaMax.push_back(maxA);
 	// BetaMax[u][A
-	std::vector<size_t> temp = [&G](size_t i) { return std::vector<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i) { return 0; }); };
-	std::vector<size_t> BetaMax (n_a, temp);
+	auto degreeB = [&G](size_t i) { return (1 + G.get_vertex(i).out_degree()); };
+	std::vector<size_t> BetaMax;
+	int maxB = 0;
+	BetaMax.push_back(n_a);
+		for (int i = 0; i < n_a; i++) {
+		maxB = maxB < degreeB(i) ? degreeB(i) : maxB;
+	}
+	BetaMax.push_back(maxB);
 
 
 }
@@ -179,7 +192,8 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 		for (size_t i = 0; i < activeV.size(), i++) {
 			size_t index = activeV.vtx(i) - n_a;
 				for(size_t j = 1; j < max_beta; j++){ 
-					AlphaMax[index][j]=std::max(AlphaMax[index][j],alpha); 
+					// AlphaMax.at(index)[j]=std::max(AlphaMax.at(index)[j],alpha); 
+					AlphaMax.at(j)=std::max(AlphaMax.at(j),alpha); 
 				}
 		}
 		vertexSubsetData deleteU = nghCount(G, activeV, D, alpha);
