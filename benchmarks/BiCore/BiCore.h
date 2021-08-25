@@ -206,12 +206,10 @@ namespace gbbs
 		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
 		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 		//ft.start();
-		ft.start();
 		while (uDel.size>0){
 			pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
 			uDel = nghCount(G, vDel, D, alpha);
 		}
-		ft.stop();
 		//ft.stop();
 
 		pt.stop();
@@ -312,12 +310,10 @@ namespace gbbs
 
 		// nghCount counts the # of neighbors
 		//ft.start();
-		ft.start();
 		while (vDel.size>0){
 			pbbslib::dyn_arr<uintE> uDel = nghCount(G, vDel, D, 1);
 			vDel = nghCount(G, uDel, D, beta);
 		}
-		ft.stop();
 		//ft.stop();
 		pt.stop();
 
