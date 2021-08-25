@@ -66,8 +66,8 @@ namespace gbbs
 		const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 		// max unicor 
 
-		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
-		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
+		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t> >(delta+1);
+		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t> >(delta+1);
 		auto timeA = sequence<double>(delta, 0.0);
 		auto timeB = sequence<double>(delta, 0.0);
 		auto tTimeA = sequence<double>(delta, 0.0);
@@ -81,7 +81,7 @@ namespace gbbs
 		breakptrs.push_back(0);
 		for(size_t i=1; i<=delta; i++){
 			curSpan += slope-(slope-1)/delta*i;
-			if(curSpan>=avgSpan*0.97){
+			if(curSpan>=avgSpan*1){
 				curSpan = 0;
 				breakptrs.push_back(i);
 				std::cout<<"breakptr at "<<i<<std::endl;
@@ -94,10 +94,33 @@ namespace gbbs
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			sequence<uintE> degA = sequence<uintE>(n, [&](size_t i) {
+				return G.get_vertex(i).out_degree();
+			});
+			sequence<uintE> degB = degA;
+			uintE minCore = breakptrs[idx-1]+1;
+
+			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<minCore;}));
+			pbbslib::dyn_arr<uintE> DelA(initSize);
+			for(size_t i=0; i<n_a; i++) if(D[i]<minCore){ DelA.push_back(i); }
+			initialClean(G, degA, DelA);
+
+			initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<minCore;}));
+			pbbslib::dyn_arr<uintE> DelB(initSize);
+			for(size_t i=n_a; i<n; i++) if(D[i]<minCore){ DelB.push_back(i); }
+			initialClean(G, degB, DelB);
+
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				timer t_in; t_in.start();
-				auto ret = PeelFixA(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+
+				sequence<uintE> D = degA;
+				initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
+				pbbslib::dyn_arr<uintE> delA(initSize);
+				for(size_t i=0; i<n_a; i++) if(D[i]<core & D[i]>=minCore){ delA.push_back(i); }
+				initialClean(G, D, delA);
+
+				auto ret = PeelFixA(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
 				double preptime = std::get<1>(ret);
 				timeA[core-1] = preptime;
 				auto retA = std::get<0>(ret);
@@ -107,7 +130,14 @@ namespace gbbs
 			auto peelAllFixB = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				timer t_in; t_in.start();
-				auto ret = PeelFixB(G, BetaMax, AlphaMax, core, bipartition, num_buckets);
+
+				sequence<uintE> D = degB;
+				initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
+				pbbslib::dyn_arr<uintE> delB(initSize);
+				for(size_t i=n_a; i<n; i++) if(D[i]<core & D[i]>=minCore){ delB.push_back(i); }
+				initialClean(G, D, delB);
+
+				auto ret = PeelFixB(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
 				double inittime = std::get<1>(ret);
 				timeB[core-1] = inittime;
 				auto retB = std::get<0>(ret);
@@ -117,6 +147,8 @@ namespace gbbs
 			par_do(peelAllFixA,peelAllFixB);
 			std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
 		});
+
+		// remember to aggregate AlphaMax, BetaMax
 
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreA "<<core<<" "<<std::get<0>(msgA[core])<<" "<<std::get<1>(msgA[core])<<" "<<std::get<2>(msgA[core])<<'\n');
 		debug(for(size_t core=1; core<=delta; ++core) std::cout<<"coreB "<<core<<" "<<std::get<0>(msgB[core])<<" "<<std::get<1>(msgB[core])<<" "<<std::get<2>(msgB[core])<<'\n');
@@ -175,6 +207,14 @@ namespace gbbs
 			}
 		}
 		return delOther;
+	}
+
+	template <class Graph>
+	inline void initialClean(Graph &G, sequence<uintE>& D, pbbslib::dyn_arr<uintE>& del){
+		while (del.size>0){
+			pbbslib::dyn_arr<uintE> oDel = nghCount(G, del, D, 1);
+			del = nghCount(G, oDel, D, cutoff);
+		}
 	}
 
 	template <class Graph>
