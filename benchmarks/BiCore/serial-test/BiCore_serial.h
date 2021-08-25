@@ -182,14 +182,15 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	std::priority_queue pq(vD.begin(), vD.end());
 	while (finished != vCount)
 	{
-		size_t vbkt = pq.top();
-		max_beta = std::max(max_beta, vbkt.id);
-		if (uDel.id == 0)
+		auto vbkt = pq.top();
+		max_beta = max_beta > vbkt.at(0) ? max_beta : vbkt.at(0);
+		if (uDel.at(0) == 0)
 			continue;
-		auto activeV = vertexSubset(n, std::move(D.identifiers)); // container of vertices
+		// auto activeV = vertexSubset(n, std::move(D.identifiers)); // container of vertices
+		auto activeV = vertexSubset(n, std::move(D.at(0))); // container of vertices
 		finished += activeV.size();
 
-		for (size_t i = 0; i < activeV.size(), i++) {
+		for (size_t i = 0; i < activeV.size(); i++) {
 			size_t index = activeV.vtx(i) - n_a;
 				for(size_t j = 1; j < max_beta; j++){ 
 					// AlphaMax.at(index)[j]=std::max(AlphaMax.at(index)[j],alpha); 
