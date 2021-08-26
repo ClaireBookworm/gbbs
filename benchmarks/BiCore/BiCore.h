@@ -100,9 +100,7 @@ namespace gbbs
 			sequence<uintE> degA = sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
 			});
-			sequence<uintE> degB = sequence<uintE>(n, [&](size_t i) {
-				return G.get_vertex(i).out_degree();
-			});
+			sequence<uintE> degB = degA;
 			//uintE minCore = breakptrs[idx-1]+1;
 
 			// size_t InitSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
@@ -119,9 +117,7 @@ namespace gbbs
 
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				sequence<uintE> D = sequence<uintE>(n, [&](size_t i) {
-					return G.get_vertex(i).out_degree();
-				});
+				sequence<uintE> D = degA;
 				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]<core) & (D[i]>=minCore);}));
 				pbbslib::dyn_arr<uintE> delA(initSize);
 				for(size_t i=0; i<n_a; i++) if((D[i]<core) && (D[i]>=minCore)){ delA.push_back(i); }
@@ -135,9 +131,7 @@ namespace gbbs
 			});};
 			auto peelAllFixB = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				sequence<uintE> D = sequence<uintE>(n, [&](size_t i) {
-					return G.get_vertex(i).out_degree();
-				});
+				sequence<uintE> D = degB;
 				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return (D[i+n_a]<core) & (D[i+n_a]>=minCore);}));
 				pbbslib::dyn_arr<uintE> delB(initSize);
 				for(size_t i=n_a; i<n; i++) if((D[i]<core) && (D[i]>=minCore)){ delB.push_back(i); }
