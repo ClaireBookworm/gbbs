@@ -92,7 +92,7 @@ namespace gbbs
 		auto tTime = sequence<double>(breakptrs.size(), 0.0);
 		auto pTime = sequence<double>(breakptrs.size(), 0.0);
 
-		sequence<uintE> prepeelA[breakptrs.size()];
+		sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			uintE minCore = breakptrs[idx-1]+1;
 			sequence<uintE> degA(n, [&](size_t i) {
@@ -105,7 +105,7 @@ namespace gbbs
 			prepeelA[idx] = std::move(degA);
 		});
 
-		sequence<uintE> prepeelB[breakptrs.size()];
+		sequence<uintE>* prepeelB = new sequence<uintE>[breakptrs.size()];
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			uintE minCore = breakptrs[idx-1]+1;
 			sequence<uintE> degB(n, [&](size_t i) {
