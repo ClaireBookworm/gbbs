@@ -70,8 +70,6 @@ namespace gbbs
 		auto msgB = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t> >(delta+1);
 		auto timeA = sequence<double>(delta, 0.0);
 		auto timeB = sequence<double>(delta, 0.0);
-		auto tTimeA = sequence<double>(delta, 0.0);
-		auto tTimeB = sequence<double>(delta, 0.0);
 
 		double slope = 1.5;
 		double thread_ratio = 1; //each worker gets assigned thread_ratio/num_workers() percent of depth
@@ -91,9 +89,14 @@ namespace gbbs
 			breakptrs.push_back(delta);
 		std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<std::endl;
 
+		auto tTime = sequence<double>(breakptrs.size(), 0.0);
+		auto pTime = sequence<double>(breakptrs.size(), 0.0);
+
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			timer t_in, p_t; 
+			t_in.start(); p_t.start();
 			sequence<uintE> degA = sequence<uintE>(n, [&](size_t i) {
 				return G.get_vertex(i).out_degree();
 			});
@@ -110,10 +113,10 @@ namespace gbbs
 			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore){ DelB.push_back(i); }
 			initialClean(G, degB, DelB, minCore);
 
+			p_t.stop();
+
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				timer t_in; t_in.start();
-
 				sequence<uintE> D = degA;
 				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
 				pbbslib::dyn_arr<uintE> delA(initSize);
@@ -124,13 +127,10 @@ namespace gbbs
 				double preptime = std::get<1>(ret);
 				timeA[core-1] = preptime;
 				auto retA = std::get<0>(ret);
-				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),t_in.stop());
-				tTimeA[core-1] = t_in.get_total();
+				msgA[core]=std::make_tuple(std::get<0>(retA),std::get<1>(retA),0);
 			});};
 			auto peelAllFixB = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				timer t_in; t_in.start();
-
 				sequence<uintE> D = degB;
 				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<core & D[i+n_a]>=minCore;}));
 				pbbslib::dyn_arr<uintE> delB(initSize);
@@ -141,10 +141,12 @@ namespace gbbs
 				double inittime = std::get<1>(ret);
 				timeB[core-1] = inittime;
 				auto retB = std::get<0>(ret);
-				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),t_in.stop());
-				tTimeB[core-1] = t_in.get_total();
+				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),0);
 			});};
 			par_do(peelAllFixA,peelAllFixB);
+			t_in.stop();
+			tTime[idx] = t_in.get_total();
+			pTime[idx] = p_t.get_total();
 			std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
 		});
 
@@ -157,9 +159,11 @@ namespace gbbs
 
 		double peeltimeA = pbbslib::reduce_add(timeA);
 		double peeltimeB = pbbslib::reduce_add(timeB);
-		double totalTime = pbbslib::reduce_add(tTimeA) + pbbslib::reduce_add(tTimeB);
+		double totalTime = pbbslib::reduce_add(tTime);
+		double prepTime = pbbslib::reduce_add(pTime);
 		debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
 		debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
+		debug(std::cout<< "initPeelTime: " << prepTime <<std::endl);
 		debug(std::cout<< "totaltime: " << totalTime <<std::endl);
 	}
 
