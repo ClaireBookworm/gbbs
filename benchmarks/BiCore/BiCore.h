@@ -53,15 +53,15 @@ namespace gbbs
 		// BetaMax[u][A]
 		auto BetaMax = sequence<sequence<size_t>>(n_a, [&G](size_t i){ return sequence<size_t>(1+G.get_vertex(i).out_degree(),[](size_t i){return 0;}); });
 
-		if(peel_core_alpha!=0){
-			PeelFixA(G, BetaMax, AlphaMax, peel_core_alpha, bipartition, num_buckets);
-			std::cout << "complete PeelFixA" << std::endl;
-			return;
-		}else if(peel_core_beta!=0){
-			PeelFixB(G, BetaMax, AlphaMax, peel_core_beta, bipartition, num_buckets);
-			std::cout << "complete PeelFixB" << std::endl;
-			return;
-		}
+		// if(peel_core_alpha!=0){
+		// 	PeelFixA(G, BetaMax, AlphaMax, peel_core_alpha, bipartition, num_buckets);
+		// 	std::cout << "complete PeelFixA" << std::endl;
+		// 	return;
+		// }else if(peel_core_beta!=0){
+		// 	PeelFixB(G, BetaMax, AlphaMax, peel_core_beta, bipartition, num_buckets);
+		// 	std::cout << "complete PeelFixB" << std::endl;
+		// 	return;
+		// }
 		auto ret = KCore(G, num_buckets);
 		const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 		// max unicor 
@@ -100,15 +100,15 @@ namespace gbbs
 			sequence<uintE> degB = degA;
 			uintE minCore = breakptrs[idx-1]+1;
 
-			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<minCore;}));
+			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
 			pbbslib::dyn_arr<uintE> DelA(initSize);
-			for(size_t i=0; i<n_a; i++) if(D[i]<minCore){ DelA.push_back(i); }
-			initialClean(G, degA, DelA);
+			for(size_t i=0; i<n_a; i++) if(degA[i]<minCore){ DelA.push_back(i); }
+			initialClean(G, degA, DelA, minCore);
 
-			initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<minCore;}));
+			initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
 			pbbslib::dyn_arr<uintE> DelB(initSize);
-			for(size_t i=n_a; i<n; i++) if(D[i]<minCore){ DelB.push_back(i); }
-			initialClean(G, degB, DelB);
+			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore){ DelB.push_back(i); }
+			initialClean(G, degB, DelB, minCore);
 
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
@@ -118,7 +118,7 @@ namespace gbbs
 				initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
 				pbbslib::dyn_arr<uintE> delA(initSize);
 				for(size_t i=0; i<n_a; i++) if(D[i]<core & D[i]>=minCore){ delA.push_back(i); }
-				initialClean(G, D, delA);
+				initialClean(G, D, delA, core);
 
 				auto ret = PeelFixA(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
 				double preptime = std::get<1>(ret);
@@ -132,10 +132,10 @@ namespace gbbs
 				timer t_in; t_in.start();
 
 				sequence<uintE> D = degB;
-				initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
+				initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<core & D[i+n_a]>=minCore;}));
 				pbbslib::dyn_arr<uintE> delB(initSize);
 				for(size_t i=n_a; i<n; i++) if(D[i]<core & D[i]>=minCore){ delB.push_back(i); }
-				initialClean(G, D, delB);
+				initialClean(G, D, delB, core);
 
 				auto ret = PeelFixB(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
 				double inittime = std::get<1>(ret);
@@ -210,7 +210,7 @@ namespace gbbs
 	}
 
 	template <class Graph>
-	inline void initialClean(Graph &G, sequence<uintE>& D, pbbslib::dyn_arr<uintE>& del){
+	inline void initialClean(Graph &G, sequence<uintE>& D, pbbslib::dyn_arr<uintE>& del, uintE cutoff){
 		while (del.size>0){
 			pbbslib::dyn_arr<uintE> oDel = nghCount(G, del, D, 1);
 			del = nghCount(G, oDel, D, cutoff);
@@ -219,7 +219,7 @@ namespace gbbs
 
 	template <class Graph>
 	inline std::pair<std::pair<size_t,size_t>,double> PeelFixA(Graph &G, sequence<sequence<size_t>> &BetaMax, 
-	sequence<sequence<size_t>> &AlphaMax, size_t alpha,
+	sequence<sequence<size_t>> &AlphaMax, sequence<uintE>& D, size_t alpha,
 	 size_t bipartition = 2, size_t num_buckets=16)
 	{
 		timer bt,ft,pt,it; // bt: begin time, ft: finish time, pt: processing time
@@ -231,26 +231,26 @@ namespace gbbs
 
 		size_t finished = 0, rho_alpha = 0, max_beta = 0;
 		// [0, bipartition] interval for U
-		// [bipartition+1, n-1]  interval V
-		auto D =
-			sequence<uintE>(n, [&](size_t i) {
-				return G.get_vertex(i).out_degree();
-			});
+		// // [bipartition+1, n-1]  interval V
+		// auto D =
+		// 	sequence<uintE>(n, [&](size_t i) {
+		// 		return G.get_vertex(i).out_degree();
+		// 	});
 
-		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<alpha;}));
+		// size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<alpha;}));
 
-		pbbslib::dyn_arr<uintE> uDel(initSize);
-		for(size_t i=0; i<n_a; i++)
-			if(D[i]<alpha){uDel.push_back(i);}
+		// pbbslib::dyn_arr<uintE> uDel(initSize);
+		// for(size_t i=0; i<n_a; i++)
+		// 	if(D[i]<alpha){uDel.push_back(i);}
 
-		// instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
-		// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
-		//ft.start();
-		while (uDel.size>0){
-			pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
-			uDel = nghCount(G, vDel, D, alpha);
-		}
-		//ft.stop();
+		// // instead of tracking whether a vertex is peeled or not using a boolean arr, we can just see whether its degree is above or below the cutoff
+		// // peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
+		// //ft.start();
+		// while (uDel.size>0){
+		// 	pbbslib::dyn_arr<uintE> vDel = nghCount(G, uDel, D, 1);
+		// 	uDel = nghCount(G, vDel, D, alpha);
+		// }
+		// //ft.stop();
 
 		pt.stop();
 
@@ -304,6 +304,9 @@ namespace gbbs
 			// 		pbbslib::write_max(&AlphaMax[index][j],alpha);
 			// 	});
 			// });
+
+			// try graph pruning
+			// try openmp
 			pbbslib::dyn_arr<uintE> deleteU = nghCount(G, activeV, D, alpha);
 			for(size_t i=0; i<deleteU.size; i++) updateBeta(deleteU[i]);
 			// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
@@ -327,7 +330,7 @@ namespace gbbs
 
 	template <class Graph>
 	inline std::pair<std::pair<size_t,size_t>,double> PeelFixB(Graph &G, sequence<sequence<size_t>> &BetaMax, 
-	sequence<sequence<size_t>> &AlphaMax, size_t beta,
+	sequence<sequence<size_t>> &AlphaMax, sequence<uintE>& D, size_t beta,
 	size_t bipartition = 2, size_t num_buckets=16)
 	{
 		timer bt,ft,pt,it;
@@ -337,23 +340,23 @@ namespace gbbs
 		const size_t n_a = bipartition + 1;
 
 		size_t finished = 0, rho_beta = 0, max_alpha = 0;
-		auto D =
-			sequence<uintE>(n, [&](size_t i) {
-				return G.get_vertex(i).out_degree();
-			});
+		// auto D =
+		// 	sequence<uintE>(n, [&](size_t i) {
+		// 		return G.get_vertex(i).out_degree();
+		// 	});
 
-		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<beta;}));
-		pbbslib::dyn_arr<uintE> vDel(initSize);
-		for(size_t i=n_a; i<n; i++)
-			if(D[i]<beta){ vDel.push_back(i); }
+		// size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<beta;}));
+		// pbbslib::dyn_arr<uintE> vDel(initSize);
+		// for(size_t i=n_a; i<n; i++)
+		// 	if(D[i]<beta){ vDel.push_back(i); }
 
 
-		// nghCount counts the # of neighbors
-		//ft.start();
-		while (vDel.size>0){
-			pbbslib::dyn_arr<uintE> uDel = nghCount(G, vDel, D, 1);
-			vDel = nghCount(G, uDel, D, beta);
-		}
+		// // nghCount counts the # of neighbors
+		// //ft.start();
+		// while (vDel.size>0){
+		// 	pbbslib::dyn_arr<uintE> uDel = nghCount(G, vDel, D, 1);
+		// 	vDel = nghCount(G, uDel, D, beta);
+		// }
 		//ft.stop();
 		pt.stop();
 
