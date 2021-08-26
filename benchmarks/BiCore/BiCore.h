@@ -92,32 +92,43 @@ namespace gbbs
 		auto tTime = sequence<double>(breakptrs.size(), 0.0);
 		auto pTime = sequence<double>(breakptrs.size(), 0.0);
 
+		sequence<uintE> prepeelA[breakptrs.size()];
+		par_for(1,breakptrs.size(),1,[&](size_t idx){
+			uintE minCore = breakptrs[idx-1]+1;
+			sequence<uintE> degA(n, [&](size_t i) {
+				return G.get_vertex(i).out_degree();
+			});
+			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
+			pbbslib::dyn_arr<uintE> DelA(initSize);
+			for(size_t i=0; i<n_a; i++) if(degA[i]<minCore) DelA.push_back(i);
+			initialClean(G, degA, DelA, minCore);
+			prepeelA[idx] = std::move(degA);
+		});
+
+		sequence<uintE> prepeelB[breakptrs.size()];
+		par_for(1,breakptrs.size(),1,[&](size_t idx){
+			uintE minCore = breakptrs[idx-1]+1;
+			sequence<uintE> degB(n, [&](size_t i) {
+				return G.get_vertex(i).out_degree();
+			});
+			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
+			pbbslib::dyn_arr<uintE> DelB(initSize);
+			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore) DelB.push_back(i);
+			initialClean(G, degB, DelB, minCore);
+			prepeelB[idx] = std::move(degB);
+		});
+
 		par_for(1,breakptrs.size(),1,[&](size_t idx){
 			std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			timer t_in, p_t; 
 			t_in.start(); p_t.start();
-			sequence<uintE> degA = sequence<uintE>(n, [&](size_t i) {
-				return G.get_vertex(i).out_degree();
-			});
-			sequence<uintE> degB = degA;
 			uintE minCore = breakptrs[idx-1]+1;
-
-			size_t InitSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
-			pbbslib::dyn_arr<uintE> DelA(InitSize);
-			for(size_t i=0; i<n_a; i++) if(degA[i]<minCore) DelA.push_back(i);
-			initialClean(G, degA, DelA, minCore);
-
-			InitSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
-			pbbslib::dyn_arr<uintE> DelB(InitSize);
-			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore) DelB.push_back(i);
-			initialClean(G, degB, DelB, minCore);
-			//uintE minCore = -10000000;
 			p_t.stop();
 
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				sequence<uintE> D = degA;
+				sequence<uintE> D = prepeelA[idx];
 				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) { return (D[i]<core) & (D[i]>=minCore); }));
 				pbbslib::dyn_arr<uintE> delA(initSize);
 				for(size_t i=0; i<n_a; i++) if((D[i]<core) && (D[i]>=minCore)){ delA.push_back(i); }
@@ -131,7 +142,7 @@ namespace gbbs
 			});};
 			auto peelAllFixB = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
-				sequence<uintE> D = degB;
+				sequence<uintE> D = prepeelB[idx];
 				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) { return (D[i+n_a]<core) & (D[i+n_a]>=minCore); }));
 				pbbslib::dyn_arr<uintE> delB(initSize);
 				for(size_t i=n_a; i<n; i++) if((D[i]<core) && (D[i]>=minCore)){ delB.push_back(i); }
