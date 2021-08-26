@@ -79,7 +79,7 @@ namespace gbbs
 		breakptrs.push_back(0);
 		for(size_t i=1; i<=delta; i++){
 			curSpan += slope-(slope-1)/delta*i;
-			if(curSpan>=avgSpan*0.97){
+			if(curSpan>=avgSpan*1){
 				curSpan = 0;
 				breakptrs.push_back(i);
 				std::cout<<"breakptr at "<<i<<std::endl;
@@ -105,12 +105,12 @@ namespace gbbs
 
 			size_t InitSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
 			pbbslib::dyn_arr<uintE> DelA(InitSize);
-			for(size_t i=0; i<n_a; i++) if(degA[i]<minCore){ DelA.push_back(i); }
+			for(size_t i=0; i<n_a; i++) if(degA[i]<minCore) DelA.push_back(i);
 			initialClean(G, degA, DelA, minCore);
 
 			InitSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
 			pbbslib::dyn_arr<uintE> DelB(InitSize);
-			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore){ DelB.push_back(i); }
+			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore) DelB.push_back(i);
 			initialClean(G, degB, DelB, minCore);
 
 			p_t.stop();
@@ -118,9 +118,9 @@ namespace gbbs
 			auto peelAllFixA = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				sequence<uintE> D = degA;
-				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
+				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]<core) & (D[i]>=minCore);}));
 				pbbslib::dyn_arr<uintE> delA(initSize);
-				for(size_t i=0; i<n_a; i++) if(D[i]<core & D[i]>=minCore){ delA.push_back(i); }
+				for(size_t i=0; i<n_a; i++) if((D[i]<core) && (D[i]>=minCore)){ delA.push_back(i); }
 				initialClean(G, D, delA, core);
 
 				auto ret = PeelFixA(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
@@ -132,9 +132,9 @@ namespace gbbs
 			auto peelAllFixB = [&](){
 			par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
 				sequence<uintE> D = degB;
-				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<core & D[i+n_a]>=minCore;}));
+				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return (D[i+n_a]<core) & (D[i+n_a]>=minCore);}));
 				pbbslib::dyn_arr<uintE> delB(initSize);
-				for(size_t i=n_a; i<n; i++) if(D[i]<core & D[i]>=minCore){ delB.push_back(i); }
+				for(size_t i=n_a; i<n; i++) if((D[i]<core) && (D[i]>=minCore)){ delB.push_back(i); }
 				initialClean(G, D, delB, core);
 
 				auto ret = PeelFixB(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
@@ -143,7 +143,7 @@ namespace gbbs
 				auto retB = std::get<0>(ret);
 				msgB[core]=std::make_tuple(std::get<0>(retB),std::get<1>(retB),0);
 			});};
-			par_do(peelAllFixA,peelAllFixB);
+			//par_do(peelAllFixA,peelAllFixB);
 			t_in.stop();
 			tTime[idx] = t_in.get_total();
 			pTime[idx] = p_t.get_total();
