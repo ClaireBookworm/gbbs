@@ -100,13 +100,13 @@ namespace gbbs
 			sequence<uintE> degB = degA;
 			uintE minCore = breakptrs[idx-1]+1;
 
-			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
-			pbbslib::dyn_arr<uintE> DelA(initSize);
+			size_t InitSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
+			pbbslib::dyn_arr<uintE> DelA(InitSize);
 			for(size_t i=0; i<n_a; i++) if(degA[i]<minCore){ DelA.push_back(i); }
 			initialClean(G, degA, DelA, minCore);
 
-			initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
-			pbbslib::dyn_arr<uintE> DelB(initSize);
+			InitSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
+			pbbslib::dyn_arr<uintE> DelB(InitSize);
 			for(size_t i=n_a; i<n; i++) if(degB[i]<minCore){ DelB.push_back(i); }
 			initialClean(G, degB, DelB, minCore);
 
@@ -115,7 +115,7 @@ namespace gbbs
 				timer t_in; t_in.start();
 
 				sequence<uintE> D = degA;
-				initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
+				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]<core & D[i]>=minCore;}));
 				pbbslib::dyn_arr<uintE> delA(initSize);
 				for(size_t i=0; i<n_a; i++) if(D[i]<core & D[i]>=minCore){ delA.push_back(i); }
 				initialClean(G, D, delA, core);
@@ -132,7 +132,7 @@ namespace gbbs
 				timer t_in; t_in.start();
 
 				sequence<uintE> D = degB;
-				initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<core & D[i+n_a]>=minCore;}));
+				size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]<core & D[i+n_a]>=minCore;}));
 				pbbslib::dyn_arr<uintE> delB(initSize);
 				for(size_t i=n_a; i<n; i++) if(D[i]<core & D[i]>=minCore){ delB.push_back(i); }
 				initialClean(G, D, delB, core);
