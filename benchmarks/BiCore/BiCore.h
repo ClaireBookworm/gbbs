@@ -97,10 +97,10 @@ namespace gbbs
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			timer t_in, p_t; 
 			t_in.start(); p_t.start();
-			// sequence<uintE> degA = sequence<uintE>(n, [&](size_t i) {
-			// 	return G.get_vertex(i).out_degree();
-			// });
-			// sequence<uintE> degB = degA;
+			sequence<uintE> degA = sequence<uintE>(n, [&](size_t i) {
+				return G.get_vertex(i).out_degree();
+			});
+			sequence<uintE> degB = degA;
 			// uintE minCore = breakptrs[idx-1]+1;
 
 			// size_t InitSize = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return degA[i]<minCore;}));
