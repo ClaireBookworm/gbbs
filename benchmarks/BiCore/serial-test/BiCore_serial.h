@@ -80,7 +80,7 @@
 // }
 namespace gbbs{
 // use max alpha and beta
-template <class Graph>
+template <class Graph> 
 inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
 {
 	std::cout << "starting" << std::endl;
@@ -89,11 +89,26 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
 
 	// alphamax is max degree in first partition
-	std::vector<size_t> AlphaMax = (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
-	// BetaMax[u][A]
-	std::vector<size_t> BetaMax = (n_a, [&G](size_t i)
-											  { return std::vector<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i)
-																		{ return 0; }); });
+	// std::vector<size_t> AlphaMax (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
+	auto degreeA = [&G, &n_a](size_t i){return (1 + G.get_vertex(i + n_a).out_degree()); };
+	auto maxA = 0;
+	for (int i = 0; i < n_a; i++) {
+		maxA = maxA < degreeA(i) ? degreeA(i) : maxA;
+	}
+	std::vector<size_t> AlphaMax;
+	AlphaMax.push_back(n_b);
+	AlphaMax.push_back(maxA);
+	// BetaMax[u][A
+	auto degreeB = [&G](size_t i) { return (1 + G.get_vertex(i).out_degree()); };
+	std::vector<size_t> BetaMax;
+	int maxB = 0;
+	BetaMax.push_back(n_a);
+		for (int i = 0; i < n_a; i++) {
+		maxB = maxB < degreeB(i) ? degreeB(i) : maxB;
+	}
+	BetaMax.push_back(maxB);
+
+
 }
 
 template <class Graph>
@@ -167,17 +182,19 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	std::priority_queue pq(vD.begin(), vD.end());
 	while (finished != vCount)
 	{
-		size_t vbkt = pq.top();
-		max_beta = std::max(max_beta, vbkt.id);
-		if (uDel.id == 0)
+		auto vbkt = pq.top();
+		max_beta = max_beta > vbkt.at(0) ? max_beta : vbkt.at(0);
+		if (uDel.at(0) == 0)
 			continue;
-		auto activeV = vertexSubset(n, std::move(D.identifiers)); // container of vertices
+		// auto activeV = vertexSubset(n, std::move(D.identifiers)); // container of vertices
+		auto activeV = vertexSubset(n, std::move(D.at(0))); // container of vertices
 		finished += activeV.size();
 
-		for (size_t i = 0; i < activeV.size(), i++) {
+		for (size_t i = 0; i < activeV.size(); i++) {
 			size_t index = activeV.vtx(i) - n_a;
 				for(size_t j = 1; j < max_beta; j++){ 
-					AlphaMax[index][j]=std::max(AlphaMax[index][j],alpha); 
+					// AlphaMax.at(index)[j]=std::max(AlphaMax.at(index)[j],alpha); 
+					AlphaMax.at(j)=std::max(AlphaMax.at(j),alpha); 
 				}
 		}
 		vertexSubsetData deleteU = nghCount(G, activeV, D, alpha);
@@ -196,6 +213,7 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	// debug(it.reportTotal("initialize time"));
 	return std::pair<size_t, size_t>(rho_alpha, max_beta);
 }
+
 /*
   	uncompressed_neighbors<W> in_neighbors() {
     	return uncompressed_neighbors<W>(id, degree, neighbors); }
