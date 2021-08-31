@@ -79,6 +79,19 @@
 	// 	return *p;
 // }
 namespace gbbs{
+
+struct Node{
+	size_t idx;
+	size_t deg;
+	Node(size_t idx_, size_t deg_) : idx(idx_), deg(deg_) {}
+	bool operator<(const Node& other) const{
+		return deg < other.deg;
+	}
+	bool operator>(const Node& other) const{
+		return deg > other.deg;
+	}
+};
+
 // use max alpha and beta
 template <class Graph> 
 inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
@@ -179,14 +192,18 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	vCount = pbbslib::reduce_add(std::vector<uintE>(n_b, [&](size_t i)
 												 { return D[i + n_a] > 0; }));
 	
-	std::priority_queue pq(vD.begin(), vD.end());
-	while (finished != vCount)
+	// using pq_graph = std::priority_queue<uintE, std::vector<uintE>, std::greater<uintE> >;
+	using pq_graph = std::priority_queue<Node, std::vector<Node>, std::greater<Node> >;
+	pq_graph pq(vD.begin(), vD.end());
+	// while (finished != vCount)
+	while (!pq.empty())
 	{
 
-		size_t v = pq.top(); 
-		auto *vbkt = pq.top();
-		std::cout << "pq.top: " << pq.top() << std::endl;
-		max_beta = max_beta > int(vbkt.at(0)) ? max_beta : int(vbkt.at(0));
+		Node v = pq.top(); 
+		auto vbkt = pq.top();
+		// pq.pop();
+		// std::cout << "pq.top: " << pq.top() << std::endl;
+		max_beta = max_beta > vbkt.idx ? max_beta : vbkt.idx;
 		if (uDel.at(0) == 0)
 			continue;
 		// auto activeV = vertexSubset(n, std::move(D.identifiers)); // container of vertices
