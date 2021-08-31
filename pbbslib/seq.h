@@ -247,6 +247,10 @@ namespace pbbs
       return is_equal;
     }
 
+    sequence<value_type> subseq(size_t ss, size_t ee){
+      return sequence<value_type>(s+ss, std::min(n,ee)-ss);
+    }
+
     range<value_type *> slice(size_t ss, size_t ee) const
     {
       return range<value_type *>(s + ss, s + ee);

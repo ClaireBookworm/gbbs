@@ -269,7 +269,7 @@ namespace gbbs
 
 		pt.stop();
 
-		auto vD =
+		auto Dv =
 			sequence<uintE>(n, [&](size_t i) {
 				if (i <= bipartition || D[i] == 0)
 					return std::numeric_limits<uintE>::max();
@@ -277,7 +277,7 @@ namespace gbbs
 			});
 
 		it.start();
-		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
+		auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
 		it.stop();
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
@@ -288,6 +288,7 @@ namespace gbbs
 			uintE v = std::get<0>(p), new_deg = std::get<1>(p);
 			new_deg = std::max(new_deg, static_cast<uintE>(max_beta));
 			D[v] = new_deg;
+			Dv[v] = new_deg;
 			uintE buck = bbuckets.get_bucket(new_deg);
 			return wrap(v, buck);
 		};
@@ -378,8 +379,8 @@ namespace gbbs
 		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>0;}));
 
 		auto Du =
-			sequence<uintE>(n, [&](size_t i) {
-				if (i > bipartition || D[i] == 0)
+			sequence<uintE>(n_a, [&](size_t i) {
+				if (D[i] == 0)
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
@@ -393,6 +394,7 @@ namespace gbbs
 			uintE u = std::get<0>(p), new_deg = std::get<1>(p);
 			new_deg = std::max(new_deg, static_cast<uintE>(max_alpha));
 			D[u] = new_deg;
+			Du[u] = new_deg;
 			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
