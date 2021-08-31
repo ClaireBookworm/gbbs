@@ -30,8 +30,8 @@ struct Node{
 	}
 };
 
-inline std::pair<size_t, size_t> PeelFixA(std::vector<std::list<Edge> >& adjG, size_t alpha, size_t n_a, size_t n_b);
-inline std::pair<size_t, size_t> PeelFixB(std::vector<std::list<Edge> >& adjG, size_t alpha, size_t n_a, size_t n_b);
+inline double PeelFixA(std::vector<std::list<Edge> >& adjG, size_t alpha, size_t n_a, size_t n_b);
+inline double PeelFixB(std::vector<std::list<Edge> >& adjG, size_t alpha, size_t n_a, size_t n_b);
 
 template <class Graph>
 inline std::vector<std::list<Edge> > make_graph(Graph& G){
@@ -63,18 +63,25 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 
 	auto ret = KCore(G, num_buckets);
 	const size_t delta = static_cast<size_t>(pbbslib::reduce_max(ret));
-
+	double pqt = 0;
+	timer mkt;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
+		mkt.start();
 		std::vector<std::list<Edge> > adjG = make_graph(G);
-		PeelFixA(adjG, core, n_a, n_b);
+		mkt.stop();
+		pqt += PeelFixA(adjG, core, n_a, n_b);
 	}
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixB core "<<core<<std::endl;
+		mkt.start();
 		std::vector<std::list<Edge> > adjG = make_graph(G);
-		PeelFixB(adjG, core, n_a, n_b);
+		mkt.stop();
+		pqt += PeelFixB(adjG, core, n_a, n_b);
 	}
+	std::cout<<"pq time "<<pqt<<std::endl;
+	mkt.reportTotal("make_graph time");
 }
 
 inline void nghCount(std::vector<std::list<Edge> >& adjG, size_t vtx, size_t cutoff, std::vector<size_t>& delList){
@@ -104,10 +111,10 @@ inline std::unordered_set<size_t> nghCount(std::vector<std::list<Edge> >& adjG, 
 	return changeVtx;
 }
 
-inline std::pair<size_t, size_t> PeelFixA(std::vector<std::list<Edge> >& adjG, size_t alpha, size_t n_a, size_t n_b)
+inline double PeelFixA(std::vector<std::list<Edge> >& adjG, size_t alpha, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
-
+	timer pqt;
 	size_t rho_alpha = 0, max_beta = 0;
 
 	std::vector<size_t> uDel;
@@ -136,13 +143,17 @@ inline std::pair<size_t, size_t> PeelFixA(std::vector<std::list<Edge> >& adjG, s
 			remnants.push_back(Node(i,adjG[i].size()));
 		}
 	}
+	pqt.start();
 	using PQNode = std::priority_queue<Node, std::vector<Node>, std::greater<Node> >;
 	PQNode pq(remnants.begin(), remnants.end());
+	pqt.stop();
 	while (!pq.empty())
 	{
+		pqt.start();
 		Node node = pq.top();
 		//std::cout<<node.idx<<" "<<node.deg<<" "<<pq.size()<<std::endl;
 		pq.pop();
+		pqt.stop();
 		if(adjG[node.idx].size() != node.deg) continue; //old values
 		max_beta = std::max(max_beta, node.deg);
 
@@ -158,12 +169,13 @@ inline std::pair<size_t, size_t> PeelFixA(std::vector<std::list<Edge> >& adjG, s
 		rho_alpha++;
 	}
 	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
-	return std::pair<size_t, size_t>(rho_alpha, max_beta);
+	return pqt.get_total();
 }
 
-inline std::pair<size_t, size_t> PeelFixB(std::vector<std::list<Edge> >& adjG, size_t beta, size_t n_a, size_t n_b)
+inline double PeelFixB(std::vector<std::list<Edge> >& adjG, size_t beta, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
+	timer pqt;
 
 	size_t rho_beta = 0, max_alpha = 0;
 
@@ -192,13 +204,17 @@ inline std::pair<size_t, size_t> PeelFixB(std::vector<std::list<Edge> >& adjG, s
 			remnants.push_back(Node(i,adjG[i].size()));
 		}
 	}
+	pqt.start();
 	using PQNode = std::priority_queue<Node, std::vector<Node>, std::greater<Node> >;
 	PQNode pq(remnants.begin(), remnants.end());
+	pqt.stop();
 	while (!pq.empty())
 	{
+		pqt.start();
 		Node node = pq.top();
 		//std::cout<<node.idx<<" "<<node.deg<<" "<<pq.size()<<std::endl;
 		pq.pop();
+		pqt.stop();
 		if(adjG[node.idx].size() != node.deg) continue; //old values
 		max_alpha = std::max(max_alpha, node.deg);
 
@@ -214,7 +230,7 @@ inline std::pair<size_t, size_t> PeelFixB(std::vector<std::list<Edge> >& adjG, s
 		rho_beta++;
 	}
 	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
-	return std::pair<size_t, size_t>(rho_beta, max_alpha);
+	return pqt.get_total();
 }
 
 }
