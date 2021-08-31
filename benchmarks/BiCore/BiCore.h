@@ -385,7 +385,7 @@ namespace gbbs
 				return D[i];
 			});
 		it.start();
-		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
+		auto abuckets = make_vertex_buckets(n_a,Du,increasing,num_buckets);
 		it.stop();
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
