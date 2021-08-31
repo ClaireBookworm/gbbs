@@ -183,8 +183,8 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	while (finished != vCount)
 	{
 
-		// size_t v = pq.top(); 
-		unsigned size_t *vbkt = pq.top();
+		size_t v = pq.top(); 
+		auto *vbkt = pq.top();
 		std::cout << "pq.top: " << pq.top() << std::endl;
 		max_beta = max_beta > int(vbkt.at(0)) ? max_beta : int(vbkt.at(0));
 		if (uDel.at(0) == 0)
