@@ -9,77 +9,26 @@
 #include <vector>
 #include <queue>
 #include <unordered_set>
+#include <list>
 
-// std::pair<int, int> getPairs(std::string fileName)
-// {
-	// 	std::ifstream fin(fileName);
-	// 	std::string graphType;
-	// 	fin >> graphType;
-	// 	int u, w;
-	// 	int sum = 0;
-
-	// 	auto p = new std::pair<int, int>[u + w];
-	// 	// std::pair<int, int> p = new std::pair[u + w];
-	// 	fin >> u >> w; // sizes of bipartite node groups
-	// 	int **all = new int *[u + w];
-	// 	int uGraph[u];
-	// 	for (int i = 0; i < u; i++)
-	// 	{
-	// 		fin >> uGraph[i];
-	// 		sum += uGraph[i] > 1 ? uGraph[i] : 1;
-	// 	}
-	// 	int wGraph[w];
-	// 	for (int i = 0; i < w; i++)
-	// 	{
-	// 		fin >> wGraph[i];
-	// 	}
-	// 	std::sort(uGraph, uGraph + u, std::greater<int>());
-	// 	std::sort(wGraph, wGraph + w, std::greater<int>());
-
-	// 	std::copy(wGraph, wGraph + w, std::copy(uGraph, uGraph + u, *all));
-
-	// 	// sorts correctly
-	// 	int pairCount = 0;
-	// 	for (int i = 0; i < u; i++)
-	// 	{
-	// 		// p[pairCount].first = uGraph[i];
-	// 		// int topVal = uGraph[i];
-	// 		// std::cout << "VALUE OF U: " << uGraph[i] << std::endl;
-	// 		for (int j = 0; j < w; j++)
-	// 		{
-	// 			if (wGraph[j] > 0)
-	// 			{
-	// 				p[pairCount].first = *all[i];
-	// 				p[pairCount].second = *all[u + j];
-	// 				// std::cout << "looking at w: " << wGraph[j] << std::endl;
-	// 				wGraph[j]--;
-	// 				uGraph[i]--;
-	// 				pairCount++;
-	// 				// continue;
-	// 			}
-	// 			else
-	// 			{
-	// 				continue;
-	// 			}
-	// 			if (uGraph[i] <= 0)
-	// 			{
-	// 				break;
-	// 			}
-	// 			// std::cout << "back at u: " << uGraph[i] << std::endl;
-	// 		}
-	// 		// std::cout << "END OF U: " << uGraph[i] << std::endl;
-	// 	}
-	// 	fin.close();
-	// 	// std::ofstream fout;
-	// 	// fout.open("test-graph.out"); // for some reason this keeps giving segmentation fault
-	// 	for (int i = 0; i < (sum); i++)
-	// 	{
-	// 		std::cout << p[i].first << ", " << p[i].second << std::endl;
-	// 	}
-	// 	return *p;
-// }
 namespace gbbs{
 // use max alpha and beta
+struct Edge{
+	uintE other;
+	std::list<Edge>::iterator oiter;
+	Edge(uintE o, std::list<Edge>::iterator it) : other(o), oiter(it) {}
+}
+struct Node{
+	uintE idx;
+	uintE deg;
+	Node(uintE idx_, uintE deg_) : idx(idx_), deg(deg_) {}
+	bool operator<(const Node& other) const{
+		return deg < other.deg;
+	}
+	bool operator>(const Node& other) const{
+		return deg > other.deg;
+	}
+}
 template <class Graph>
 inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
 {
@@ -87,113 +36,97 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	const size_t n = G.n;					// # of vertices
 	const size_t n_a = bipartition + 1;		// number of vertices in first partition
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
-
-	// alphamax is max degree in first partition
-	std::vector<size_t> AlphaMax = (n_b, [&G, &n_a](size_t i){(1 + G.get_vertex(i + n_a).out_degree(), [](size_t i) { return 0; }); });
-	// BetaMax[u][A]
-	std::vector<size_t> BetaMax = (n_a, [&G](size_t i)
-											  { return std::vector<size_t>(1 + G.get_vertex(i).out_degree(), [](size_t i)
-																		{ return 0; }); });
-}
-
-template <class Graph>
-inline std::vector<uintE> nghCount(Graph &G, std::vector<uintE> del, std::vector<uintE> D, size_t cutoff)
-{
-	//everything less than cutoff is deleted
-	std::unordered_set<uintE> delOther;
-	for (size_t i = 0; i < del.size(); i++)
-	{
-		uintE vtx = del[i];
-		auto D_n = G.get_vertex(vtx);
-		// out_neighbors gives the id, degree, and neighbors in tuple form
-		auto neighbors = D_n.out_neighbors();
-		for (int j = 0; j < neighbors.degree; j++)
-		{
-			uintE id = neighbors.get_neighbor(j);
-			if(D[id]>=cutoff){
-				D[id]--;
-				delOther.insert(id);
-			}
+	std::list<Edge>* adjG = new std::list<Edge>[n];
+	for(size_t i=0; i<n; i++){
+		auto neighbors = G.get_vertex(i).out_neighbors();
+		for (size_t j = 0; j < neighbors.degree; j++){
+			uintE other = neighbors.get_neighbor(j);
+			if(other<=i) continue; // don't support self-loop
+			auto oEnd = adjG[other].end();
+			auto iEnd = adjG[i].end();
+			adjG[i].push_back(Edge(other, oEnd));
+			adjG[other].push_back(Edge(i, iEnd));
 		}
 	}
-	std::vector<uintE> delOtherF;
-	for(uintE id : delOther)
-		if(D[id]<cutoff) delOtherF.push_back(id);
-	return delOtherF;
+
 }
 
-// template <class Graph>
-// inline std::pair<std::pair<size_t, size_t>, double> PeelFixB(Graph &G, std::vector<size_t> &BetaMax, std::vector<size_t> &AlphaMax, size_t alpha, size_t bipartition = 2, size_t num_buckets  = 16) {
+inline void nghCount(std::list<Edge>* adjG, uintE vtx, size_t cutoff, std::vector<uintE>& delList){
+	//everything less than cutoff is deleted
+	list<Edge>& neighbors = adjG[vtx];
+	for (auto it = neighbors.begin(); it != neighbors.end(); it++){
+		uintE id = it->other;
+		if(adjG[id].size()==cutoff)
+			delList.push_back(id);
+		adjG[id].erase(it->oiter);
+	}
+	neighbors.clear();
+}
 
-// }
+inline unordered_set<uintE> nghCount(std::list<Edge>* adjG, std::vector<uintE>& del, size_t cutoff){
+	//everything less than cutoff is deleted
+	unordered_set<uintE> changeVtx;
+	for(uintE vtx : del){
+		list<Edge>& neighbors = adjG[vtx];
+		for (auto it = neighbors.begin(); it != neighbors.end(); it++){
+			uintE id = it->other;
+			changeVtx.add(id);
+			adjG[id].erase(it->oiter);
+		}
+		neighbors.clear();
+	}
+	return changeVtx;
+}
 
-template <class Graph>
-inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax,std::vector<size_t> &AlphaMax, size_t alpha, size_t bipartition = 2, size_t num_buckets = 16)
+inline std::pair<size_t, size_t> PeelFixA(std::list<Edge>* adjG, size_t alpha, size_t n_a, size_t n_b)
 {
-	const size_t n = G.n;
-	const size_t n_b = n - bipartition - 1;
-	const size_t n_a = bipartition + 1;
+	const size_t n = n_a + n_b;
 
 	size_t finished = 0, rho_alpha = 0, max_beta = 0;
-	// [0, bipartition] interval for U
-	// [bipartition+1, n-1]  interval V
-	std::vector<uintE> D;
-	for (size_t i = 0; i < n; i++)
-		D.push_back(G.get_vertex(i).out_degree());
+
 	std::vector<uintE> uDel;
 	for (size_t i = 0; i < n_a; i++)
-		if (D[i] < alpha)
+		if (adjG[i].size() < alpha)
 			uDel.push_back(i);
 	// (alpha,0)
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (uDel.size()>0)
 	{
 		// everything less than cutoff is deleted
-		std::vector<uintE> vDel = nghCount(G, uDel, D, 1);
-		uDel = nghCount(G, vDel, D, alpha);
+		std::vector<uintE> vDel;
+		for(uintE del : uDel)
+			nghCount(adjG, del, 1, vDel);
+		uDel.clear();
+		for(uintE del : vDel)
+			nghCount(adjG, del, alpha, uDel);
 	}
 
 	size_t vCount = 0;
-
-	std::vector<uintE> vD = (n, [&](size_t i)
-							 {
-								 if (i <= bipartition || D[i] == 0)
-									 return std::numeric_limits<uintE>::max();
-								 return D[i];
-							 });
-	vCount = pbbslib::reduce_add(std::vector<uintE>(n_b, [&](size_t i)
-												 { return D[i + n_a] > 0; }));
-	
-	std::priority_queue pq(vD.begin(), vD.end());
+	std::vector<Node> remnants;
+	for(size_t i=n_a; i<n; i++){
+		if(adjG[i].size()>0){
+			vCount++;
+			remnants.push_back(Node(i,adjG[i].size()));
+		}
+	}
+	using PQNode = std::priority_queue<Node, std::vector<Node>, std::greater<Node> >;
+	PQNode pq(remnants.begin(), remnants.end());
 	while (finished != vCount)
 	{
-		size_t vbkt = pq.top();
-		max_beta = std::max(max_beta, vbkt.id);
-		if (uDel.id == 0)
-			continue;
-		auto activeV = vertexSubset(n, std::move(D.identifiers)); // container of vertices
-		finished += activeV.size();
-
-		for (size_t i = 0; i < activeV.size(), i++) {
-			size_t index = activeV.vtx(i) - n_a;
-				for(size_t j = 1; j < max_beta; j++){ 
-					AlphaMax[index][j]=std::max(AlphaMax[index][j],alpha); 
-				}
-		}
-		vertexSubsetData deleteU = nghCount(G, activeV, D, alpha);
-		// "deleteU" is a wrapper storing a sequence id of deleted vertices in U
-
-		vertexSubsetData movedV = nghCount(G, deleteU, D, alpha);
-		// "movedV" is a wrapper storing a sequence of tuples like (id, newBucket)
-		// bbuckets.update_buckets(movedV);
+		Node node = pq.top();
 		pq.pop();
+		if(adjG[node.idx].size() != node.deg) continue; //old values
+		max_beta = std::max(max_beta, node.deg);
+
+		std::vector<uintE> deleteU;
+		nghCount(adjG, node.idx, alpha, deleteU);
+		for(Edge e : adjG[node.idx])
+			pq.push(Node(e.other, adjG[e].size()));
+		unordered_set<uintE> changeVtx = nghCount(adjG, deleteU, max_beta)
+		for(uintE i : changeVtx)
+			pq.push(Node(i, adjG[i].size()));
 		rho_alpha++;
 	}
-	// it.start();
-	// bbuckets.del();
-	// em.del();
-	// it.stop();
-	// debug(it.reportTotal("initialize time"));
 	return std::pair<size_t, size_t>(rho_alpha, max_beta);
 }
 /*
