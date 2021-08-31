@@ -311,7 +311,6 @@ struct buckets {
     // pbbslib::free_array(outs);
     return num_elms - ne_before;
   }
-
  private:
   size_t n;  // total number of identifiers in the system
   D& d;

@@ -58,7 +58,7 @@ namespace gbbs
 			return;
 		}
 		auto ret = KCore(G, num_buckets);
-		const uintE delta = static_cast<size_t>(pbbslib::reduce_max(ret));
+		const size_t delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 		// max unicor 
 
 		auto msgA = pbbslib::new_array_no_init<std::tuple<size_t,size_t,float_t>>(delta+1);
@@ -208,6 +208,7 @@ namespace gbbs
 			uintE deg = D[v];
 			uintE new_deg = std::max(deg - edgesRemoved, static_cast<uintE>(max_beta));
 			D[v] = new_deg;
+			vD[v] = new_deg;
 			return wrap(v, bbuckets.get_bucket(new_deg));
 		};
 
@@ -313,13 +314,13 @@ namespace gbbs
 		size_t uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return (D[i]>0);}));
 
 		auto Du =
-			sequence<uintE>(n, [&](size_t i) {
-				if (i > bipartition || D[i] == 0)
+			sequence<uintE>(n_a, [&](size_t i) {
+				if (D[i] == 0)
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
 		it.start();
-		auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
+		auto abuckets = make_vertex_buckets(n_a,Du,increasing,num_buckets);
 		it.stop();
 		// makes num_buckets open buckets
 		// for each vertex [0, n_a-1], it puts it in bucket D[i]
@@ -328,6 +329,7 @@ namespace gbbs
 			uintE u = std::get<0>(p), edgesRemoved = std::get<1>(p);
 			uintE new_deg = std::max(D[u] - edgesRemoved, static_cast<uintE>(max_alpha));
 			D[u] = new_deg;
+			Du[u] = new_deg;
 			return wrap(u, abuckets.get_bucket(new_deg));
 		};
 
@@ -336,6 +338,7 @@ namespace gbbs
 			bt.start();
 			auto ubkt = abuckets.next_bucket();
 			bt.stop();
+
 			max_alpha = std::max(max_alpha, ubkt.id);
 
 			if (ubkt.id == 0)
