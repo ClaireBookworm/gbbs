@@ -116,7 +116,7 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::vector<size_t> BetaMax;
 	int maxB = 0;
 	BetaMax.push_back(n_a);
-		for (int i = 0; i < n_a; i++) {
+		for (size_t i = 0; i < n_a; i++) {
 		maxB = maxB < degreeB(i) ? degreeB(i) : maxB;
 	}
 	BetaMax.push_back(maxB);
@@ -198,10 +198,8 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 	// while (finished != vCount)
 	while (!pq.empty())
 	{
-
-		Node v = pq.top(); 
 		auto vbkt = pq.top();
-		// pq.pop();
+		// pq.pop();	
 		// std::cout << "pq.top: " << pq.top() << std::endl;
 		max_beta = max_beta > vbkt.idx ? max_beta : vbkt.idx;
 		if (uDel.at(0) == 0)
@@ -214,7 +212,8 @@ inline std::pair<size_t, size_t> PeelFixA(Graph &G, std::vector<size_t> &BetaMax
 			size_t index = activeV.vtx(i) - n_a;
 				for(size_t j = 1; j < max_beta; j++){ 
 					// AlphaMax.at(index)[j]=std::max(AlphaMax.at(index)[j],alpha); 
-					AlphaMax.at(j)=std::max(AlphaMax.at(j),alpha); 
+					// AlphaMax.at(j)=std::max(AlphaMax.at(j),alpha); 
+					AlphaMax[j]=std::max(AlphaMax[j],alpha); 
 				}
 		}
 		vertexSubsetData deleteU = nghCount(G, activeV, D, alpha);
