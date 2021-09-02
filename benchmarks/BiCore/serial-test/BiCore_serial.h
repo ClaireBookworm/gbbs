@@ -55,7 +55,6 @@ struct Buckets{
 	}
 
 	inline bool empty(){
-		assert(ahead>=0);
 		return ahead == 0;
 	}
 };
