@@ -16,37 +16,49 @@ namespace gbbs{
 inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_t n_b);
 inline double PeelFixB(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_t n_b);
 
-struct Node{
-	uintE idx;
-	uintE deg;
-	Node(size_t idx_, size_t deg_) : idx(idx_), deg(deg_) {}
-	bool operator<(const Node& other) const{
-		return deg < other.deg;
+struct Buckets{
+	std::vector<uintE>* bkts;
+	std::vector<uintE>& degs;
+	uintE curDeg, n, ahead, st, et;
+	Buckets(std::vector<uintE>& degs_, uintE startPos, uintE endPos)
+	 : degs(degs_), st(startPos), et(endPos) 
+	{
+		uintE maxDeg = 0;
+		uintE minDeg = 0;
+		for(size_t i=startPos; i<endPos; i++) {
+			maxDeg = std::max(degs[i], maxDeg);
+			if(degs[i]>0) minDeg = std::min(degs[i], minDeg);
+		}
+		bkts = new std::vector<uintE>[maxDeg+1];
+		ahead = 0;
+		for(size_t i=startPos; i<endPos; i++)
+			if(degs[i]>0){bkts[degs[i]].push_back(i); ahead++;}
+		curDeg = minDeg;
+		n = maxDeg;
 	}
-	bool operator>(const Node& other) const{
-		return deg > other.deg;
+
+	inline void update(uintE idx, uintE newDeg){ bkts[newDeg].push_back(idx); }
+
+	inline std::vector<uintE> next_bucket(){
+		std::vector<uintE> filterBkt;
+		while(filterBkt.size()==0){
+			while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
+			std::vector<uintE>& bkt = bkts[curDeg];
+			for(uintE i = bkt.size()-1; true; i--){
+				if(degs[bkt[i]] == curDeg) filterBkt.push_back(bkt[i]);
+				bkt.pop_back();
+				if(i==0) break;
+			}
+		}
+		ahead -= filterBkt.size();	
+		return filterBkt;
+	}
+
+	inline bool empty(){
+		assert(ahead>=0);
+		return ahead == 0;
 	}
 };
-
-struct Buckets{
-	std::unordered_set<uintE>* bkts;
-	Buckets(std::vector<uintE>& degs, uintE startPos){
-		size_t maxDeg = 0;
-		size_t minDeg = 0;
-		for(size_t i=startPos; i<degs.size(); i++) {
-			maxDeg = std::max(degs[i], maxDeg);
-			minDeg = std::min(degs[i], minDeg);
-		}
-		bkts = new std::unordered_set<uintE>[maxDeg+1];
-		for(size_t i=startPos; i<degs.size(); i++)
-			bkts[degs[i]].insert(i);
-	}
-	inline void update(uintE idx, uintE oldDeg, uintE newDeg){
-		bkts[oldDeg].erase(idx);
-		bkts[newDeg].insert(idx);
-	}
-
-}
 
 template <class Graph>
 inline std::vector<uintE>* make_graph(Graph& G){
@@ -87,39 +99,6 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	//mkt.reportTotal("make_graph time");
 }
 
-inline void nghCount(std::vector<uintE>* adjG, std::vector<uintE>& D, size_t vtx, size_t cutoff, std::vector<uintE>& delList){
-	//everything less than cutoff is deleted
-	std::vector<uintE>& neighbors = adjG[vtx];
-	for (size_t i = 0; i<neighbors.size(); i++){
-		uintE id = neighbors[i];
-		if(D[id]==cutoff)
-			delList.push_back(id);
-		if(D[id]>=cutoff)
-			D[id]--;
-	}
-	D[vtx] = 0;
-}
-
-inline std::vector<uintE> nghCount(std::vector<uintE>* adjG, std::vector<uintE>& D, std::vector<uintE>& del, std::vector<size_t>& tracker, size_t iter, size_t cutoff){
-	//everything less than cutoff is deleted
-	std::vector<uintE> changeVtx;
-	for(uintE vtx : del){
-		std::vector<uintE>& neighbors = adjG[vtx];
-		for (size_t i = 0; i<neighbors.size(); i++){
-			uintE id = neighbors[i];
-			if(D[id]>=cutoff){
-				if(tracker[id]<iter){
-					changeVtx.push_back(id);
-					tracker[id] = iter;
-				}
-				D[id]--;
-			}
-		}
-		D[vtx] = 0;
-	}
-	return changeVtx;
-}
-
 inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
@@ -134,51 +113,68 @@ inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_
 
 	std::vector<uintE> uDel;
 	for (size_t i = 0; i < n_a; i++)
-		if (D[i] < alpha)
-			uDel.push_back(i);
+		if (D[i] < alpha) uDel.push_back(i);
 	// (alpha,0)
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (uDel.size()>0)
 	{
-		// everything less than cutoff is deleted
-		//std::cout<<uDel.size()<<std::endl;
-		std::vector<uintE> vDel;
-		for(size_t del : uDel)
-			nghCount(adjG, D, del, 1, vDel);
-		uDel.clear();
-		for(size_t del : vDel)
-			nghCount(adjG, D, del, alpha, uDel);
+		std::vector<uintE> newUDel;
+		for(uintE ui : uDel){
+			for(uintE vi : adjG[ui]){
+				if(D[vi]<1) continue;
+				D[vi]--;
+				if(D[vi]<1){
+					for(uintE uii : adjG[vi]){ 
+						if(D[uii]<alpha) continue;
+						D[uii]--;
+						if(D[uii]<alpha) newUDel.push_back(uii);
+					}
+				}
+			}
+		}
+		uDel = std::move(newUDel);
 	}
 
 	pt.stop();
 
 	pqt.start();
-	std::vector<Node> remnants;
-	for(size_t i=n_a; i<n; i++) if(D[i]>0) remnants.push_back(Node(i,D[i]));
 
-	using PQNode = std::priority_queue<Node, std::vector<Node>, std::greater<Node> >;
-	PQNode pq(remnants.begin(), remnants.end());
+	Buckets bbuckets(D, n_a, n);
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	while (!pq.empty())
+	while (!bbuckets.empty())
 	{
+		iter++;
 		pqt.start();
-		Node node = pq.top();
-		//std::cout<<node.idx<<" "<<node.deg<<" "<<pq.size()<<std::endl;
-		pq.pop();
+		std::vector<uintE> bkt = bbuckets.next_bucket();
+		max_beta = std::max(max_beta, bbuckets.curDeg);
 		pqt.stop();
-		if(D[node.idx] != node.deg) continue; //old values
-		max_beta = std::max(max_beta, node.deg);
-
-		std::vector<uintE> deleteU;
-		nghCount(adjG, D, node.idx, alpha, deleteU);
-		std::vector<uintE> changeVtx = nghCount(adjG, D, deleteU, tracker, ++iter, max_beta);
-		for(uintE i : changeVtx) pq.push(Node(i, std::max(max_beta,D[i])));
+		std::vector<uintE> changeVtx;
+		for(uintE vi : bkt){
+			for(uintE ui : adjG[vi]){
+				if(D[ui]<alpha) continue;
+				D[ui]--;
+				if(D[ui]<alpha){
+					for(uintE vii : adjG[ui]){ 
+						if(D[vii]<=max_beta) continue;
+						if(tracker[vii]!=iter){
+							changeVtx.push_back(vii);
+							tracker[vii] = iter;
+						}
+						D[vii]--;
+					}
+				}
+			}
+		}
+		pqt.start();
+		for(uintE vii : changeVtx)
+			bbuckets.update(vii, D[vii]);
+		pqt.stop();
 		rho_alpha++;
 	}
 	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
-	return pt.get_total();
+	return pqt.get_total();
 }
 
 inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t n_b)
@@ -187,53 +183,76 @@ inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t
 	timer pqt;
 	timer pt;
 	uintE rho_beta = 0, max_alpha = 0;
+
 	pt.start();
+
 	std::vector<uintE> D(n);
 	for(size_t i=0; i<n; i++) D[i] = adjG[i].size();
 
 	std::vector<uintE> vDel;
-	for (size_t i = n_a; i < n; i++) if (D[i] < beta) vDel.push_back(i);
+	for (size_t i = n_a; i < n; i++)
+		if (D[i] < beta) vDel.push_back(i);
 	// (alpha,0)
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (vDel.size()>0)
 	{
-		// everything less than cutoff is deleted
-		std::vector<uintE> uDel;
-		for(size_t del : vDel)
-			nghCount(adjG, D, del, 1, uDel);
-		vDel.clear();
-		for(size_t del : uDel)
-			nghCount(adjG, D, del, beta, vDel);
+		std::vector<uintE> newVDel;
+		for(uintE vi : vDel){
+			for(uintE ui : adjG[vi]){
+				if(D[ui]<1) continue;
+				D[ui]--;
+				if(D[ui]<1){
+					for(uintE vii : adjG[ui]){ 
+						if(D[vii]<beta) continue;
+						D[vii]--;
+						if(D[vii]<beta) newVDel.push_back(vii);
+					}
+				}
+			}
+		}
+		vDel = std::move(newVDel);
 	}
+
 	pt.stop();
-	
-	std::vector<Node> remnants;
-	for(size_t i=0; i<n_a; i++) if(D[i]>0) remnants.push_back(Node(i,D[i]));
 
 	pqt.start();
-	using PQNode = std::priority_queue<Node, std::vector<Node>, std::greater<Node> >;
-	PQNode pq(remnants.begin(), remnants.end());
+
+	Buckets abuckets(D, 0, n_a);
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	while (!pq.empty())
+	while (!abuckets.empty())
 	{
+		iter++;
 		pqt.start();
-		Node node = pq.top();
-		//std::cout<<node.idx<<" "<<node.deg<<" "<<pq.size()<<std::endl;
-		pq.pop();
+		std::vector<uintE> bkt = abuckets.next_bucket();
+		max_alpha = std::max(max_alpha, abuckets.curDeg);
 		pqt.stop();
-		if(D[node.idx] != node.deg) continue; //old values
-		max_alpha = std::max(max_alpha, node.deg);
-
-		std::vector<uintE> deleteV;
-		nghCount(adjG, D, node.idx, beta, deleteV);
-		std::vector<uintE> changeVtx = nghCount(adjG, D, deleteV, tracker, ++iter, max_alpha);
-		for(uintE i : changeVtx) pq.push(Node(i, std::max(max_alpha,D[i])));
+		std::vector<uintE> changeVtx;
+		for(uintE ui : bkt){
+			for(uintE vi : adjG[ui]){
+				if(D[vi]<beta) continue;
+				D[vi]--;
+				if(D[vi]<beta){
+					for(uintE uii : adjG[vi]){ 
+						if(D[uii]<=max_alpha) continue;
+						if(tracker[uii]!=iter){
+							changeVtx.push_back(uii);
+							tracker[uii] = iter;
+						}
+						D[uii]--;
+					}
+				}
+			}
+		}
+		pqt.start();
+		for(uintE uii : changeVtx)
+			abuckets.update(uii, D[uii]);
+		pqt.stop();
 		rho_beta++;
 	}
 	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
-	return pt.get_total();
+	return pqt.get_total();
 }
 
 }
