@@ -127,6 +127,36 @@ struct symmetric_graph {
       e1 = e0;  // handles NVM case when graph is stored in symmetric memory
     }
   }
+
+  symmetric_graph(const symmetric_graph& G)
+      : n(G.n),
+        m(G.m)
+  {
+    v_data = pbbs::new_array_no_init<vertex_data>(n);
+    e0 = pbbs::new_array_no_init<edge_type>(m);
+    std::copy(G.v_data, G.v_data+n, v_data);
+    std::copy(G.e0, G.e0+m, e0);
+    deletion_fn = [this] () {
+      pbbs::free_array(v_data);
+      pbbs::free_array(e0);
+    };
+  }
+
+  symmetric_graph& operator=(const symmetric_graph& G){
+    del();
+    n = G.n; m = G.m; deletion_fn = G.deletion_fn;
+    v_data = pbbs::new_array_no_init<vertex_data>(n);
+    e0 = pbbs::new_array_no_init<edge_type>(m);
+    std::copy(G.v_data, G.v_data+n, v_data);
+    std::copy(G.e0, G.e0+m, e0);
+    deletion_fn = [this] () {
+      pbbs::free_array(v_data);
+      pbbs::free_array(e0);
+    };
+    //assume no e1
+    return *this;
+  }
+
   void del() { deletion_fn(); }
 
   // creates an in-memory copy of the graph.

@@ -73,6 +73,47 @@ struct Buckets{
 	}
 };
 
+template <class Graph>
+inline Graph shrink_graph(Graph& G, std::vector<uintE>& D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
+	const size_t n = n_a + n_b;
+	std::vector<uintE> degs = D;
+	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA) degs[i] = 0;
+	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB) degs[i] = 0;
+	std::vector<uintT> offsets(n+1); offsets[0]=0;
+	for(uintE i = 1; i<=n; i++) offsets[i] = offsets[i-1] + degs[i-1];
+	const size_t m = offsets[n];
+	vertex_data* v_data = pbbs::new_array_no_init<vertex_data>(n);
+	for(uintE i = 0; i<n; i++) { v_data[i].offset = offsets[i]; v_data[i].degree = degs[i]; }
+	uintE* edges = pbbs::new_array_no_init<uintE>(m);
+	for(uintE i = 0; i<n; i++){
+		if(i<n_a && D[i]<cutoffA) continue;
+		if(i>=n_a && D[i]<cutoffB) continue;
+		auto neighbors = G.get_vertex(i).out_neighbors();
+		uintT offset = offsets[i];
+		uintE idx = 0;
+		for(uintE j = 0; j<neighbors.degree; j++){
+			uintE neigh = neighbors.get_neighbor(j);
+			if(neigh<n_a && D[neigh]<cutoffA) continue;
+			if(neigh>=n_a && D[neigh]<cutoffB) continue;
+			assert(idx+offset<m);
+			edges[idx+offset] = neigh; idx++;
+		}
+	}
+	return Graph(
+      v_data, n, m,
+      [=](){
+		pbbslib::free_array(v_data);
+        pbbslib::free_array(edges);
+      }, (std::tuple<uintE, pbbs::empty>*)edges);
+}
+
+inline uintE get_vertex_count(std::vector<uintE> D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
+	const size_t n = n_a + n_b;
+	size_t new_n = n;
+	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA) new_n--;
+	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB) new_n--;
+	return new_n;
+}
 
 template <class Graph>
 inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
@@ -89,18 +130,28 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::vector<uintE> DA(n);
 	for(size_t i=0; i<n; i++) DA[i] = G.get_vertex(i).out_degree();
 	std::vector<uintE> DB = DA;
+	Graph GA = G;
+	Graph GB = G;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
-		auto ret = PeelFixA(G, DA, core, n_a, n_b);
+		auto ret = PeelFixA(GA, DA, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
+		if(get_vertex_count(DA, n_a, n_b, core, 1)<n){
+			GA = shrink_graph(GA, DA, n_a, n_b, core, 1);
+			std::cout<<"compacted "<<GA.m<<std::endl;
+		}
 	}
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixB core "<<core<<std::endl;
-		auto ret = PeelFixB(G, DB, core, n_a, n_b);
+		auto ret = PeelFixB(GB, DB, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
+		if(get_vertex_count(DB, n_a, n_b, 1, core)<n){
+			GB = shrink_graph(GB, DB, n_a, n_b, 1, core);
+			std::cout<<"compacted "<<GB.m<<std::endl;
+		}
 	}
 	std::cout<<"pq time "<<pqt<<std::endl;
 	std::cout<<"pt time "<<pt<<std::endl;

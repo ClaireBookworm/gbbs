@@ -41,8 +41,8 @@ double BiCore_runner(Graph& G, commandLine P) {
 
   size_t num_buckets = P.getOptionLongValue("-nb", 16);
   size_t bipartition = P.getOptionLongValue("-bi", 2);
-  size_t peel_by_alpha = P.getOptionLongValue("-a", 0);
-  size_t peel_by_beta = P.getOptionLongValue("-b",0);
+  size_t peel_by_alpha = P.getOptionLongValue("-alpha", 0);
+  size_t peel_by_beta = P.getOptionLongValue("-beta",0);
   std::cout << "### Application: BiCore" << std::endl;
   std::cout << "### Graph: " << P.getArgument(0) << std::endl;
   std::cout << "### Threads: " << num_workers() << std::endl;

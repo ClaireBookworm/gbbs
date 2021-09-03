@@ -243,6 +243,13 @@ inline auto get_pcm_state() { return (size_t)1; }
 /* Macro to generate binary for unweighted graph applications that can ingest
  * only
  * symmetric graph inputs */
+
+/*
+auto G = gbbs::gbbs_io::read_compressed_symmetric_graph<pbbslib::empty>( 
+         iFile, mmap, mmapcopy);                                              
+      gbbs::alloc_init(G);                                                     
+      run_app(G, APP, rounds)                                                  
+*/
 #define generate_symmetric_main(APP, mutates)                                  \
   int main(int argc, char* argv[]) {                                           \
     gbbs::commandLine P(argc, argv, " [-s] <inFile>");                         \
@@ -262,13 +269,9 @@ inline auto get_pcm_state() { return (size_t)1; }
     size_t rounds = P.getOptionLongValue("-rounds", 3);                        \
     gbbs::pcm_init();                                                          \
     if (compressed) {                                                          \
-      auto G = gbbs::gbbs_io::read_compressed_symmetric_graph<pbbslib::empty>( \
-          iFile, mmap, mmapcopy);                                              \
-      gbbs::alloc_init(G);                                                     \
-      run_app(G, APP, rounds)                                                  \
-    } else {                                                                   \
+    } else {                                                                  \
       auto G =                                                                 \
-          gbbs::gbbs_io::read_unweighted_symmetric_graph(iFile, mmap, binary); \
+        gbbs::gbbs_io::read_unweighted_symmetric_graph(iFile, mmap, binary); \
       gbbs::alloc_init(G);                                                     \
       run_app(G, APP, rounds)                                                  \
     }                                                                          \
