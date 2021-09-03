@@ -95,7 +95,7 @@ inline Graph shrink_graph(Graph& G, std::vector<uintE>& D, uintE n_a, uintE n_b,
 			uintE neigh = neighbors.get_neighbor(j);
 			if(neigh<n_a && D[neigh]<cutoffA) continue;
 			if(neigh>=n_a && D[neigh]<cutoffB) continue;
-			assert(idx+offset<m);
+			//assert(idx+offset<m);
 			edges[idx+offset] = neigh; idx++;
 		}
 	}
@@ -107,9 +107,9 @@ inline Graph shrink_graph(Graph& G, std::vector<uintE>& D, uintE n_a, uintE n_b,
       }, (std::tuple<uintE, pbbs::empty>*)edges);
 }
 
-inline uintE get_vertex_count(std::vector<uintE> D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
+inline uintE get_vertex_count(uintE vtx_c, std::vector<uintE> D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
 	const size_t n = n_a + n_b;
-	size_t new_n = n;
+	size_t new_n = vtx_c;
 	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA) new_n--;
 	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB) new_n--;
 	return new_n;
@@ -132,15 +132,20 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::vector<uintE> DB = DA;
 	Graph GA = G;
 	Graph GB = G;
+	uintE vtx_countA = n;
+	uintE vtx_countB = n;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
 		auto ret = PeelFixA(GA, DA, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
-		if(get_vertex_count(DA, n_a, n_b, core, 1)<n){
+		uintE vtx_count = get_vertex_count(n, DA, n_a, n_b, core, 1);
+		std::cout<<"vtx remaining "<<vtx_count<<std::endl;
+		if(vtx_count*1.9<vtx_countA){
 			GA = shrink_graph(GA, DA, n_a, n_b, core, 1);
 			std::cout<<"compacted "<<GA.m<<std::endl;
+			vtx_countA = vtx_count;
 		}
 	}
 	for(size_t core = 1; core<=delta; core++){
@@ -148,9 +153,12 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 		auto ret = PeelFixB(GB, DB, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
-		if(get_vertex_count(DB, n_a, n_b, 1, core)<n){
+		uintE vtx_count = get_vertex_count(n, DB, n_a, n_b, 1, core);
+		std::cout<<"vtx remaining "<<vtx_count<<std::endl;
+		if(vtx_count*1.9<vtx_countB){
 			GB = shrink_graph(GB, DB, n_a, n_b, 1, core);
 			std::cout<<"compacted "<<GB.m<<std::endl;
+			vtx_countB = vtx_count;
 		}
 	}
 	std::cout<<"pq time "<<pqt<<std::endl;
