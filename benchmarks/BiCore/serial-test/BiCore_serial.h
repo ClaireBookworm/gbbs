@@ -13,15 +13,17 @@
 
 namespace gbbs{
 // use max alpha and beta
-inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_t n_b);
-inline double PeelFixB(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_t n_b);
+template <class Graph>
+inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, size_t n_b);
+template <class Graph>
+inline std::pair<double, double> PeelFixB(Graph& G, size_t alpha, size_t n_a, size_t n_b);
 
 struct Buckets{
 	std::vector<uintE>* bkts;
 	std::vector<uintE>& degs;
-	uintE curDeg, n, ahead, st, et;
+	uintE curDeg, n, ahead, curPos;
 	Buckets(std::vector<uintE>& degs_, uintE startPos, uintE endPos)
-	 : degs(degs_), st(startPos), et(endPos) 
+	 : degs(degs_), curPos(0)
 	{
 		uintE maxDeg = 0;
 		uintE minDeg = 0;
@@ -39,8 +41,20 @@ struct Buckets{
 
 	inline void update(uintE idx, uintE newDeg){ bkts[newDeg].push_back(idx); }
 
+	inline uintE next_vtx(){
+		if(curPos >= bkts[curDeg].size()){
+			curDeg++;
+			curPos = 0;
+			while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
+		}
+		std::vector<uintE>& bkt = bkts[curDeg];
+		while(curPos < bkt.size() && degs[bkt[curPos]] != curDeg) curPos++;
+		if(curPos < bkt.size()) {ahead--; return bkt[curPos++];}
+		else return next_vtx();
+	}
+
 	inline std::vector<uintE> next_bucket(){
-		std::vector<uintE> filterBkt;
+		std::vector<uintE> filterBkt; filterBkt.reserve(bkts[curDeg].size());
 		while(filterBkt.size()==0){
 			while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
 			std::vector<uintE>& bkt = bkts[curDeg];
@@ -59,19 +73,6 @@ struct Buckets{
 	}
 };
 
-template <class Graph>
-inline std::vector<uintE>* make_graph(Graph& G){
-	const size_t n = G.n;
-	std::vector<uintE>* adjG = new std::vector<uintE>[n];
-	for(size_t i=0; i<n; i++){
-		auto neighbors = G.get_vertex(i).out_neighbors();
-		for (size_t j = 0; j < neighbors.degree; j++){
-			size_t other = neighbors.get_neighbor(j);
-			adjG[i].push_back(other);
-		}
-	}
-	return adjG;
-}
 
 template <class Graph>
 inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
@@ -84,21 +85,27 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	auto ret = KCore(G, num_buckets);
 	const size_t delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 	double pqt = 0;
-	std::vector<uintE>* adjG = make_graph(G);
+	double pt = 0;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
-		pqt += PeelFixA(adjG, core, n_a, n_b);
+		auto ret = PeelFixA(G, core, n_a, n_b);
+		pqt += ret.first;
+		pt += ret.second;
 	}
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixB core "<<core<<std::endl;
-		pqt += PeelFixB(adjG, core, n_a, n_b);
+		auto ret = PeelFixB(G, core, n_a, n_b);
+		pqt += ret.first;
+		pt += ret.second;
 	}
 	std::cout<<"pq time "<<pqt<<std::endl;
+	std::cout<<"pt time "<<pt<<std::endl;
 	//mkt.reportTotal("make_graph time");
 }
 
-inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_t n_b)
+template <class Graph>
+inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
 	timer pqt;
@@ -108,7 +115,7 @@ inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_
 	pt.start();
 
 	std::vector<uintE> D(n);
-	for(size_t i=0; i<n; i++) D[i] = adjG[i].size();
+	for(size_t i=0; i<n; i++) D[i] = G.get_vertex(i).out_degree();
 
 	std::vector<uintE> uDel;
 	for (size_t i = 0; i < n_a; i++)
@@ -119,11 +126,15 @@ inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_
 	{
 		std::vector<uintE> newUDel;
 		for(uintE ui : uDel){
-			for(uintE vi : adjG[ui]){
+			auto neighborsUi = G.get_vertex(ui).out_neighbors();
+			for(uintE i = 0; i<neighborsUi.degree; i++){
+				uintE vi = neighborsUi.get_neighbor(i);
 				if(D[vi]<1) continue;
 				D[vi]--;
 				if(D[vi]<1){
-					for(uintE uii : adjG[vi]){ 
+					auto neighborsVi = G.get_vertex(vi).out_neighbors();
+					for(uintE j = 0; j<neighborsVi.degree; j++){
+						uintE uii = neighborsVi.get_neighbor(j); 
 						if(D[uii]<alpha) continue;
 						D[uii]--;
 						if(D[uii]<alpha) newUDel.push_back(uii);
@@ -142,6 +153,7 @@ inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
+	std::vector<uintE> changeVtx;
 	while (!bbuckets.empty())
 	{
 		iter++;
@@ -149,13 +161,16 @@ inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_
 		std::vector<uintE> bkt = bbuckets.next_bucket();
 		max_beta = std::max(max_beta, bbuckets.curDeg);
 		pqt.stop();
-		std::vector<uintE> changeVtx;
 		for(uintE vi : bkt){
-			for(uintE ui : adjG[vi]){
+			auto neighborsVi = G.get_vertex(vi).out_neighbors();
+			for(uintE i = 0; i<neighborsVi.degree; i++){
+				uintE ui = neighborsVi.get_neighbor(i);
 				if(D[ui]<alpha) continue;
 				D[ui]--;
 				if(D[ui]<alpha){
-					for(uintE vii : adjG[ui]){ 
+					auto neighborsUi = G.get_vertex(ui).out_neighbors();
+					for(uintE j = 0; j<neighborsUi.degree; j++){
+						uintE vii = neighborsUi.get_neighbor(j); 
 						if(D[vii]<=max_beta) continue;
 						if(tracker[vii]!=iter){
 							changeVtx.push_back(vii);
@@ -169,14 +184,16 @@ inline double PeelFixA(std::vector<uintE>* adjG, size_t alpha, size_t n_a, size_
 		pqt.start();
 		for(uintE vii : changeVtx)
 			bbuckets.update(vii, D[vii]);
+		changeVtx.clear();
 		pqt.stop();
 		rho_alpha++;
 	}
 	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
-	return pqt.get_total();
+	return std::make_pair(pqt.get_total(), pt.get_total());
 }
 
-inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t n_b)
+template <class Graph>
+inline std::pair<double, double> PeelFixB(Graph& G, size_t beta, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
 	timer pqt;
@@ -186,7 +203,7 @@ inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t
 	pt.start();
 
 	std::vector<uintE> D(n);
-	for(size_t i=0; i<n; i++) D[i] = adjG[i].size();
+	for(size_t i=0; i<n; i++) D[i] = G.get_vertex(i).out_degree();
 
 	std::vector<uintE> vDel;
 	for (size_t i = n_a; i < n; i++)
@@ -197,11 +214,15 @@ inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t
 	{
 		std::vector<uintE> newVDel;
 		for(uintE vi : vDel){
-			for(uintE ui : adjG[vi]){
+			auto neighborsVi = G.get_vertex(vi).out_neighbors();
+			for(uintE i = 0; i<neighborsVi.degree; i++){
+				uintE ui = neighborsVi.get_neighbor(i);
 				if(D[ui]<1) continue;
 				D[ui]--;
 				if(D[ui]<1){
-					for(uintE vii : adjG[ui]){ 
+					auto neighborsUi = G.get_vertex(ui).out_neighbors();
+					for(uintE j = 0; j<neighborsUi.degree; j++){
+						uintE vii = neighborsUi.get_neighbor(j); 
 						if(D[vii]<beta) continue;
 						D[vii]--;
 						if(D[vii]<beta) newVDel.push_back(vii);
@@ -220,6 +241,7 @@ inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
+	std::vector<uintE> changeVtx; 
 	while (!abuckets.empty())
 	{
 		iter++;
@@ -227,13 +249,16 @@ inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t
 		std::vector<uintE> bkt = abuckets.next_bucket();
 		max_alpha = std::max(max_alpha, abuckets.curDeg);
 		pqt.stop();
-		std::vector<uintE> changeVtx;
 		for(uintE ui : bkt){
-			for(uintE vi : adjG[ui]){
+			auto neighborsUi = G.get_vertex(ui).out_neighbors();
+			for(uintE i = 0; i<neighborsUi.degree; i++){
+				uintE vi = neighborsUi.get_neighbor(i);
 				if(D[vi]<beta) continue;
 				D[vi]--;
 				if(D[vi]<beta){
-					for(uintE uii : adjG[vi]){ 
+					auto neighborsVi = G.get_vertex(vi).out_neighbors();
+					for(uintE j = 0; j<neighborsVi.degree; j++){
+						uintE uii = neighborsVi.get_neighbor(j);
 						if(D[uii]<=max_alpha) continue;
 						if(tracker[uii]!=iter){
 							changeVtx.push_back(uii);
@@ -247,11 +272,12 @@ inline double PeelFixB(std::vector<uintE>* adjG, size_t beta, size_t n_a, size_t
 		pqt.start();
 		for(uintE uii : changeVtx)
 			abuckets.update(uii, D[uii]);
+		changeVtx.clear();
 		pqt.stop();
 		rho_beta++;
 	}
 	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
-	return pqt.get_total();
+	return std::make_pair(pqt.get_total(), pt.get_total());
 }
 
 }
