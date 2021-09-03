@@ -14,9 +14,9 @@
 namespace gbbs{
 // use max alpha and beta
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b);
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, size_t alpha, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b);
 
 struct Buckets{
 	std::vector<uintE>* bkts;
@@ -86,16 +86,19 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	const size_t delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 	double pqt = 0;
 	double pt = 0;
+	std::vector<uintE> DA(n);
+	for(size_t i=0; i<n; i++) DA[i] = G.get_vertex(i).out_degree();
+	std::vector<uintE> DB = DA;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
-		auto ret = PeelFixA(G, core, n_a, n_b);
+		auto ret = PeelFixA(G, DA, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
 	}
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixB core "<<core<<std::endl;
-		auto ret = PeelFixB(G, core, n_a, n_b);
+		auto ret = PeelFixB(G, DB, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
 	}
@@ -105,7 +108,7 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, size_t n_b)
+inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, size_t alpha, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
 	timer pqt;
@@ -114,12 +117,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, si
 
 	pt.start();
 
-	std::vector<uintE> D(n);
-	for(size_t i=0; i<n; i++) D[i] = G.get_vertex(i).out_degree();
-
 	std::vector<uintE> uDel;
 	for (size_t i = 0; i < n_a; i++)
-		if (D[i] < alpha) uDel.push_back(i);
+		if (Deg[i] == alpha-1) uDel.push_back(i);
 	// (alpha,0)
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (uDel.size()>0)
@@ -129,21 +129,22 @@ inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, si
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
-				if(D[vi]<1) continue;
-				D[vi]--;
-				if(D[vi]<1){
+				if(Deg[vi]<1) continue;
+				Deg[vi]--;
+				if(Deg[vi]<1){
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j); 
-						if(D[uii]<alpha) continue;
-						D[uii]--;
-						if(D[uii]<alpha) newUDel.push_back(uii);
+						if(Deg[uii]<alpha) continue;
+						Deg[uii]--;
+						if(Deg[uii]<alpha) newUDel.push_back(uii);
 					}
 				}
 			}
 		}
 		uDel = std::move(newUDel);
 	}
+	std::vector<uintE> D = Deg;
 
 	pt.stop();
 
@@ -193,7 +194,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, size_t alpha, size_t n_a, si
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, size_t beta, size_t n_a, size_t n_b)
+inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
 	timer pqt;
@@ -202,12 +203,9 @@ inline std::pair<double, double> PeelFixB(Graph& G, size_t beta, size_t n_a, siz
 
 	pt.start();
 
-	std::vector<uintE> D(n);
-	for(size_t i=0; i<n; i++) D[i] = G.get_vertex(i).out_degree();
-
 	std::vector<uintE> vDel;
 	for (size_t i = n_a; i < n; i++)
-		if (D[i] < beta) vDel.push_back(i);
+		if (Deg[i] == beta-1) vDel.push_back(i);
 	// (alpha,0)
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (vDel.size()>0)
@@ -217,21 +215,22 @@ inline std::pair<double, double> PeelFixB(Graph& G, size_t beta, size_t n_a, siz
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
-				if(D[ui]<1) continue;
-				D[ui]--;
-				if(D[ui]<1){
+				if(Deg[ui]<1) continue;
+				Deg[ui]--;
+				if(Deg[ui]<1){
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
-						if(D[vii]<beta) continue;
-						D[vii]--;
-						if(D[vii]<beta) newVDel.push_back(vii);
+						if(Deg[vii]<beta) continue;
+						Deg[vii]--;
+						if(Deg[vii]<beta) newVDel.push_back(vii);
 					}
 				}
 			}
 		}
 		vDel = std::move(newVDel);
 	}
+	std::vector<uintE> D = Deg;
 
 	pt.stop();
 
