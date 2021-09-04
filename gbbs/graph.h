@@ -132,29 +132,51 @@ struct symmetric_graph {
       : n(G.n),
         m(G.m)
   {
-    v_data = pbbs::new_array_no_init<vertex_data>(n);
-    e0 = pbbs::new_array_no_init<edge_type>(m);
-    std::copy(G.v_data, G.v_data+n, v_data);
-    std::copy(G.e0, G.e0+m, e0);
-    deletion_fn = [this] () {
-      pbbs::free_array(v_data);
-      pbbs::free_array(e0);
-    };
+    v_data = (vertex_data*)malloc(n*sizeof(vertex_data));
+    e0 = (edge_type*)malloc(m*sizeof(edge_type));
+    memcpy(v_data, G.v_data, sizeof(vertex_data)*n);
+    memcpy(e0, G.e0, sizeof(edge_type)*m);
+    deletion_fn = [] () {};
   }
 
   symmetric_graph& operator=(const symmetric_graph& G){
-    del();
-    n = G.n; m = G.m; deletion_fn = G.deletion_fn;
-    v_data = pbbs::new_array_no_init<vertex_data>(n);
-    e0 = pbbs::new_array_no_init<edge_type>(m);
-    std::copy(G.v_data, G.v_data+n, v_data);
-    std::copy(G.e0, G.e0+m, e0);
-    deletion_fn = [this] () {
-      pbbs::free_array(v_data);
-      pbbs::free_array(e0);
-    };
-    //assume no e1
+    clear();
+    n = G.n; m = G.m;
+    v_data = (vertex_data*)malloc(n*sizeof(vertex_data));
+    e0 = (edge_type*)malloc(m*sizeof(edge_type));
+    memcpy(v_data, G.v_data, sizeof(vertex_data)*n);
+    memcpy(e0, G.e0, sizeof(edge_type)*m);
+    deletion_fn = [] () {}; //assume no e1
     return *this;
+  }
+
+  symmetric_graph(symmetric_graph&& G)
+      : n(G.n),
+        m(G.m),
+        v_data(G.v_data),
+        e0(G.e0)
+  {
+    deletion_fn = []() {};
+    G.n = 0; G.m = 0;
+    G.v_data = nullptr; G.e0 = nullptr; G.e1 = nullptr;
+    G.deletion_fn = []() {};
+  }
+
+  symmetric_graph& operator=(symmetric_graph&& G){
+    clear();
+    n = G.n; m = G.m;
+    v_data = G.v_data;
+    e0 = G.e0;
+    deletion_fn = []() {};
+    G.n = 0; G.m = 0;
+    G.v_data = nullptr; G.e0 = nullptr; G.e1 = nullptr;
+    G.deletion_fn = []() {};
+    return *this;
+  }
+
+  void clear() {
+    pbbs::free_array(v_data);
+    pbbs::free_array(e0);
   }
 
   void del() { deletion_fn(); }
