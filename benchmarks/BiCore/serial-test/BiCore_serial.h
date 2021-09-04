@@ -181,8 +181,6 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	uintE vtxCount = n;
 	bool firstMove = true;
 	pt.start();
-	for(uintE i=0; i<n_a; i++) if(Deg[i]<alpha) vtxCount--;
-	for(uintE i=n_a; i<n; i++) if(Deg[i]<1) vtxCount--;
 
 	std::vector<uintE> uDel;
 	for (size_t i = 0; i < n_a; i++)
@@ -193,14 +191,12 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	{
 		std::vector<uintE> newUDel;
 		for(uintE ui : uDel){
-			vtxCount--;
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
 				if(Deg[vi]<1) continue;
 				Deg[vi]--;
 				if(Deg[vi]<1){
-					vtxCount--;
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j); 
@@ -214,6 +210,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 		uDel = std::move(newUDel);
 	}
 	std::vector<uintE> D = Deg;
+	for(uintE i=0; i<n_a; i++) if(D[i]<alpha) vtxCount--;
+	for(uintE i=n_a; i<n; i++) if(D[i]<1) vtxCount--;
 	Graph new_G;
 	if(vtxCount*2 < G.nValid){
 		firstMove=false;
@@ -245,10 +243,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 					new_G = shrink_graph(G, D, n_a, n_b, alpha, max_beta+1);
 				}else
 					new_G = shrink_graph(new_G, D, n_a, n_b, alpha, max_beta+1);
-				uintE tempCount = 0;
-				for(uintE i=0; i<n_a; i++) if(D[i]>=alpha) tempCount++;
-				for(uintE i=n_a; i<n; i++) if(D[i]>max_beta) tempCount++;
-				std::cout<<"compact "<<vtxCount<<" "<<new_G.nValid<<" "<<tempCount<<std::endl;
+				std::cout<<"compact "<<vtxCount<<" "<<new_G.nValid<<std::endl;
 			}
 			max_beta = bbuckets.curDeg;
 		}
@@ -300,8 +295,6 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	bool firstMove = true;
 	pt.start();
 
-	for(uintE i=0; i<n_a; i++) if(Deg[i]<1) vtxCount--;
-	for(uintE i=n_a; i<n; i++) if(Deg[i]<beta) vtxCount--;
 	std::vector<uintE> vDel;
 	for (uintE i = n_a; i < n; i++)
 		if (Deg[i] == beta-1) vDel.push_back(i);
@@ -310,14 +303,12 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	{
 		std::vector<uintE> newVDel;
 		for(uintE vi : vDel){
-			vtxCount--;
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
 				if(Deg[ui]<1) continue;
 				Deg[ui]--;
 				if(Deg[ui]<1){
-					vtxCount--;
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
@@ -331,6 +322,8 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 		vDel = std::move(newVDel);
 	}
 	std::vector<uintE> D = Deg;
+	for(uintE i=0; i<n_a; i++) if(D[i]<1) vtxCount--;
+	for(uintE i=n_a; i<n; i++) if(D[i]<beta) vtxCount--;
 	Graph new_G;
 	std::cout<<"initial count "<<vtxCount<<" "<<G.nValid<<std::endl;
 	if(vtxCount*2 < G.nValid){
