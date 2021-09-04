@@ -245,7 +245,10 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 					new_G = shrink_graph(G, D, n_a, n_b, alpha, max_beta+1);
 				}else
 					new_G = shrink_graph(new_G, D, n_a, n_b, alpha, max_beta+1);
-				std::cout<<"compact "<<vtxCount<<std::endl;
+				uintE tempCount = 0;
+				for(uintE i=0; i<n_a; i++) if(D[i]>=alpha) tempCount++;
+				for(uintE i=n_a; i<n; i++) if(D[i]>max_beta) tempCount++;
+				std::cout<<"compact "<<vtxCount<<" "<<new_G.nValid<<" "<<tempCount<<std::endl;
 			}
 			max_beta = bbuckets.curDeg;
 		}
