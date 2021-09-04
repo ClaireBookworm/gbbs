@@ -216,7 +216,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	std::vector<uintE> D = Deg;
 	for(uintE i=0; i<n_a; i++) if(D[i]<alpha) vtxCount--;
 	for(uintE i=n_a; i<n; i++) if(D[i]<1) vtxCount--;
-	if(vtxCount*1.5 < G.nValid){
+	if(vtxCount*1.2 < G.nValid && G.nValid*10>n){
 		G = shrink_graph(G, D, n_a, n_b, alpha, 1);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
 	}
@@ -309,7 +309,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	for(uintE i=0; i<n_a; i++) if(D[i]<1) vtxCount--;
 	for(uintE i=n_a; i<n; i++) if(D[i]<beta) vtxCount--;
 	std::cout<<"initial count "<<vtxCount<<" "<<G.nValid<<std::endl;
-	if(vtxCount*1.5 < G.nValid){
+	if(vtxCount*1.2 < G.nValid && G.nValid*10>n){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
 	}
