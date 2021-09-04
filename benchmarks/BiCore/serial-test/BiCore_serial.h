@@ -76,7 +76,6 @@ template <class Graph>
 inline Graph shrink_graph(timer& st, Graph& G, const std::vector<uintE>& D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
 	const size_t n = n_a + n_b;
 	size_t nValid = n;
-	st.start();
 	std::vector<uintE> degs = D;
 	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA){ degs[i] = 0; nValid--; }
 	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB){ degs[i] = 0; nValid--; }
@@ -86,16 +85,26 @@ inline Graph shrink_graph(timer& st, Graph& G, const std::vector<uintE>& D, uint
 	vertex_data* v_data = pbbs::new_array_no_init<vertex_data>(n);
 	for(uintE i = 0; i<n; i++) { v_data[i].offset = offsets[i]; v_data[i].degree = degs[i]; }
 	uintE* edges = pbbs::new_array_no_init<uintE>(m);
-	for(uintE i = 0; i<n; i++){
-		if(i<n_a && D[i]<cutoffA) continue;
-		if(i>=n_a && D[i]<cutoffB) continue;
+	st.start();
+	for(uintE i = 0; i<n_a; i++){
+		if(D[i]<cutoffA) continue;
 		auto neighbors = G.get_vertex(i).out_neighbors();
 		uintT offset = offsets[i];
 		uintE idx = 0;
 		for(uintE j = 0; j<neighbors.degree; j++){
 			uintE neigh = neighbors.get_neighbor(j);
-			if(neigh<n_a && D[neigh]<cutoffA) continue;
-			if(neigh>=n_a && D[neigh]<cutoffB) continue;
+			if(D[neigh]<cutoffB) continue;
+			edges[idx+offset] = neigh; idx++;
+		}
+	}
+	for(uintE i = n_a; i<n; i++){
+		if(D[i]<cutoffB) continue;
+		auto neighbors = G.get_vertex(i).out_neighbors();
+		uintT offset = offsets[i];
+		uintE idx = 0;
+		for(uintE j = 0; j<neighbors.degree; j++){
+			uintE neigh = neighbors.get_neighbor(j);
+			if(D[neigh]<cutoffA) continue;
 			edges[idx+offset] = neigh; idx++;
 		}
 	}
