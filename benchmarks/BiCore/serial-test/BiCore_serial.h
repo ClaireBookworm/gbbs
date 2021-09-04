@@ -181,6 +181,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	uintE vtxCount = n;
 	bool firstMove = true;
 	pt.start();
+	for(uintE i=0; i<n_a; i++) if(Deg[i]<alpha) vtxCount--;
+	for(uintE i=n_a; i<n; i++) if(Deg[i]<1) vtxCount--;
 
 	std::vector<uintE> uDel;
 	for (size_t i = 0; i < n_a; i++)
@@ -236,7 +238,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 		pqt.start();
 		std::vector<uintE> bkt = bbuckets.next_bucket();
 		if(bbuckets.curDeg > max_beta){
-			if(vtxCount*3.5 < new_G.nValid){
+			if(vtxCount*3.5 < new_G.nValid && new_G.nValid*10 > n){
 				if(firstMove){
 					firstMove = false;
 					G = std::move(new_G);
@@ -295,8 +297,10 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	bool firstMove = true;
 	pt.start();
 
+	for(uintE i=0; i<n_a; i++) if(Deg[i]<1) vtxCount--;
+	for(uintE i=n_a; i<n; i++) if(Deg[i]<beta) vtxCount--;
 	std::vector<uintE> vDel;
-	for (size_t i = n_a; i < n; i++)
+	for (uintE i = n_a; i < n; i++)
 		if (Deg[i] == beta-1) vDel.push_back(i);
 
 	while (vDel.size()>0)
@@ -325,6 +329,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	}
 	std::vector<uintE> D = Deg;
 	Graph new_G;
+	std::cout<<"initial count "<<vtxCount<<" "<<G.nValid<<std::endl;
 	if(vtxCount*2 < G.nValid){
 		firstMove=false;
 		new_G = shrink_graph(G, D, n_a, n_b, 1, beta);
@@ -348,7 +353,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 		pqt.start();
 		std::vector<uintE> bkt = abuckets.next_bucket();
 		if(abuckets.curDeg > max_alpha){
-			if(vtxCount*3.5 < new_G.nValid){
+			if(vtxCount*3.5 < new_G.nValid && new_G.nValid*10 > n){
 				if(firstMove){
 					firstMove = false;
 					G = std::move(new_G);
