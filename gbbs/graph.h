@@ -111,6 +111,7 @@ struct symmetric_graph {
         e0(nullptr),
         e1(nullptr),
         n(0),
+        nValid(0),
         m(0),
         deletion_fn([]() {}) {}
 
@@ -121,6 +122,22 @@ struct symmetric_graph {
         e0(_e0),
         e1(_e1),
         n(n),
+        nValid(n),
+        m(m),
+        deletion_fn(_deletion_fn) {
+    if (_e1 == nullptr) {
+      e1 = e0;  // handles NVM case when graph is stored in symmetric memory
+    }
+  }
+
+  symmetric_graph(vertex_data* v_data, size_t n, size_t _nValid, size_t m,
+                  std::function<void()> _deletion_fn, edge_type* _e0,
+                  edge_type* _e1 = nullptr)
+      : v_data(v_data),
+        e0(_e0),
+        e1(_e1),
+        n(n),
+        nValid(_nValid),
         m(m),
         deletion_fn(_deletion_fn) {
     if (_e1 == nullptr) {
@@ -130,6 +147,7 @@ struct symmetric_graph {
 
   symmetric_graph(const symmetric_graph& G)
       : n(G.n),
+        nValid(G.nValid),
         m(G.m)
   {
     v_data = (vertex_data*)malloc(n*sizeof(vertex_data));
@@ -141,7 +159,7 @@ struct symmetric_graph {
 
   symmetric_graph& operator=(const symmetric_graph& G){
     clear();
-    n = G.n; m = G.m;
+    n = G.n; nValid = G.nValid; m = G.m;
     v_data = (vertex_data*)malloc(n*sizeof(vertex_data));
     e0 = (edge_type*)malloc(m*sizeof(edge_type));
     memcpy(v_data, G.v_data, sizeof(vertex_data)*n);
@@ -152,6 +170,7 @@ struct symmetric_graph {
 
   symmetric_graph(symmetric_graph&& G)
       : n(G.n),
+        nValid(G.nValid),
         m(G.m),
         v_data(G.v_data),
         e0(G.e0)
@@ -164,7 +183,7 @@ struct symmetric_graph {
 
   symmetric_graph& operator=(symmetric_graph&& G){
     clear();
-    n = G.n; m = G.m;
+    n = G.n; nValid = G.nValid; m = G.m;
     v_data = G.v_data;
     e0 = G.e0;
     deletion_fn = []() {};
@@ -218,8 +237,11 @@ struct symmetric_graph {
 
   // number of vertices in G
   size_t n;
+  // number of vertices with deg>0
+  size_t nValid;
   // number of edges in G
   size_t m;
+
 
   // called to delete the graph
   std::function<void()> deletion_fn;
