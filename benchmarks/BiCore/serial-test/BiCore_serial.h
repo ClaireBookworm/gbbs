@@ -9,7 +9,6 @@
 #include <vector>
 #include <queue>
 #include <unordered_set>
-#include <list>
 
 namespace gbbs{
 // use max alpha and beta
@@ -74,9 +73,10 @@ struct Buckets{
 };
 
 template <class Graph>
-inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
+inline Graph shrink_graph(timer& st, Graph& G, const std::vector<uintE>& D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
 	const size_t n = n_a + n_b;
 	size_t nValid = n;
+	st.start();
 	std::vector<uintE> degs = D;
 	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA){ degs[i] = 0; nValid--; }
 	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB){ degs[i] = 0; nValid--; }
@@ -99,6 +99,7 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 			edges[idx+offset] = neigh; idx++;
 		}
 	}
+	st.stop();
 	return Graph(
       v_data, n, nValid, m,
       [=](){
@@ -175,8 +176,7 @@ template <class Graph>
 inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, size_t alpha, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
-	timer pqt;
-	timer pt;
+	timer pqt, pt, st;
 	uintE rho_alpha = 0, max_beta = 0;
 	uintE vtxCount = n;
 	bool firstMove = true;
@@ -215,7 +215,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	Graph new_G;
 	if(vtxCount*2 < G.nValid){
 		firstMove=false;
-		new_G = shrink_graph(G, D, n_a, n_b, alpha, 1);
+		new_G = shrink_graph(st,G, D, n_a, n_b, alpha, 1);
 		G = new_G;
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
 	}else 
@@ -240,9 +240,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 				if(firstMove){
 					firstMove = false;
 					G = std::move(new_G);
-					new_G = shrink_graph(G, D, n_a, n_b, alpha, max_beta+1);
+					new_G = shrink_graph(st,G, D, n_a, n_b, alpha, max_beta+1);
 				}else
-					new_G = shrink_graph(new_G, D, n_a, n_b, alpha, max_beta+1);
+					new_G = shrink_graph(st,new_G, D, n_a, n_b, alpha, max_beta+1);
 				std::cout<<"compact "<<vtxCount<<std::endl;
 			}
 			max_beta = bbuckets.curDeg;
@@ -281,15 +281,14 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	}
 	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
 	if(firstMove) G = std::move(new_G);
-	return std::make_pair(pqt.get_total(), pt.get_total());
+	return std::make_pair(pqt.get_total(), st.get_total());
 }
 
 template <class Graph>
 inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
-	timer pqt;
-	timer pt;
+	timer pqt,pt,st;
 	uintE rho_beta = 0, max_alpha = 0;
 	uintE vtxCount = n;
 	bool firstMove = true;
@@ -328,7 +327,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	std::cout<<"initial count "<<vtxCount<<" "<<G.nValid<<std::endl;
 	if(vtxCount*2 < G.nValid){
 		firstMove=false;
-		new_G = shrink_graph(G, D, n_a, n_b, 1, beta);
+		new_G = shrink_graph(st,G, D, n_a, n_b, 1, beta);
 		G = new_G;
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
 	}else 
@@ -353,9 +352,9 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 				if(firstMove){
 					firstMove = false;
 					G = std::move(new_G);
-					new_G = shrink_graph(G, D, n_a, n_b, max_alpha+1, beta);
+					new_G = shrink_graph(st,G, D, n_a, n_b, max_alpha+1, beta);
 				}else
-					new_G = shrink_graph(new_G, D, n_a, n_b, max_alpha+1, beta);
+					new_G = shrink_graph(st,new_G, D, n_a, n_b, max_alpha+1, beta);
 				std::cout<<"compact "<<vtxCount<<std::endl;
 			}
 			max_alpha = abuckets.curDeg;
@@ -392,7 +391,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	}
 	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
 	if(firstMove) G = std::move(new_G);
-	return std::make_pair(pqt.get_total(), pt.get_total());
+	return std::make_pair(pqt.get_total(), st.get_total());
 }
 
 }
