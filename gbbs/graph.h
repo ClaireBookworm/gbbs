@@ -146,7 +146,8 @@ struct symmetric_graph {
   }
 
   symmetric_graph(const symmetric_graph& G)
-      : n(G.n),
+      : e1(nullptr),
+        n(G.n),
         nValid(G.nValid),
         m(G.m)
   {
@@ -169,11 +170,12 @@ struct symmetric_graph {
   }
 
   symmetric_graph(symmetric_graph&& G)
-      : n(G.n),
+      : v_data(G.v_data),
+        e0(G.e0),
+        e1(nullptr),
+        n(G.n),
         nValid(G.nValid),
-        m(G.m),
-        v_data(G.v_data),
-        e0(G.e0)
+        m(G.m)
   {
     deletion_fn = []() {};
     G.n = 0; G.m = 0;

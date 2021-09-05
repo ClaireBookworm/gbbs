@@ -77,6 +77,8 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 	const size_t n = n_a + n_b;
 	size_t nValid = n;
 	std::vector<uintE> degs = D;
+	std::vector<uintE> oldDegs(n);
+	for(uintE i = 0; i<n; i++) oldDegs[i] = G.v_data[i].degree; 
 	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA){ degs[i] = 0; nValid--; }
 	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB){ degs[i] = 0; nValid--; }
 	std::vector<uintT> offsets(n+1); offsets[0]=0;
@@ -85,26 +87,18 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 	vertex_data* v_data = pbbs::new_array_no_init<vertex_data>(n);
 	for(uintE i = 0; i<n; i++) { v_data[i].offset = offsets[i]; v_data[i].degree = degs[i]; }
 	uintE* edges = pbbs::new_array_no_init<uintE>(m);
-	for(uintE i = 0; i<n_a; i++){
-		if(D[i]<cutoffA) continue;
-		auto neighbors = G.get_vertex(i).out_neighbors();
-		uintT offset = offsets[i];
-		uintE idx = 0;
-		for(uintE j = 0; j<neighbors.degree; j++){
-			uintE neigh = neighbors.get_neighbor(j);
-			if(D[neigh]<cutoffB) continue;
-			edges[idx+offset] = neigh; idx++;
+	uintT idx = 0;
+	for(uintE i = 0; i<n; i++){
+		uintE oldDeg = oldDegs[i], offset = offsets[i];
+		if(degs[i] == 0){
+			idx += oldDeg;
+			continue;
 		}
-	}
-	for(uintE i = n_a; i<n; i++){
-		if(D[i]<cutoffB) continue;
-		auto neighbors = G.get_vertex(i).out_neighbors();
-		uintT offset = offsets[i];
-		uintE idx = 0;
-		for(uintE j = 0; j<neighbors.degree; j++){
-			uintE neigh = neighbors.get_neighbor(j);
-			if(D[neigh]<cutoffA) continue;
-			edges[idx+offset] = neigh; idx++;
+		for(uintE oj = 0; oj<oldDeg; oj++, idx++){
+			uintE oid = std::get<0>(G.e0[idx]);
+			if(degs[oid] == 0) continue;
+			//assert(offset<offsets[i+1]);
+			edges[offset] = oid; offset++;
 		}
 	}
 	return Graph(
@@ -216,7 +210,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 	std::vector<uintE> D = Deg;
 	for(uintE i=0; i<n_a; i++) if(D[i]<alpha) vtxCount--;
 	for(uintE i=n_a; i<n; i++) if(D[i]<1) vtxCount--;
-	if(vtxCount*1.5 < G.nValid){
+	if(vtxCount*1.1 < G.nValid && G.nValid*10 > n){
 		G = shrink_graph(G, D, n_a, n_b, alpha, 1);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
 	}
@@ -309,7 +303,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	for(uintE i=0; i<n_a; i++) if(D[i]<1) vtxCount--;
 	for(uintE i=n_a; i<n; i++) if(D[i]<beta) vtxCount--;
 	std::cout<<"initial count "<<vtxCount<<" "<<G.nValid<<std::endl;
-	if(vtxCount*1.5 < G.nValid){
+	if(vtxCount*1.1 < G.nValid && G.nValid*10 > n){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
 	}
