@@ -102,19 +102,8 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 		}
 	}
 	return Graph(
-      v_data, n, nValid, m,
-      [=](){
-		pbbslib::free_array(v_data);
-        pbbslib::free_array(edges);
-      }, (std::tuple<uintE, pbbs::empty>*)edges);
-}
-
-inline uintE get_vertex_count(uintE vtx_c, std::vector<uintE> D, size_t n_a, size_t n_b, uintE cutoffA, uintE cutoffB){
-	const size_t n = n_a + n_b;
-	size_t new_n = vtx_c;
-	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA) new_n--;
-	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB) new_n--;
-	return new_n;
+      v_data, n, m,
+      [=](){ pbbslib::free_array(v_data); pbbslib::free_array(edges); }, nValid, (std::tuple<uintE, pbbs::empty>*)edges);
 }
 
 template <class Graph>
@@ -124,7 +113,6 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	const size_t n = G.n;					// # of vertices
 	const size_t n_a = bipartition + 1;		// number of vertices in first partition
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
-
 	auto ret = KCore(G, num_buckets);
 	const size_t delta = static_cast<size_t>(pbbslib::reduce_max(ret));
 	double pqt = 0;
@@ -132,8 +120,9 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::vector<uintE> DA(n);
 	for(size_t i=0; i<n; i++) DA[i] = G.get_vertex(i).out_degree();
 	std::vector<uintE> DB = DA;
-	Graph GA = G.copy();
-	Graph GB = G.copy();
+	std::cout<<"m "<<G.m<<" "<<G.n<<std::endl;
+	Graph GA = G;
+	Graph GB = G;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
@@ -150,25 +139,6 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::cout<<"pq time "<<pqt<<std::endl;
 	std::cout<<"pt time "<<pt<<std::endl;
 	//mkt.reportTotal("make_graph time");
-}
-
-template <class Graph>
-inline void check(Graph& G, std::vector<uintE>& D, size_t n_a, size_t n_b, uintE cutoffA, uintE cutoffB){
-	const size_t n = n_a + n_b;
-	for(uintE i = 0; i<n; i++){
-		if(i<n_a && D[i]<cutoffA) continue;
-		if(i>=n_a && D[i]<cutoffB) continue;
-		auto neighbors = G.get_vertex(i).out_neighbors();
-		uintE idx = 0;
-		for(uintE j = 0; j<neighbors.degree; j++){
-			uintE neigh = neighbors.get_neighbor(j);
-			if(neigh<n_a && D[neigh]<cutoffA) continue;
-			if(neigh>=n_a && D[neigh]<cutoffB) continue;
-			if(idx>=D[i])
-				std::cout<<i<<" "<<idx<<" "<<D[i]<<std::endl;
-			assert(idx<D[i]);idx++;
-		}
-	}
 }
 
 template <class Graph>
@@ -302,7 +272,6 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 	std::vector<uintE> D = Deg;
 	for(uintE i=0; i<n_a; i++) if(D[i]<1) vtxCount--;
 	for(uintE i=n_a; i<n; i++) if(D[i]<beta) vtxCount--;
-	std::cout<<"initial count "<<vtxCount<<" "<<G.nValid<<std::endl;
 	if(vtxCount*1.1 < G.nValid && G.nValid*10 > n){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
