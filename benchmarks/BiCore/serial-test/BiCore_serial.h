@@ -122,7 +122,6 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::vector<uintE> DB = DA;
 	std::cout<<"m "<<G.m<<" "<<G.n<<std::endl;
 	Graph GA = G;
-	Graph GB = G;
 	std::cout<<"finished preprocessing"<<std::endl;
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
@@ -132,7 +131,7 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	}
 	for(size_t core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixB core "<<core<<std::endl;
-		auto ret = PeelFixB(GB, DB, core, n_a, n_b);
+		auto ret = PeelFixB(G, DB, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
 	}
