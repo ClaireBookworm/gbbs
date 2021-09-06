@@ -101,9 +101,11 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 			edges[offset] = oid; offset++;
 		}
 	}
-	return Graph(
+	auto G_ = Graph(
       v_data, n, m,
-      [=](){ pbbslib::free_array(v_data); pbbslib::free_array(edges); }, nValid, (std::tuple<uintE, pbbs::empty>*)edges);
+      [=](){ pbbslib::free_array(v_data); pbbslib::free_array(edges); }, (std::tuple<uintE, pbbs::empty>*)edges);
+	G_.nValid = nValid;
+	return G_;
 }
 
 template <class Graph>
