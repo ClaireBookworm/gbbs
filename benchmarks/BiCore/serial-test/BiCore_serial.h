@@ -40,18 +40,6 @@ struct Buckets{
 
 	inline void update(uintE idx, uintE newDeg){ bkts[newDeg].push_back(idx); }
 
-	inline uintE next_vtx(){
-		if(curPos >= bkts[curDeg].size()){
-			curDeg++;
-			curPos = 0;
-			while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
-		}
-		std::vector<uintE>& bkt = bkts[curDeg];
-		while(curPos < bkt.size() && degs[bkt[curPos]] != curDeg) curPos++;
-		if(curPos < bkt.size()) {ahead--; return bkt[curPos++];}
-		else return next_vtx();
-	}
-
 	inline uintE next_bucket_deg(){
 		while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
 		return curDeg;
@@ -86,8 +74,7 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, size_t n_a, siz
 		}
 		for(uintE oj = 0; oj<oldDeg; oj++, idx++){
 			uintE oid = std::get<0>(G.e0[idx]);
-			if(degs[oid] == 0) continue;
-			edges[offset] = oid; offset++;
+			edges[offset] = oid; offset+=degs[oid]>0;
 		}
 	}
 	return Graph(
@@ -161,10 +148,13 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 		}
 		uDel = std::move(newUDel);
 	}
+	for(size_t i=0; i<n_a; i++) if(Deg[i]<alpha){ 
+		Deg[i]=0;
+		edgeCount-=G.get_vertex(i).out_degree()*2;
+	}
 	std::vector<uintE> D = Deg;
-	for(size_t i=0; i<n_a; i++) if(D[i]<alpha) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
-	if(edgeCount*1.2 < G.m && G.m > 1000){
+	if(edgeCount*1.1 < G.m && G.m > 1000){
 		G = shrink_graph(G, D, n_a, n_b, alpha, 1);
 		std::cout<<"compact at start "<<edgeCount<<std::endl;
 	}
@@ -252,10 +242,13 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 		}
 		vDel = std::move(newVDel);
 	}
+	for(size_t i=n_a; i<n; i++) if(Deg[i]<beta){ 
+		Deg[i]=0;
+		edgeCount-=G.get_vertex(i).out_degree()*2;
+	}
 	std::vector<uintE> D = Deg;
-	for(size_t i=n_a; i<n; i++) if(D[i]<beta) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
-	if(edgeCount*1.2 < G.m && G.m > 1000){
+	if(edgeCount*1.1 < G.m && G.m > 1000){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
 		std::cout<<"compact at start "<<edgeCount<<std::endl;
 	}
