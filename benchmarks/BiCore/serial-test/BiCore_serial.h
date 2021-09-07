@@ -165,7 +165,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	std::vector<uintE> changeVtx; changeVtx.reserve((size_t)(n_b/32));
+	std::vector<uintE> changeVtx; changeVtx.reserve((size_t)(n_b/128));
 	while (!bbuckets.empty())
 	{
 		iter++;
@@ -256,7 +256,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	std::vector<uintE> changeVtx; changeVtx.reserve((size_t)(n_a/32));
+	std::vector<uintE> changeVtx; changeVtx.reserve((size_t)(n_a/128));
 	while (!abuckets.empty())
 	{
 		iter++;
