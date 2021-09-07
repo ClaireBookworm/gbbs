@@ -114,19 +114,19 @@ struct symmetric_graph {
         m(0),
         deletion_fn([]() {}) {}
 
-  symmetric_graph(vertex_data* v_data, size_t n, size_t m,
+  symmetric_graph(vertex_data* _v_data, size_t _n, size_t _m,
                   std::function<void()> _deletion_fn, edge_type* _e0,
                   edge_type* _e1 = nullptr)
-      : v_data(v_data),
+      : v_data(_v_data),
         e0(_e0),
         e1(_e1),
-        n(n),
-        m(m),
+        n(_n),
+        m(_m),
         deletion_fn(_deletion_fn) {
     if (_e1 == nullptr) {
       e1 = e0;  // handles NVM case when graph is stored in symmetric memory
     }
-    std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
+    std::cout<<"graph constructed "<<n<<" "<<m<<" from "<<_n<<" "<<_m<<std::endl;
   }
 
   symmetric_graph(const symmetric_graph& G)
