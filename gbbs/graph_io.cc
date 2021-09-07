@@ -112,7 +112,7 @@ symmetric_graph<symmetric_vertex, pbbslib::empty> read_unweighted_symmetric_grap
   uintT* offsets;
   uintE* edges;
   std::tie(n, m, offsets, edges) = parse_unweighted_graph(fname, mmap, binary, bytes, bytes_size);
-
+  std::cout<<"readin "<<n<<" "<<m<<std::endl;
   auto v_data = pbbs::new_array_no_init<vertex_data>(n);
   parallel_for(0, n, [&] (size_t i) {
     v_data[i].offset = offsets[i];

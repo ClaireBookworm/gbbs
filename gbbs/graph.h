@@ -128,6 +128,7 @@ struct symmetric_graph {
     if (_e1 == nullptr) {
       e1 = e0;  // handles NVM case when graph is stored in symmetric memory
     }
+    std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
   }
 
   symmetric_graph(const symmetric_graph& G)
