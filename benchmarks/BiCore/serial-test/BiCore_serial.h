@@ -177,7 +177,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 		uDel = std::move(newUDel);
 	}
 	std::vector<uintE> D = Deg;
-	for(size_t i=0; i<n_a; i++) if(D[i]<alpha) edgeCount-=G.get_vertex(i).out_degree();
+	for(size_t i=0; i<n_a; i++) if(D[i]<alpha) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.nValid<<std::endl;
 	if(edgeCount*1.1 < G.nValid && G.nValid*10 > G.m){
 		G = shrink_graph(G, D, n_a, n_b, alpha, 1);
@@ -263,7 +263,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 		vDel = std::move(newVDel);
 	}
 	std::vector<uintE> D = Deg;
-	for(size_t i=n_a; i<n; i++) if(D[i]<beta) edgeCount-=G.get_vertex(i).out_degree();
+	for(size_t i=n_a; i<n; i++) if(D[i]<beta) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.nValid<<std::endl;
 	if(edgeCount*1.1 < G.nValid && G.nValid*10 > G.m){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
