@@ -183,15 +183,11 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 		iter++;
 		pqt.start();
 		uintE curDeg = bbuckets.next_bucket_deg();
-		std::cout<<"running on deg "<<curDeg<<" has size "<<bbuckets.bkts[curDeg].size()<<std::endl;
-		if(curDeg > max_beta){
-			max_beta = curDeg;
-		}
+		max_beta = std::max(curDeg, max_beta);
 		std::vector<uintE>& bkt = bbuckets.bkts[curDeg];
 		pqt.stop();
 		while(!bkt.empty()){
 			uintE vi = bkt.back(); bkt.pop_back();
-			std::cout<<vi<<" ";
 			if(D[vi] != curDeg) continue;
 			bbuckets.ahead--;
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
@@ -201,15 +197,17 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
-						if(D[vii]-- > max_beta && tracker[vii]!=iter){
-							changeVtx.push_back(vii);
-							tracker[vii] = iter;
+						if(D[vii] > max_beta){
+							if(tracker[vii]!=iter){
+								changeVtx.push_back(vii);
+								tracker[vii] = iter;
+							}
+							D[vii]--;
 						}
 					}
 				}
 			}
 		}
-		std::cout<<std::endl;
 		pqt.start();
 		for(uintE vii : changeVtx){
 			D[vii] = std::max(max_beta, D[vii]);
@@ -276,12 +274,10 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 		iter++;
 		pqt.start();
 		uintE curDeg = abuckets.next_bucket_deg();
-		if(curDeg > max_alpha){
-			max_alpha = curDeg;
-		}
+		max_alpha = std::max(max_alpha, curDeg);
 		std::vector<uintE>& bkt = abuckets.bkts[curDeg];
 		pqt.stop();
-		for(size_t b=bkt.size()-1; b>=0; b--){
+		while(!bkt.empty()){
 			uintE ui = bkt.back(); bkt.pop_back();
 			if(D[ui] != curDeg) continue;
 			abuckets.ahead--;
@@ -292,9 +288,12 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j);
-						if(D[uii]-- > max_alpha && tracker[uii]!=iter){
-							changeVtx.push_back(uii);
-							tracker[uii] = iter;
+						if(D[uii] > max_alpha){
+							if(tracker[uii]!=iter){
+								changeVtx.push_back(uii);
+								tracker[uii] = iter;
+							}
+							D[uii]--;
 						}
 					}
 				}
