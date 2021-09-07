@@ -13,9 +13,9 @@
 namespace gbbs{
 // use max alpha and beta
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uintE alpha, size_t n_a, size_t n_b);
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uintE beta, size_t n_a, size_t n_b);
 
 struct Buckets{
 	std::vector<uintE>* bkts;
@@ -73,14 +73,14 @@ struct Buckets{
 };
 
 template <class Graph>
-inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uintE n_b, uintE cutoffA, uintE cutoffB){
+inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, size_t n_a, size_t n_b, uintE cutoffA, uintE cutoffB){
 	const size_t n = n_a + n_b;
 	size_t nValid = n;
 	std::vector<uintE> degs = D;
 	std::vector<uintE> oldDegs(n);
-	for(uintE i = 0; i<n; i++) oldDegs[i] = G.v_data[i].degree; 
-	for(uintE i = 0; i<n_a; i++) if(D[i]<cutoffA){ degs[i] = 0; nValid--; }
-	for(uintE i = n_a; i<n; i++) if(D[i]<cutoffB){ degs[i] = 0; nValid--; }
+	for(size_t i = 0; i<n; i++) oldDegs[i] = G.v_data[i].degree; 
+	for(size_t i = 0; i<n_a; i++) if(D[i]<cutoffA){ degs[i] = 0; nValid--; }
+	for(size_t i = n_a; i<n; i++) if(D[i]<cutoffB){ degs[i] = 0; nValid--; }
 	std::vector<uintT> offsets(n+1); offsets[0]=0;
 	for(uintE i = 1; i<=n; i++) offsets[i] = offsets[i-1] + degs[i-1];
 	const size_t m = offsets[n];
@@ -89,7 +89,8 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 	uintE* edges = pbbs::new_array_no_init<uintE>(m);
 	uintT idx = 0;
 	for(uintE i = 0; i<n; i++){
-		uintE oldDeg = oldDegs[i], offset = offsets[i];
+		uintE oldDeg = oldDegs[i];
+		uintT offset = offsets[i];
 		if(degs[i] == 0){
 			idx += oldDeg;
 			continue;
@@ -97,7 +98,6 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 		for(uintE oj = 0; oj<oldDeg; oj++, idx++){
 			uintE oid = std::get<0>(G.e0[idx]);
 			if(degs[oid] == 0) continue;
-			//assert(offset<offsets[i+1]);
 			edges[offset] = oid; offset++;
 		}
 	}
@@ -109,14 +109,14 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, uintE n_a, uint
 }
 
 template <class Graph>
-inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, size_t peel_core_alpha = 0, size_t peel_core_beta = 0)
+inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
 {
 	std::cout << "starting" << std::endl;
 	const size_t n = G.n;					// # of vertices
 	const size_t n_a = bipartition + 1;		// number of vertices in first partition
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
 	auto ret = KCore(G, num_buckets);
-	const size_t delta = static_cast<size_t>(pbbslib::reduce_max(ret));
+	const uintE delta = static_cast<uintE>(pbbslib::reduce_max(ret));
 	double pqt = 0;
 	double pt = 0;
 	std::vector<uintE> DA(n);
@@ -125,13 +125,13 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 	std::cout<<"m "<<G.m<<" "<<G.n<<std::endl;
 	Graph GA = G;
 	std::cout<<"finished preprocessing"<<std::endl;
-	for(size_t core = 1; core<=delta; core++){
+	for(uintE core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixA core "<<core<<std::endl;
 		auto ret = PeelFixA(GA, DA, core, n_a, n_b);
 		pqt += ret.first;
 		pt += ret.second;
 	}
-	for(size_t core = 1; core<=delta; core++){
+	for(uintE core = 1; core<=delta; core++){
 		std::cout<<"running PeelFixB core "<<core<<std::endl;
 		auto ret = PeelFixB(G, DB, core, n_a, n_b);
 		pqt += ret.first;
@@ -143,12 +143,12 @@ inline void BiCore_serial(Graph &G, size_t num_buckets = 16, size_t bipartition 
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, size_t alpha, size_t n_a, size_t n_b)
+inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uintE alpha, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
 	timer pqt, pt;
 	uintE rho_alpha = 0, max_beta = 0;
-	uintE vtxCount = n;
+	size_t vtxCount = n;
 	pt.start();
 
 	std::vector<uintE> uDel;
@@ -163,24 +163,20 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
-				if(Deg[vi]<1) continue;
-				Deg[vi]--;
-				if(Deg[vi]<1){
+				if(Deg[vi]-- == 1){
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j); 
-						if(Deg[uii]<alpha) continue;
-						Deg[uii]--;
-						if(Deg[uii]<alpha) newUDel.push_back(uii);
-					}
+						if(Deg[uii]-- == alpha) newUDel.push_back(uii);
+					}//Deg should always be positive
 				}
 			}
 		}
 		uDel = std::move(newUDel);
 	}
 	std::vector<uintE> D = Deg;
-	for(uintE i=0; i<n_a; i++) if(D[i]<alpha) vtxCount--;
-	for(uintE i=n_a; i<n; i++) if(D[i]<1) vtxCount--;
+	for(size_t i=0; i<n_a; i++) if(D[i]<alpha) vtxCount--;
+	for(size_t i=n_a; i<n; i++) if(D[i]<1) vtxCount--;
 	if(vtxCount*1.1 < G.nValid && G.nValid*10 > n){
 		G = shrink_graph(G, D, n_a, n_b, alpha, 1);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
@@ -208,25 +204,23 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
-				if(D[ui]<alpha) continue;
-				D[ui]--;
-				if(D[ui]<alpha){
+				if(D[ui]-- == alpha){
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
-						if(D[vii]<=max_beta) continue;
-						if(tracker[vii]!=iter){
+						if(D[vii]-- > max_beta && tracker[vii]!=iter){
 							changeVtx.push_back(vii);
 							tracker[vii] = iter;
 						}
-						D[vii]--;
 					}
 				}
 			}
 		}
 		pqt.start();
-		for(uintE vii : changeVtx)
+		for(uintE vii : changeVtx){
+			D[vii] = std::max(max_beta, D[vii]);
 			bbuckets.update(vii, D[vii]);
+		}
 		changeVtx.clear();
 		pqt.stop();
 		rho_alpha++;
@@ -236,12 +230,12 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, siz
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, size_t beta, size_t n_a, size_t n_b)
+inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uintE beta, size_t n_a, size_t n_b)
 {
 	const size_t n = n_a + n_b;
 	timer pqt,pt;
 	uintE rho_beta = 0, max_alpha = 0;
-	uintE vtxCount = n;
+	size_t vtxCount = n;
 	pt.start();
 
 	std::vector<uintE> vDel;
@@ -255,24 +249,20 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
-				if(Deg[ui]<1) continue;
-				Deg[ui]--;
-				if(Deg[ui]<1){
+				if(Deg[ui]-- == 1){
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
-						if(Deg[vii]<beta) continue;
-						Deg[vii]--;
-						if(Deg[vii]<beta) newVDel.push_back(vii);
-					}
+						if(Deg[vii]-- == beta) newVDel.push_back(vii);
+					} // Deg should always be positive
 				}
 			}
 		}
 		vDel = std::move(newVDel);
 	}
 	std::vector<uintE> D = Deg;
-	for(uintE i=0; i<n_a; i++) if(D[i]<1) vtxCount--;
-	for(uintE i=n_a; i<n; i++) if(D[i]<beta) vtxCount--;
+	for(size_t i=0; i<n_a; i++) if(D[i]<1) vtxCount--;
+	for(size_t i=n_a; i<n; i++) if(D[i]<beta) vtxCount--;
 	if(vtxCount*1.1 < G.nValid && G.nValid*10 > n){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
 		std::cout<<"compact at start "<<vtxCount<<std::endl;
@@ -300,25 +290,23 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, siz
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
-				if(D[vi]<beta) continue;
-				D[vi]--;
-				if(D[vi]<beta){
+				if(D[vi]-- == beta){
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j);
-						if(D[uii]<=max_alpha) continue;
-						if(tracker[uii]!=iter){
+						if(D[uii]-- > max_alpha && tracker[uii]!=iter){
 							changeVtx.push_back(uii);
 							tracker[uii] = iter;
 						}
-						D[uii]--;
 					}
 				}
 			}
 		}
 		pqt.start();
-		for(uintE uii : changeVtx)
+		for(uintE uii : changeVtx){
+			D[uii] = std::max(D[uii], max_alpha);
 			abuckets.update(uii, D[uii]);
+		}
 		changeVtx.clear();
 		pqt.stop();
 		rho_beta++;
