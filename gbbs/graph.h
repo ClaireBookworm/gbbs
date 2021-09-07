@@ -189,6 +189,8 @@ struct symmetric_graph {
     return *this;
   }
 
+  ~symmetric_graph(){del();}
+
   void del() { deletion_fn(); }
 
   // creates an in-memory copy of the graph.
