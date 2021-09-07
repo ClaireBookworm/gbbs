@@ -122,29 +122,13 @@ struct symmetric_graph {
         e0(_e0),
         e1(_e1),
         n(n),
-        nValid(n),
+        nValid(m),
         m(m),
         deletion_fn(_deletion_fn) {
     if (_e1 == nullptr) {
       e1 = e0;  // handles NVM case when graph is stored in symmetric memory
     }
-    std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
-  }
-
-  symmetric_graph(vertex_data* v_data, size_t n, size_t m,
-                  std::function<void()> _deletion_fn, size_t nValid_, edge_type* _e0,
-                  edge_type* _e1 = nullptr)
-      : v_data(v_data),
-        e0(_e0),
-        e1(_e1),
-        n(n),
-        nValid(nValid_),
-        m(m),
-        deletion_fn(_deletion_fn) {
-    if (_e1 == nullptr) {
-      e1 = e0;  // handles NVM case when graph is stored in symmetric memory
-    }
-    std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
+    std::cout<<"graph constructed "<<n<<" "<<m<<" "<<nValid<<std::endl;
   }
 
   symmetric_graph(const symmetric_graph& G)
@@ -258,7 +242,7 @@ struct symmetric_graph {
 
   // number of vertices in G
   size_t n;
-  // number of vertices with deg>0
+  // number of edges not deleted
   size_t nValid;
   // number of edges in G
   size_t m;
