@@ -21,7 +21,7 @@ struct Buckets{
 	std::vector<uintE>* bkts;
 	std::vector<uintE>& degs;
 	uintE curDeg, n, ahead, curPos;
-	Buckets(std::vector<uintE>& degs_, uintE startPos, uintE endPos)
+	Buckets(std::vector<uintE>& degs_, size_t startPos, size_t endPos, size_t init_size=16)
 	 : degs(degs_), curPos(0)
 	{
 		uintE maxDeg = 0;
@@ -31,6 +31,7 @@ struct Buckets{
 			if(degs[i]>0) minDeg = std::min(degs[i], minDeg);
 		}
 		bkts = new std::vector<uintE>[maxDeg+1];
+		for(size_t i = minDeg; i<=maxDeg; i++) bkts[i].reserve(init_size);
 		ahead = 0;
 		for(size_t i=startPos; i<endPos; i++)
 			if(degs[i]>0){bkts[degs[i]].push_back(i); ahead++;}
@@ -148,10 +149,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 		}
 		uDel = std::move(newUDel);
 	}
-	for(size_t i=0; i<n_a; i++) if(Deg[i]<alpha){ 
-		Deg[i]=0;
-		edgeCount-=G.get_vertex(i).out_degree()*2;
-	}
+	for(size_t i=0; i<n_a; i++) if(Deg[i]<alpha) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::vector<uintE> D = Deg;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
 	if(edgeCount*1.1 < G.m && G.m > 1000){
@@ -242,10 +240,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 		}
 		vDel = std::move(newVDel);
 	}
-	for(size_t i=n_a; i<n; i++) if(Deg[i]<beta){ 
-		Deg[i]=0;
-		edgeCount-=G.get_vertex(i).out_degree()*2;
-	}
+	for(size_t i=n_a; i<n; i++) if(Deg[i]<beta) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::vector<uintE> D = Deg;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
 	if(edgeCount*1.1 < G.m && G.m > 1000){
