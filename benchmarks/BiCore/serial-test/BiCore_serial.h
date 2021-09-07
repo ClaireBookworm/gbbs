@@ -21,20 +21,20 @@ struct Buckets{
 	std::vector<uintE>* bkts;
 	std::vector<uintE>& degs;
 	uintE curDeg, n, ahead, curPos;
-	Buckets(std::vector<uintE>& degs_, size_t startPos, size_t endPos, size_t init_size=16)
+	Buckets(std::vector<uintE>& degs_, size_t startPos, size_t endPos)
 	 : degs(degs_), curPos(0)
 	{
 		uintE maxDeg = 0;
 		uintE minDeg = 0;
+		ahead = 0;
 		for(size_t i=startPos; i<endPos; i++) {
 			maxDeg = std::max(degs[i], maxDeg);
-			if(degs[i]>0) minDeg = std::min(degs[i], minDeg);
+			if(degs[i]>0){ minDeg = std::min(degs[i], minDeg); ahead++; }
 		}
 		bkts = new std::vector<uintE>[maxDeg+1];
-		for(size_t i = minDeg; i<=maxDeg; i++) bkts[i].reserve(init_size);
-		ahead = 0;
+		for(size_t i = minDeg; i<=maxDeg; i++) bkts[i].reserve((size_t)(ahead/(maxDeg-minDeg+1)));
 		for(size_t i=startPos; i<endPos; i++)
-			if(degs[i]>0){bkts[degs[i]].push_back(i); ahead++;}
+			if(degs[i]>0) bkts[degs[i]].push_back(i);
 		curDeg = minDeg;
 		n = maxDeg;
 	}
