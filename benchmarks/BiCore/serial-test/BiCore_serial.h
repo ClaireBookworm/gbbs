@@ -225,6 +225,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 		pqt.stop();
 		rho_alpha++;
 	}
+	changeVtx.del();
 	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
 	return std::make_pair(pqt.get_total(), pt.get_total());
 }
@@ -311,6 +312,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 		pqt.stop();
 		rho_beta++;
 	}
+	changeVtx.del();
 	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
 	return std::make_pair(pqt.get_total(), pt.get_total());
 }
