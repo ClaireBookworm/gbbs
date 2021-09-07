@@ -126,14 +126,14 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	size_t edgeCount = G.m;
 	pt.start();
 
-	std::vector<uintE> uDel;
+	std::vector<uintE> uDel; uDel.reserve(16);
 	for (size_t i = 0; i < n_a; i++)
 		if (Deg[i] == alpha-1) uDel.push_back(i);
 	// (alpha,0)
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (uDel.size()>0)
 	{
-		std::vector<uintE> newUDel;
+		std::vector<uintE> newUDel; newUDel.reserve(16);
 		for(uintE ui : uDel){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
@@ -165,7 +165,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	std::vector<uintE> changeVtx;
+	std::vector<uintE> changeVtx; changeVtx.reserve((size_t)(n_b/32));
 	while (!bbuckets.empty())
 	{
 		iter++;
@@ -218,13 +218,13 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 	size_t edgeCount = G.m;
 	pt.start();
 
-	std::vector<uintE> vDel;
+	std::vector<uintE> vDel; vDel.reserve(16);
 	for (uintE i = n_a; i < n; i++)
 		if (Deg[i] == beta-1) vDel.push_back(i);
 
 	while (vDel.size()>0)
 	{
-		std::vector<uintE> newVDel;
+		std::vector<uintE> newVDel; newVDel.reserve(16);
 		for(uintE vi : vDel){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
@@ -256,7 +256,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	std::vector<uintE> changeVtx; 
+	std::vector<uintE> changeVtx; changeVtx.reserve((size_t)(n_a/32));
 	while (!abuckets.empty())
 	{
 		iter++;
