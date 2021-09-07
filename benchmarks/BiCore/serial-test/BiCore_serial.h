@@ -101,11 +101,9 @@ inline Graph shrink_graph(Graph& G, const std::vector<uintE>& D, size_t n_a, siz
 			edges[offset] = oid; offset++;
 		}
 	}
-	auto G_ = Graph(
+	return Graph(
       v_data, n, m,
-      [=](){ pbbslib::free_array(v_data); pbbslib::free_array(edges); }, (std::tuple<uintE, pbbs::empty>*)edges);
-	G_.nValid = nValid;
-	return G_;
+      [v_data, edges](){ pbbslib::free_array(v_data); pbbslib::free_array(edges); }, nValid, (std::tuple<uintE, pbbs::empty>*)edges);
 }
 
 template <class Graph>
@@ -225,7 +223,6 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 		pqt.stop();
 		rho_alpha++;
 	}
-	changeVtx.del();
 	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
 	return std::make_pair(pqt.get_total(), pt.get_total());
 }
@@ -312,7 +309,6 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 		pqt.stop();
 		rho_beta++;
 	}
-	changeVtx.del();
 	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
 	return std::make_pair(pqt.get_total(), pt.get_total());
 }

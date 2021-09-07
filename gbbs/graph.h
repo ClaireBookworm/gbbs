@@ -131,6 +131,22 @@ struct symmetric_graph {
     std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
   }
 
+  symmetric_graph(vertex_data* v_data, size_t n, size_t m,
+                  std::function<void()> _deletion_fn, size_t nValid_, edge_type* _e0,
+                  edge_type* _e1 = nullptr)
+      : v_data(v_data),
+        e0(_e0),
+        e1(_e1),
+        n(n),
+        nValid(nValid_),
+        m(m),
+        deletion_fn(_deletion_fn) {
+    if (_e1 == nullptr) {
+      e1 = e0;  // handles NVM case when graph is stored in symmetric memory
+    }
+    std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
+  }
+
   symmetric_graph(const symmetric_graph& G)
       : e1(nullptr),
         n(G.n),
@@ -145,7 +161,9 @@ struct symmetric_graph {
     }
     memcpy(v_data, G.v_data, n*sizeof(vertex_data));
     memcpy(e0, G.e0, m*sizeof(edge_type));
-    deletion_fn = [=] () {pbbslib::free_array(v_data); pbbslib::free_array(e0); if(e1!=e0) pbbslib::free_array(e1);};
+    edge_type *e0_=e0, *e1_=e1;
+    vertex_data *v_data_=v_data;
+    deletion_fn = [v_data_, e0_, e1_] () {pbbslib::free_array(v_data_); pbbslib::free_array(e0_); if(e1_!=e0_) pbbslib::free_array(e1_);};
   }
 
   symmetric_graph& operator=(const symmetric_graph& G){
@@ -159,7 +177,9 @@ struct symmetric_graph {
     }
     memcpy(v_data, G.v_data, n*sizeof(vertex_data));
     memcpy(e0, G.e0, m*sizeof(edge_type));
-    deletion_fn = [=] () {pbbslib::free_array(v_data); pbbslib::free_array(e0); if(e1!=e0) pbbslib::free_array(e1);};
+    edge_type *e0_=e0, *e1_=e1;
+    vertex_data *v_data_=v_data;
+    deletion_fn = [v_data_, e0_, e1_] () {pbbslib::free_array(v_data_); pbbslib::free_array(e0_); if(e1_!=e0_) pbbslib::free_array(e1_);};
     return *this;
   }
 
@@ -171,7 +191,9 @@ struct symmetric_graph {
         nValid(G.nValid),
         m(G.m)
   {
-    deletion_fn = [=] () {pbbslib::free_array(v_data); pbbslib::free_array(e0); if(e1!=e0) pbbslib::free_array(e1);};
+    edge_type *e0_=e0, *e1_=e1;
+    vertex_data *v_data_=v_data;
+    deletion_fn = [v_data_, e0_, e1_] () {pbbslib::free_array(v_data_); pbbslib::free_array(e0_); if(e1_!=e0_) pbbslib::free_array(e1_);};
     G.n = 0; G.m = 0;
     G.v_data = nullptr; G.e0 = nullptr; G.e1 = nullptr;
     G.deletion_fn = []() {};
@@ -181,17 +203,23 @@ struct symmetric_graph {
     del();
     n = G.n; nValid = G.nValid; m = G.m;
     v_data = G.v_data;
-    e0 = G.e0; e1 = G.e1;
-    deletion_fn = [=] () {pbbslib::free_array(v_data); pbbslib::free_array(e0); if(e1!=e0) pbbslib::free_array(e1);};
+    e0 = G.e0, e1 = G.e1;
+    edge_type *e0_=e0, *e1_=e1;
+    vertex_data *v_data_=v_data;
+    deletion_fn = [v_data_, e0_, e1_] () {pbbslib::free_array(v_data_); pbbslib::free_array(e0_); if(e1_!=e0_) pbbslib::free_array(e1_);};
     G.n = 0; G.m = 0;
     G.v_data = nullptr; G.e0 = nullptr; G.e1 = nullptr;
     G.deletion_fn = []() {};
     return *this;
   }
 
-  ~symmetric_graph(){del();}
+  void del() { 
+    std::cout<<"delete graph"<<std::endl;
+    deletion_fn(); 
+    v_data=nullptr; e0=nullptr; e1=nullptr; deletion_fn = [](){};
+  }
 
-  void del() { deletion_fn(); }
+  ~symmetric_graph(){del();}
 
   // creates an in-memory copy of the graph.
   graph copy() {
