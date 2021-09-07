@@ -52,19 +52,9 @@ struct Buckets{
 		else return next_vtx();
 	}
 
-	inline std::vector<uintE> next_bucket(){
-		std::vector<uintE> filterBkt; filterBkt.reserve(bkts[curDeg].size());
-		while(filterBkt.size()==0){
-			while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
-			std::vector<uintE>& bkt = bkts[curDeg];
-			for(uintE i = bkt.size()-1; true; i--){
-				if(degs[bkt[i]] == curDeg) filterBkt.push_back(bkt[i]);
-				bkt.pop_back();
-				if(i==0) break;
-			}
-		}
-		ahead -= filterBkt.size();	
-		return filterBkt;
+	inline uintE next_bucket_deg(){
+		while(curDeg <= n && bkts[curDeg].size() == 0) curDeg++;
+		return curDeg;
 	}
 
 	inline bool empty(){
@@ -174,7 +164,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	std::vector<uintE> D = Deg;
 	for(size_t i=0; i<n_a; i++) if(D[i]<alpha) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
-	if(edgeCount*1.1 < G.m && G.m > 1000){
+	if(edgeCount*1.2 < G.m && G.m > 1000){
 		G = shrink_graph(G, D, n_a, n_b, alpha, 1);
 		std::cout<<"compact at start "<<edgeCount<<std::endl;
 	}
@@ -192,12 +182,14 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	{
 		iter++;
 		pqt.start();
-		std::vector<uintE> bkt = bbuckets.next_bucket();
-		if(bbuckets.curDeg > max_beta){
-			max_beta = bbuckets.curDeg;
-		}
+		uintE curDeg = bbuckets.next_bucket_deg();
+		max_beta = std::max(curDeg, max_beta);
+		std::vector<uintE>& bkt = bbuckets.bkts[curDeg];
 		pqt.stop();
-		for(uintE vi : bkt){
+		while(!bkt.empty()){
+			uintE vi = bkt.back(); bkt.pop_back();
+			if(D[vi] != curDeg) continue;
+			bbuckets.ahead--;
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
@@ -205,9 +197,12 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
-						if(D[vii]-- > max_beta && tracker[vii]!=iter){
-							changeVtx.push_back(vii);
-							tracker[vii] = iter;
+						if(D[vii] > max_beta){
+							if(tracker[vii]!=iter){
+								changeVtx.push_back(vii);
+								tracker[vii] = iter;
+							}
+							D[vii]--;
 						}
 					}
 				}
@@ -260,7 +255,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 	std::vector<uintE> D = Deg;
 	for(size_t i=n_a; i<n; i++) if(D[i]<beta) edgeCount-=G.get_vertex(i).out_degree()*2;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
-	if(edgeCount*1.1 < G.m && G.m > 1000){
+	if(edgeCount*1.2 < G.m && G.m > 1000){
 		G = shrink_graph(G, D, n_a, n_b, 1, beta);
 		std::cout<<"compact at start "<<edgeCount<<std::endl;
 	}
@@ -278,12 +273,14 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 	{
 		iter++;
 		pqt.start();
-		std::vector<uintE> bkt = abuckets.next_bucket();
-		if(abuckets.curDeg > max_alpha){
-			max_alpha = abuckets.curDeg;
-		}
+		uintE curDeg = abuckets.next_bucket_deg();
+		max_alpha = std::max(max_alpha, curDeg);
+		std::vector<uintE>& bkt = abuckets.bkts[curDeg];
 		pqt.stop();
-		for(uintE ui : bkt){
+		while(!bkt.empty()){
+			uintE ui = bkt.back(); bkt.pop_back();
+			if(D[ui] != curDeg) continue;
+			abuckets.ahead--;
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
@@ -291,9 +288,12 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j);
-						if(D[uii]-- > max_alpha && tracker[uii]!=iter){
-							changeVtx.push_back(uii);
-							tracker[uii] = iter;
+						if(D[uii] > max_alpha){
+							if(tracker[uii]!=iter){
+								changeVtx.push_back(uii);
+								tracker[uii] = iter;
+							}
+							D[uii]--;
 						}
 					}
 				}
