@@ -133,7 +133,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	// peels all vertices in U which are < alpha, and repeatedly peels vertices in V which has deg == 0
 	while (uDel.size()>0)
 	{
-		std::vector<uintE> newUDel; newUDel.reserve(16);
+		std::vector<uintE> newUDel;
 		for(uintE ui : uDel){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
@@ -224,7 +224,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 
 	while (vDel.size()>0)
 	{
-		std::vector<uintE> newVDel; newVDel.reserve(16);
+		std::vector<uintE> newVDel;
 		for(uintE vi : vDel){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
