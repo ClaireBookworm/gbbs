@@ -111,7 +111,6 @@ struct symmetric_graph {
         e0(nullptr),
         e1(nullptr),
         n(0),
-        nValid(0),
         m(0),
         deletion_fn([]() {}) {}
 
@@ -122,19 +121,17 @@ struct symmetric_graph {
         e0(_e0),
         e1(_e1),
         n(n),
-        nValid(m),
         m(m),
         deletion_fn(_deletion_fn) {
     if (_e1 == nullptr) {
       e1 = e0;  // handles NVM case when graph is stored in symmetric memory
     }
-    std::cout<<"graph constructed "<<n<<" "<<m<<" "<<nValid<<std::endl;
+    std::cout<<"graph constructed "<<n<<" "<<m<<std::endl;
   }
 
   symmetric_graph(const symmetric_graph& G)
       : e1(nullptr),
         n(G.n),
-        nValid(G.nValid),
         m(G.m)
   {
     v_data = pbbslib::new_array_no_init<vertex_data>(n);
@@ -152,7 +149,7 @@ struct symmetric_graph {
 
   symmetric_graph& operator=(const symmetric_graph& G){
     del();
-    n = G.n; nValid = G.nValid; m = G.m; e1=nullptr;
+    n = G.n; m = G.m; e1=nullptr;
     v_data = pbbslib::new_array_no_init<vertex_data>(n);
     e0 = pbbslib::new_array_no_init<edge_type>(m);
     if(G.e1 != nullptr && G.e1 != G.e0){
@@ -172,7 +169,6 @@ struct symmetric_graph {
         e0(G.e0),
         e1(G.e1),
         n(G.n),
-        nValid(G.nValid),
         m(G.m)
   {
     edge_type *e0_=e0, *e1_=e1;
@@ -185,7 +181,7 @@ struct symmetric_graph {
 
   symmetric_graph& operator=(symmetric_graph&& G){
     del();
-    n = G.n; nValid = G.nValid; m = G.m;
+    n = G.n; m = G.m;
     v_data = G.v_data;
     e0 = G.e0, e1 = G.e1;
     edge_type *e0_=e0, *e1_=e1;
@@ -242,8 +238,6 @@ struct symmetric_graph {
 
   // number of vertices in G
   size_t n;
-  // number of edges not deleted
-  size_t nValid;
   // number of edges in G
   size_t m;
 
