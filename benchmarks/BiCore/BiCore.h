@@ -176,9 +176,9 @@ namespace gbbs
 		double peeltimeB = pbbslib::reduce_add(timeB);
 		double totalTime = pbbslib::reduce_add(tTime);
 		double prepTime = pbbslib::reduce_add(pTime);
-		debug(std::cout<< "peeltimeA: " << peeltimeA <<std::endl);
-		debug(std::cout<< "peeltimeB: " << peeltimeB <<std::endl);
-		debug(std::cout<< "initPeelTime: " << prepTime <<std::endl);
+		debug(std::cout<< "bkttimeA: " << peeltimeA <<std::endl);
+		debug(std::cout<< "bkttimeB: " << peeltimeB <<std::endl);
+		debug(std::cout<< "prepTime: " << prepTime <<std::endl);
 		debug(std::cout<< "totaltime: " << totalTime <<std::endl);
 	}
 
