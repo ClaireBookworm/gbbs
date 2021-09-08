@@ -123,7 +123,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 	const size_t n = n_a + n_b;
 	timer pqt, pt;
 	uintE rho_alpha = 0, max_beta = 0;
-	size_t edgeCount = G.m;
+	size_t edgeCount = 0;
 	pt.start();
 
 	std::vector<uintE> Del; Del.reserve(16);
@@ -138,18 +138,12 @@ inline std::pair<double, double> PeelFixA(Graph& G, std::vector<uintE>& Deg, uin
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE oi = neighborsVi.get_neighbor(i);
-				if(Deg[oi]-- == alpha){
-					auto neighborsOi = G.get_vertex(oi).out_neighbors();
-					for(uintE j = 0; j<neighborsOi.degree; j++){
-						uintE vii = neighborsOi.get_neighbor(j); 
-						if(Deg[vii]-- == alpha) newDel.push_back(vii);
-					}//Deg should always be positive
-				}
+				if(Deg[oi]-- == alpha) newDel.push_back(oi);
 			}
 		}
 		Del = std::move(newDel);
 	}
-	for(size_t i=0; i<n; i++) if(Deg[i]<alpha) edgeCount-=G.get_vertex(i).out_degree();
+	for(size_t i=0; i<n; i++) if(Deg[i]>=alpha) edgeCount+=Deg[i];
 	std::vector<uintE> D = Deg;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
 	if(edgeCount*1.1 < G.m && G.m > 1000){
@@ -215,7 +209,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 	const size_t n = n_a + n_b;
 	timer pqt,pt;
 	uintE rho_beta = 0, max_alpha = 0;
-	size_t edgeCount = G.m;
+	size_t edgeCount = 0;
 	pt.start();
 
 	std::vector<uintE> Del; Del.reserve(16);
@@ -229,18 +223,12 @@ inline std::pair<double, double> PeelFixB(Graph& G, std::vector<uintE>& Deg, uin
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE oi = neighborsVi.get_neighbor(i);
-				if(Deg[oi]-- == beta){
-					auto neighborsOi = G.get_vertex(oi).out_neighbors();
-					for(uintE j = 0; j<neighborsOi.degree; j++){
-						uintE vii = neighborsOi.get_neighbor(j); 
-						if(Deg[vii]-- == beta) newDel.push_back(vii);
-					} // Deg should always be positive
-				}
+				if(Deg[oi]-- == beta) newDel.push_back(oi);
 			}
 		}
 		Del = std::move(newDel);
 	}
-	for(size_t i=0; i<n; i++) if(Deg[i]<beta) edgeCount-=G.get_vertex(i).out_degree();
+	for(size_t i=0; i<n; i++) if(Deg[i]>=beta) edgeCount+=Deg[i];
 	std::vector<uintE> D = Deg;
 	std::cout<<"cur state "<<edgeCount<<" "<<G.m<<std::endl;
 	if(edgeCount*1.1 < G.m && G.m > 1000){
