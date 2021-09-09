@@ -85,7 +85,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	auto timeA = sequence<double>(delta, 0.0);
 	auto timeB = sequence<double>(delta, 0.0);
 	auto tTime = sequence<double>(delta, 0.0);
-
+	timer it; it.start();
 	sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
 	par_for(1,breakptrs.size(),1,[&](size_t idx){
 		uintE minCore = breakptrs[idx-1]+1;
@@ -107,7 +107,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		initialClean(G, degB, DelB, minCore);
 		prepeelB[idx] = std::move(degB);
 	});
-
+	it.stop();
 	par_for(1,breakptrs.size(),1,[&](size_t idx){
 		std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -144,7 +144,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		par_do(peelAllFixA,peelAllFixB);
 		std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
 	});
-
+	it.reportTotal("initialize time");
 }
 
 template <class Graph>
@@ -168,9 +168,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
-	pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(16);
 	uintE finished = 0;
-	uintE vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));;
+	uintE vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>=alpha;}));;
 	while (finished != vCount)
 	{
 		iter++;
@@ -200,6 +199,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 			}
 		}
 		pqt.start();
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(16);
 		for(uintE vii : changeVtx){
 			uintE deg = std::max(max_beta, D[vii]);
 			Dv[vii] = deg; D[vii] = deg;
@@ -213,7 +213,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 		pqt.stop();
 		rho_alpha++;
 	}
-	std::cout<<rho_alpha << " "<<max_beta<<std::endl;
+	std::cout<<"Alpha "<<alpha<<" "<<rho_alpha <<" "<<max_beta<<std::endl;
 	return std::make_pair(pqt.get_total(), pt.get_total());
 }
 
@@ -238,9 +238,8 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
-	pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(16);
 	uintE finished = 0;
-	uintE uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>0;}));;
+	uintE uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>=beta;}));
 	while (finished != uCount)
 	{
 		iter++;
@@ -270,6 +269,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 			}
 		}
 		pqt.start();
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(16);
 		for(uintE uii : changeVtx){
 			uintE deg = std::max(max_alpha, D[uii]);
 			Du[uii] = deg; D[uii] = deg;
@@ -283,7 +283,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 		pqt.stop();
 		rho_beta++;
 	}
-	std::cout<<rho_beta << " "<<max_alpha<<std::endl;
+	std::cout<<"Beta "<<beta<<" "<<rho_beta <<" "<<max_alpha<<std::endl;
 	return std::make_pair(pqt.get_total(), pt.get_total());
 }
 
