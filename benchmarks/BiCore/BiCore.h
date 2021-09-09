@@ -82,6 +82,10 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		breakptrs.push_back(delta);
 	std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<std::endl;
 
+	auto timeA = sequence<double>(delta, 0.0);
+	auto timeB = sequence<double>(delta, 0.0);
+	auto tTime = sequence<double>(delta, 0.0);
+
 	sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
 	par_for(1,breakptrs.size(),1,[&](size_t idx){
 		uintE minCore = breakptrs[idx-1]+1;
@@ -100,19 +104,6 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degB[i]<minCore;}));
 		std::vector<uintE> DelB(initSize);
 		for(size_t i=0, j=0; i<n; i++) if(degB[i]<minCore) DelB[j++]=i;
-		initialClean(G, degB, DelB, minCore);
-		prepeelB[idx] = std::move(degB);
-	});
-
-	sequence<uintE>* prepeelB = new sequence<uintE>[breakptrs.size()];
-	par_for(1,breakptrs.size(),1,[&](size_t idx){
-		uintE minCore = breakptrs[idx-1]+1;
-		sequence<uintE> degB(n, [&](size_t i) {
-			return G.get_vertex(i).out_degree();
-		});
-		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return degB[i+n_a]<minCore;}));
-		pbbslib::dyn_arr<uintE> DelB(initSize);
-		for(size_t i=n_a; i<n; i++) if(degB[i]<minCore) DelB.push_back(i);
 		initialClean(G, degB, DelB, minCore);
 		prepeelB[idx] = std::move(degB);
 	});
@@ -145,7 +136,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delB[j++] = i;
 			initialClean(G, D, delB, core);
 
-			auto ret = PeelFixB(G, BetaMax, AlphaMax, D, core, bipartition, num_buckets);
+			auto ret = PeelFixB(G, D, core, n_a, n_b, num_buckets);
 			timeB[core-1] = std::get<1>(ret);
 			t_in.stop();
 			tTime[core-1] += t_in.get_total();
@@ -177,14 +168,17 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
-	pbbslib::dyn_arr moveV(16);
-	while (!bbuckets.empty())
+	pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(16);
+	uintE finished = 0;
+	uintE vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>0;}));;
+	while (finished != vCount)
 	{
 		iter++;
 		pqt.start();
 		auto bkt = bbuckets.next_bucket();
-		max_beta = std::max(bkt.id, max_beta);
+		max_beta = std::max((uintE)bkt.id, max_beta);
 		auto bktArr = bkt.identifiers;
+		finished += bktArr.size();
 		pqt.stop();
 		for(uintE vi : bktArr){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
@@ -208,11 +202,12 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 		pqt.start();
 		for(uintE vii : changeVtx){
 			uintE deg = std::max(max_beta, D[vii]);
-			vD[vii] = deg; D[vii] = deg;
+			Dv[vii] = deg; D[vii] = deg;
 			auto ret = getVBuckets(vii, deg);
 			if(ret) { moveV.resize(1); moveV.push_back(*ret); }
 		}
-		bbuckets.update_buckets(vertexSubsetData<uintE>(n, std::move(moveV.to_seq())));
+		auto moveVBucket = vertexSubsetData<uintE>(n, moveV.to_seq());
+		bbuckets.update_buckets(moveVBucket);
 		moveV.clear();
 		changeVtx.clear();
 		pqt.stop();
@@ -230,11 +225,11 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	uintE rho_beta = 0, max_alpha = 0;
 
 	pqt.start();
-	auto Dv = sequence<uintE>(n, [&](size_t i) {
+	auto Du = sequence<uintE>(n, [&](size_t i) {
 		if (i >= n_a || D[i] < beta) return std::numeric_limits<uintE>::max();
 		return D[i];
 	});
-	auto abuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
+	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
 	auto getUBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, abuckets.get_bucket(deg));
@@ -243,14 +238,17 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
-	pbbslib::dyn_arr moveU(16);
-	while (!abuckets.empty())
+	pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(16);
+	uintE finished = 0;
+	uintE uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>0;}));;
+	while (finished != uCount)
 	{
 		iter++;
 		pqt.start();
 		auto bkt = abuckets.next_bucket();
-		max_alpha = std::max(bkt.id, max_alpha);
+		max_alpha = std::max((uintE)bkt.id, max_alpha);
 		auto bktArr = bkt.identifiers;
+		finished += bktArr.size();
 		pqt.stop();
 		for(uintE ui : bktArr){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
@@ -274,11 +272,12 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 		pqt.start();
 		for(uintE uii : changeVtx){
 			uintE deg = std::max(max_alpha, D[uii]);
-			vD[uii] = deg; D[uii] = deg;
+			Du[uii] = deg; D[uii] = deg;
 			auto ret = getUBuckets(uii, deg);
 			if(ret) { moveU.resize(1); moveU.push_back(*ret); }
 		}
-		abuckets.update_buckets(vertexSubsetData<uintE>(n, std::move(moveU.to_seq())));
+		auto moveUBucket = vertexSubsetData<uintE>(n, moveU.to_seq());
+		abuckets.update_buckets(moveUBucket);
 		moveU.clear();
 		changeVtx.clear();
 		pqt.stop();
