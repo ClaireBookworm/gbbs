@@ -1,0 +1,3555 @@
+readin 876252 27336640
+graph constructed 876252 27336640 from 876252 27336640
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 36864, node size: 16392, bytes: 604274688
+### Application: BiCore
+### Graph: ../../../inputs/epinions_adj
+### Threads: 60
+### n: 876252
+### m: 27336640
+### Params: -nb (num_buckets) = 16 -bi = 120491
+### ------------------------------------
+starting
+### rho = 1197 k_{max} = 151
+m 27336640 876252
+finished preprocessing
+running PeelFixA core 1
+cur state 27336640 27336640
+442 1195
+running PeelFixA core 2
+cur state 27182776 27336640
+805 453
+running PeelFixA core 3
+cur state 26942796 27336640
+796 390
+running PeelFixA core 4
+cur state 26565608 27336640
+852 386
+running PeelFixA core 5
+cur state 26056970 27336640
+878 386
+running PeelFixA core 6
+cur state 25439978 27336640
+885 386
+running PeelFixA core 7
+cur state 24753944 27336640
+graph constructed 876252 24753944 from 876252 24753944
+delete graph
+delete graph
+compact at start 24753944
+915 386
+running PeelFixA core 8
+cur state 24039286 24753944
+924 386
+running PeelFixA core 9
+cur state 23329782 24753944
+935 386
+running PeelFixA core 10
+cur state 22651394 24753944
+850 280
+running PeelFixA core 11
+cur state 22005558 24753944
+graph constructed 876252 22005558 from 876252 22005558
+delete graph
+delete graph
+compact at start 22005558
+819 273
+running PeelFixA core 12
+cur state 21405162 22005558
+814 266
+running PeelFixA core 13
+cur state 20850112 22005558
+816 261
+running PeelFixA core 14
+cur state 20342176 22005558
+797 254
+running PeelFixA core 15
+cur state 19873608 22005558
+graph constructed 876252 19873608 from 876252 19873608
+delete graph
+delete graph
+compact at start 19873608
+778 249
+running PeelFixA core 16
+cur state 19442944 19873608
+775 244
+running PeelFixA core 17
+cur state 19035358 19873608
+773 241
+running PeelFixA core 18
+cur state 18658356 19873608
+742 236
+running PeelFixA core 19
+cur state 18295384 19873608
+744 232
+running PeelFixA core 20
+cur state 17948442 19873608
+graph constructed 876252 17948442 from 876252 17948442
+delete graph
+delete graph
+compact at start 17948442
+718 229
+running PeelFixA core 21
+cur state 17621162 17948442
+715 226
+running PeelFixA core 22
+cur state 17312790 17948442
+738 223
+running PeelFixA core 23
+cur state 17018468 17948442
+739 220
+running PeelFixA core 24
+cur state 16735470 17948442
+728 216
+running PeelFixA core 25
+cur state 16455464 17948442
+718 213
+running PeelFixA core 26
+cur state 16185934 17948442
+graph constructed 876252 16185934 from 876252 16185934
+delete graph
+delete graph
+compact at start 16185934
+715 210
+running PeelFixA core 27
+cur state 15926440 16185934
+697 208
+running PeelFixA core 28
+cur state 15686904 16185934
+687 206
+running PeelFixA core 29
+cur state 15441218 16185934
+683 205
+running PeelFixA core 30
+cur state 15188922 16185934
+671 204
+running PeelFixA core 31
+cur state 14948304 16185934
+682 202
+running PeelFixA core 32
+cur state 14728374 16185934
+669 202
+running PeelFixA core 33
+cur state 14504690 16185934
+graph constructed 876252 14504690 from 876252 14504690
+delete graph
+delete graph
+compact at start 14504690
+644 202
+running PeelFixA core 34
+cur state 14278768 14504690
+654 202
+running PeelFixA core 35
+cur state 14068732 14504690
+676 202
+running PeelFixA core 36
+cur state 13849534 14504690
+641 202
+running PeelFixA core 37
+cur state 13638066 14504690
+642 202
+running PeelFixA core 38
+cur state 13427922 14504690
+618 202
+running PeelFixA core 39
+cur state 13227604 14504690
+647 202
+running PeelFixA core 40
+cur state 13029968 14504690
+graph constructed 876252 13029968 from 876252 13029968
+delete graph
+delete graph
+compact at start 13029968
+624 202
+running PeelFixA core 41
+cur state 12827248 13029968
+634 202
+running PeelFixA core 42
+cur state 12632516 13029968
+606 202
+running PeelFixA core 43
+cur state 12437800 13029968
+617 202
+running PeelFixA core 44
+cur state 12236808 13029968
+588 202
+running PeelFixA core 45
+cur state 12044906 13029968
+608 202
+running PeelFixA core 46
+cur state 11851392 13029968
+587 190
+running PeelFixA core 47
+cur state 11671186 13029968
+graph constructed 876252 11671186 from 876252 11671186
+delete graph
+delete graph
+compact at start 11671186
+569 190
+running PeelFixA core 48
+cur state 11485194 11671186
+549 190
+running PeelFixA core 49
+cur state 11299008 11671186
+555 190
+running PeelFixA core 50
+cur state 11114600 11671186
+580 190
+running PeelFixA core 51
+cur state 10928202 11671186
+548 190
+running PeelFixA core 52
+cur state 10745610 11671186
+556 190
+running PeelFixA core 53
+cur state 10574406 11671186
+graph constructed 876252 10574406 from 876252 10574406
+delete graph
+delete graph
+compact at start 10574406
+537 190
+running PeelFixA core 54
+cur state 10413850 10574406
+530 190
+running PeelFixA core 55
+cur state 10250816 10574406
+523 190
+running PeelFixA core 56
+cur state 10079482 10574406
+510 190
+running PeelFixA core 57
+cur state 9899466 10574406
+507 183
+running PeelFixA core 58
+cur state 9737994 10574406
+483 181
+running PeelFixA core 59
+cur state 9579008 10574406
+graph constructed 876252 9579008 from 876252 9579008
+delete graph
+delete graph
+compact at start 9579008
+495 181
+running PeelFixA core 60
+cur state 9434938 9579008
+478 180
+running PeelFixA core 61
+cur state 9284814 9579008
+471 179
+running PeelFixA core 62
+cur state 9142560 9579008
+490 178
+running PeelFixA core 63
+cur state 8999244 9579008
+470 178
+running PeelFixA core 64
+cur state 8853386 9579008
+465 176
+running PeelFixA core 65
+cur state 8704578 9579008
+graph constructed 876252 8704578 from 876252 8704578
+delete graph
+delete graph
+compact at start 8704578
+465 176
+running PeelFixA core 66
+cur state 8552052 8704578
+434 176
+running PeelFixA core 67
+cur state 8415790 8704578
+458 176
+running PeelFixA core 68
+cur state 8282204 8704578
+438 176
+running PeelFixA core 69
+cur state 8144290 8704578
+444 175
+running PeelFixA core 70
+cur state 8008400 8704578
+439 175
+running PeelFixA core 71
+cur state 7868796 8704578
+graph constructed 876252 7868796 from 876252 7868796
+delete graph
+delete graph
+compact at start 7868796
+423 175
+running PeelFixA core 72
+cur state 7743536 7868796
+417 174
+running PeelFixA core 73
+cur state 7612166 7868796
+458 174
+running PeelFixA core 74
+cur state 7481680 7868796
+414 174
+running PeelFixA core 75
+cur state 7350370 7868796
+394 173
+running PeelFixA core 76
+cur state 7222048 7868796
+393 173
+running PeelFixA core 77
+cur state 7086116 7868796
+graph constructed 876252 7086116 from 876252 7086116
+delete graph
+delete graph
+compact at start 7086116
+408 173
+running PeelFixA core 78
+cur state 6949174 7086116
+399 172
+running PeelFixA core 79
+cur state 6812346 7086116
+403 172
+running PeelFixA core 80
+cur state 6683476 7086116
+378 171
+running PeelFixA core 81
+cur state 6552106 7086116
+395 171
+running PeelFixA core 82
+cur state 6435072 7086116
+graph constructed 876252 6435072 from 876252 6435072
+delete graph
+delete graph
+compact at start 6435072
+372 171
+running PeelFixA core 83
+cur state 6314442 6435072
+370 171
+running PeelFixA core 84
+cur state 6196536 6435072
+346 170
+running PeelFixA core 85
+cur state 6086088 6435072
+343 170
+running PeelFixA core 86
+cur state 5966826 6435072
+368 169
+running PeelFixA core 87
+cur state 5852212 6435072
+338 169
+running PeelFixA core 88
+cur state 5725990 6435072
+graph constructed 876252 5725990 from 876252 5725990
+delete graph
+delete graph
+compact at start 5725990
+360 168
+running PeelFixA core 89
+cur state 5605910 5725990
+338 168
+running PeelFixA core 90
+cur state 5493328 5725990
+325 168
+running PeelFixA core 91
+cur state 5382356 5725990
+353 168
+running PeelFixA core 92
+cur state 5262538 5725990
+330 167
+running PeelFixA core 93
+cur state 5141798 5725990
+graph constructed 876252 5141798 from 876252 5141798
+delete graph
+delete graph
+compact at start 5141798
+324 167
+running PeelFixA core 94
+cur state 5028604 5141798
+327 167
+running PeelFixA core 95
+cur state 4920080 5141798
+315 166
+running PeelFixA core 96
+cur state 4797304 5141798
+315 166
+running PeelFixA core 97
+cur state 4688168 5141798
+299 165
+running PeelFixA core 98
+cur state 4571332 5141798
+graph constructed 876252 4571332 from 876252 4571332
+delete graph
+delete graph
+compact at start 4571332
+306 165
+running PeelFixA core 99
+cur state 4466160 4571332
+299 165
+running PeelFixA core 100
+cur state 4364268 4571332
+284 164
+running PeelFixA core 101
+cur state 4252402 4571332
+279 164
+running PeelFixA core 102
+cur state 4139840 4571332
+graph constructed 876252 4139840 from 876252 4139840
+delete graph
+delete graph
+compact at start 4139840
+288 164
+running PeelFixA core 103
+cur state 4023512 4139840
+279 164
+running PeelFixA core 104
+cur state 3905212 4139840
+272 163
+running PeelFixA core 105
+cur state 3799038 4139840
+276 163
+running PeelFixA core 106
+cur state 3684560 4139840
+graph constructed 876252 3684560 from 876252 3684560
+delete graph
+delete graph
+compact at start 3684560
+255 163
+running PeelFixA core 107
+cur state 3572282 3684560
+260 162
+running PeelFixA core 108
+cur state 3464968 3684560
+250 162
+running PeelFixA core 109
+cur state 3352152 3684560
+266 162
+running PeelFixA core 110
+cur state 3238970 3684560
+graph constructed 876252 3238970 from 876252 3238970
+delete graph
+delete graph
+compact at start 3238970
+244 162
+running PeelFixA core 111
+cur state 3122824 3238970
+230 162
+running PeelFixA core 112
+cur state 3020602 3238970
+216 161
+running PeelFixA core 113
+cur state 2896708 3238970
+graph constructed 876252 2896708 from 876252 2896708
+delete graph
+delete graph
+compact at start 2896708
+228 161
+running PeelFixA core 114
+cur state 2758742 2896708
+221 161
+running PeelFixA core 115
+cur state 2614350 2896708
+graph constructed 876252 2614350 from 876252 2614350
+delete graph
+delete graph
+compact at start 2614350
+210 161
+running PeelFixA core 116
+cur state 2514446 2614350
+212 160
+running PeelFixA core 117
+cur state 2403128 2614350
+182 160
+running PeelFixA core 118
+cur state 2298818 2614350
+graph constructed 876252 2298818 from 876252 2298818
+delete graph
+delete graph
+compact at start 2298818
+182 159
+running PeelFixA core 119
+cur state 2203708 2298818
+184 159
+running PeelFixA core 120
+cur state 2082366 2298818
+graph constructed 876252 2082366 from 876252 2082366
+delete graph
+delete graph
+compact at start 2082366
+167 159
+running PeelFixA core 121
+cur state 1926410 2082366
+151 159
+running PeelFixA core 122
+cur state 1818074 2082366
+graph constructed 876252 1818074 from 876252 1818074
+delete graph
+delete graph
+compact at start 1818074
+149 159
+running PeelFixA core 123
+cur state 1681110 1818074
+147 158
+running PeelFixA core 124
+cur state 1546238 1818074
+graph constructed 876252 1546238 from 876252 1546238
+delete graph
+delete graph
+compact at start 1546238
+126 158
+running PeelFixA core 125
+cur state 1459484 1546238
+122 158
+running PeelFixA core 126
+cur state 1363614 1546238
+graph constructed 876252 1363614 from 876252 1363614
+delete graph
+delete graph
+compact at start 1363614
+111 158
+running PeelFixA core 127
+cur state 1297930 1363614
+103 158
+running PeelFixA core 128
+cur state 1205300 1363614
+graph constructed 876252 1205300 from 876252 1205300
+delete graph
+delete graph
+compact at start 1205300
+90 157
+running PeelFixA core 129
+cur state 1070228 1205300
+graph constructed 876252 1070228 from 876252 1070228
+delete graph
+delete graph
+compact at start 1070228
+90 157
+running PeelFixA core 130
+cur state 973668 1070228
+74 157
+running PeelFixA core 131
+cur state 723322 1070228
+graph constructed 876252 723322 from 876252 723322
+delete graph
+delete graph
+compact at start 723322
+55 157
+running PeelFixA core 132
+cur state 82328 723322
+graph constructed 876252 82328 from 876252 82328
+delete graph
+delete graph
+compact at start 82328
+27 157
+running PeelFixA core 133
+cur state 82328 82328
+28 157
+running PeelFixA core 134
+cur state 81798 82328
+27 156
+running PeelFixA core 135
+cur state 81798 82328
+29 156
+running PeelFixA core 136
+cur state 81798 82328
+28 156
+running PeelFixA core 137
+cur state 80984 82328
+21 156
+running PeelFixA core 138
+cur state 79616 82328
+18 155
+running PeelFixA core 139
+cur state 79616 82328
+18 155
+running PeelFixA core 140
+cur state 79616 82328
+18 155
+running PeelFixA core 141
+cur state 78776 82328
+18 154
+running PeelFixA core 142
+cur state 77930 82328
+16 154
+running PeelFixA core 143
+cur state 76796 82328
+13 154
+running PeelFixA core 144
+cur state 76510 82328
+15 153
+running PeelFixA core 145
+cur state 75646 82328
+11 153
+running PeelFixA core 146
+cur state 75646 82328
+12 152
+running PeelFixA core 147
+cur state 75646 82328
+13 152
+running PeelFixA core 148
+cur state 75646 82328
+10 152
+running PeelFixA core 149
+cur state 74462 82328
+graph constructed 876252 74462 from 876252 74462
+delete graph
+delete graph
+compact at start 74462
+8 152
+running PeelFixA core 150
+cur state 72680 74462
+7 151
+running PeelFixA core 151
+cur state 72380 74462
+5 151
+running PeelFixB core 1
+cur state 27336640 27336640
+2867 162169
+running PeelFixB core 2
+cur state 27182776 27336640
+27555 29420
+running PeelFixB core 3
+cur state 26942796 27336640
+21472 21180
+running PeelFixB core 4
+cur state 26565608 27336640
+18449 18028
+running PeelFixB core 5
+cur state 26056970 27336640
+16578 16034
+running PeelFixB core 6
+cur state 25439978 27336640
+15140 14533
+running PeelFixB core 7
+cur state 24753944 27336640
+graph constructed 876252 24753944 from 876252 24753944
+delete graph
+delete graph
+compact at start 24753944
+14049 13397
+running PeelFixB core 8
+cur state 24039286 24753944
+13163 12458
+running PeelFixB core 9
+cur state 23329782 24753944
+12043 11304
+running PeelFixB core 10
+cur state 22651394 24753944
+11285 10551
+running PeelFixB core 11
+cur state 22005558 24753944
+graph constructed 876252 22005558 from 876252 22005558
+delete graph
+delete graph
+compact at start 22005558
+10624 9858
+running PeelFixB core 12
+cur state 21405162 22005558
+10014 9227
+running PeelFixB core 13
+cur state 20850112 22005558
+9482 8704
+running PeelFixB core 14
+cur state 20342176 22005558
+9131 8357
+running PeelFixB core 15
+cur state 19873608 22005558
+graph constructed 876252 19873608 from 876252 19873608
+delete graph
+delete graph
+compact at start 19873608
+8656 7872
+running PeelFixB core 16
+cur state 19442944 19873608
+8302 7524
+running PeelFixB core 17
+cur state 19035358 19873608
+7961 7174
+running PeelFixB core 18
+cur state 18658356 19873608
+7513 6730
+running PeelFixB core 19
+cur state 18295384 19873608
+7147 6367
+running PeelFixB core 20
+cur state 17948442 19873608
+graph constructed 876252 17948442 from 876252 17948442
+delete graph
+delete graph
+compact at start 17948442
+6799 6036
+running PeelFixB core 21
+cur state 17621162 17948442
+6507 5774
+running PeelFixB core 22
+cur state 17312790 17948442
+6328 5532
+running PeelFixB core 23
+cur state 17018468 17948442
+6072 5309
+running PeelFixB core 24
+cur state 16735470 17948442
+5908 5090
+running PeelFixB core 25
+cur state 16455464 17948442
+5596 4839
+running PeelFixB core 26
+cur state 16185934 17948442
+graph constructed 876252 16185934 from 876252 16185934
+delete graph
+delete graph
+compact at start 16185934
+5425 4688
+running PeelFixB core 27
+cur state 15926440 16185934
+5205 4452
+running PeelFixB core 28
+cur state 15686904 16185934
+4985 4273
+running PeelFixB core 29
+cur state 15441218 16185934
+4865 4110
+running PeelFixB core 30
+cur state 15188922 16185934
+4687 3937
+running PeelFixB core 31
+cur state 14948304 16185934
+4574 3777
+running PeelFixB core 32
+cur state 14728374 16185934
+4388 3630
+running PeelFixB core 33
+cur state 14504690 16185934
+graph constructed 876252 14504690 from 876252 14504690
+delete graph
+delete graph
+compact at start 14504690
+4217 3511
+running PeelFixB core 34
+cur state 14278768 14504690
+4143 3382
+running PeelFixB core 35
+cur state 14068732 14504690
+3991 3250
+running PeelFixB core 36
+cur state 13849534 14504690
+3880 3171
+running PeelFixB core 37
+cur state 13638066 14504690
+3801 3070
+running PeelFixB core 38
+cur state 13427922 14504690
+3633 2917
+running PeelFixB core 39
+cur state 13227604 14504690
+3573 2860
+running PeelFixB core 40
+cur state 13029968 14504690
+graph constructed 876252 13029968 from 876252 13029968
+delete graph
+delete graph
+compact at start 13029968
+3539 2842
+running PeelFixB core 41
+cur state 12827248 13029968
+3550 2824
+running PeelFixB core 42
+cur state 12632516 13029968
+3495 2803
+running PeelFixB core 43
+cur state 12437800 13029968
+3443 2764
+running PeelFixB core 44
+cur state 12236808 13029968
+3448 2729
+running PeelFixB core 45
+cur state 12044906 13029968
+3404 2701
+running PeelFixB core 46
+cur state 11851392 13029968
+3327 2662
+running PeelFixB core 47
+cur state 11671186 13029968
+graph constructed 876252 11671186 from 876252 11671186
+delete graph
+delete graph
+compact at start 11671186
+3304 2626
+running PeelFixB core 48
+cur state 11485194 11671186
+3259 2609
+running PeelFixB core 49
+cur state 11299008 11671186
+3245 2577
+running PeelFixB core 50
+cur state 11114600 11671186
+3191 2540
+running PeelFixB core 51
+cur state 10928202 11671186
+3185 2514
+running PeelFixB core 52
+cur state 10745610 11671186
+3163 2489
+running PeelFixB core 53
+cur state 10574406 11671186
+graph constructed 876252 10574406 from 876252 10574406
+delete graph
+delete graph
+compact at start 10574406
+3137 2465
+running PeelFixB core 54
+cur state 10413850 10574406
+3097 2437
+running PeelFixB core 55
+cur state 10250816 10574406
+3041 2406
+running PeelFixB core 56
+cur state 10079482 10574406
+2973 2372
+running PeelFixB core 57
+cur state 9899466 10574406
+2938 2348
+running PeelFixB core 58
+cur state 9737994 10574406
+2910 2316
+running PeelFixB core 59
+cur state 9579008 10574406
+graph constructed 876252 9579008 from 876252 9579008
+delete graph
+delete graph
+compact at start 9579008
+2867 2289
+running PeelFixB core 60
+cur state 9434938 9579008
+2846 2263
+running PeelFixB core 61
+cur state 9284814 9579008
+2837 2229
+running PeelFixB core 62
+cur state 9142560 9579008
+2753 2193
+running PeelFixB core 63
+cur state 8999244 9579008
+2739 2150
+running PeelFixB core 64
+cur state 8853386 9579008
+2734 2125
+running PeelFixB core 65
+cur state 8704578 9579008
+graph constructed 876252 8704578 from 876252 8704578
+delete graph
+delete graph
+compact at start 8704578
+2677 2096
+running PeelFixB core 66
+cur state 8552052 8704578
+2627 2049
+running PeelFixB core 67
+cur state 8415790 8704578
+2557 1982
+running PeelFixB core 68
+cur state 8282204 8704578
+2475 1930
+running PeelFixB core 69
+cur state 8144290 8704578
+2452 1887
+running PeelFixB core 70
+cur state 8008400 8704578
+2381 1835
+running PeelFixB core 71
+cur state 7868796 8704578
+graph constructed 876252 7868796 from 876252 7868796
+delete graph
+delete graph
+compact at start 7868796
+2373 1801
+running PeelFixB core 72
+cur state 7743536 7868796
+2312 1762
+running PeelFixB core 73
+cur state 7612166 7868796
+2222 1698
+running PeelFixB core 74
+cur state 7481680 7868796
+2173 1631
+running PeelFixB core 75
+cur state 7350370 7868796
+2138 1583
+running PeelFixB core 76
+cur state 7222048 7868796
+2098 1536
+running PeelFixB core 77
+cur state 7086116 7868796
+graph constructed 876252 7086116 from 876252 7086116
+delete graph
+delete graph
+compact at start 7086116
+2037 1482
+running PeelFixB core 78
+cur state 6949174 7086116
+1943 1422
+running PeelFixB core 79
+cur state 6812346 7086116
+1900 1367
+running PeelFixB core 80
+cur state 6683476 7086116
+1785 1305
+running PeelFixB core 81
+cur state 6552106 7086116
+1779 1253
+running PeelFixB core 82
+cur state 6435072 7086116
+graph constructed 876252 6435072 from 876252 6435072
+delete graph
+delete graph
+compact at start 6435072
+1712 1203
+running PeelFixB core 83
+cur state 6314442 6435072
+1679 1166
+running PeelFixB core 84
+cur state 6196536 6435072
+1625 1132
+running PeelFixB core 85
+cur state 6086088 6435072
+1554 1089
+running PeelFixB core 86
+cur state 5966826 6435072
+1545 1059
+running PeelFixB core 87
+cur state 5852212 6435072
+1522 1025
+running PeelFixB core 88
+cur state 5725990 6435072
+graph constructed 876252 5725990 from 876252 5725990
+delete graph
+delete graph
+compact at start 5725990
+1431 982
+running PeelFixB core 89
+cur state 5605910 5725990
+1375 940
+running PeelFixB core 90
+cur state 5493328 5725990
+1367 903
+running PeelFixB core 91
+cur state 5382356 5725990
+1291 858
+running PeelFixB core 92
+cur state 5262538 5725990
+1223 795
+running PeelFixB core 93
+cur state 5141798 5725990
+graph constructed 876252 5141798 from 876252 5141798
+delete graph
+delete graph
+compact at start 5141798
+1174 757
+running PeelFixB core 94
+cur state 5028604 5141798
+1102 705
+running PeelFixB core 95
+cur state 4920080 5141798
+1049 662
+running PeelFixB core 96
+cur state 4797304 5141798
+1029 611
+running PeelFixB core 97
+cur state 4688168 5141798
+941 555
+running PeelFixB core 98
+cur state 4571332 5141798
+graph constructed 876252 4571332 from 876252 4571332
+delete graph
+delete graph
+compact at start 4571332
+888 498
+running PeelFixB core 99
+cur state 4466160 4571332
+862 459
+running PeelFixB core 100
+cur state 4364268 4571332
+823 432
+running PeelFixB core 101
+cur state 4252402 4571332
+787 411
+running PeelFixB core 102
+cur state 4139840 4571332
+graph constructed 876252 4139840 from 876252 4139840
+delete graph
+delete graph
+compact at start 4139840
+712 389
+running PeelFixB core 103
+cur state 4023512 4139840
+723 365
+running PeelFixB core 104
+cur state 3905212 4139840
+662 336
+running PeelFixB core 105
+cur state 3799038 4139840
+643 307
+running PeelFixB core 106
+cur state 3684560 4139840
+graph constructed 876252 3684560 from 876252 3684560
+delete graph
+delete graph
+compact at start 3684560
+608 290
+running PeelFixB core 107
+cur state 3572282 3684560
+583 275
+running PeelFixB core 108
+cur state 3464968 3684560
+567 264
+running PeelFixB core 109
+cur state 3352152 3684560
+514 259
+running PeelFixB core 110
+cur state 3238970 3684560
+graph constructed 876252 3238970 from 876252 3238970
+delete graph
+delete graph
+compact at start 3238970
+483 250
+running PeelFixB core 111
+cur state 3122824 3238970
+504 246
+running PeelFixB core 112
+cur state 3020602 3238970
+483 236
+running PeelFixB core 113
+cur state 2896708 3238970
+graph constructed 876252 2896708 from 876252 2896708
+delete graph
+delete graph
+compact at start 2896708
+434 230
+running PeelFixB core 114
+cur state 2758742 2896708
+428 223
+running PeelFixB core 115
+cur state 2614350 2896708
+graph constructed 876252 2614350 from 876252 2614350
+delete graph
+delete graph
+compact at start 2614350
+414 215
+running PeelFixB core 116
+cur state 2514446 2614350
+386 210
+running PeelFixB core 117
+cur state 2403128 2614350
+378 204
+running PeelFixB core 118
+cur state 2298818 2614350
+graph constructed 876252 2298818 from 876252 2298818
+delete graph
+delete graph
+compact at start 2298818
+371 203
+running PeelFixB core 119
+cur state 2203708 2298818
+325 202
+running PeelFixB core 120
+cur state 2082366 2298818
+graph constructed 876252 2082366 from 876252 2082366
+delete graph
+delete graph
+compact at start 2082366
+321 201
+running PeelFixB core 121
+cur state 1926410 2082366
+297 201
+running PeelFixB core 122
+cur state 1818074 2082366
+graph constructed 876252 1818074 from 876252 1818074
+delete graph
+delete graph
+compact at start 1818074
+282 200
+running PeelFixB core 123
+cur state 1681110 1818074
+271 199
+running PeelFixB core 124
+cur state 1546238 1818074
+graph constructed 876252 1546238 from 876252 1546238
+delete graph
+delete graph
+compact at start 1546238
+232 197
+running PeelFixB core 125
+cur state 1459484 1546238
+235 196
+running PeelFixB core 126
+cur state 1363614 1546238
+graph constructed 876252 1363614 from 876252 1363614
+delete graph
+delete graph
+compact at start 1363614
+204 196
+running PeelFixB core 127
+cur state 1297930 1363614
+195 195
+running PeelFixB core 128
+cur state 1205300 1363614
+graph constructed 876252 1205300 from 876252 1205300
+delete graph
+delete graph
+compact at start 1205300
+168 194
+running PeelFixB core 129
+cur state 1070228 1205300
+graph constructed 876252 1070228 from 876252 1070228
+delete graph
+delete graph
+compact at start 1070228
+153 193
+running PeelFixB core 130
+cur state 973668 1070228
+127 192
+running PeelFixB core 131
+cur state 723322 1070228
+graph constructed 876252 723322 from 876252 723322
+delete graph
+delete graph
+compact at start 723322
+102 190
+running PeelFixB core 132
+cur state 82328 723322
+graph constructed 876252 82328 from 876252 82328
+delete graph
+delete graph
+compact at start 82328
+48 190
+running PeelFixB core 133
+cur state 82328 82328
+47 189
+running PeelFixB core 134
+cur state 81798 82328
+39 187
+running PeelFixB core 135
+cur state 81798 82328
+45 185
+running PeelFixB core 136
+cur state 81798 82328
+45 183
+running PeelFixB core 137
+cur state 80984 82328
+40 181
+running PeelFixB core 138
+cur state 79616 82328
+32 180
+running PeelFixB core 139
+cur state 79616 82328
+36 179
+running PeelFixB core 140
+cur state 79616 82328
+36 177
+running PeelFixB core 141
+cur state 78776 82328
+32 176
+running PeelFixB core 142
+cur state 77930 82328
+26 174
+running PeelFixB core 143
+cur state 76796 82328
+25 174
+running PeelFixB core 144
+cur state 76510 82328
+20 173
+running PeelFixB core 145
+cur state 75646 82328
+19 170
+running PeelFixB core 146
+cur state 75646 82328
+19 168
+running PeelFixB core 147
+cur state 75646 82328
+17 163
+running PeelFixB core 148
+cur state 75646 82328
+14 158
+running PeelFixB core 149
+cur state 74462 82328
+graph constructed 876252 74462 from 876252 74462
+delete graph
+delete graph
+compact at start 74462
+8 156
+running PeelFixB core 150
+cur state 72680 74462
+7 154
+running PeelFixB core 151
+cur state 72380 74462
+6 153
+pq time 2.58337
+pt time 2.75822
+delete graph
+### Running Time: 19.5203
+# time per iter: 19.5203
+delete graph
+delete graph
+readin 876252 27336640
+graph constructed 876252 27336640 from 876252 27336640
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 36864, node size: 16392, bytes: 604274688
+### Application: BiCore
+### Graph: ../../../inputs/epinions_adj
+### Threads: 60
+### n: 876252
+### m: 27336640
+### Params: -nb (num_buckets) = 16 -bi = 120491
+### ------------------------------------
+starting
+### rho = 1197 k_{max} = 151
+m 27336640 876252
+finished preprocessing
+running PeelFixA core 1
+cur state 27336640 27336640
+442 1195
+running PeelFixA core 2
+cur state 27182776 27336640
+805 453
+running PeelFixA core 3
+cur state 26942796 27336640
+796 390
+running PeelFixA core 4
+cur state 26565608 27336640
+852 386
+running PeelFixA core 5
+cur state 26056970 27336640
+878 386
+running PeelFixA core 6
+cur state 25439978 27336640
+885 386
+running PeelFixA core 7
+cur state 24753944 27336640
+graph constructed 876252 24753944 from 876252 24753944
+delete graph
+delete graph
+compact at start 24753944
+915 386
+running PeelFixA core 8
+cur state 24039286 24753944
+924 386
+running PeelFixA core 9
+cur state 23329782 24753944
+935 386
+running PeelFixA core 10
+cur state 22651394 24753944
+850 280
+running PeelFixA core 11
+cur state 22005558 24753944
+graph constructed 876252 22005558 from 876252 22005558
+delete graph
+delete graph
+compact at start 22005558
+819 273
+running PeelFixA core 12
+cur state 21405162 22005558
+814 266
+running PeelFixA core 13
+cur state 20850112 22005558
+816 261
+running PeelFixA core 14
+cur state 20342176 22005558
+797 254
+running PeelFixA core 15
+cur state 19873608 22005558
+graph constructed 876252 19873608 from 876252 19873608
+delete graph
+delete graph
+compact at start 19873608
+778 249
+running PeelFixA core 16
+cur state 19442944 19873608
+775 244
+running PeelFixA core 17
+cur state 19035358 19873608
+773 241
+running PeelFixA core 18
+cur state 18658356 19873608
+742 236
+running PeelFixA core 19
+cur state 18295384 19873608
+744 232
+running PeelFixA core 20
+cur state 17948442 19873608
+graph constructed 876252 17948442 from 876252 17948442
+delete graph
+delete graph
+compact at start 17948442
+718 229
+running PeelFixA core 21
+cur state 17621162 17948442
+715 226
+running PeelFixA core 22
+cur state 17312790 17948442
+738 223
+running PeelFixA core 23
+cur state 17018468 17948442
+739 220
+running PeelFixA core 24
+cur state 16735470 17948442
+728 216
+running PeelFixA core 25
+cur state 16455464 17948442
+718 213
+running PeelFixA core 26
+cur state 16185934 17948442
+graph constructed 876252 16185934 from 876252 16185934
+delete graph
+delete graph
+compact at start 16185934
+715 210
+running PeelFixA core 27
+cur state 15926440 16185934
+697 208
+running PeelFixA core 28
+cur state 15686904 16185934
+687 206
+running PeelFixA core 29
+cur state 15441218 16185934
+683 205
+running PeelFixA core 30
+cur state 15188922 16185934
+671 204
+running PeelFixA core 31
+cur state 14948304 16185934
+682 202
+running PeelFixA core 32
+cur state 14728374 16185934
+669 202
+running PeelFixA core 33
+cur state 14504690 16185934
+graph constructed 876252 14504690 from 876252 14504690
+delete graph
+delete graph
+compact at start 14504690
+644 202
+running PeelFixA core 34
+cur state 14278768 14504690
+654 202
+running PeelFixA core 35
+cur state 14068732 14504690
+676 202
+running PeelFixA core 36
+cur state 13849534 14504690
+641 202
+running PeelFixA core 37
+cur state 13638066 14504690
+642 202
+running PeelFixA core 38
+cur state 13427922 14504690
+618 202
+running PeelFixA core 39
+cur state 13227604 14504690
+647 202
+running PeelFixA core 40
+cur state 13029968 14504690
+graph constructed 876252 13029968 from 876252 13029968
+delete graph
+delete graph
+compact at start 13029968
+624 202
+running PeelFixA core 41
+cur state 12827248 13029968
+634 202
+running PeelFixA core 42
+cur state 12632516 13029968
+606 202
+running PeelFixA core 43
+cur state 12437800 13029968
+617 202
+running PeelFixA core 44
+cur state 12236808 13029968
+588 202
+running PeelFixA core 45
+cur state 12044906 13029968
+608 202
+running PeelFixA core 46
+cur state 11851392 13029968
+587 190
+running PeelFixA core 47
+cur state 11671186 13029968
+graph constructed 876252 11671186 from 876252 11671186
+delete graph
+delete graph
+compact at start 11671186
+569 190
+running PeelFixA core 48
+cur state 11485194 11671186
+549 190
+running PeelFixA core 49
+cur state 11299008 11671186
+555 190
+running PeelFixA core 50
+cur state 11114600 11671186
+580 190
+running PeelFixA core 51
+cur state 10928202 11671186
+548 190
+running PeelFixA core 52
+cur state 10745610 11671186
+556 190
+running PeelFixA core 53
+cur state 10574406 11671186
+graph constructed 876252 10574406 from 876252 10574406
+delete graph
+delete graph
+compact at start 10574406
+537 190
+running PeelFixA core 54
+cur state 10413850 10574406
+530 190
+running PeelFixA core 55
+cur state 10250816 10574406
+523 190
+running PeelFixA core 56
+cur state 10079482 10574406
+510 190
+running PeelFixA core 57
+cur state 9899466 10574406
+507 183
+running PeelFixA core 58
+cur state 9737994 10574406
+483 181
+running PeelFixA core 59
+cur state 9579008 10574406
+graph constructed 876252 9579008 from 876252 9579008
+delete graph
+delete graph
+compact at start 9579008
+495 181
+running PeelFixA core 60
+cur state 9434938 9579008
+478 180
+running PeelFixA core 61
+cur state 9284814 9579008
+471 179
+running PeelFixA core 62
+cur state 9142560 9579008
+490 178
+running PeelFixA core 63
+cur state 8999244 9579008
+470 178
+running PeelFixA core 64
+cur state 8853386 9579008
+465 176
+running PeelFixA core 65
+cur state 8704578 9579008
+graph constructed 876252 8704578 from 876252 8704578
+delete graph
+delete graph
+compact at start 8704578
+465 176
+running PeelFixA core 66
+cur state 8552052 8704578
+434 176
+running PeelFixA core 67
+cur state 8415790 8704578
+458 176
+running PeelFixA core 68
+cur state 8282204 8704578
+438 176
+running PeelFixA core 69
+cur state 8144290 8704578
+444 175
+running PeelFixA core 70
+cur state 8008400 8704578
+439 175
+running PeelFixA core 71
+cur state 7868796 8704578
+graph constructed 876252 7868796 from 876252 7868796
+delete graph
+delete graph
+compact at start 7868796
+423 175
+running PeelFixA core 72
+cur state 7743536 7868796
+417 174
+running PeelFixA core 73
+cur state 7612166 7868796
+458 174
+running PeelFixA core 74
+cur state 7481680 7868796
+414 174
+running PeelFixA core 75
+cur state 7350370 7868796
+394 173
+running PeelFixA core 76
+cur state 7222048 7868796
+393 173
+running PeelFixA core 77
+cur state 7086116 7868796
+graph constructed 876252 7086116 from 876252 7086116
+delete graph
+delete graph
+compact at start 7086116
+408 173
+running PeelFixA core 78
+cur state 6949174 7086116
+399 172
+running PeelFixA core 79
+cur state 6812346 7086116
+403 172
+running PeelFixA core 80
+cur state 6683476 7086116
+378 171
+running PeelFixA core 81
+cur state 6552106 7086116
+395 171
+running PeelFixA core 82
+cur state 6435072 7086116
+graph constructed 876252 6435072 from 876252 6435072
+delete graph
+delete graph
+compact at start 6435072
+372 171
+running PeelFixA core 83
+cur state 6314442 6435072
+370 171
+running PeelFixA core 84
+cur state 6196536 6435072
+346 170
+running PeelFixA core 85
+cur state 6086088 6435072
+343 170
+running PeelFixA core 86
+cur state 5966826 6435072
+368 169
+running PeelFixA core 87
+cur state 5852212 6435072
+338 169
+running PeelFixA core 88
+cur state 5725990 6435072
+graph constructed 876252 5725990 from 876252 5725990
+delete graph
+delete graph
+compact at start 5725990
+360 168
+running PeelFixA core 89
+cur state 5605910 5725990
+338 168
+running PeelFixA core 90
+cur state 5493328 5725990
+325 168
+running PeelFixA core 91
+cur state 5382356 5725990
+353 168
+running PeelFixA core 92
+cur state 5262538 5725990
+330 167
+running PeelFixA core 93
+cur state 5141798 5725990
+graph constructed 876252 5141798 from 876252 5141798
+delete graph
+delete graph
+compact at start 5141798
+324 167
+running PeelFixA core 94
+cur state 5028604 5141798
+327 167
+running PeelFixA core 95
+cur state 4920080 5141798
+315 166
+running PeelFixA core 96
+cur state 4797304 5141798
+315 166
+running PeelFixA core 97
+cur state 4688168 5141798
+299 165
+running PeelFixA core 98
+cur state 4571332 5141798
+graph constructed 876252 4571332 from 876252 4571332
+delete graph
+delete graph
+compact at start 4571332
+306 165
+running PeelFixA core 99
+cur state 4466160 4571332
+299 165
+running PeelFixA core 100
+cur state 4364268 4571332
+284 164
+running PeelFixA core 101
+cur state 4252402 4571332
+279 164
+running PeelFixA core 102
+cur state 4139840 4571332
+graph constructed 876252 4139840 from 876252 4139840
+delete graph
+delete graph
+compact at start 4139840
+288 164
+running PeelFixA core 103
+cur state 4023512 4139840
+279 164
+running PeelFixA core 104
+cur state 3905212 4139840
+272 163
+running PeelFixA core 105
+cur state 3799038 4139840
+276 163
+running PeelFixA core 106
+cur state 3684560 4139840
+graph constructed 876252 3684560 from 876252 3684560
+delete graph
+delete graph
+compact at start 3684560
+255 163
+running PeelFixA core 107
+cur state 3572282 3684560
+260 162
+running PeelFixA core 108
+cur state 3464968 3684560
+250 162
+running PeelFixA core 109
+cur state 3352152 3684560
+266 162
+running PeelFixA core 110
+cur state 3238970 3684560
+graph constructed 876252 3238970 from 876252 3238970
+delete graph
+delete graph
+compact at start 3238970
+244 162
+running PeelFixA core 111
+cur state 3122824 3238970
+230 162
+running PeelFixA core 112
+cur state 3020602 3238970
+216 161
+running PeelFixA core 113
+cur state 2896708 3238970
+graph constructed 876252 2896708 from 876252 2896708
+delete graph
+delete graph
+compact at start 2896708
+228 161
+running PeelFixA core 114
+cur state 2758742 2896708
+221 161
+running PeelFixA core 115
+cur state 2614350 2896708
+graph constructed 876252 2614350 from 876252 2614350
+delete graph
+delete graph
+compact at start 2614350
+210 161
+running PeelFixA core 116
+cur state 2514446 2614350
+212 160
+running PeelFixA core 117
+cur state 2403128 2614350
+182 160
+running PeelFixA core 118
+cur state 2298818 2614350
+graph constructed 876252 2298818 from 876252 2298818
+delete graph
+delete graph
+compact at start 2298818
+182 159
+running PeelFixA core 119
+cur state 2203708 2298818
+184 159
+running PeelFixA core 120
+cur state 2082366 2298818
+graph constructed 876252 2082366 from 876252 2082366
+delete graph
+delete graph
+compact at start 2082366
+167 159
+running PeelFixA core 121
+cur state 1926410 2082366
+151 159
+running PeelFixA core 122
+cur state 1818074 2082366
+graph constructed 876252 1818074 from 876252 1818074
+delete graph
+delete graph
+compact at start 1818074
+149 159
+running PeelFixA core 123
+cur state 1681110 1818074
+147 158
+running PeelFixA core 124
+cur state 1546238 1818074
+graph constructed 876252 1546238 from 876252 1546238
+delete graph
+delete graph
+compact at start 1546238
+126 158
+running PeelFixA core 125
+cur state 1459484 1546238
+122 158
+running PeelFixA core 126
+cur state 1363614 1546238
+graph constructed 876252 1363614 from 876252 1363614
+delete graph
+delete graph
+compact at start 1363614
+111 158
+running PeelFixA core 127
+cur state 1297930 1363614
+103 158
+running PeelFixA core 128
+cur state 1205300 1363614
+graph constructed 876252 1205300 from 876252 1205300
+delete graph
+delete graph
+compact at start 1205300
+90 157
+running PeelFixA core 129
+cur state 1070228 1205300
+graph constructed 876252 1070228 from 876252 1070228
+delete graph
+delete graph
+compact at start 1070228
+90 157
+running PeelFixA core 130
+cur state 973668 1070228
+74 157
+running PeelFixA core 131
+cur state 723322 1070228
+graph constructed 876252 723322 from 876252 723322
+delete graph
+delete graph
+compact at start 723322
+55 157
+running PeelFixA core 132
+cur state 82328 723322
+graph constructed 876252 82328 from 876252 82328
+delete graph
+delete graph
+compact at start 82328
+27 157
+running PeelFixA core 133
+cur state 82328 82328
+28 157
+running PeelFixA core 134
+cur state 81798 82328
+27 156
+running PeelFixA core 135
+cur state 81798 82328
+29 156
+running PeelFixA core 136
+cur state 81798 82328
+28 156
+running PeelFixA core 137
+cur state 80984 82328
+21 156
+running PeelFixA core 138
+cur state 79616 82328
+18 155
+running PeelFixA core 139
+cur state 79616 82328
+18 155
+running PeelFixA core 140
+cur state 79616 82328
+18 155
+running PeelFixA core 141
+cur state 78776 82328
+18 154
+running PeelFixA core 142
+cur state 77930 82328
+16 154
+running PeelFixA core 143
+cur state 76796 82328
+13 154
+running PeelFixA core 144
+cur state 76510 82328
+15 153
+running PeelFixA core 145
+cur state 75646 82328
+11 153
+running PeelFixA core 146
+cur state 75646 82328
+12 152
+running PeelFixA core 147
+cur state 75646 82328
+13 152
+running PeelFixA core 148
+cur state 75646 82328
+10 152
+running PeelFixA core 149
+cur state 74462 82328
+graph constructed 876252 74462 from 876252 74462
+delete graph
+delete graph
+compact at start 74462
+8 152
+running PeelFixA core 150
+cur state 72680 74462
+7 151
+running PeelFixA core 151
+cur state 72380 74462
+5 151
+running PeelFixB core 1
+cur state 27336640 27336640
+2867 162169
+running PeelFixB core 2
+cur state 27182776 27336640
+27555 29420
+running PeelFixB core 3
+cur state 26942796 27336640
+21472 21180
+running PeelFixB core 4
+cur state 26565608 27336640
+18449 18028
+running PeelFixB core 5
+cur state 26056970 27336640
+16578 16034
+running PeelFixB core 6
+cur state 25439978 27336640
+15140 14533
+running PeelFixB core 7
+cur state 24753944 27336640
+graph constructed 876252 24753944 from 876252 24753944
+delete graph
+delete graph
+compact at start 24753944
+14049 13397
+running PeelFixB core 8
+cur state 24039286 24753944
+13163 12458
+running PeelFixB core 9
+cur state 23329782 24753944
+12043 11304
+running PeelFixB core 10
+cur state 22651394 24753944
+11285 10551
+running PeelFixB core 11
+cur state 22005558 24753944
+graph constructed 876252 22005558 from 876252 22005558
+delete graph
+delete graph
+compact at start 22005558
+10624 9858
+running PeelFixB core 12
+cur state 21405162 22005558
+10014 9227
+running PeelFixB core 13
+cur state 20850112 22005558
+9482 8704
+running PeelFixB core 14
+cur state 20342176 22005558
+9131 8357
+running PeelFixB core 15
+cur state 19873608 22005558
+graph constructed 876252 19873608 from 876252 19873608
+delete graph
+delete graph
+compact at start 19873608
+8656 7872
+running PeelFixB core 16
+cur state 19442944 19873608
+8302 7524
+running PeelFixB core 17
+cur state 19035358 19873608
+7961 7174
+running PeelFixB core 18
+cur state 18658356 19873608
+7513 6730
+running PeelFixB core 19
+cur state 18295384 19873608
+7147 6367
+running PeelFixB core 20
+cur state 17948442 19873608
+graph constructed 876252 17948442 from 876252 17948442
+delete graph
+delete graph
+compact at start 17948442
+6799 6036
+running PeelFixB core 21
+cur state 17621162 17948442
+6507 5774
+running PeelFixB core 22
+cur state 17312790 17948442
+6328 5532
+running PeelFixB core 23
+cur state 17018468 17948442
+6072 5309
+running PeelFixB core 24
+cur state 16735470 17948442
+5908 5090
+running PeelFixB core 25
+cur state 16455464 17948442
+5596 4839
+running PeelFixB core 26
+cur state 16185934 17948442
+graph constructed 876252 16185934 from 876252 16185934
+delete graph
+delete graph
+compact at start 16185934
+5425 4688
+running PeelFixB core 27
+cur state 15926440 16185934
+5205 4452
+running PeelFixB core 28
+cur state 15686904 16185934
+4985 4273
+running PeelFixB core 29
+cur state 15441218 16185934
+4865 4110
+running PeelFixB core 30
+cur state 15188922 16185934
+4687 3937
+running PeelFixB core 31
+cur state 14948304 16185934
+4574 3777
+running PeelFixB core 32
+cur state 14728374 16185934
+4388 3630
+running PeelFixB core 33
+cur state 14504690 16185934
+graph constructed 876252 14504690 from 876252 14504690
+delete graph
+delete graph
+compact at start 14504690
+4217 3511
+running PeelFixB core 34
+cur state 14278768 14504690
+4143 3382
+running PeelFixB core 35
+cur state 14068732 14504690
+3991 3250
+running PeelFixB core 36
+cur state 13849534 14504690
+3880 3171
+running PeelFixB core 37
+cur state 13638066 14504690
+3801 3070
+running PeelFixB core 38
+cur state 13427922 14504690
+3633 2917
+running PeelFixB core 39
+cur state 13227604 14504690
+3573 2860
+running PeelFixB core 40
+cur state 13029968 14504690
+graph constructed 876252 13029968 from 876252 13029968
+delete graph
+delete graph
+compact at start 13029968
+3539 2842
+running PeelFixB core 41
+cur state 12827248 13029968
+3550 2824
+running PeelFixB core 42
+cur state 12632516 13029968
+3495 2803
+running PeelFixB core 43
+cur state 12437800 13029968
+3443 2764
+running PeelFixB core 44
+cur state 12236808 13029968
+3448 2729
+running PeelFixB core 45
+cur state 12044906 13029968
+3404 2701
+running PeelFixB core 46
+cur state 11851392 13029968
+3327 2662
+running PeelFixB core 47
+cur state 11671186 13029968
+graph constructed 876252 11671186 from 876252 11671186
+delete graph
+delete graph
+compact at start 11671186
+3304 2626
+running PeelFixB core 48
+cur state 11485194 11671186
+3259 2609
+running PeelFixB core 49
+cur state 11299008 11671186
+3245 2577
+running PeelFixB core 50
+cur state 11114600 11671186
+3191 2540
+running PeelFixB core 51
+cur state 10928202 11671186
+3185 2514
+running PeelFixB core 52
+cur state 10745610 11671186
+3163 2489
+running PeelFixB core 53
+cur state 10574406 11671186
+graph constructed 876252 10574406 from 876252 10574406
+delete graph
+delete graph
+compact at start 10574406
+3137 2465
+running PeelFixB core 54
+cur state 10413850 10574406
+3097 2437
+running PeelFixB core 55
+cur state 10250816 10574406
+3041 2406
+running PeelFixB core 56
+cur state 10079482 10574406
+2973 2372
+running PeelFixB core 57
+cur state 9899466 10574406
+2938 2348
+running PeelFixB core 58
+cur state 9737994 10574406
+2910 2316
+running PeelFixB core 59
+cur state 9579008 10574406
+graph constructed 876252 9579008 from 876252 9579008
+delete graph
+delete graph
+compact at start 9579008
+2867 2289
+running PeelFixB core 60
+cur state 9434938 9579008
+2846 2263
+running PeelFixB core 61
+cur state 9284814 9579008
+2837 2229
+running PeelFixB core 62
+cur state 9142560 9579008
+2753 2193
+running PeelFixB core 63
+cur state 8999244 9579008
+2739 2150
+running PeelFixB core 64
+cur state 8853386 9579008
+2734 2125
+running PeelFixB core 65
+cur state 8704578 9579008
+graph constructed 876252 8704578 from 876252 8704578
+delete graph
+delete graph
+compact at start 8704578
+2677 2096
+running PeelFixB core 66
+cur state 8552052 8704578
+2627 2049
+running PeelFixB core 67
+cur state 8415790 8704578
+2557 1982
+running PeelFixB core 68
+cur state 8282204 8704578
+2475 1930
+running PeelFixB core 69
+cur state 8144290 8704578
+2452 1887
+running PeelFixB core 70
+cur state 8008400 8704578
+2381 1835
+running PeelFixB core 71
+cur state 7868796 8704578
+graph constructed 876252 7868796 from 876252 7868796
+delete graph
+delete graph
+compact at start 7868796
+2373 1801
+running PeelFixB core 72
+cur state 7743536 7868796
+2312 1762
+running PeelFixB core 73
+cur state 7612166 7868796
+2222 1698
+running PeelFixB core 74
+cur state 7481680 7868796
+2173 1631
+running PeelFixB core 75
+cur state 7350370 7868796
+2138 1583
+running PeelFixB core 76
+cur state 7222048 7868796
+2098 1536
+running PeelFixB core 77
+cur state 7086116 7868796
+graph constructed 876252 7086116 from 876252 7086116
+delete graph
+delete graph
+compact at start 7086116
+2037 1482
+running PeelFixB core 78
+cur state 6949174 7086116
+1943 1422
+running PeelFixB core 79
+cur state 6812346 7086116
+1900 1367
+running PeelFixB core 80
+cur state 6683476 7086116
+1785 1305
+running PeelFixB core 81
+cur state 6552106 7086116
+1779 1253
+running PeelFixB core 82
+cur state 6435072 7086116
+graph constructed 876252 6435072 from 876252 6435072
+delete graph
+delete graph
+compact at start 6435072
+1712 1203
+running PeelFixB core 83
+cur state 6314442 6435072
+1679 1166
+running PeelFixB core 84
+cur state 6196536 6435072
+1625 1132
+running PeelFixB core 85
+cur state 6086088 6435072
+1554 1089
+running PeelFixB core 86
+cur state 5966826 6435072
+1545 1059
+running PeelFixB core 87
+cur state 5852212 6435072
+1522 1025
+running PeelFixB core 88
+cur state 5725990 6435072
+graph constructed 876252 5725990 from 876252 5725990
+delete graph
+delete graph
+compact at start 5725990
+1431 982
+running PeelFixB core 89
+cur state 5605910 5725990
+1375 940
+running PeelFixB core 90
+cur state 5493328 5725990
+1367 903
+running PeelFixB core 91
+cur state 5382356 5725990
+1291 858
+running PeelFixB core 92
+cur state 5262538 5725990
+1223 795
+running PeelFixB core 93
+cur state 5141798 5725990
+graph constructed 876252 5141798 from 876252 5141798
+delete graph
+delete graph
+compact at start 5141798
+1174 757
+running PeelFixB core 94
+cur state 5028604 5141798
+1102 705
+running PeelFixB core 95
+cur state 4920080 5141798
+1049 662
+running PeelFixB core 96
+cur state 4797304 5141798
+1029 611
+running PeelFixB core 97
+cur state 4688168 5141798
+941 555
+running PeelFixB core 98
+cur state 4571332 5141798
+graph constructed 876252 4571332 from 876252 4571332
+delete graph
+delete graph
+compact at start 4571332
+888 498
+running PeelFixB core 99
+cur state 4466160 4571332
+862 459
+running PeelFixB core 100
+cur state 4364268 4571332
+823 432
+running PeelFixB core 101
+cur state 4252402 4571332
+787 411
+running PeelFixB core 102
+cur state 4139840 4571332
+graph constructed 876252 4139840 from 876252 4139840
+delete graph
+delete graph
+compact at start 4139840
+712 389
+running PeelFixB core 103
+cur state 4023512 4139840
+723 365
+running PeelFixB core 104
+cur state 3905212 4139840
+662 336
+running PeelFixB core 105
+cur state 3799038 4139840
+643 307
+running PeelFixB core 106
+cur state 3684560 4139840
+graph constructed 876252 3684560 from 876252 3684560
+delete graph
+delete graph
+compact at start 3684560
+608 290
+running PeelFixB core 107
+cur state 3572282 3684560
+583 275
+running PeelFixB core 108
+cur state 3464968 3684560
+567 264
+running PeelFixB core 109
+cur state 3352152 3684560
+514 259
+running PeelFixB core 110
+cur state 3238970 3684560
+graph constructed 876252 3238970 from 876252 3238970
+delete graph
+delete graph
+compact at start 3238970
+483 250
+running PeelFixB core 111
+cur state 3122824 3238970
+504 246
+running PeelFixB core 112
+cur state 3020602 3238970
+483 236
+running PeelFixB core 113
+cur state 2896708 3238970
+graph constructed 876252 2896708 from 876252 2896708
+delete graph
+delete graph
+compact at start 2896708
+434 230
+running PeelFixB core 114
+cur state 2758742 2896708
+428 223
+running PeelFixB core 115
+cur state 2614350 2896708
+graph constructed 876252 2614350 from 876252 2614350
+delete graph
+delete graph
+compact at start 2614350
+414 215
+running PeelFixB core 116
+cur state 2514446 2614350
+386 210
+running PeelFixB core 117
+cur state 2403128 2614350
+378 204
+running PeelFixB core 118
+cur state 2298818 2614350
+graph constructed 876252 2298818 from 876252 2298818
+delete graph
+delete graph
+compact at start 2298818
+371 203
+running PeelFixB core 119
+cur state 2203708 2298818
+325 202
+running PeelFixB core 120
+cur state 2082366 2298818
+graph constructed 876252 2082366 from 876252 2082366
+delete graph
+delete graph
+compact at start 2082366
+321 201
+running PeelFixB core 121
+cur state 1926410 2082366
+297 201
+running PeelFixB core 122
+cur state 1818074 2082366
+graph constructed 876252 1818074 from 876252 1818074
+delete graph
+delete graph
+compact at start 1818074
+282 200
+running PeelFixB core 123
+cur state 1681110 1818074
+271 199
+running PeelFixB core 124
+cur state 1546238 1818074
+graph constructed 876252 1546238 from 876252 1546238
+delete graph
+delete graph
+compact at start 1546238
+232 197
+running PeelFixB core 125
+cur state 1459484 1546238
+235 196
+running PeelFixB core 126
+cur state 1363614 1546238
+graph constructed 876252 1363614 from 876252 1363614
+delete graph
+delete graph
+compact at start 1363614
+204 196
+running PeelFixB core 127
+cur state 1297930 1363614
+195 195
+running PeelFixB core 128
+cur state 1205300 1363614
+graph constructed 876252 1205300 from 876252 1205300
+delete graph
+delete graph
+compact at start 1205300
+168 194
+running PeelFixB core 129
+cur state 1070228 1205300
+graph constructed 876252 1070228 from 876252 1070228
+delete graph
+delete graph
+compact at start 1070228
+153 193
+running PeelFixB core 130
+cur state 973668 1070228
+127 192
+running PeelFixB core 131
+cur state 723322 1070228
+graph constructed 876252 723322 from 876252 723322
+delete graph
+delete graph
+compact at start 723322
+102 190
+running PeelFixB core 132
+cur state 82328 723322
+graph constructed 876252 82328 from 876252 82328
+delete graph
+delete graph
+compact at start 82328
+48 190
+running PeelFixB core 133
+cur state 82328 82328
+47 189
+running PeelFixB core 134
+cur state 81798 82328
+39 187
+running PeelFixB core 135
+cur state 81798 82328
+45 185
+running PeelFixB core 136
+cur state 81798 82328
+45 183
+running PeelFixB core 137
+cur state 80984 82328
+40 181
+running PeelFixB core 138
+cur state 79616 82328
+32 180
+running PeelFixB core 139
+cur state 79616 82328
+36 179
+running PeelFixB core 140
+cur state 79616 82328
+36 177
+running PeelFixB core 141
+cur state 78776 82328
+32 176
+running PeelFixB core 142
+cur state 77930 82328
+26 174
+running PeelFixB core 143
+cur state 76796 82328
+25 174
+running PeelFixB core 144
+cur state 76510 82328
+20 173
+running PeelFixB core 145
+cur state 75646 82328
+19 170
+running PeelFixB core 146
+cur state 75646 82328
+19 168
+running PeelFixB core 147
+cur state 75646 82328
+17 163
+running PeelFixB core 148
+cur state 75646 82328
+14 158
+running PeelFixB core 149
+cur state 74462 82328
+graph constructed 876252 74462 from 876252 74462
+delete graph
+delete graph
+compact at start 74462
+8 156
+running PeelFixB core 150
+cur state 72680 74462
+7 154
+running PeelFixB core 151
+cur state 72380 74462
+6 153
+pq time 2.64679
+pt time 2.77279
+delete graph
+### Running Time: 19.7708
+# time per iter: 19.7708
+delete graph
+delete graph
+readin 876252 27336640
+graph constructed 876252 27336640 from 876252 27336640
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 36864, node size: 16392, bytes: 604274688
+### Application: BiCore
+### Graph: ../../../inputs/epinions_adj
+### Threads: 60
+### n: 876252
+### m: 27336640
+### Params: -nb (num_buckets) = 16 -bi = 120491
+### ------------------------------------
+starting
+### rho = 1197 k_{max} = 151
+m 27336640 876252
+finished preprocessing
+running PeelFixA core 1
+cur state 27336640 27336640
+442 1195
+running PeelFixA core 2
+cur state 27182776 27336640
+805 453
+running PeelFixA core 3
+cur state 26942796 27336640
+796 390
+running PeelFixA core 4
+cur state 26565608 27336640
+852 386
+running PeelFixA core 5
+cur state 26056970 27336640
+878 386
+running PeelFixA core 6
+cur state 25439978 27336640
+885 386
+running PeelFixA core 7
+cur state 24753944 27336640
+graph constructed 876252 24753944 from 876252 24753944
+delete graph
+delete graph
+compact at start 24753944
+915 386
+running PeelFixA core 8
+cur state 24039286 24753944
+924 386
+running PeelFixA core 9
+cur state 23329782 24753944
+935 386
+running PeelFixA core 10
+cur state 22651394 24753944
+850 280
+running PeelFixA core 11
+cur state 22005558 24753944
+graph constructed 876252 22005558 from 876252 22005558
+delete graph
+delete graph
+compact at start 22005558
+819 273
+running PeelFixA core 12
+cur state 21405162 22005558
+814 266
+running PeelFixA core 13
+cur state 20850112 22005558
+816 261
+running PeelFixA core 14
+cur state 20342176 22005558
+797 254
+running PeelFixA core 15
+cur state 19873608 22005558
+graph constructed 876252 19873608 from 876252 19873608
+delete graph
+delete graph
+compact at start 19873608
+778 249
+running PeelFixA core 16
+cur state 19442944 19873608
+775 244
+running PeelFixA core 17
+cur state 19035358 19873608
+773 241
+running PeelFixA core 18
+cur state 18658356 19873608
+742 236
+running PeelFixA core 19
+cur state 18295384 19873608
+744 232
+running PeelFixA core 20
+cur state 17948442 19873608
+graph constructed 876252 17948442 from 876252 17948442
+delete graph
+delete graph
+compact at start 17948442
+718 229
+running PeelFixA core 21
+cur state 17621162 17948442
+715 226
+running PeelFixA core 22
+cur state 17312790 17948442
+738 223
+running PeelFixA core 23
+cur state 17018468 17948442
+739 220
+running PeelFixA core 24
+cur state 16735470 17948442
+728 216
+running PeelFixA core 25
+cur state 16455464 17948442
+718 213
+running PeelFixA core 26
+cur state 16185934 17948442
+graph constructed 876252 16185934 from 876252 16185934
+delete graph
+delete graph
+compact at start 16185934
+715 210
+running PeelFixA core 27
+cur state 15926440 16185934
+697 208
+running PeelFixA core 28
+cur state 15686904 16185934
+687 206
+running PeelFixA core 29
+cur state 15441218 16185934
+683 205
+running PeelFixA core 30
+cur state 15188922 16185934
+671 204
+running PeelFixA core 31
+cur state 14948304 16185934
+682 202
+running PeelFixA core 32
+cur state 14728374 16185934
+669 202
+running PeelFixA core 33
+cur state 14504690 16185934
+graph constructed 876252 14504690 from 876252 14504690
+delete graph
+delete graph
+compact at start 14504690
+644 202
+running PeelFixA core 34
+cur state 14278768 14504690
+654 202
+running PeelFixA core 35
+cur state 14068732 14504690
+676 202
+running PeelFixA core 36
+cur state 13849534 14504690
+641 202
+running PeelFixA core 37
+cur state 13638066 14504690
+642 202
+running PeelFixA core 38
+cur state 13427922 14504690
+618 202
+running PeelFixA core 39
+cur state 13227604 14504690
+647 202
+running PeelFixA core 40
+cur state 13029968 14504690
+graph constructed 876252 13029968 from 876252 13029968
+delete graph
+delete graph
+compact at start 13029968
+624 202
+running PeelFixA core 41
+cur state 12827248 13029968
+634 202
+running PeelFixA core 42
+cur state 12632516 13029968
+606 202
+running PeelFixA core 43
+cur state 12437800 13029968
+617 202
+running PeelFixA core 44
+cur state 12236808 13029968
+588 202
+running PeelFixA core 45
+cur state 12044906 13029968
+608 202
+running PeelFixA core 46
+cur state 11851392 13029968
+587 190
+running PeelFixA core 47
+cur state 11671186 13029968
+graph constructed 876252 11671186 from 876252 11671186
+delete graph
+delete graph
+compact at start 11671186
+569 190
+running PeelFixA core 48
+cur state 11485194 11671186
+549 190
+running PeelFixA core 49
+cur state 11299008 11671186
+555 190
+running PeelFixA core 50
+cur state 11114600 11671186
+580 190
+running PeelFixA core 51
+cur state 10928202 11671186
+548 190
+running PeelFixA core 52
+cur state 10745610 11671186
+556 190
+running PeelFixA core 53
+cur state 10574406 11671186
+graph constructed 876252 10574406 from 876252 10574406
+delete graph
+delete graph
+compact at start 10574406
+537 190
+running PeelFixA core 54
+cur state 10413850 10574406
+530 190
+running PeelFixA core 55
+cur state 10250816 10574406
+523 190
+running PeelFixA core 56
+cur state 10079482 10574406
+510 190
+running PeelFixA core 57
+cur state 9899466 10574406
+507 183
+running PeelFixA core 58
+cur state 9737994 10574406
+483 181
+running PeelFixA core 59
+cur state 9579008 10574406
+graph constructed 876252 9579008 from 876252 9579008
+delete graph
+delete graph
+compact at start 9579008
+495 181
+running PeelFixA core 60
+cur state 9434938 9579008
+478 180
+running PeelFixA core 61
+cur state 9284814 9579008
+471 179
+running PeelFixA core 62
+cur state 9142560 9579008
+490 178
+running PeelFixA core 63
+cur state 8999244 9579008
+470 178
+running PeelFixA core 64
+cur state 8853386 9579008
+465 176
+running PeelFixA core 65
+cur state 8704578 9579008
+graph constructed 876252 8704578 from 876252 8704578
+delete graph
+delete graph
+compact at start 8704578
+465 176
+running PeelFixA core 66
+cur state 8552052 8704578
+434 176
+running PeelFixA core 67
+cur state 8415790 8704578
+458 176
+running PeelFixA core 68
+cur state 8282204 8704578
+438 176
+running PeelFixA core 69
+cur state 8144290 8704578
+444 175
+running PeelFixA core 70
+cur state 8008400 8704578
+439 175
+running PeelFixA core 71
+cur state 7868796 8704578
+graph constructed 876252 7868796 from 876252 7868796
+delete graph
+delete graph
+compact at start 7868796
+423 175
+running PeelFixA core 72
+cur state 7743536 7868796
+417 174
+running PeelFixA core 73
+cur state 7612166 7868796
+458 174
+running PeelFixA core 74
+cur state 7481680 7868796
+414 174
+running PeelFixA core 75
+cur state 7350370 7868796
+394 173
+running PeelFixA core 76
+cur state 7222048 7868796
+393 173
+running PeelFixA core 77
+cur state 7086116 7868796
+graph constructed 876252 7086116 from 876252 7086116
+delete graph
+delete graph
+compact at start 7086116
+408 173
+running PeelFixA core 78
+cur state 6949174 7086116
+399 172
+running PeelFixA core 79
+cur state 6812346 7086116
+403 172
+running PeelFixA core 80
+cur state 6683476 7086116
+378 171
+running PeelFixA core 81
+cur state 6552106 7086116
+395 171
+running PeelFixA core 82
+cur state 6435072 7086116
+graph constructed 876252 6435072 from 876252 6435072
+delete graph
+delete graph
+compact at start 6435072
+372 171
+running PeelFixA core 83
+cur state 6314442 6435072
+370 171
+running PeelFixA core 84
+cur state 6196536 6435072
+346 170
+running PeelFixA core 85
+cur state 6086088 6435072
+343 170
+running PeelFixA core 86
+cur state 5966826 6435072
+368 169
+running PeelFixA core 87
+cur state 5852212 6435072
+338 169
+running PeelFixA core 88
+cur state 5725990 6435072
+graph constructed 876252 5725990 from 876252 5725990
+delete graph
+delete graph
+compact at start 5725990
+360 168
+running PeelFixA core 89
+cur state 5605910 5725990
+338 168
+running PeelFixA core 90
+cur state 5493328 5725990
+325 168
+running PeelFixA core 91
+cur state 5382356 5725990
+353 168
+running PeelFixA core 92
+cur state 5262538 5725990
+330 167
+running PeelFixA core 93
+cur state 5141798 5725990
+graph constructed 876252 5141798 from 876252 5141798
+delete graph
+delete graph
+compact at start 5141798
+324 167
+running PeelFixA core 94
+cur state 5028604 5141798
+327 167
+running PeelFixA core 95
+cur state 4920080 5141798
+315 166
+running PeelFixA core 96
+cur state 4797304 5141798
+315 166
+running PeelFixA core 97
+cur state 4688168 5141798
+299 165
+running PeelFixA core 98
+cur state 4571332 5141798
+graph constructed 876252 4571332 from 876252 4571332
+delete graph
+delete graph
+compact at start 4571332
+306 165
+running PeelFixA core 99
+cur state 4466160 4571332
+299 165
+running PeelFixA core 100
+cur state 4364268 4571332
+284 164
+running PeelFixA core 101
+cur state 4252402 4571332
+279 164
+running PeelFixA core 102
+cur state 4139840 4571332
+graph constructed 876252 4139840 from 876252 4139840
+delete graph
+delete graph
+compact at start 4139840
+288 164
+running PeelFixA core 103
+cur state 4023512 4139840
+279 164
+running PeelFixA core 104
+cur state 3905212 4139840
+272 163
+running PeelFixA core 105
+cur state 3799038 4139840
+276 163
+running PeelFixA core 106
+cur state 3684560 4139840
+graph constructed 876252 3684560 from 876252 3684560
+delete graph
+delete graph
+compact at start 3684560
+255 163
+running PeelFixA core 107
+cur state 3572282 3684560
+260 162
+running PeelFixA core 108
+cur state 3464968 3684560
+250 162
+running PeelFixA core 109
+cur state 3352152 3684560
+266 162
+running PeelFixA core 110
+cur state 3238970 3684560
+graph constructed 876252 3238970 from 876252 3238970
+delete graph
+delete graph
+compact at start 3238970
+244 162
+running PeelFixA core 111
+cur state 3122824 3238970
+230 162
+running PeelFixA core 112
+cur state 3020602 3238970
+216 161
+running PeelFixA core 113
+cur state 2896708 3238970
+graph constructed 876252 2896708 from 876252 2896708
+delete graph
+delete graph
+compact at start 2896708
+228 161
+running PeelFixA core 114
+cur state 2758742 2896708
+221 161
+running PeelFixA core 115
+cur state 2614350 2896708
+graph constructed 876252 2614350 from 876252 2614350
+delete graph
+delete graph
+compact at start 2614350
+210 161
+running PeelFixA core 116
+cur state 2514446 2614350
+212 160
+running PeelFixA core 117
+cur state 2403128 2614350
+182 160
+running PeelFixA core 118
+cur state 2298818 2614350
+graph constructed 876252 2298818 from 876252 2298818
+delete graph
+delete graph
+compact at start 2298818
+182 159
+running PeelFixA core 119
+cur state 2203708 2298818
+184 159
+running PeelFixA core 120
+cur state 2082366 2298818
+graph constructed 876252 2082366 from 876252 2082366
+delete graph
+delete graph
+compact at start 2082366
+167 159
+running PeelFixA core 121
+cur state 1926410 2082366
+151 159
+running PeelFixA core 122
+cur state 1818074 2082366
+graph constructed 876252 1818074 from 876252 1818074
+delete graph
+delete graph
+compact at start 1818074
+149 159
+running PeelFixA core 123
+cur state 1681110 1818074
+147 158
+running PeelFixA core 124
+cur state 1546238 1818074
+graph constructed 876252 1546238 from 876252 1546238
+delete graph
+delete graph
+compact at start 1546238
+126 158
+running PeelFixA core 125
+cur state 1459484 1546238
+122 158
+running PeelFixA core 126
+cur state 1363614 1546238
+graph constructed 876252 1363614 from 876252 1363614
+delete graph
+delete graph
+compact at start 1363614
+111 158
+running PeelFixA core 127
+cur state 1297930 1363614
+103 158
+running PeelFixA core 128
+cur state 1205300 1363614
+graph constructed 876252 1205300 from 876252 1205300
+delete graph
+delete graph
+compact at start 1205300
+90 157
+running PeelFixA core 129
+cur state 1070228 1205300
+graph constructed 876252 1070228 from 876252 1070228
+delete graph
+delete graph
+compact at start 1070228
+90 157
+running PeelFixA core 130
+cur state 973668 1070228
+74 157
+running PeelFixA core 131
+cur state 723322 1070228
+graph constructed 876252 723322 from 876252 723322
+delete graph
+delete graph
+compact at start 723322
+55 157
+running PeelFixA core 132
+cur state 82328 723322
+graph constructed 876252 82328 from 876252 82328
+delete graph
+delete graph
+compact at start 82328
+27 157
+running PeelFixA core 133
+cur state 82328 82328
+28 157
+running PeelFixA core 134
+cur state 81798 82328
+27 156
+running PeelFixA core 135
+cur state 81798 82328
+29 156
+running PeelFixA core 136
+cur state 81798 82328
+28 156
+running PeelFixA core 137
+cur state 80984 82328
+21 156
+running PeelFixA core 138
+cur state 79616 82328
+18 155
+running PeelFixA core 139
+cur state 79616 82328
+18 155
+running PeelFixA core 140
+cur state 79616 82328
+18 155
+running PeelFixA core 141
+cur state 78776 82328
+18 154
+running PeelFixA core 142
+cur state 77930 82328
+16 154
+running PeelFixA core 143
+cur state 76796 82328
+13 154
+running PeelFixA core 144
+cur state 76510 82328
+15 153
+running PeelFixA core 145
+cur state 75646 82328
+11 153
+running PeelFixA core 146
+cur state 75646 82328
+12 152
+running PeelFixA core 147
+cur state 75646 82328
+13 152
+running PeelFixA core 148
+cur state 75646 82328
+10 152
+running PeelFixA core 149
+cur state 74462 82328
+graph constructed 876252 74462 from 876252 74462
+delete graph
+delete graph
+compact at start 74462
+8 152
+running PeelFixA core 150
+cur state 72680 74462
+7 151
+running PeelFixA core 151
+cur state 72380 74462
+5 151
+running PeelFixB core 1
+cur state 27336640 27336640
+2867 162169
+running PeelFixB core 2
+cur state 27182776 27336640
+27555 29420
+running PeelFixB core 3
+cur state 26942796 27336640
+21472 21180
+running PeelFixB core 4
+cur state 26565608 27336640
+18449 18028
+running PeelFixB core 5
+cur state 26056970 27336640
+16578 16034
+running PeelFixB core 6
+cur state 25439978 27336640
+15140 14533
+running PeelFixB core 7
+cur state 24753944 27336640
+graph constructed 876252 24753944 from 876252 24753944
+delete graph
+delete graph
+compact at start 24753944
+14049 13397
+running PeelFixB core 8
+cur state 24039286 24753944
+13163 12458
+running PeelFixB core 9
+cur state 23329782 24753944
+12043 11304
+running PeelFixB core 10
+cur state 22651394 24753944
+11285 10551
+running PeelFixB core 11
+cur state 22005558 24753944
+graph constructed 876252 22005558 from 876252 22005558
+delete graph
+delete graph
+compact at start 22005558
+10624 9858
+running PeelFixB core 12
+cur state 21405162 22005558
+10014 9227
+running PeelFixB core 13
+cur state 20850112 22005558
+9482 8704
+running PeelFixB core 14
+cur state 20342176 22005558
+9131 8357
+running PeelFixB core 15
+cur state 19873608 22005558
+graph constructed 876252 19873608 from 876252 19873608
+delete graph
+delete graph
+compact at start 19873608
+8656 7872
+running PeelFixB core 16
+cur state 19442944 19873608
+8302 7524
+running PeelFixB core 17
+cur state 19035358 19873608
+7961 7174
+running PeelFixB core 18
+cur state 18658356 19873608
+7513 6730
+running PeelFixB core 19
+cur state 18295384 19873608
+7147 6367
+running PeelFixB core 20
+cur state 17948442 19873608
+graph constructed 876252 17948442 from 876252 17948442
+delete graph
+delete graph
+compact at start 17948442
+6799 6036
+running PeelFixB core 21
+cur state 17621162 17948442
+6507 5774
+running PeelFixB core 22
+cur state 17312790 17948442
+6328 5532
+running PeelFixB core 23
+cur state 17018468 17948442
+6072 5309
+running PeelFixB core 24
+cur state 16735470 17948442
+5908 5090
+running PeelFixB core 25
+cur state 16455464 17948442
+5596 4839
+running PeelFixB core 26
+cur state 16185934 17948442
+graph constructed 876252 16185934 from 876252 16185934
+delete graph
+delete graph
+compact at start 16185934
+5425 4688
+running PeelFixB core 27
+cur state 15926440 16185934
+5205 4452
+running PeelFixB core 28
+cur state 15686904 16185934
+4985 4273
+running PeelFixB core 29
+cur state 15441218 16185934
+4865 4110
+running PeelFixB core 30
+cur state 15188922 16185934
+4687 3937
+running PeelFixB core 31
+cur state 14948304 16185934
+4574 3777
+running PeelFixB core 32
+cur state 14728374 16185934
+4388 3630
+running PeelFixB core 33
+cur state 14504690 16185934
+graph constructed 876252 14504690 from 876252 14504690
+delete graph
+delete graph
+compact at start 14504690
+4217 3511
+running PeelFixB core 34
+cur state 14278768 14504690
+4143 3382
+running PeelFixB core 35
+cur state 14068732 14504690
+3991 3250
+running PeelFixB core 36
+cur state 13849534 14504690
+3880 3171
+running PeelFixB core 37
+cur state 13638066 14504690
+3801 3070
+running PeelFixB core 38
+cur state 13427922 14504690
+3633 2917
+running PeelFixB core 39
+cur state 13227604 14504690
+3573 2860
+running PeelFixB core 40
+cur state 13029968 14504690
+graph constructed 876252 13029968 from 876252 13029968
+delete graph
+delete graph
+compact at start 13029968
+3539 2842
+running PeelFixB core 41
+cur state 12827248 13029968
+3550 2824
+running PeelFixB core 42
+cur state 12632516 13029968
+3495 2803
+running PeelFixB core 43
+cur state 12437800 13029968
+3443 2764
+running PeelFixB core 44
+cur state 12236808 13029968
+3448 2729
+running PeelFixB core 45
+cur state 12044906 13029968
+3404 2701
+running PeelFixB core 46
+cur state 11851392 13029968
+3327 2662
+running PeelFixB core 47
+cur state 11671186 13029968
+graph constructed 876252 11671186 from 876252 11671186
+delete graph
+delete graph
+compact at start 11671186
+3304 2626
+running PeelFixB core 48
+cur state 11485194 11671186
+3259 2609
+running PeelFixB core 49
+cur state 11299008 11671186
+3245 2577
+running PeelFixB core 50
+cur state 11114600 11671186
+3191 2540
+running PeelFixB core 51
+cur state 10928202 11671186
+3185 2514
+running PeelFixB core 52
+cur state 10745610 11671186
+3163 2489
+running PeelFixB core 53
+cur state 10574406 11671186
+graph constructed 876252 10574406 from 876252 10574406
+delete graph
+delete graph
+compact at start 10574406
+3137 2465
+running PeelFixB core 54
+cur state 10413850 10574406
+3097 2437
+running PeelFixB core 55
+cur state 10250816 10574406
+3041 2406
+running PeelFixB core 56
+cur state 10079482 10574406
+2973 2372
+running PeelFixB core 57
+cur state 9899466 10574406
+2938 2348
+running PeelFixB core 58
+cur state 9737994 10574406
+2910 2316
+running PeelFixB core 59
+cur state 9579008 10574406
+graph constructed 876252 9579008 from 876252 9579008
+delete graph
+delete graph
+compact at start 9579008
+2867 2289
+running PeelFixB core 60
+cur state 9434938 9579008
+2846 2263
+running PeelFixB core 61
+cur state 9284814 9579008
+2837 2229
+running PeelFixB core 62
+cur state 9142560 9579008
+2753 2193
+running PeelFixB core 63
+cur state 8999244 9579008
+2739 2150
+running PeelFixB core 64
+cur state 8853386 9579008
+2734 2125
+running PeelFixB core 65
+cur state 8704578 9579008
+graph constructed 876252 8704578 from 876252 8704578
+delete graph
+delete graph
+compact at start 8704578
+2677 2096
+running PeelFixB core 66
+cur state 8552052 8704578
+2627 2049
+running PeelFixB core 67
+cur state 8415790 8704578
+2557 1982
+running PeelFixB core 68
+cur state 8282204 8704578
+2475 1930
+running PeelFixB core 69
+cur state 8144290 8704578
+2452 1887
+running PeelFixB core 70
+cur state 8008400 8704578
+2381 1835
+running PeelFixB core 71
+cur state 7868796 8704578
+graph constructed 876252 7868796 from 876252 7868796
+delete graph
+delete graph
+compact at start 7868796
+2373 1801
+running PeelFixB core 72
+cur state 7743536 7868796
+2312 1762
+running PeelFixB core 73
+cur state 7612166 7868796
+2222 1698
+running PeelFixB core 74
+cur state 7481680 7868796
+2173 1631
+running PeelFixB core 75
+cur state 7350370 7868796
+2138 1583
+running PeelFixB core 76
+cur state 7222048 7868796
+2098 1536
+running PeelFixB core 77
+cur state 7086116 7868796
+graph constructed 876252 7086116 from 876252 7086116
+delete graph
+delete graph
+compact at start 7086116
+2037 1482
+running PeelFixB core 78
+cur state 6949174 7086116
+1943 1422
+running PeelFixB core 79
+cur state 6812346 7086116
+1900 1367
+running PeelFixB core 80
+cur state 6683476 7086116
+1785 1305
+running PeelFixB core 81
+cur state 6552106 7086116
+1779 1253
+running PeelFixB core 82
+cur state 6435072 7086116
+graph constructed 876252 6435072 from 876252 6435072
+delete graph
+delete graph
+compact at start 6435072
+1712 1203
+running PeelFixB core 83
+cur state 6314442 6435072
+1679 1166
+running PeelFixB core 84
+cur state 6196536 6435072
+1625 1132
+running PeelFixB core 85
+cur state 6086088 6435072
+1554 1089
+running PeelFixB core 86
+cur state 5966826 6435072
+1545 1059
+running PeelFixB core 87
+cur state 5852212 6435072
+1522 1025
+running PeelFixB core 88
+cur state 5725990 6435072
+graph constructed 876252 5725990 from 876252 5725990
+delete graph
+delete graph
+compact at start 5725990
+1431 982
+running PeelFixB core 89
+cur state 5605910 5725990
+1375 940
+running PeelFixB core 90
+cur state 5493328 5725990
+1367 903
+running PeelFixB core 91
+cur state 5382356 5725990
+1291 858
+running PeelFixB core 92
+cur state 5262538 5725990
+1223 795
+running PeelFixB core 93
+cur state 5141798 5725990
+graph constructed 876252 5141798 from 876252 5141798
+delete graph
+delete graph
+compact at start 5141798
+1174 757
+running PeelFixB core 94
+cur state 5028604 5141798
+1102 705
+running PeelFixB core 95
+cur state 4920080 5141798
+1049 662
+running PeelFixB core 96
+cur state 4797304 5141798
+1029 611
+running PeelFixB core 97
+cur state 4688168 5141798
+941 555
+running PeelFixB core 98
+cur state 4571332 5141798
+graph constructed 876252 4571332 from 876252 4571332
+delete graph
+delete graph
+compact at start 4571332
+888 498
+running PeelFixB core 99
+cur state 4466160 4571332
+862 459
+running PeelFixB core 100
+cur state 4364268 4571332
+823 432
+running PeelFixB core 101
+cur state 4252402 4571332
+787 411
+running PeelFixB core 102
+cur state 4139840 4571332
+graph constructed 876252 4139840 from 876252 4139840
+delete graph
+delete graph
+compact at start 4139840
+712 389
+running PeelFixB core 103
+cur state 4023512 4139840
+723 365
+running PeelFixB core 104
+cur state 3905212 4139840
+662 336
+running PeelFixB core 105
+cur state 3799038 4139840
+643 307
+running PeelFixB core 106
+cur state 3684560 4139840
+graph constructed 876252 3684560 from 876252 3684560
+delete graph
+delete graph
+compact at start 3684560
+608 290
+running PeelFixB core 107
+cur state 3572282 3684560
+583 275
+running PeelFixB core 108
+cur state 3464968 3684560
+567 264
+running PeelFixB core 109
+cur state 3352152 3684560
+514 259
+running PeelFixB core 110
+cur state 3238970 3684560
+graph constructed 876252 3238970 from 876252 3238970
+delete graph
+delete graph
+compact at start 3238970
+483 250
+running PeelFixB core 111
+cur state 3122824 3238970
+504 246
+running PeelFixB core 112
+cur state 3020602 3238970
+483 236
+running PeelFixB core 113
+cur state 2896708 3238970
+graph constructed 876252 2896708 from 876252 2896708
+delete graph
+delete graph
+compact at start 2896708
+434 230
+running PeelFixB core 114
+cur state 2758742 2896708
+428 223
+running PeelFixB core 115
+cur state 2614350 2896708
+graph constructed 876252 2614350 from 876252 2614350
+delete graph
+delete graph
+compact at start 2614350
+414 215
+running PeelFixB core 116
+cur state 2514446 2614350
+386 210
+running PeelFixB core 117
+cur state 2403128 2614350
+378 204
+running PeelFixB core 118
+cur state 2298818 2614350
+graph constructed 876252 2298818 from 876252 2298818
+delete graph
+delete graph
+compact at start 2298818
+371 203
+running PeelFixB core 119
+cur state 2203708 2298818
+325 202
+running PeelFixB core 120
+cur state 2082366 2298818
+graph constructed 876252 2082366 from 876252 2082366
+delete graph
+delete graph
+compact at start 2082366
+321 201
+running PeelFixB core 121
+cur state 1926410 2082366
+297 201
+running PeelFixB core 122
+cur state 1818074 2082366
+graph constructed 876252 1818074 from 876252 1818074
+delete graph
+delete graph
+compact at start 1818074
+282 200
+running PeelFixB core 123
+cur state 1681110 1818074
+271 199
+running PeelFixB core 124
+cur state 1546238 1818074
+graph constructed 876252 1546238 from 876252 1546238
+delete graph
+delete graph
+compact at start 1546238
+232 197
+running PeelFixB core 125
+cur state 1459484 1546238
+235 196
+running PeelFixB core 126
+cur state 1363614 1546238
+graph constructed 876252 1363614 from 876252 1363614
+delete graph
+delete graph
+compact at start 1363614
+204 196
+running PeelFixB core 127
+cur state 1297930 1363614
+195 195
+running PeelFixB core 128
+cur state 1205300 1363614
+graph constructed 876252 1205300 from 876252 1205300
+delete graph
+delete graph
+compact at start 1205300
+168 194
+running PeelFixB core 129
+cur state 1070228 1205300
+graph constructed 876252 1070228 from 876252 1070228
+delete graph
+delete graph
+compact at start 1070228
+153 193
+running PeelFixB core 130
+cur state 973668 1070228
+127 192
+running PeelFixB core 131
+cur state 723322 1070228
+graph constructed 876252 723322 from 876252 723322
+delete graph
+delete graph
+compact at start 723322
+102 190
+running PeelFixB core 132
+cur state 82328 723322
+graph constructed 876252 82328 from 876252 82328
+delete graph
+delete graph
+compact at start 82328
+48 190
+running PeelFixB core 133
+cur state 82328 82328
+47 189
+running PeelFixB core 134
+cur state 81798 82328
+39 187
+running PeelFixB core 135
+cur state 81798 82328
+45 185
+running PeelFixB core 136
+cur state 81798 82328
+45 183
+running PeelFixB core 137
+cur state 80984 82328
+40 181
+running PeelFixB core 138
+cur state 79616 82328
+32 180
+running PeelFixB core 139
+cur state 79616 82328
+36 179
+running PeelFixB core 140
+cur state 79616 82328
+36 177
+running PeelFixB core 141
+cur state 78776 82328
+32 176
+running PeelFixB core 142
+cur state 77930 82328
+26 174
+running PeelFixB core 143
+cur state 76796 82328
+25 174
+running PeelFixB core 144
+cur state 76510 82328
+20 173
+running PeelFixB core 145
+cur state 75646 82328
+19 170
+running PeelFixB core 146
+cur state 75646 82328
+19 168
+running PeelFixB core 147
+cur state 75646 82328
+17 163
+running PeelFixB core 148
+cur state 75646 82328
+14 158
+running PeelFixB core 149
+cur state 74462 82328
+graph constructed 876252 74462 from 876252 74462
+delete graph
+delete graph
+compact at start 74462
+8 156
+running PeelFixB core 150
+cur state 72680 74462
+7 154
+running PeelFixB core 151
+cur state 72380 74462
+6 153
+pq time 2.58114
+pt time 2.76559
+delete graph
+### Running Time: 19.3876
+# time per iter: 19.3876
+delete graph
+delete graph
