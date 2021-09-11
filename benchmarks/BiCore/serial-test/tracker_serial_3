@@ -1,0 +1,2725 @@
+readin 40421974 281227524
+graph constructed 40421974 281227524 from 40421974 281227524
+# list_alloc init_blocks: 4934
+# after init: 
+# Used: 0, allocated: 10752, node size: 16392, bytes: 176246784
+### Application: BiCore
+### Graph: ../../../inputs/tracker_adj
+### Threads: 1
+### n: 40421974
+### m: 281227524
+### Params: -nb (num_buckets) = 16 -bi = 27665729
+### ------------------------------------
+starting
+### rho = 2565 k_{max} = 437
+m 281227524 40421974
+finished preprocessing
+running PeelFixA core 1
+cur state 281227524 281227524
+4170 11571952
+running PeelFixA core 2
+cur state 263838012 281227524
+168754 2462018
+running PeelFixA core 3
+cur state 241270620 281227524
+graph constructed 40421974 241270620 from 40421974 241270620
+delete graph
+delete graph
+compact at start 241270620
+182121 908749
+running PeelFixA core 4
+cur state 219128988 241270620
+graph constructed 40421974 219128988 from 40421974 219128988
+delete graph
+delete graph
+compact at start 219128988
+192297 781008
+running PeelFixA core 5
+cur state 196819748 219128988
+graph constructed 40421974 196819748 from 40421974 196819748
+delete graph
+delete graph
+compact at start 196819748
+171884 335458
+running PeelFixA core 6
+cur state 176984108 196819748
+graph constructed 40421974 176984108 from 40421974 176984108
+delete graph
+delete graph
+compact at start 176984108
+110326 145232
+running PeelFixA core 7
+cur state 162640640 176984108
+84443 96914
+running PeelFixA core 8
+cur state 151485636 176984108
+graph constructed 40421974 151485636 from 40421974 151485636
+delete graph
+delete graph
+compact at start 151485636
+61439 66369
+running PeelFixA core 9
+cur state 143018276 151485636
+50091 52104
+running PeelFixA core 10
+cur state 135786884 151485636
+graph constructed 40421974 135786884 from 40421974 135786884
+delete graph
+delete graph
+compact at start 135786884
+37782 36685
+running PeelFixA core 11
+cur state 129584004 135786884
+28176 26710
+running PeelFixA core 12
+cur state 124316126 135786884
+21554 19979
+running PeelFixA core 13
+cur state 119764838 135786884
+graph constructed 40421974 119764838 from 40421974 119764838
+delete graph
+delete graph
+compact at start 119764838
+16961 15403
+running PeelFixA core 14
+cur state 115843986 119764838
+13523 11992
+running PeelFixA core 15
+cur state 112309938 119764838
+12026 10423
+running PeelFixA core 16
+cur state 109185168 119764838
+11890 10370
+running PeelFixA core 17
+cur state 106363696 119764838
+graph constructed 40421974 106363696 from 40421974 106363696
+delete graph
+delete graph
+compact at start 106363696
+11741 10221
+running PeelFixA core 18
+cur state 103921680 106363696
+11637 10080
+running PeelFixA core 19
+cur state 101784144 106363696
+11431 9889
+running PeelFixA core 20
+cur state 99872060 106363696
+11094 9551
+running PeelFixA core 21
+cur state 98153940 106363696
+10997 9453
+running PeelFixA core 22
+cur state 96589608 106363696
+graph constructed 40421974 96589608 from 40421974 96589608
+delete graph
+delete graph
+compact at start 96589608
+10695 9093
+running PeelFixA core 23
+cur state 95174348 96589608
+10212 8672
+running PeelFixA core 24
+cur state 93860726 96589608
+9429 7880
+running PeelFixA core 25
+cur state 92636342 96589608
+7111 5544
+running PeelFixA core 26
+cur state 91500642 96589608
+6106 4587
+running PeelFixA core 27
+cur state 90446914 96589608
+5514 4002
+running PeelFixA core 28
+cur state 89454016 96589608
+4715 3179
+running PeelFixA core 29
+cur state 88519544 96589608
+4718 3176
+running PeelFixA core 30
+cur state 87612192 96589608
+graph constructed 40421974 87612192 from 40421974 87612192
+delete graph
+delete graph
+compact at start 87612192
+4681 3172
+running PeelFixA core 31
+cur state 86746332 87612192
+4702 3172
+running PeelFixA core 32
+cur state 85930164 87612192
+4714 3171
+running PeelFixA core 33
+cur state 85176372 87612192
+4698 3170
+running PeelFixA core 34
+cur state 84463770 87612192
+4645 3168
+running PeelFixA core 35
+cur state 83776426 87612192
+4631 3167
+running PeelFixA core 36
+cur state 83126336 87612192
+4618 3166
+running PeelFixA core 37
+cur state 82503392 87612192
+4641 3163
+running PeelFixA core 38
+cur state 81921308 87612192
+4611 3160
+running PeelFixA core 39
+cur state 81363468 87612192
+4634 3159
+running PeelFixA core 40
+cur state 80828934 87612192
+4620 3155
+running PeelFixA core 41
+cur state 80320774 87612192
+4607 3153
+running PeelFixA core 42
+cur state 79817376 87612192
+4581 3152
+running PeelFixA core 43
+cur state 79336812 87612192
+graph constructed 40421974 79336812 from 40421974 79336812
+delete graph
+delete graph
+compact at start 79336812
+4591 3151
+running PeelFixA core 44
+cur state 78885656 79336812
+4609 3151
+running PeelFixA core 45
+cur state 78421808 79336812
+4550 3151
+running PeelFixA core 46
+cur state 77989088 79336812
+4525 3150
+running PeelFixA core 47
+cur state 77582632 79336812
+4558 3150
+running PeelFixA core 48
+cur state 77163204 79336812
+4582 3149
+running PeelFixA core 49
+cur state 76776804 79336812
+4539 3148
+running PeelFixA core 50
+cur state 76403620 79336812
+4594 3148
+running PeelFixA core 51
+cur state 76043520 79336812
+4532 3148
+running PeelFixA core 52
+cur state 75682644 79336812
+4557 3146
+running PeelFixA core 53
+cur state 75353172 79336812
+4556 3144
+running PeelFixA core 54
+cur state 75026904 79336812
+4496 3140
+running PeelFixA core 55
+cur state 74722344 79336812
+4535 3135
+running PeelFixA core 56
+cur state 74410604 79336812
+4525 3131
+running PeelFixA core 57
+cur state 74100924 79336812
+4320 2958
+running PeelFixA core 58
+cur state 73798938 79336812
+4343 2958
+running PeelFixA core 59
+cur state 73501050 79336812
+4276 2957
+running PeelFixA core 60
+cur state 73208528 79336812
+4273 2956
+running PeelFixA core 61
+cur state 72926408 79336812
+4285 2955
+running PeelFixA core 62
+cur state 72643856 79336812
+4283 2954
+running PeelFixA core 63
+cur state 72353324 79336812
+4253 2954
+running PeelFixA core 64
+cur state 72087716 79336812
+graph constructed 40421974 72087716 from 40421974 72087716
+delete graph
+delete graph
+compact at start 72087716
+4342 2954
+running PeelFixA core 65
+cur state 71829028 72087716
+4291 2953
+running PeelFixA core 66
+cur state 71566688 72087716
+4262 2953
+running PeelFixA core 67
+cur state 71298596 72087716
+4312 2953
+running PeelFixA core 68
+cur state 71071332 72087716
+4280 2953
+running PeelFixA core 69
+cur state 70840404 72087716
+4315 2953
+running PeelFixA core 70
+cur state 70613670 72087716
+4291 2952
+running PeelFixA core 71
+cur state 70393590 72087716
+4250 2951
+running PeelFixA core 72
+cur state 70139836 72087716
+4275 2951
+running PeelFixA core 73
+cur state 69917644 72087716
+4265 2951
+running PeelFixA core 74
+cur state 69702294 72087716
+4252 2950
+running PeelFixA core 75
+cur state 69484142 72087716
+4214 2949
+running PeelFixA core 76
+cur state 69278192 72087716
+4233 2947
+running PeelFixA core 77
+cur state 69089712 72087716
+4186 2945
+running PeelFixA core 78
+cur state 68887202 72087716
+4252 2941
+running PeelFixA core 79
+cur state 68691422 72087716
+4256 2938
+running PeelFixA core 80
+cur state 68430248 72087716
+2629 1339
+running PeelFixA core 81
+cur state 68164968 72087716
+2063 803
+running PeelFixA core 82
+cur state 67917918 72087716
+2066 803
+running PeelFixA core 83
+cur state 67685038 72087716
+2059 803
+running PeelFixA core 84
+cur state 67471230 72087716
+2033 803
+running PeelFixA core 85
+cur state 67249470 72087716
+2045 803
+running PeelFixA core 86
+cur state 67052950 72087716
+2035 803
+running PeelFixA core 87
+cur state 66844486 72087716
+2047 802
+running PeelFixA core 88
+cur state 66629944 72087716
+2032 800
+running PeelFixA core 89
+cur state 66446728 72087716
+2017 770
+running PeelFixA core 90
+cur state 66229212 72087716
+1978 745
+running PeelFixA core 91
+cur state 66059832 72087716
+1823 617
+running PeelFixA core 92
+cur state 65880198 72087716
+1814 608
+running PeelFixA core 93
+cur state 65724902 72087716
+1772 599
+running PeelFixA core 94
+cur state 65511188 72087716
+graph constructed 40421974 65511188 from 40421974 65511188
+delete graph
+delete graph
+compact at start 65511188
+1771 592
+running PeelFixA core 95
+cur state 65347628 65511188
+1764 584
+running PeelFixA core 96
+cur state 65193538 65511188
+1790 577
+running PeelFixA core 97
+cur state 65038210 65511188
+1776 571
+running PeelFixA core 98
+cur state 64888054 65511188
+1750 564
+running PeelFixA core 99
+cur state 64748698 65511188
+1743 558
+running PeelFixA core 100
+cur state 64607920 65511188
+1750 553
+running PeelFixA core 101
+cur state 64471720 65511188
+1721 547
+running PeelFixA core 102
+cur state 64333956 65511188
+1699 542
+running PeelFixA core 103
+cur state 64208700 65511188
+1689 537
+running PeelFixA core 104
+cur state 64085100 65511188
+1689 532
+running PeelFixA core 105
+cur state 63959884 65511188
+1720 528
+running PeelFixA core 106
+cur state 63828004 65511188
+1655 521
+running PeelFixA core 107
+cur state 63690416 65511188
+1656 515
+running PeelFixA core 108
+cur state 63569720 65511188
+1636 511
+running PeelFixA core 109
+cur state 63443144 65511188
+1672 505
+running PeelFixA core 110
+cur state 63325424 65511188
+1673 501
+running PeelFixA core 111
+cur state 63202004 65511188
+1668 497
+running PeelFixA core 112
+cur state 63082346 65511188
+1618 492
+running PeelFixA core 113
+cur state 62974154 65511188
+1639 488
+running PeelFixA core 114
+cur state 62860476 65511188
+1590 485
+running PeelFixA core 115
+cur state 62755596 65511188
+1606 480
+running PeelFixA core 116
+cur state 62646806 65511188
+1597 476
+running PeelFixA core 117
+cur state 62534054 65511188
+1588 473
+running PeelFixA core 118
+cur state 62420564 65511188
+1601 469
+running PeelFixA core 119
+cur state 62310588 65511188
+1581 465
+running PeelFixA core 120
+cur state 62212770 65511188
+1586 462
+running PeelFixA core 121
+cur state 62095410 65511188
+1597 459
+running PeelFixA core 122
+cur state 61987720 65511188
+1597 455
+running PeelFixA core 123
+cur state 61880116 65511188
+1600 452
+running PeelFixA core 124
+cur state 61793278 65511188
+1597 449
+running PeelFixA core 125
+cur state 61702014 65511188
+1570 446
+running PeelFixA core 126
+cur state 61597014 65511188
+1556 442
+running PeelFixA core 127
+cur state 61481598 65511188
+1577 438
+running PeelFixA core 128
+cur state 61380506 65511188
+1577 438
+running PeelFixA core 129
+cur state 61267610 65511188
+1586 438
+running PeelFixA core 130
+cur state 61171376 65511188
+1536 438
+running PeelFixA core 131
+cur state 61076216 65511188
+1537 438
+running PeelFixA core 132
+cur state 60980324 65511188
+1582 438
+running PeelFixA core 133
+cur state 60867332 65511188
+1535 438
+running PeelFixA core 134
+cur state 60769976 65511188
+1534 438
+running PeelFixA core 135
+cur state 60681536 65511188
+1528 438
+running PeelFixA core 136
+cur state 60584876 65511188
+1530 438
+running PeelFixA core 137
+cur state 60497836 65511188
+1522 438
+running PeelFixA core 138
+cur state 60404676 65511188
+1552 438
+running PeelFixA core 139
+cur state 60318012 65511188
+1508 438
+running PeelFixA core 140
+cur state 60236836 65511188
+1513 438
+running PeelFixA core 141
+cur state 60166276 65511188
+1488 438
+running PeelFixA core 142
+cur state 60088444 65511188
+1509 438
+running PeelFixA core 143
+cur state 60010060 65511188
+1541 438
+running PeelFixA core 144
+cur state 59933698 65511188
+1530 438
+running PeelFixA core 145
+cur state 59858242 65511188
+1546 438
+running PeelFixA core 146
+cur state 59776172 65511188
+1489 438
+running PeelFixA core 147
+cur state 59699960 65511188
+1463 438
+running PeelFixA core 148
+cur state 59612936 65511188
+1487 438
+running PeelFixA core 149
+cur state 59540416 65511188
+graph constructed 40421974 59540416 from 40421974 59540416
+delete graph
+delete graph
+compact at start 59540416
+1519 438
+running PeelFixA core 150
+cur state 59462340 59540416
+1484 438
+running PeelFixA core 151
+cur state 59390040 59540416
+1504 438
+running PeelFixA core 152
+cur state 59318466 59540416
+1468 438
+running PeelFixA core 153
+cur state 59243682 59540416
+1487 438
+running PeelFixA core 154
+cur state 59168100 59540416
+1467 438
+running PeelFixA core 155
+cur state 59092640 59540416
+1461 438
+running PeelFixA core 156
+cur state 59016070 59540416
+1473 438
+running PeelFixA core 157
+cur state 58945558 59540416
+1500 438
+running PeelFixA core 158
+cur state 58873652 59540416
+1510 438
+running PeelFixA core 159
+cur state 58809820 59540416
+1473 438
+running PeelFixA core 160
+cur state 58739860 59540416
+1496 438
+running PeelFixA core 161
+cur state 58675220 59540416
+1473 438
+running PeelFixA core 162
+cur state 58614684 59540416
+1496 438
+running PeelFixA core 163
+cur state 58546968 59540416
+1474 438
+running PeelFixA core 164
+cur state 58474922 59540416
+1457 438
+running PeelFixA core 165
+cur state 58409978 59540416
+1468 438
+running PeelFixA core 166
+cur state 58337378 59540416
+1460 438
+running PeelFixA core 167
+cur state 58272638 59540416
+1429 438
+running PeelFixA core 168
+cur state 58207842 59540416
+1470 438
+running PeelFixA core 169
+cur state 58139298 59540416
+1465 438
+running PeelFixA core 170
+cur state 58074402 59540416
+1453 438
+running PeelFixA core 171
+cur state 58004702 59540416
+1432 438
+running PeelFixA core 172
+cur state 57946562 59540416
+1447 438
+running PeelFixA core 173
+cur state 57882578 59540416
+1429 438
+running PeelFixA core 174
+cur state 57817184 59540416
+1424 438
+running PeelFixA core 175
+cur state 57748976 59540416
+1438 438
+running PeelFixA core 176
+cur state 57694026 59540416
+1420 438
+running PeelFixA core 177
+cur state 57622218 59540416
+1430 438
+running PeelFixA core 178
+cur state 57551064 59540416
+1402 438
+running PeelFixA core 179
+cur state 57480932 59540416
+1420 438
+running PeelFixA core 180
+cur state 57418640 59540416
+1431 438
+running PeelFixA core 181
+cur state 57355640 59540416
+1411 438
+running PeelFixA core 182
+cur state 57291928 59540416
+1403 438
+running PeelFixA core 183
+cur state 57218764 59540416
+1396 438
+running PeelFixA core 184
+cur state 57152518 59540416
+1383 438
+running PeelFixA core 185
+cur state 57091430 59540416
+1418 438
+running PeelFixA core 186
+cur state 57033340 59540416
+1380 438
+running PeelFixA core 187
+cur state 56973076 59540416
+1387 438
+running PeelFixA core 188
+cur state 56905756 59540416
+1421 438
+running PeelFixA core 189
+cur state 56850108 59540416
+1393 438
+running PeelFixA core 190
+cur state 56793408 59540416
+1397 438
+running PeelFixA core 191
+cur state 56732988 59540416
+1382 438
+running PeelFixA core 192
+cur state 56676452 59540416
+1366 438
+running PeelFixA core 193
+cur state 56627684 59540416
+1342 438
+running PeelFixA core 194
+cur state 56582136 59540416
+1384 438
+running PeelFixA core 195
+cur state 56527040 59540416
+1348 438
+running PeelFixA core 196
+cur state 56456450 59540416
+1369 438
+running PeelFixA core 197
+cur state 56405490 59540416
+1370 438
+running PeelFixA core 198
+cur state 56350330 59540416
+1350 438
+running PeelFixA core 199
+cur state 56294098 59540416
+1361 438
+running PeelFixA core 200
+cur state 56238378 59540416
+1350 438
+running PeelFixA core 201
+cur state 56181978 59540416
+1382 438
+running PeelFixA core 202
+cur state 56129316 59540416
+1358 438
+running PeelFixA core 203
+cur state 56074776 59540416
+1380 438
+running PeelFixA core 204
+cur state 56021184 59540416
+1317 438
+running PeelFixA core 205
+cur state 55964880 59540416
+1357 438
+running PeelFixA core 206
+cur state 55901330 59540416
+1308 438
+running PeelFixA core 207
+cur state 55839118 59540416
+1355 438
+running PeelFixA core 208
+cur state 55785712 59540416
+1366 438
+running PeelFixA core 209
+cur state 55739952 59540416
+1315 438
+running PeelFixA core 210
+cur state 55695644 59540416
+1330 438
+running PeelFixA core 211
+cur state 55649024 59540416
+1366 438
+running PeelFixA core 212
+cur state 55608090 59540416
+1325 438
+running PeelFixA core 213
+cur state 55561450 59540416
+1347 438
+running PeelFixA core 214
+cur state 55503514 59540416
+1330 438
+running PeelFixA core 215
+cur state 55444450 59540416
+1306 438
+running PeelFixA core 216
+cur state 55403600 59540416
+1306 438
+running PeelFixA core 217
+cur state 55348736 59540416
+1291 438
+running PeelFixA core 218
+cur state 55296656 59540416
+1294 438
+running PeelFixA core 219
+cur state 55230384 59540416
+1308 438
+running PeelFixA core 220
+cur state 55163808 59540416
+1337 438
+running PeelFixA core 221
+cur state 55106608 59540416
+1279 438
+running PeelFixA core 222
+cur state 55048706 59540416
+1301 438
+running PeelFixA core 223
+cur state 55003862 59540416
+1289 438
+running PeelFixA core 224
+cur state 54956140 59540416
+1319 438
+running PeelFixA core 225
+cur state 54914924 59540416
+1291 438
+running PeelFixA core 226
+cur state 54867674 59540416
+1302 438
+running PeelFixA core 227
+cur state 54818406 59540416
+1308 438
+running PeelFixA core 228
+cur state 54772552 59540416
+1308 438
+running PeelFixA core 229
+cur state 54722848 59540416
+1306 438
+running PeelFixA core 230
+cur state 54679338 59540416
+1311 438
+running PeelFixA core 231
+cur state 54632418 59540416
+1286 438
+running PeelFixA core 232
+cur state 54595920 59540416
+1289 438
+running PeelFixA core 233
+cur state 54552304 59540416
+1278 438
+running PeelFixA core 234
+cur state 54504772 59540416
+1314 438
+running PeelFixA core 235
+cur state 54466396 59540416
+1302 438
+running PeelFixA core 236
+cur state 54425506 59540416
+1326 438
+running PeelFixA core 237
+cur state 54385386 59540416
+1294 438
+running PeelFixA core 238
+cur state 54343674 59540416
+1309 438
+running PeelFixA core 239
+cur state 54302738 59540416
+1280 438
+running PeelFixA core 240
+cur state 54263542 59540416
+1308 438
+running PeelFixA core 241
+cur state 54228982 59540416
+1283 438
+running PeelFixA core 242
+cur state 54189940 59540416
+1249 438
+running PeelFixA core 243
+cur state 54143960 59540416
+1251 438
+running PeelFixA core 244
+cur state 54100220 59540416
+graph constructed 40421974 54100220 from 40421974 54100220
+delete graph
+delete graph
+compact at start 54100220
+1264 438
+running PeelFixA core 245
+cur state 54066548 54100220
+1275 438
+running PeelFixA core 246
+cur state 54023918 54100220
+1276 438
+running PeelFixA core 247
+cur state 53980622 54100220
+1264 438
+running PeelFixA core 248
+cur state 53928752 54100220
+1259 438
+running PeelFixA core 249
+cur state 53885104 54100220
+1250 438
+running PeelFixA core 250
+cur state 53842276 54100220
+1221 438
+running PeelFixA core 251
+cur state 53796276 54100220
+1233 438
+running PeelFixA core 252
+cur state 53758626 54100220
+1222 438
+running PeelFixA core 253
+cur state 53702178 54100220
+1251 438
+running PeelFixA core 254
+cur state 53654614 54100220
+1249 438
+running PeelFixA core 255
+cur state 53613974 54100220
+1243 438
+running PeelFixA core 256
+cur state 53574704 54100220
+1222 438
+running PeelFixA core 257
+cur state 53540400 54100220
+1238 438
+running PeelFixA core 258
+cur state 53475122 54100220
+1237 438
+running PeelFixA core 259
+cur state 53440550 54100220
+1231 438
+running PeelFixA core 260
+cur state 53404290 54100220
+1239 438
+running PeelFixA core 261
+cur state 53361130 54100220
+1256 438
+running PeelFixA core 262
+cur state 53316760 54100220
+1232 438
+running PeelFixA core 263
+cur state 53280080 54100220
+1212 438
+running PeelFixA core 264
+cur state 53239052 54100220
+1228 438
+running PeelFixA core 265
+cur state 53201564 54100220
+1224 438
+running PeelFixA core 266
+cur state 53166584 54100220
+1237 438
+running PeelFixA core 267
+cur state 53130408 54100220
+1251 438
+running PeelFixA core 268
+cur state 53088756 54100220
+1227 438
+running PeelFixA core 269
+cur state 53051772 54100220
+1211 438
+running PeelFixA core 270
+cur state 53010884 54100220
+1245 438
+running PeelFixA core 271
+cur state 52975244 54100220
+1246 438
+running PeelFixA core 272
+cur state 52940014 54100220
+1225 438
+running PeelFixA core 273
+cur state 52908462 54100220
+1215 438
+running PeelFixA core 274
+cur state 52876794 54100220
+1223 438
+running PeelFixA core 275
+cur state 52842818 54100220
+1232 438
+running PeelFixA core 276
+cur state 52809268 54100220
+1197 438
+running PeelFixA core 277
+cur state 52762348 54100220
+1229 438
+running PeelFixA core 278
+cur state 52723568 54100220
+1202 438
+running PeelFixA core 279
+cur state 52685760 54100220
+1237 438
+running PeelFixA core 280
+cur state 52656744 54100220
+1203 438
+running PeelFixA core 281
+cur state 52611944 54100220
+1208 438
+running PeelFixA core 282
+cur state 52574852 54100220
+1191 438
+running PeelFixA core 283
+cur state 52543268 54100220
+1226 438
+running PeelFixA core 284
+cur state 52505912 54100220
+1196 438
+running PeelFixA core 285
+cur state 52472400 54100220
+1191 438
+running PeelFixA core 286
+cur state 52436490 54100220
+1200 438
+running PeelFixA core 287
+cur state 52402170 54100220
+1178 438
+running PeelFixA core 288
+cur state 52363712 54100220
+1188 438
+running PeelFixA core 289
+cur state 52334336 54100220
+1178 438
+running PeelFixA core 290
+cur state 52296766 54100220
+1172 438
+running PeelFixA core 291
+cur state 52245146 54100220
+1171 438
+running PeelFixA core 292
+cur state 52214882 54100220
+1190 438
+running PeelFixA core 293
+cur state 52183930 54100220
+1177 438
+running PeelFixA core 294
+cur state 52154630 54100220
+1186 438
+running PeelFixA core 295
+cur state 52124054 54100220
+1169 438
+running PeelFixA core 296
+cur state 52086884 54100220
+1185 438
+running PeelFixA core 297
+cur state 52057876 54100220
+1147 438
+running PeelFixA core 298
+cur state 52029958 54100220
+1160 438
+running PeelFixA core 299
+cur state 51997774 54100220
+1158 438
+running PeelFixA core 300
+cur state 51963688 54100220
+1178 438
+running PeelFixA core 301
+cur state 51930088 54100220
+1162 438
+running PeelFixA core 302
+cur state 51898182 54100220
+1158 438
+running PeelFixA core 303
+cur state 51866170 54100220
+1167 438
+running PeelFixA core 304
+cur state 51838900 54100220
+1168 438
+running PeelFixA core 305
+cur state 51808500 54100220
+1168 438
+running PeelFixA core 306
+cur state 51779830 54100220
+1161 438
+running PeelFixA core 307
+cur state 51749230 54100220
+1157 438
+running PeelFixA core 308
+cur state 51717302 54100220
+1153 438
+running PeelFixA core 309
+cur state 51682806 54100220
+1174 438
+running PeelFixA core 310
+cur state 51663030 54100220
+1180 438
+running PeelFixA core 311
+cur state 51634510 54100220
+1163 438
+running PeelFixA core 312
+cur state 51600300 54100220
+1179 438
+running PeelFixA core 313
+cur state 51526044 54100220
+1171 438
+running PeelFixA core 314
+cur state 51493492 54100220
+1145 438
+running PeelFixA core 315
+cur state 51456440 54100220
+1139 438
+running PeelFixA core 316
+cur state 51412970 54100220
+1187 438
+running PeelFixA core 317
+cur state 51378842 54100220
+1157 438
+running PeelFixA core 318
+cur state 51339534 54100220
+1155 438
+running PeelFixA core 319
+cur state 51295014 54100220
+1151 438
+running PeelFixA core 320
+cur state 51259286 54100220
+1151 438
+running PeelFixA core 321
+cur state 51222806 54100220
+1131 438
+running PeelFixA core 322
+cur state 51184928 54100220
+1137 438
+running PeelFixA core 323
+cur state 51152728 54100220
+1108 438
+running PeelFixA core 324
+cur state 51120428 54100220
+1149 438
+running PeelFixA core 325
+cur state 51088676 54100220
+1143 438
+running PeelFixA core 326
+cur state 51058126 54100220
+1171 438
+running PeelFixA core 327
+cur state 51024874 54100220
+1142 438
+running PeelFixA core 328
+cur state 50986942 54100220
+1147 438
+running PeelFixA core 329
+cur state 50951518 54100220
+1108 438
+running PeelFixA core 330
+cur state 50915328 54100220
+1079 438
+running PeelFixA core 331
+cur state 50875728 54100220
+1109 438
+running PeelFixA core 332
+cur state 50843290 54100220
+1129 438
+running PeelFixA core 333
+cur state 50805442 54100220
+1100 438
+running PeelFixA core 334
+cur state 50764150 54100220
+1093 438
+running PeelFixA core 335
+cur state 50736762 54100220
+1080 438
+running PeelFixA core 336
+cur state 50708622 54100220
+1106 438
+running PeelFixA core 337
+cur state 50665614 54100220
+1078 438
+running PeelFixA core 338
+cur state 50637306 54100220
+1080 438
+running PeelFixA core 339
+cur state 50611618 54100220
+1101 438
+running PeelFixA core 340
+cur state 50585176 54100220
+1082 438
+running PeelFixA core 341
+cur state 50554576 54100220
+1109 438
+running PeelFixA core 342
+cur state 50513656 54100220
+1078 438
+running PeelFixA core 343
+cur state 50489716 54100220
+1091 438
+running PeelFixA core 344
+cur state 50465706 54100220
+1097 438
+running PeelFixA core 345
+cur state 50447818 54100220
+1083 438
+running PeelFixA core 346
+cur state 50418148 54100220
+1062 438
+running PeelFixA core 347
+cur state 50386316 54100220
+1053 438
+running PeelFixA core 348
+cur state 50361332 54100220
+1072 438
+running PeelFixA core 349
+cur state 50332796 54100220
+1075 438
+running PeelFixA core 350
+cur state 50301386 54100220
+1059 438
+running PeelFixA core 351
+cur state 50273386 54100220
+1072 438
+running PeelFixA core 352
+cur state 50237584 54100220
+1088 438
+running PeelFixA core 353
+cur state 50216464 54100220
+1073 438
+running PeelFixA core 354
+cur state 50187518 54100220
+1058 438
+running PeelFixA core 355
+cur state 50159198 54100220
+1067 438
+running PeelFixA core 356
+cur state 50132218 54100220
+1087 438
+running PeelFixA core 357
+cur state 50103738 54100220
+1079 438
+running PeelFixA core 358
+cur state 50073750 54100220
+1114 438
+running PeelFixA core 359
+cur state 50051554 54100220
+1092 438
+running PeelFixA core 360
+cur state 50019962 54100220
+1059 438
+running PeelFixA core 361
+cur state 49994762 54100220
+1064 438
+running PeelFixA core 362
+cur state 49958662 54100220
+1080 438
+running PeelFixA core 363
+cur state 49923186 54100220
+1079 438
+running PeelFixA core 364
+cur state 49901406 54100220
+1077 438
+running PeelFixA core 365
+cur state 49876654 54100220
+1059 438
+running PeelFixA core 366
+cur state 49847454 54100220
+1088 438
+running PeelFixA core 367
+cur state 49820370 54100220
+1048 438
+running PeelFixA core 368
+cur state 49786606 54100220
+1075 438
+running PeelFixA core 369
+cur state 49755694 54100220
+1044 438
+running PeelFixA core 370
+cur state 49728388 54100220
+1059 438
+running PeelFixA core 371
+cur state 49701748 54100220
+1056 438
+running PeelFixA core 372
+cur state 49680972 54100220
+1048 438
+running PeelFixA core 373
+cur state 49652700 54100220
+1054 438
+running PeelFixA core 374
+cur state 49616146 54100220
+1019 438
+running PeelFixA core 375
+cur state 49588470 54100220
+1035 438
+running PeelFixA core 376
+cur state 49561470 54100220
+1058 438
+running PeelFixA core 377
+cur state 49535902 54100220
+1054 438
+running PeelFixA core 378
+cur state 49499710 54100220
+1029 438
+running PeelFixA core 379
+cur state 49471738 54100220
+1021 438
+running PeelFixA core 380
+cur state 49442934 54100220
+1022 438
+running PeelFixA core 381
+cur state 49422414 54100220
+1008 438
+running PeelFixA core 382
+cur state 49390410 54100220
+1008 438
+running PeelFixA core 383
+cur state 49364434 54100220
+1033 438
+running PeelFixA core 384
+cur state 49332262 54100220
+995 438
+running PeelFixA core 385
+cur state 49302310 54100220
+1001 438
+running PeelFixA core 386
+cur state 49276900 54100220
+1004 438
+running PeelFixA core 387
+cur state 49259916 54100220
+990 438
+running PeelFixA core 388
+cur state 49229730 54100220
+1000 438
+running PeelFixA core 389
+cur state 49203346 54100220
+1015 438
+running PeelFixA core 390
+cur state 49186230 54100220
+1023 438
+running PeelFixA core 391
+cur state 49167510 54100220
+graph constructed 40421974 49167510 from 40421974 49167510
+delete graph
+delete graph
+compact at start 49167510
+992 438
+running PeelFixA core 392
+cur state 49144050 49167510
+998 438
+running PeelFixA core 393
+cur state 49117394 49167510
+1025 438
+running PeelFixA core 394
+cur state 49103246 49167510
+1026 438
+running PeelFixA core 395
+cur state 49083546 49167510
+999 438
+running PeelFixA core 396
+cur state 49052736 49167510
+1004 438
+running PeelFixA core 397
+cur state 49025808 49167510
+1001 438
+running PeelFixA core 398
+cur state 49001988 49167510
+988 438
+running PeelFixA core 399
+cur state 48965372 49167510
+981 438
+running PeelFixA core 400
+cur state 48952604 49167510
+993 438
+running PeelFixA core 401
+cur state 48928604 49167510
+994 437
+running PeelFixA core 402
+cur state 48902940 49167510
+990 437
+running PeelFixA core 403
+cur state 48886056 49167510
+989 437
+running PeelFixA core 404
+cur state 48852204 49167510
+996 437
+running PeelFixA core 405
+cur state 48827156 49167510
+1006 437
+running PeelFixA core 406
+cur state 48806096 49167510
+996 437
+running PeelFixA core 407
+cur state 48786608 49167510
+991 437
+running PeelFixA core 408
+cur state 48766258 49167510
+997 437
+running PeelFixA core 409
+cur state 48742594 49167510
+995 437
+running PeelFixA core 410
+cur state 48719690 49167510
+1008 437
+running PeelFixA core 411
+cur state 48688530 49167510
+979 437
+running PeelFixA core 412
+cur state 48668802 49167510
+978 437
+running PeelFixA core 413
+cur state 48644082 49167510
+977 437
+running PeelFixA core 414
+cur state 48615998 49167510
+956 437
+running PeelFixA core 415
+cur state 48591986 49167510
+968 437
+running PeelFixA core 416
+cur state 48572896 49167510
+972 437
+running PeelFixA core 417
+cur state 48555424 49167510
+993 437
+running PeelFixA core 418
+cur state 48538744 49167510
+971 437
+running PeelFixA core 419
+cur state 48509484 49167510
+978 437
+running PeelFixA core 420
+cur state 48482668 49167510
+975 437
+running PeelFixA core 421
+cur state 48441508 49167510
+979 437
+running PeelFixA core 422
+cur state 48405302 49167510
+971 437
+running PeelFixA core 423
+cur state 48373230 49167510
+975 437
+running PeelFixA core 424
+cur state 48325854 49167510
+987 437
+running PeelFixA core 425
+cur state 48289390 49167510
+957 437
+running PeelFixA core 426
+cur state 48258790 49167510
+974 437
+running PeelFixA core 427
+cur state 48228118 49167510
+958 437
+running PeelFixA core 428
+cur state 48199082 49167510
+954 437
+running PeelFixA core 429
+cur state 48176826 49167510
+936 437
+running PeelFixA core 430
+cur state 48157092 49167510
+969 437
+running PeelFixA core 431
+cur state 48128712 49167510
+971 437
+running PeelFixA core 432
+cur state 48107162 49167510
+955 437
+running PeelFixA core 433
+cur state 48084698 49167510
+968 437
+running PeelFixA core 434
+cur state 48062182 49167510
+952 437
+running PeelFixA core 435
+cur state 48029198 49167510
+969 437
+running PeelFixA core 436
+cur state 48008318 49167510
+968 437
+running PeelFixA core 437
+cur state 47982158 49167510
+961 437
+running PeelFixB core 1
+cur state 281227524 281227524
+3548 1100065
+running PeelFixB core 2
+cur state 265608434 281227524
+60398 193224
+running PeelFixB core 3
+cur state 257699890 281227524
+40398 41383
+running PeelFixB core 4
+cur state 252525106 281227524
+graph constructed 40421974 252525106 from 40421974 252525106
+delete graph
+delete graph
+compact at start 252525106
+20736 19358
+running PeelFixB core 5
+cur state 248763562 252525106
+17837 16293
+running PeelFixB core 6
+cur state 245826422 252525106
+15672 14093
+running PeelFixB core 7
+cur state 243332822 252525106
+14071 12461
+running PeelFixB core 8
+cur state 241260360 252525106
+12794 11123
+running PeelFixB core 9
+cur state 239437992 252525106
+11666 10031
+running PeelFixB core 10
+cur state 237809802 252525106
+10374 8766
+running PeelFixB core 11
+cur state 236237902 252525106
+9572 7933
+running PeelFixB core 12
+cur state 234883010 252525106
+8857 7172
+running PeelFixB core 13
+cur state 233647634 252525106
+8160 6507
+running PeelFixB core 14
+cur state 232512448 252525106
+7746 6145
+running PeelFixB core 15
+cur state 231463960 252525106
+7244 5626
+running PeelFixB core 16
+cur state 230474800 252525106
+6880 5218
+running PeelFixB core 17
+cur state 229531536 252525106
+graph constructed 40421974 229531536 from 40421974 229531536
+delete graph
+delete graph
+compact at start 229531536
+6576 4922
+running PeelFixB core 18
+cur state 228656546 229531536
+6338 4679
+running PeelFixB core 19
+cur state 227826962 229531536
+6037 4378
+running PeelFixB core 20
+cur state 227042908 229531536
+5792 4155
+running PeelFixB core 21
+cur state 226288068 229531536
+5636 3952
+running PeelFixB core 22
+cur state 225565710 229531536
+5412 3736
+running PeelFixB core 23
+cur state 224874734 229531536
+5193 3526
+running PeelFixB core 24
+cur state 224214864 229531536
+4992 3360
+running PeelFixB core 25
+cur state 223583136 229531536
+4847 3218
+running PeelFixB core 26
+cur state 222984636 229531536
+4662 3056
+running PeelFixB core 27
+cur state 222408164 229531536
+4575 2936
+running PeelFixB core 28
+cur state 221842028 229531536
+4449 2817
+running PeelFixB core 29
+cur state 221307452 229531536
+4346 2698
+running PeelFixB core 30
+cur state 220801402 229531536
+4175 2584
+running PeelFixB core 31
+cur state 220310422 229531536
+4080 2497
+running PeelFixB core 32
+cur state 219814422 229531536
+4031 2417
+running PeelFixB core 33
+cur state 219348438 229531536
+3837 2314
+running PeelFixB core 34
+cur state 218885712 229531536
+3788 2197
+running PeelFixB core 35
+cur state 218428072 229531536
+3689 2105
+running PeelFixB core 36
+cur state 218001772 229531536
+3570 2015
+running PeelFixB core 37
+cur state 217580356 229531536
+3445 1904
+running PeelFixB core 38
+cur state 217170248 229531536
+3395 1848
+running PeelFixB core 39
+cur state 216767220 229531536
+3350 1804
+running PeelFixB core 40
+cur state 216368796 229531536
+3253 1766
+running PeelFixB core 41
+cur state 215981276 229531536
+3199 1707
+running PeelFixB core 42
+cur state 215610964 229531536
+3155 1667
+running PeelFixB core 43
+cur state 215254804 229531536
+3149 1599
+running PeelFixB core 44
+cur state 214908912 229531536
+3047 1532
+running PeelFixB core 45
+cur state 214564920 229531536
+2968 1472
+running PeelFixB core 46
+cur state 214244700 229531536
+2941 1436
+running PeelFixB core 47
+cur state 213922056 229531536
+2934 1420
+running PeelFixB core 48
+cur state 213607156 229531536
+2940 1420
+running PeelFixB core 49
+cur state 213287284 229531536
+2955 1420
+running PeelFixB core 50
+cur state 212974076 229531536
+2920 1420
+running PeelFixB core 51
+cur state 212664476 229531536
+2865 1420
+running PeelFixB core 52
+cur state 212380406 229531536
+2891 1420
+running PeelFixB core 53
+cur state 212108862 229531536
+2902 1420
+running PeelFixB core 54
+cur state 211824888 229531536
+2902 1420
+running PeelFixB core 55
+cur state 211552296 229531536
+2941 1420
+running PeelFixB core 56
+cur state 211282576 229531536
+2900 1420
+running PeelFixB core 57
+cur state 211019824 229531536
+2874 1419
+running PeelFixB core 58
+cur state 210751468 229531536
+2881 1419
+running PeelFixB core 59
+cur state 210486988 229531536
+2851 1419
+running PeelFixB core 60
+cur state 210239306 229531536
+2863 1419
+running PeelFixB core 61
+cur state 210000386 229531536
+2840 1419
+running PeelFixB core 62
+cur state 209761510 229531536
+2865 1419
+running PeelFixB core 63
+cur state 209526034 229531536
+2845 1419
+running PeelFixB core 64
+cur state 209196544 229531536
+2819 1419
+running PeelFixB core 65
+cur state 208963072 229531536
+2838 1419
+running PeelFixB core 66
+cur state 208743632 229531536
+2840 1419
+running PeelFixB core 67
+cur state 208524644 229531536
+graph constructed 40421974 208524644 from 40421974 208524644
+delete graph
+delete graph
+compact at start 208524644
+2872 1419
+running PeelFixB core 68
+cur state 208151052 208524644
+2868 1419
+running PeelFixB core 69
+cur state 207907612 208524644
+2851 1419
+running PeelFixB core 70
+cur state 207694402 208524644
+2838 1419
+running PeelFixB core 71
+cur state 207477542 208524644
+2837 1419
+running PeelFixB core 72
+cur state 207293652 208524644
+2848 1419
+running PeelFixB core 73
+cur state 207088308 208524644
+2861 1419
+running PeelFixB core 74
+cur state 206907268 208524644
+2825 1419
+running PeelFixB core 75
+cur state 206710872 208524644
+2841 1419
+running PeelFixB core 76
+cur state 206521722 208524644
+2808 1419
+running PeelFixB core 77
+cur state 206337802 208524644
+2811 1419
+running PeelFixB core 78
+cur state 206149306 208524644
+2847 1419
+running PeelFixB core 79
+cur state 205960078 208524644
+2803 1419
+running PeelFixB core 80
+cur state 205792440 208524644
+2817 1419
+running PeelFixB core 81
+cur state 205592760 208524644
+2836 1419
+running PeelFixB core 82
+cur state 205419258 208524644
+2831 1419
+running PeelFixB core 83
+cur state 205257718 208524644
+2771 1419
+running PeelFixB core 84
+cur state 205091220 208524644
+2777 1419
+running PeelFixB core 85
+cur state 204913308 208524644
+2751 1419
+running PeelFixB core 86
+cur state 204721888 208524644
+2782 1419
+running PeelFixB core 87
+cur state 204562960 208524644
+2776 1419
+running PeelFixB core 88
+cur state 204405838 208524644
+2783 1419
+running PeelFixB core 89
+cur state 204245854 208524644
+2776 1419
+running PeelFixB core 90
+cur state 204091884 208524644
+2837 1419
+running PeelFixB core 91
+cur state 203938524 208524644
+2797 1419
+running PeelFixB core 92
+cur state 203784916 208524644
+2787 1419
+running PeelFixB core 93
+cur state 203644892 208524644
+2725 1419
+running PeelFixB core 94
+cur state 203504648 208524644
+2784 1419
+running PeelFixB core 95
+cur state 203368724 208524644
+2748 1419
+running PeelFixB core 96
+cur state 203219574 208524644
+2745 1419
+running PeelFixB core 97
+cur state 203078838 208524644
+2765 1419
+running PeelFixB core 98
+cur state 202951574 208524644
+2733 1419
+running PeelFixB core 99
+cur state 202821038 208524644
+2731 1419
+running PeelFixB core 100
+cur state 202685012 208524644
+2735 1419
+running PeelFixB core 101
+cur state 202550412 208524644
+2724 1419
+running PeelFixB core 102
+cur state 202425576 208524644
+2733 1419
+running PeelFixB core 103
+cur state 202293384 208524644
+2737 1419
+running PeelFixB core 104
+cur state 202170196 208524644
+2728 1419
+running PeelFixB core 105
+cur state 202038740 208524644
+2726 1419
+running PeelFixB core 106
+cur state 201918410 208524644
+2693 1419
+running PeelFixB core 107
+cur state 201799902 208524644
+2704 1419
+running PeelFixB core 108
+cur state 201678350 208524644
+2706 1419
+running PeelFixB core 109
+cur state 201549614 208524644
+2667 1419
+running PeelFixB core 110
+cur state 201436908 208524644
+2690 1419
+running PeelFixB core 111
+cur state 201320968 208524644
+2683 1419
+running PeelFixB core 112
+cur state 201205972 208524644
+2728 1419
+running PeelFixB core 113
+cur state 201084788 208524644
+2662 1419
+running PeelFixB core 114
+cur state 200969980 208524644
+2672 1419
+running PeelFixB core 115
+cur state 200869660 208524644
+2652 1419
+running PeelFixB core 116
+cur state 200733270 208524644
+2651 1419
+running PeelFixB core 117
+cur state 200615878 208524644
+2644 1419
+running PeelFixB core 118
+cur state 200494666 208524644
+2635 1419
+running PeelFixB core 119
+cur state 200389174 208524644
+2665 1419
+running PeelFixB core 120
+cur state 200275410 208524644
+2629 1419
+running PeelFixB core 121
+cur state 200167650 208524644
+2631 1418
+running PeelFixB core 122
+cur state 200057056 208524644
+2674 1418
+running PeelFixB core 123
+cur state 199943840 208524644
+2665 1418
+running PeelFixB core 124
+cur state 199842242 208524644
+2592 1418
+running PeelFixB core 125
+cur state 199736842 208524644
+2610 1418
+running PeelFixB core 126
+cur state 199629842 208524644
+2567 1418
+running PeelFixB core 127
+cur state 199524002 208524644
+2622 1418
+running PeelFixB core 128
+cur state 199348234 208524644
+2616 1418
+running PeelFixB core 129
+cur state 199228426 208524644
+2613 1418
+running PeelFixB core 130
+cur state 199120840 208524644
+2629 1418
+running PeelFixB core 131
+cur state 199009040 208524644
+2570 1418
+running PeelFixB core 132
+cur state 198904502 208524644
+2604 1418
+running PeelFixB core 133
+cur state 198799430 208524644
+2572 1418
+running PeelFixB core 134
+cur state 198694360 208524644
+2586 1418
+running PeelFixB core 135
+cur state 198586892 208524644
+2535 1418
+running PeelFixB core 136
+cur state 198489962 208524644
+2523 1418
+running PeelFixB core 137
+cur state 198392586 208524644
+2546 1418
+running PeelFixB core 138
+cur state 198298604 208524644
+2564 1418
+running PeelFixB core 139
+cur state 198208904 208524644
+2551 1418
+running PeelFixB core 140
+cur state 198114106 208524644
+2562 1418
+running PeelFixB core 141
+cur state 198016946 208524644
+2522 1418
+running PeelFixB core 142
+cur state 197912324 208524644
+2538 1418
+running PeelFixB core 143
+cur state 197817468 208524644
+2510 1418
+running PeelFixB core 144
+cur state 197721944 208524644
+2517 1418
+running PeelFixB core 145
+cur state 197625176 208524644
+2506 1418
+running PeelFixB core 146
+cur state 197538466 208524644
+2499 1418
+running PeelFixB core 147
+cur state 197446486 208524644
+2498 1418
+running PeelFixB core 148
+cur state 197360932 208524644
+2501 1418
+running PeelFixB core 149
+cur state 197270060 208524644
+2480 1418
+running PeelFixB core 150
+cur state 197175296 208524644
+2452 1418
+running PeelFixB core 151
+cur state 197094596 208524644
+2464 1418
+running PeelFixB core 152
+cur state 197011546 208524644
+2471 1418
+running PeelFixB core 153
+cur state 196933418 208524644
+2439 1418
+running PeelFixB core 154
+cur state 196852634 208524644
+2469 1418
+running PeelFixB core 155
+cur state 196772246 208524644
+2484 1418
+running PeelFixB core 156
+cur state 196692266 208524644
+2427 1418
+running PeelFixB core 157
+cur state 196609898 208524644
+2464 1418
+running PeelFixB core 158
+cur state 196535166 208524644
+2445 1418
+running PeelFixB core 159
+cur state 196452374 208524644
+2444 1418
+running PeelFixB core 160
+cur state 196378916 208524644
+2430 1418
+running PeelFixB core 161
+cur state 196299556 208524644
+2452 1418
+running PeelFixB core 162
+cur state 196221954 208524644
+2437 1418
+running PeelFixB core 163
+cur state 196148082 208524644
+2452 1418
+running PeelFixB core 164
+cur state 196068212 208524644
+2446 1418
+running PeelFixB core 165
+cur state 195992116 208524644
+2432 1418
+running PeelFixB core 166
+cur state 195895096 208524644
+2436 1418
+running PeelFixB core 167
+cur state 195747024 208524644
+2444 1418
+running PeelFixB core 168
+cur state 195668868 208524644
+2416 1418
+running PeelFixB core 169
+cur state 195587892 208524644
+2405 1418
+running PeelFixB core 170
+cur state 195462494 208524644
+2463 1418
+running PeelFixB core 171
+cur state 195393474 208524644
+2393 1418
+running PeelFixB core 172
+cur state 195310368 208524644
+2408 1418
+running PeelFixB core 173
+cur state 195243288 208524644
+2432 1418
+running PeelFixB core 174
+cur state 195175472 208524644
+2403 1418
+running PeelFixB core 175
+cur state 195099260 208524644
+2410 1418
+running PeelFixB core 176
+cur state 195027510 208524644
+2393 1418
+running PeelFixB core 177
+cur state 194951126 208524644
+2419 1418
+running PeelFixB core 178
+cur state 194881034 208524644
+2403 1418
+running PeelFixB core 179
+cur state 194814818 208524644
+2417 1418
+running PeelFixB core 180
+cur state 194746440 208524644
+2374 1418
+running PeelFixB core 181
+cur state 194681640 208524644
+2385 1418
+running PeelFixB core 182
+cur state 194613222 208524644
+2407 1418
+running PeelFixB core 183
+cur state 194534962 208524644
+2350 1418
+running PeelFixB core 184
+cur state 194470180 208524644
+2372 1418
+running PeelFixB core 185
+cur state 194334756 208524644
+2355 1418
+running PeelFixB core 186
+cur state 193880026 208524644
+2381 1418
+running PeelFixB core 187
+cur state 193781074 208524644
+2366 1418
+running PeelFixB core 188
+cur state 193714502 208524644
+2370 1418
+running PeelFixB core 189
+cur state 193646070 208524644
+2372 1418
+running PeelFixB core 190
+cur state 193581054 208524644
+2328 1418
+running PeelFixB core 191
+cur state 193514934 208524644
+2360 1418
+running PeelFixB core 192
+cur state 193453432 208524644
+2376 1418
+running PeelFixB core 193
+cur state 193395064 208524644
+2339 1418
+running PeelFixB core 194
+cur state 193332146 208524644
+2346 1418
+running PeelFixB core 195
+cur state 193265410 208524644
+2307 1418
+running PeelFixB core 196
+cur state 193209250 208524644
+2339 1418
+running PeelFixB core 197
+cur state 193142218 208524644
+2317 1418
+running PeelFixB core 198
+cur state 193084300 208524644
+2315 1418
+running PeelFixB core 199
+cur state 193021732 208524644
+2334 1418
+running PeelFixB core 200
+cur state 192957256 208524644
+2346 1418
+running PeelFixB core 201
+cur state 192896056 208524644
+2322 1418
+running PeelFixB core 202
+cur state 192822490 208524644
+2338 1418
+running PeelFixB core 203
+cur state 192769970 208524644
+2338 1418
+running PeelFixB core 204
+cur state 192702168 208524644
+2321 1418
+running PeelFixB core 205
+cur state 192640152 208524644
+2321 1418
+running PeelFixB core 206
+cur state 192581522 208524644
+2372 1418
+running PeelFixB core 207
+cur state 192516426 208524644
+2303 1418
+running PeelFixB core 208
+cur state 192450600 208524644
+2278 1418
+running PeelFixB core 209
+cur state 192381960 208524644
+2304 1418
+running PeelFixB core 210
+cur state 192310064 208524644
+2325 1418
+running PeelFixB core 211
+cur state 192243284 208524644
+2332 1418
+running PeelFixB core 212
+cur state 192173232 208524644
+2326 1418
+running PeelFixB core 213
+cur state 192103696 208524644
+2300 1418
+running PeelFixB core 214
+cur state 192023182 208524644
+2285 1418
+running PeelFixB core 215
+cur state 191882798 208524644
+2296 1418
+running PeelFixB core 216
+cur state 191805828 208524644
+2291 1418
+running PeelFixB core 217
+cur state 191744484 208524644
+2301 1418
+running PeelFixB core 218
+cur state 191687630 208524644
+2304 1418
+running PeelFixB core 219
+cur state 191631386 208524644
+2280 1418
+running PeelFixB core 220
+cur state 191570942 208524644
+2290 1418
+running PeelFixB core 221
+cur state 191511542 208524644
+2225 1418
+running PeelFixB core 222
+cur state 191460712 208524644
+2285 1418
+running PeelFixB core 223
+cur state 191405212 208524644
+2249 1418
+running PeelFixB core 224
+cur state 191350354 208524644
+2252 1418
+running PeelFixB core 225
+cur state 191294802 208524644
+2269 1418
+running PeelFixB core 226
+cur state 191234952 208524644
+2280 1418
+running PeelFixB core 227
+cur state 191178452 208524644
+2247 1418
+running PeelFixB core 228
+cur state 191121248 208524644
+2281 1418
+running PeelFixB core 229
+cur state 191061512 208524644
+2297 1418
+running PeelFixB core 230
+cur state 191002888 208524644
+2286 1418
+running PeelFixB core 231
+cur state 190948148 208524644
+2235 1418
+running PeelFixB core 232
+cur state 190874690 208524644
+2288 1418
+running PeelFixB core 233
+cur state 190813906 208524644
+2243 1418
+running PeelFixB core 234
+cur state 190764044 208524644
+2247 1418
+running PeelFixB core 235
+cur state 190692908 208524644
+2260 1418
+running PeelFixB core 236
+cur state 190627578 208524644
+2258 1418
+running PeelFixB core 237
+cur state 190561026 208524644
+2253 1418
+running PeelFixB core 238
+cur state 190499406 208524644
+2264 1418
+running PeelFixB core 239
+cur state 190437526 208524644
+2266 1418
+running PeelFixB core 240
+cur state 190377776 208524644
+2239 1418
+running PeelFixB core 241
+cur state 190324496 208524644
+2257 1418
+running PeelFixB core 242
+cur state 190268102 208524644
+2254 1418
+running PeelFixB core 243
+cur state 190208570 208524644
+2250 1418
+running PeelFixB core 244
+cur state 190147820 208524644
+2236 1418
+running PeelFixB core 245
+cur state 190086820 208524644
+2208 1418
+running PeelFixB core 246
+cur state 190031940 208524644
+2219 1418
+running PeelFixB core 247
+cur state 189976836 208524644
+2245 1418
+running PeelFixB core 248
+cur state 189918050 208524644
+2247 1418
+running PeelFixB core 249
+cur state 189863986 208524644
+2230 1418
+running PeelFixB core 250
+cur state 189819664 208524644
+2244 1418
+running PeelFixB core 251
+cur state 189781664 208524644
+2204 1418
+running PeelFixB core 252
+cur state 189731464 208524644
+2179 1418
+running PeelFixB core 253
+cur state 189683584 208524644
+2186 1418
+running PeelFixB core 254
+cur state 189637538 208524644
+2205 1418
+running PeelFixB core 255
+cur state 189589786 208524644
+2188 1418
+running PeelFixB core 256
+cur state 189545416 208524644
+graph constructed 40421974 189545416 from 40421974 189545416
+delete graph
+delete graph
+compact at start 189545416
+2190 1418
+running PeelFixB core 257
+cur state 189495240 189545416
+2169 1418
+running PeelFixB core 258
+cur state 189429962 189545416
+2171 1418
+running PeelFixB core 259
+cur state 189365462 189545416
+2182 1418
+running PeelFixB core 260
+cur state 189296568 189545416
+2179 1418
+running PeelFixB core 261
+cur state 189239888 189545416
+2182 1418
+running PeelFixB core 262
+cur state 189191342 189545416
+2201 1418
+running PeelFixB core 263
+cur state 189137370 189545416
+2149 1418
+running PeelFixB core 264
+cur state 189077932 189545416
+2184 1418
+running PeelFixB core 265
+cur state 189030940 189545416
+2164 1418
+running PeelFixB core 266
+cur state 188991190 189545416
+2179 1418
+running PeelFixB core 267
+cur state 188934798 189545416
+2186 1418
+running PeelFixB core 268
+cur state 188816250 189545416
+2188 1418
+running PeelFixB core 269
+cur state 188583090 189545416
+2148 1418
+running PeelFixB core 270
+cur state 188540588 189545416
+2160 1418
+running PeelFixB core 271
+cur state 188495768 189545416
+2157 1418
+running PeelFixB core 272
+cur state 188447530 189545416
+2134 1418
+running PeelFixB core 273
+cur state 188404010 189545416
+2171 1418
+running PeelFixB core 274
+cur state 188359784 189545416
+2141 1418
+running PeelFixB core 275
+cur state 188320328 189545416
+2159 1418
+running PeelFixB core 276
+cur state 188279078 189545416
+2147 1418
+running PeelFixB core 277
+cur state 188237126 189545416
+2131 1418
+running PeelFixB core 278
+cur state 188193360 189545416
+2129 1418
+running PeelFixB core 279
+cur state 188150548 189545416
+2142 1418
+running PeelFixB core 280
+cur state 188095864 189545416
+2161 1418
+running PeelFixB core 281
+cur state 188046584 189545416
+2139 1418
+running PeelFixB core 282
+cur state 188004434 189545416
+2122 1418
+running PeelFixB core 283
+cur state 187962134 189545416
+2097 1418
+running PeelFixB core 284
+cur state 187926476 189545416
+2145 1418
+running PeelFixB core 285
+cur state 187886148 189545416
+2143 1418
+running PeelFixB core 286
+cur state 187839978 189545416
+2139 1418
+running PeelFixB core 287
+cur state 187786782 189545416
+2136 1418
+running PeelFixB core 288
+cur state 187744880 189545416
+2138 1418
+running PeelFixB core 289
+cur state 187707440 189545416
+2118 1418
+running PeelFixB core 290
+cur state 187666402 189545416
+2124 1418
+running PeelFixB core 291
+cur state 187627542 189545416
+2128 1418
+running PeelFixB core 292
+cur state 187589712 189545416
+2114 1418
+running PeelFixB core 293
+cur state 187551168 189545416
+2127 1418
+running PeelFixB core 294
+cur state 187513078 189545416
+2104 1418
+running PeelFixB core 295
+cur state 187475446 189545416
+2128 1418
+running PeelFixB core 296
+cur state 187433556 189545416
+2144 1418
+running PeelFixB core 297
+cur state 187390932 189545416
+2124 1418
+running PeelFixB core 298
+cur state 187361826 189545416
+2089 1418
+running PeelFixB core 299
+cur state 187317722 189545416
+2109 1418
+running PeelFixB core 300
+cur state 187275862 189545416
+2088 1418
+running PeelFixB core 301
+cur state 187236862 189545416
+2078 1418
+running PeelFixB core 302
+cur state 187204354 189545416
+2096 1418
+running PeelFixB core 303
+cur state 187166906 189545416
+2105 1418
+running PeelFixB core 304
+cur state 187120850 189545416
+2106 1418
+running PeelFixB core 305
+cur state 187078290 189545416
+2077 1418
+running PeelFixB core 306
+cur state 187030710 189545416
+2123 1418
+running PeelFixB core 307
+cur state 186990930 189545416
+2086 1418
+running PeelFixB core 308
+cur state 186947336 189545416
+2085 1418
+running PeelFixB core 309
+cur state 186903600 189545416
+2097 1418
+running PeelFixB core 310
+cur state 186862194 189545416
+2093 1418
+running PeelFixB core 311
+cur state 186823134 189545416
+2093 1418
+running PeelFixB core 312
+cur state 186783326 189545416
+2094 1418
+running PeelFixB core 313
+cur state 186736526 189545416
+2089 1418
+running PeelFixB core 314
+cur state 186702722 189545416
+2073 1418
+running PeelFixB core 315
+cur state 186659390 189545416
+2076 1418
+running PeelFixB core 316
+cur state 186618440 189545416
+2067 1418
+running PeelFixB core 317
+cur state 186576096 189545416
+2082 1418
+running PeelFixB core 318
+cur state 186538056 189545416
+2085 1418
+running PeelFixB core 319
+cur state 186496080 189545416
+2078 1418
+running PeelFixB core 320
+cur state 186461628 189545416
+2082 1418
+running PeelFixB core 321
+cur state 186420028 189545416
+2068 1418
+running PeelFixB core 322
+cur state 186383434 189545416
+2081 1418
+running PeelFixB core 323
+cur state 186344794 189545416
+2061 1418
+running PeelFixB core 324
+cur state 186317016 189545416
+2055 1418
+running PeelFixB core 325
+cur state 186276192 189545416
+2065 1418
+running PeelFixB core 326
+cur state 186244992 189545416
+2061 1418
+running PeelFixB core 327
+cur state 186207828 189545416
+2067 1418
+running PeelFixB core 328
+cur state 186174474 189545416
+2067 1418
+running PeelFixB core 329
+cur state 186141674 189545416
+2060 1418
+running PeelFixB core 330
+cur state 186105484 189545416
+2045 1418
+running PeelFixB core 331
+cur state 186068524 189545416
+2018 1418
+running PeelFixB core 332
+cur state 186034100 189545416
+2025 1418
+running PeelFixB core 333
+cur state 186002892 189545416
+2038 1418
+running PeelFixB core 334
+cur state 185968260 189545416
+2041 1418
+running PeelFixB core 335
+cur state 185935528 189545416
+2043 1417
+running PeelFixB core 336
+cur state 185896668 189545416
+2028 1416
+running PeelFixB core 337
+cur state 185861724 189545416
+2039 1416
+running PeelFixB core 338
+cur state 185821958 189545416
+2038 1416
+running PeelFixB core 339
+cur state 185782750 189545416
+2057 1416
+running PeelFixB core 340
+cur state 185753596 189545416
+2036 1416
+running PeelFixB core 341
+cur state 185714156 189545416
+2037 1416
+running PeelFixB core 342
+cur state 185675282 189545416
+2025 1416
+running PeelFixB core 343
+cur state 185641766 189545416
+2027 1416
+running PeelFixB core 344
+cur state 185604722 189545416
+2046 1416
+running PeelFixB core 345
+cur state 185573074 189545416
+2023 1416
+running PeelFixB core 346
+cur state 185537884 189545416
+1994 1416
+running PeelFixB core 347
+cur state 185490828 189545416
+2008 1416
+running PeelFixB core 348
+cur state 185454740 189545416
+2028 1416
+running PeelFixB core 349
+cur state 185411588 189545416
+2011 1416
+running PeelFixB core 350
+cur state 185378084 189545416
+2015 1416
+running PeelFixB core 351
+cur state 185341684 189545416
+2013 1416
+running PeelFixB core 352
+cur state 185307286 189545416
+2021 1416
+running PeelFixB core 353
+cur state 185278422 189545416
+2008 1416
+running PeelFixB core 354
+cur state 185243828 189545416
+2005 1416
+running PeelFixB core 355
+cur state 185210552 189545416
+1996 1416
+running PeelFixB core 356
+cur state 185174342 189545416
+2017 1416
+running PeelFixB core 357
+cur state 185133046 189545416
+1995 1416
+running PeelFixB core 358
+cur state 185099488 189545416
+1992 1416
+running PeelFixB core 359
+cur state 185064404 189545416
+2001 1416
+running PeelFixB core 360
+cur state 185025632 189545416
+1993 1416
+running PeelFixB core 361
+cur state 184983152 189545416
+1983 1416
+running PeelFixB core 362
+cur state 184954994 189545416
+1971 1416
+running PeelFixB core 363
+cur state 184920242 189545416
+1979 1416
+running PeelFixB core 364
+cur state 184886120 189545416
+1962 1416
+running PeelFixB core 365
+cur state 184851176 189545416
+1970 1416
+running PeelFixB core 366
+cur state 184821976 189545416
+1966 1416
+running PeelFixB core 367
+cur state 184787572 189545416
+1982 1416
+running PeelFixB core 368
+cur state 184757478 189545416
+1980 1416
+running PeelFixB core 369
+cur state 184720678 189545416
+1955 1416
+running PeelFixB core 370
+cur state 184682302 189545416
+1985 1416
+running PeelFixB core 371
+cur state 184649742 189545416
+1967 1416
+running PeelFixB core 372
+cur state 184616352 189545416
+1958 1416
+running PeelFixB core 373
+cur state 184578408 189545416
+1956 1416
+running PeelFixB core 374
+cur state 184553044 189545416
+1961 1416
+running PeelFixB core 375
+cur state 184523124 189545416
+1965 1416
+running PeelFixB core 376
+cur state 184490124 189545416
+1962 1416
+running PeelFixB core 377
+cur state 184458540 189545416
+1987 1416
+running PeelFixB core 378
+cur state 184426118 189545416
+1983 1416
+running PeelFixB core 379
+cur state 184387562 189545416
+1986 1416
+running PeelFixB core 380
+cur state 184348904 189545416
+1944 1416
+running PeelFixB core 381
+cur state 184320024 189545416
+1936 1416
+running PeelFixB core 382
+cur state 184293354 189545416
+1962 1416
+running PeelFixB core 383
+cur state 184265086 189545416
+1950 1416
+running PeelFixB core 384
+cur state 184227552 189545416
+1941 1416
+running PeelFixB core 385
+cur state 184191456 189545416
+1952 1416
+running PeelFixB core 386
+cur state 184160656 189545416
+1935 1416
+running PeelFixB core 387
+cur state 184132864 189545416
+1941 1416
+running PeelFixB core 388
+cur state 184094164 189545416
+1913 1416
+running PeelFixB core 389
+cur state 184067004 189545416
+1939 1416
+running PeelFixB core 390
+cur state 184037440 189545416
+1944 1416
+running PeelFixB core 391
+cur state 184006240 189545416
+1970 1416
+running PeelFixB core 392
+cur state 183981998 189545416
+1967 1416
+running PeelFixB core 393
+cur state 183948286 189545416
+1946 1416
+running PeelFixB core 394
+cur state 183921562 189545416
+1954 1416
+running PeelFixB core 395
+cur state 183889254 189545416
+1966 1416
+running PeelFixB core 396
+cur state 183856864 189545416
+1961 1416
+running PeelFixB core 397
+cur state 183823600 189545416
+1944 1416
+running PeelFixB core 398
+cur state 183795016 189545416
+1948 1416
+running PeelFixB core 399
+cur state 183757604 189545416
+1934 1416
+running PeelFixB core 400
+cur state 183727280 189545416
+1951 1416
+running PeelFixB core 401
+cur state 183691280 189545416
+1939 1416
+running PeelFixB core 402
+cur state 183657596 189545416
+1949 1416
+running PeelFixB core 403
+cur state 183623024 189545416
+1960 1416
+running PeelFixB core 404
+cur state 183589978 189545416
+1953 1416
+running PeelFixB core 405
+cur state 183548770 189545416
+1922 1416
+running PeelFixB core 406
+cur state 183510700 189545416
+1935 1416
+running PeelFixB core 407
+cur state 183467664 189545416
+1944 1416
+running PeelFixB core 408
+cur state 183430220 189545416
+1931 1416
+running PeelFixB core 409
+cur state 183393500 189545416
+1923 1416
+running PeelFixB core 410
+cur state 183355054 189545416
+1927 1416
+running PeelFixB core 411
+cur state 183309954 189545416
+1931 1416
+running PeelFixB core 412
+cur state 183259812 189545416
+1937 1416
+running PeelFixB core 413
+cur state 183216140 189545416
+1916 1416
+running PeelFixB core 414
+cur state 183169884 189545416
+1921 1416
+running PeelFixB core 415
+cur state 183125172 189545416
+1928 1416
+running PeelFixB core 416
+cur state 183077862 189545416
+1939 1416
+running PeelFixB core 417
+cur state 183031270 189545416
+1926 1416
+running PeelFixB core 418
+cur state 182984566 189545416
+1911 1416
+running PeelFixB core 419
+cur state 182933570 189545416
+1927 1416
+running PeelFixB core 420
+cur state 182878262 189545416
+1922 1416
+running PeelFixB core 421
+cur state 182830382 189545416
+1916 1416
+running PeelFixB core 422
+cur state 182786598 189545416
+1916 1416
+running PeelFixB core 423
+cur state 182741866 189545416
+1891 1416
+running PeelFixB core 424
+cur state 182708026 189545416
+1905 1416
+running PeelFixB core 425
+cur state 182657146 189545416
+1890 1416
+running PeelFixB core 426
+cur state 182614646 189545416
+1907 1416
+running PeelFixB core 427
+cur state 182581418 189545416
+1886 1416
+running PeelFixB core 428
+cur state 182547258 189545416
+1895 1416
+running PeelFixB core 429
+cur state 182508738 189545416
+1905 1416
+running PeelFixB core 430
+cur state 182489004 189545416
+1891 1416
+running PeelFixB core 431
+cur state 182457184 189545416
+1906 1416
+running PeelFixB core 432
+cur state 182427876 189545416
+1889 1416
+running PeelFixB core 433
+cur state 182395044 189545416
+1898 1416
+running PeelFixB core 434
+cur state 182374260 189545416
+1888 1416
+running PeelFixB core 435
+cur state 182336068 189545416
+1862 1409
+running PeelFixB core 436
+cur state 182287348 189545416
+1890 1408
+running PeelFixB core 437
+cur state 182199276 189545416
+1482 990
+pq time 269.883
+pt time 141.092
+delete graph
+### Running Time: 1901.3
+# time per iter: 1901.3
+delete graph
+delete graph
