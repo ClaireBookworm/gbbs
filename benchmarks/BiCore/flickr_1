@@ -1,0 +1,907 @@
+# n = 499610 m = 17090614 len = 17590226
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 6656, node size: 16392, bytes: 109105152
+### Application: BiCore
+### Graph: ../../inputs/flickr_adj
+### Threads: 1
+### n: 499610
+### m: 17090614
+### Params: -nb (num_buckets) = 16 -bi = 395978
+### ------------------------------------
+begin
+resized to: 1048576
+resized to: 2097152
+### rho = 1251 k_{max} = 147
+# PBBS time: bucket time: 0.0075
+delta 147 size 2
+running range 1 to 147
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.1483
+# PBBS time: bucket time: 0.0046
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.1164
+# PBBS time: bucket time: 0.0047
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.1103
+# PBBS time: bucket time: 0.0044
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.1067
+# PBBS time: bucket time: 0.0043
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.1065
+# PBBS time: bucket time: 0.0043
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0991
+# PBBS time: bucket time: 0.0042
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0974
+# PBBS time: bucket time: 0.0041
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0962
+# PBBS time: bucket time: 0.0040
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0949
+# PBBS time: bucket time: 0.0040
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0952
+# PBBS time: bucket time: 0.0040
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0941
+# PBBS time: bucket time: 0.0039
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0933
+# PBBS time: bucket time: 0.0038
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0918
+# PBBS time: bucket time: 0.0038
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0911
+# PBBS time: bucket time: 0.0038
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0908
+# PBBS time: bucket time: 0.0037
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0899
+# PBBS time: bucket time: 0.0038
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0885
+# PBBS time: bucket time: 0.0036
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0884
+# PBBS time: bucket time: 0.0036
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0875
+# PBBS time: bucket time: 0.0035
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0870
+# PBBS time: bucket time: 0.0035
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0866
+# PBBS time: bucket time: 0.0036
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0859
+# PBBS time: bucket time: 0.0035
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0855
+# PBBS time: bucket time: 0.0034
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0847
+# PBBS time: bucket time: 0.0034
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0846
+# PBBS time: bucket time: 0.0034
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0836
+# PBBS time: bucket time: 0.0034
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0835
+# PBBS time: bucket time: 0.0034
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0836
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0830
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0998
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0915
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0817
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0813
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0809
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0812
+# PBBS time: bucket time: 0.0032
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0777
+# PBBS time: bucket time: 0.0032
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0791
+# PBBS time: bucket time: 0.0033
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0772
+# PBBS time: bucket time: 0.0032
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0771
+# PBBS time: bucket time: 0.0032
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0768
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0764
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0764
+# PBBS time: bucket time: 0.0032
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0752
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0771
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0751
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0748
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0735
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0739
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0732
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0727
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0730
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0738
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0727
+# PBBS time: bucket time: 0.0031
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0715
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0717
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0710
+# PBBS time: bucket time: 0.0029
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0709
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0709
+# PBBS time: bucket time: 0.0029
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0948
+# PBBS time: bucket time: 0.0030
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0712
+# PBBS time: bucket time: 0.0029
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0708
+# PBBS time: bucket time: 0.0029
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0702
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0701
+# PBBS time: bucket time: 0.0029
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0691
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0689
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0683
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0689
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0684
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0686
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0673
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0683
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0672
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0676
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0687
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0667
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0661
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0659
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0654
+# PBBS time: bucket time: 0.0028
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0649
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0645
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0636
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0642
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0640
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0644
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0642
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0645
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0629
+# PBBS time: bucket time: 0.0027
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0628
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0631
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0647
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0626
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0624
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0621
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0619
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0615
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0613
+# PBBS time: bucket time: 0.0026
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0612
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0609
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0610
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0604
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0599
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0600
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0594
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0590
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0588
+# PBBS time: bucket time: 0.0025
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0585
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0582
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0584
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0577
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0574
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0570
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0566
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0563
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0563
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0564
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0558
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0555
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0552
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0552
+# PBBS time: bucket time: 0.0024
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0546
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0545
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0547
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0544
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0544
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0539
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0538
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0538
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0534
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0535
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0530
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0511
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0525
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0525
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0518
+# PBBS time: bucket time: 0.0023
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0520
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0525
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0524
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0523
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0521
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0510
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0510
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0507
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0512
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0506
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0505
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0500
+# PBBS time: bucket time: 0.0022
+# PBBS time: prep time: 0.0000
+# PBBS time: nghCount time: 0.0499
+# PBBS time: bucket time: 0.0021
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+# PBBS time: prep time: 0.0000
+range 1 to 147 finished
+coreA 1 1998 34989 0
+coreA 2 2172 17540 0
+coreA 3 2249 10701 0
+coreA 4 2261 8442 0
+coreA 5 2280 7306 0
+coreA 6 2313 6353 0
+coreA 7 2254 5631 0
+coreA 8 2276 5051 0
+coreA 9 2251 4621 0
+coreA 10 2283 4262 0
+coreA 11 2271 3908 0
+coreA 12 2284 3620 0
+coreA 13 2287 3363 0
+coreA 14 2274 3163 0
+coreA 15 2223 2963 0
+coreA 16 2263 2831 0
+coreA 17 2218 2663 0
+coreA 18 2269 2526 0
+coreA 19 2204 2411 0
+coreA 20 2190 2309 0
+coreA 21 2199 2217 0
+coreA 22 2186 2130 0
+coreA 23 2183 2042 0
+coreA 24 2169 1969 0
+coreA 25 2173 1895 0
+coreA 26 2130 1828 0
+coreA 27 2151 1766 0
+coreA 28 2115 1697 0
+coreA 29 2102 1644 0
+coreA 30 2065 1584 0
+coreA 31 2039 1523 0
+coreA 32 2051 1467 0
+coreA 33 2033 1423 0
+coreA 34 2002 1379 0
+coreA 35 1997 1340 0
+coreA 36 1973 1299 0
+coreA 37 1983 1252 0
+coreA 38 2009 1216 0
+coreA 39 1951 1173 0
+coreA 40 1941 1138 0
+coreA 41 1912 1103 0
+coreA 42 1898 1072 0
+coreA 43 1909 1044 0
+coreA 44 1890 1012 0
+coreA 45 1850 985 0
+coreA 46 1863 959 0
+coreA 47 1844 928 0
+coreA 48 1837 898 0
+coreA 49 1820 876 0
+coreA 50 1819 852 0
+coreA 51 1741 832 0
+coreA 52 1710 812 0
+coreA 53 1755 791 0
+coreA 54 1729 773 0
+coreA 55 1724 754 0
+coreA 56 1701 739 0
+coreA 57 1757 716 0
+coreA 58 1685 699 0
+coreA 59 1681 683 0
+coreA 60 1672 668 0
+coreA 61 1641 651 0
+coreA 62 1620 637 0
+coreA 63 1610 623 0
+coreA 64 1599 607 0
+coreA 65 1634 594 0
+coreA 66 1561 580 0
+coreA 67 1561 565 0
+coreA 68 1572 553 0
+coreA 69 1534 539 0
+coreA 70 1554 525 0
+coreA 71 1515 513 0
+coreA 72 1518 499 0
+coreA 73 1466 487 0
+coreA 74 1485 475 0
+coreA 75 1457 462 0
+coreA 76 1452 452 0
+coreA 77 1414 443 0
+coreA 78 1404 433 0
+coreA 79 1378 425 0
+coreA 80 1390 416 0
+coreA 81 1343 408 0
+coreA 82 1362 399 0
+coreA 83 1361 393 0
+coreA 84 1316 386 0
+coreA 85 1303 379 0
+coreA 86 1294 370 0
+coreA 87 1286 365 0
+coreA 88 1276 358 0
+coreA 89 1280 351 0
+coreA 90 1245 345 0
+coreA 91 1182 337 0
+coreA 92 1217 332 0
+coreA 93 1184 326 0
+coreA 94 1201 321 0
+coreA 95 1199 315 0
+coreA 96 1163 310 0
+coreA 97 1156 305 0
+coreA 98 1131 300 0
+coreA 99 1135 294 0
+coreA 100 1140 289 0
+coreA 101 1100 284 0
+coreA 102 1079 279 0
+coreA 103 1082 275 0
+coreA 104 1058 272 0
+coreA 105 1066 268 0
+coreA 106 1060 263 0
+coreA 107 1028 259 0
+coreA 108 1039 256 0
+coreA 109 1021 251 0
+coreA 110 1059 247 0
+coreA 111 1025 243 0
+coreA 112 981 240 0
+coreA 113 979 237 0
+coreA 114 1023 233 0
+coreA 115 974 230 0
+coreA 116 961 226 0
+coreA 117 960 223 0
+coreA 118 917 220 0
+coreA 119 923 217 0
+coreA 120 899 214 0
+coreA 121 918 211 0
+coreA 122 921 208 0
+coreA 123 896 204 0
+coreA 124 885 201 0
+coreA 125 885 198 0
+coreA 126 875 195 0
+coreA 127 836 193 0
+coreA 128 862 190 0
+coreA 129 811 187 0
+coreA 130 851 184 0
+coreA 131 840 182 0
+coreA 132 830 179 0
+coreA 133 798 177 0
+coreA 134 816 174 0
+coreA 135 772 172 0
+coreA 136 774 170 0
+coreA 137 785 167 0
+coreA 138 777 165 0
+coreA 139 775 164 0
+coreA 140 772 161 0
+coreA 141 772 159 0
+coreA 142 747 157 0
+coreA 143 750 156 0
+coreA 144 736 154 0
+coreA 145 756 152 0
+coreA 146 717 150 0
+coreA 147 693 148 0
+coreB 1 824 2186 0
+coreB 2 1047 928 0
+coreB 3 1088 751 0
+coreB 4 1137 657 0
+coreB 5 1154 603 0
+coreB 6 1160 561 0
+coreB 7 1157 525 0
+coreB 8 1182 501 0
+coreB 9 1170 479 0
+coreB 10 1195 458 0
+coreB 11 1156 444 0
+coreB 12 1139 429 0
+coreB 13 1160 416 0
+coreB 14 1162 403 0
+coreB 15 1173 391 0
+coreB 16 1151 381 0
+coreB 17 1099 374 0
+coreB 18 1116 367 0
+coreB 19 1148 360 0
+coreB 20 1158 353 0
+coreB 21 1122 345 0
+coreB 22 1116 341 0
+coreB 23 1110 335 0
+coreB 24 1132 331 0
+coreB 25 1115 326 0
+coreB 26 1107 321 0
+coreB 27 1105 317 0
+coreB 28 1133 313 0
+coreB 29 1122 309 0
+coreB 30 1119 304 0
+coreB 31 1105 300 0
+coreB 32 1103 296 0
+coreB 33 1105 293 0
+coreB 34 1105 289 0
+coreB 35 1118 285 0
+coreB 36 1074 282 0
+coreB 37 1073 278 0
+coreB 38 1063 275 0
+coreB 39 1064 273 0
+coreB 40 1062 270 0
+coreB 41 1089 267 0
+coreB 42 1083 265 0
+coreB 43 1043 263 0
+coreB 44 1033 260 0
+coreB 45 1035 258 0
+coreB 46 1019 256 0
+coreB 47 1020 253 0
+coreB 48 1012 251 0
+coreB 49 1037 248 0
+coreB 50 1040 246 0
+coreB 51 1033 244 0
+coreB 52 1010 242 0
+coreB 53 1026 240 0
+coreB 54 1016 238 0
+coreB 55 1011 237 0
+coreB 56 1000 235 0
+coreB 57 1001 233 0
+coreB 58 1010 232 0
+coreB 59 977 230 0
+coreB 60 1004 228 0
+coreB 61 978 226 0
+coreB 62 979 225 0
+coreB 63 965 223 0
+coreB 64 935 222 0
+coreB 65 990 220 0
+coreB 66 1002 219 0
+coreB 67 957 218 0
+coreB 68 947 216 0
+coreB 69 937 215 0
+coreB 70 936 214 0
+coreB 71 942 212 0
+coreB 72 931 211 0
+coreB 73 926 209 0
+coreB 74 927 208 0
+coreB 75 932 207 0
+coreB 76 962 205 0
+coreB 77 956 204 0
+coreB 78 955 203 0
+coreB 79 911 202 0
+coreB 80 941 201 0
+coreB 81 927 200 0
+coreB 82 890 199 0
+coreB 83 931 197 0
+coreB 84 921 196 0
+coreB 85 903 195 0
+coreB 86 911 194 0
+coreB 87 925 193 0
+coreB 88 898 192 0
+coreB 89 897 191 0
+coreB 90 885 190 0
+coreB 91 879 189 0
+coreB 92 876 188 0
+coreB 93 854 187 0
+coreB 94 860 186 0
+coreB 95 897 185 0
+coreB 96 876 184 0
+coreB 97 851 183 0
+coreB 98 878 182 0
+coreB 99 889 181 0
+coreB 100 854 180 0
+coreB 101 865 180 0
+coreB 102 873 179 0
+coreB 103 821 178 0
+coreB 104 810 177 0
+coreB 105 843 176 0
+coreB 106 839 176 0
+coreB 107 868 175 0
+coreB 108 819 174 0
+coreB 109 850 173 0
+coreB 110 867 173 0
+coreB 111 859 172 0
+coreB 112 811 171 0
+coreB 113 827 170 0
+coreB 114 811 169 0
+coreB 115 780 169 0
+coreB 116 791 168 0
+coreB 117 799 167 0
+coreB 118 798 166 0
+coreB 119 794 166 0
+coreB 120 789 165 0
+coreB 121 792 164 0
+coreB 122 785 163 0
+coreB 123 826 163 0
+coreB 124 829 162 0
+coreB 125 801 161 0
+coreB 126 756 161 0
+coreB 127 782 160 0
+coreB 128 781 160 0
+coreB 129 764 159 0
+coreB 130 774 158 0
+coreB 131 786 157 0
+coreB 132 758 157 0
+coreB 133 748 156 0
+coreB 134 800 156 0
+coreB 135 730 155 0
+coreB 136 775 154 0
+coreB 137 733 154 0
+coreB 138 728 153 0
+coreB 139 769 152 0
+coreB 140 707 152 0
+coreB 141 730 151 0
+coreB 142 697 150 0
+coreB 143 762 150 0
+coreB 144 711 149 0
+coreB 145 742 148 0
+coreB 146 726 148 0
+coreB 147 704 147 0
+bkttimeA: 0.4228
+bkttimeB: 1.287
+prepTime: 0
+totaltime: 27.52
+### Running Time: 28.51
+# time per iter: 28.51
