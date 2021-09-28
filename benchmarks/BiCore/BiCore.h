@@ -63,19 +63,25 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	const size_t n_a = bipartition + 1;		// number of vertices in first partition
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
 	auto ret = KCore(G, num_buckets);
-	const uintE delta = static_cast<uintE>(pbbslib::reduce_max(ret));
-	double slope = 1.5;
-	double thread_ratio = 1; //each worker gets assigned thread_ratio/num_workers() percent of depth
-	double avgSpan = (slope+1)/2*delta/num_workers()*thread_ratio;
-	double curSpan = 0;
+	const uintE delta = static_cast<uintE>(pbbslib::reduce_max(std::get<0>(ret)));
+	sequence<uintT> edgeCount = std::move(std::get<1>(ret));
+	sequence<double> workC = sequence<double>(delta, [&](size_t idx){
+		return (double)(edgeCount[idx+1])/G.m;
+	});
+
 	std::vector<size_t> breakptrs;
 	breakptrs.push_back(0);
+
+	double thread_ratio = 1.0;
+	double avgWork = pbbslib::reduce_add(workC) / num_workers() * thread_ratio;
+	double curWork = 0.0;
+	size_t pCount = 0;
 	for(size_t i=1; i<=delta; i++){
-		curSpan += slope-(slope-1)/delta*i;
-		if(curSpan>=avgSpan*1){
-			curSpan = 0;
+		curWork += workC[i-1];
+		if(curWork/avgWork >= pCount+1){
 			breakptrs.push_back(i);
 			std::cout<<"breakptr at "<<i<<std::endl;
+			pCount++;
 		}
 	}
 	if(breakptrs[breakptrs.size()-1]!=delta)

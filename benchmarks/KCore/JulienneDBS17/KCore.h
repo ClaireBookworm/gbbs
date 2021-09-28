@@ -29,9 +29,11 @@
 namespace gbbs {
 
 template <class Graph>
-inline sequence<uintE> KCore(Graph& G, size_t num_buckets = 16) {
+inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_buckets = 16) {
   
   const size_t n = G.n;
+  size_t m = G.m;
+  sequence<uintT> edgeCount = sequence<uintT>(n,m);
   auto D =
       sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
 
@@ -55,6 +57,7 @@ inline sequence<uintE> KCore(Graph& G, size_t num_buckets = 16) {
       uintE deg = D[v];
       if (deg > k) {
         uintE new_deg = std::max(deg - edgesRemoved, k);
+        m -= edgesRemoved;
         D[v] = new_deg;
         return wrap(v, b.get_bucket(new_deg));
       } // deg==k means it's effectually deleted
@@ -68,10 +71,11 @@ inline sequence<uintE> KCore(Graph& G, size_t num_buckets = 16) {
     b.update_buckets(moved);
     bt.stop();
     rho++;
+    edgeCount[k_max] = std::min(edgeCount[k_max], m);
   }
   std::cout << "### rho = " << rho << " k_{max} = " << k_max << "\n";
   debug(bt.reportTotal("bucket time"););
-  return D;
+  return std::make_pair(D, edgeCount);
 }
 
 template <class W>
