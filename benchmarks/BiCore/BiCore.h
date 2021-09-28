@@ -207,7 +207,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 			}
 		}
 		pqt.start();
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx.size()/2);
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx.size()/16);
 		for(uintE vii : changeVtx){
 			uintE deg = std::max(max_beta, D[vii]);
 			Dv[vii] = deg; D[vii] = deg;
@@ -277,7 +277,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 			}
 		}
 		pqt.start();
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(changeVtx.size()/2);//try changeVtx.size, try others
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(changeVtx.size()/16);//try changeVtx.size, try others
 		for(uintE uii : changeVtx){
 			uintE deg = std::max(max_alpha, D[uii]);
 			Du[uii] = deg; D[uii] = deg;
