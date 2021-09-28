@@ -185,21 +185,29 @@ namespace pbbs
       return r;
     };
 
-    sequence(const size_t _n, value_type v)
+    sequence(const size_t _n, value_type v, bool parallel=true)
         : s(pbbs::new_array_no_init<T>(_n, true)), n(_n)
     {
       // if (n > 1000000000) std::cout << "make const: " << s << std::endl;
       auto f = [=](size_t i) { new ((void *)(s + i)) value_type(v); };
-      parallel_for(0, n, f);
+      if(parallel)
+        parallel_for(0, n, f);
+      else
+        parallel_for(0, n, f, n+1);
     };
 
     template <typename Func>
-    sequence(const size_t _n, Func f) : s(pbbs::new_array_no_init<T>(_n)), n(_n)
+    sequence(const size_t _n, Func f, bool parallel=true) : s(pbbs::new_array_no_init<T>(_n)), n(_n)
     {
       // if (n > 1000000000) std::cout << "make func: " << s << std::endl;
-      parallel_for(
-          0, n, [&](size_t i) { new ((void *)(s + i)) value_type(f(i)); },
-          1000);
+      if(parallel)
+        parallel_for(
+            0, n, [&](size_t i) { new ((void *)(s + i)) value_type(f(i)); },
+            1000);
+      else
+        parallel_for(
+            0, n, [&](size_t i) { new ((void *)(s + i)) value_type(f(i)); },
+            n+1);
     };
 
     template <typename Iter>

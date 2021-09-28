@@ -116,7 +116,8 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 			sequence<uintE> D = prepeelA[idx];
 			// use delayed_sequence here
 			// start serial, improve with parallelism
-			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) { return (D[i]<core) & (D[i]>=minCore); }));
+			size_t initSize = 0;
+			for(uintE i=0; i<n; i++) if(D[i]<core && D[i]>=minCore) initSize++;
 			std::vector<uintE> delA(initSize);
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delA[j++]=i; 
 			initialClean(G, D, delA, core);
@@ -129,7 +130,8 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 			timer t_in; t_in.start();
 			sequence<uintE> D = prepeelB[idx];
-			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) { return (D[i]<core) & (D[i]>=minCore); }));
+			size_t initSize = 0;
+			for(uintE i=0; i<n; i++) if(D[i]<core && D[i]>=minCore) initSize++;
 			std::vector<uintE> delB(initSize);
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delB[j++] = i;
 			initialClean(G, D, delB, core);
@@ -151,10 +153,10 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	uintE rho_alpha = 0, max_beta = 0;
 
 	pqt.start();
-	auto Dv = sequence<uintE>(n, [&](size_t i) {
-		if (i < n_a || D[i] < alpha) return std::numeric_limits<uintE>::max();
-		return D[i];
-	});
+	auto Dv = sequence<uintE>::no_init(n);
+	std::fill(Dv.begin(), Dv.end(), std::numeric_limits<uintE>::max());
+	for(uintE i=n_a; i<n; i++) if(D[i]>=alpha) Dv[i] = D[i];
+
 	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
 	auto getVBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
@@ -165,7 +167,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
 	uintE finished = 0;
-	uintE vCount = pbbslib::reduce_add(sequence<uintE>(n_b, [&](size_t i) {return D[i+n_a]>=alpha;}));;
+
+	uintE vCount = 0;
+	for(uintE i=n_a; i<n; i++) vCount+=D[i]>=alpha;
 	while (finished != vCount)
 	{
 		iter++;
@@ -221,10 +225,10 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	uintE rho_beta = 0, max_alpha = 0;
 
 	pqt.start();
-	auto Du = sequence<uintE>(n, [&](size_t i) {
-		if (i >= n_a || D[i] < beta) return std::numeric_limits<uintE>::max();
-		return D[i];
-	});
+	auto Du = sequence<uintE>::no_init(n);
+	std::fill(Du.begin(), Du.end(), std::numeric_limits<uintE>::max());
+	for(uintE i=0; i<n_a; i++) if(D[i]>=beta) Du[i]=D[i];
+
 	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
 	auto getUBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
@@ -235,7 +239,8 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
 	uintE finished = 0;
-	uintE uCount = pbbslib::reduce_add(sequence<uintE>(n_a, [&](size_t i) {return D[i]>=beta;}));
+	uintE uCount = 0;
+	for(uintE i=0; i<n_a; i++) uCount += D[i]>=beta;
 	while (finished != uCount)
 	{
 		iter++;
