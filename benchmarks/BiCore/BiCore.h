@@ -69,6 +69,9 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		return (double)(edgeCount[idx+1])/G.m;
 	});
 
+	for(uintE i=0; i<delta-1; i++) std::cout<<workC[i]<<" ";
+	std::cout<<workC[delta-1]<<std::endl;
+
 	std::vector<size_t> breakptrs;
 	breakptrs.push_back(0);
 
