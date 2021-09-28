@@ -71,7 +71,7 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
     b.update_buckets(moved);
     bt.stop();
     rho++;
-    edgeCount[k_max] = std::min(edgeCount[k_max], m);
+    edgeCount[k_max-1] = std::min(edgeCount[k_max-1], m);
   }
   std::cout << "### rho = " << rho << " k_{max} = " << k_max << "\n";
   debug(bt.reportTotal("bucket time"););
