@@ -78,7 +78,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	size_t pCount = 0;
 	for(size_t i=1; i<=delta; i++){
 		curWork += workC[i-1];
-		if(curWork/avgWork >= pCount+1){
+		if(curWork/avgWork >= pCount+0.9){
 			breakptrs.push_back(i);
 			std::cout<<"breakptr at "<<i<<std::endl;
 			pCount++;
