@@ -20,7 +20,10 @@ gbbs.pyc
 .docusaurus/
 node_modules/
 
+.idea/
 
+CMakeLists.txt
+cmake-build-debug/
 
 .vscode
 inputs/*_konect

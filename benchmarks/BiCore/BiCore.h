@@ -110,13 +110,12 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	it.stop();
 	par_for(1,breakptrs.size(),1,[&](size_t idx){
 		std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		uintE minCore = breakptrs[idx-1]+1;
-
-		auto peelAllFixA = [&](){
-		par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
+		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 			timer t_in; t_in.start();
 			sequence<uintE> D = prepeelA[idx];
+			// use delayed_sequence here
+			// start serial, improve with parallelism
 			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) { return (D[i]<core) & (D[i]>=minCore); }));
 			std::vector<uintE> delA(initSize);
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delA[j++]=i; 
@@ -126,22 +125,19 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 			timeA[core-1] = std::get<1>(ret);
 			t_in.stop();
 			tTime[core-1] += t_in.get_total();
-		});};
-		auto peelAllFixB = [&](){
-		par_for(breakptrs[idx-1]+1, breakptrs[idx]+1, 1, [&](size_t core){
+		}
+		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 			timer t_in; t_in.start();
 			sequence<uintE> D = prepeelB[idx];
 			size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) { return (D[i]<core) & (D[i]>=minCore); }));
 			std::vector<uintE> delB(initSize);
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delB[j++] = i;
 			initialClean(G, D, delB, core);
-
 			auto ret = PeelFixB(G, D, core, n_a, n_b, num_buckets);
 			timeB[core-1] = std::get<1>(ret);
 			t_in.stop();
 			tTime[core-1] += t_in.get_total();
-		});};
-		par_do(peelAllFixA,peelAllFixB);
+		}
 		std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
 	});
 	it.reportTotal("initialize time");
@@ -269,7 +265,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 			}
 		}
 		pqt.start();
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(16);
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(16);//try changeVtx.size, try others
 		for(uintE uii : changeVtx){
 			uintE deg = std::max(max_alpha, D[uii]);
 			Du[uii] = deg; D[uii] = deg;
