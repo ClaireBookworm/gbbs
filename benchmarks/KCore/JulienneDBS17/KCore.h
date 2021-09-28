@@ -57,7 +57,7 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
       uintE deg = D[v];
       if (deg > k) {
         uintE new_deg = std::max(deg - edgesRemoved, k);
-        m -= edgesRemoved;
+        m -= 2*edgesRemoved;
         D[v] = new_deg;
         return wrap(v, b.get_bucket(new_deg));
       } // deg==k means it's effectually deleted
