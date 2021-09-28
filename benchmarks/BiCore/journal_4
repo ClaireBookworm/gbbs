@@ -1,0 +1,247 @@
+readin 10690276 224614770
+graph constructed 10690276 224614770 from 10690276 224614770
+# list_alloc init_blocks: 1304
+# after init: 
+# Used: 0, allocated: 8704, node size: 16392, bytes: 142675968
+### Application: BiCore
+### Graph: ../../inputs/journal_adj
+### Threads: 4
+### n: 10690276
+### m: 224614770
+### Params: -nb (num_buckets) = 16 -bi = 3201202
+### ------------------------------------
+starting
+### rho = 1346 k_{max} = 108
+breakptr at 24
+breakptr at 50
+breakptr at 79
+delta 108 size 5
+running range 1 to 24
+running range 25 to 50
+running range 51 to 79
+running range 80 to 108
+Alpha 80 2673 678
+Alpha 51 5105 3294
+Alpha 25 6428 13681
+Alpha 1 6499 1053676
+Alpha 81 2582 643
+Alpha 52 4968 3126
+Alpha 82 2501 608
+Alpha 26 6437 12880
+Alpha 53 4953 2969
+Alpha 2 6567 456792
+Alpha 83 2423 575
+Alpha 84 2276 540
+Alpha 27 6383 12119
+Alpha 54 4921 2816
+Alpha 3 6650 241820
+Alpha 85 2229 509
+Alpha 55 4797 2678
+Alpha 28 6307 11357
+Alpha 86 2086 480
+Alpha 56 4814 2537
+Alpha 87 2007 452
+Alpha 4 6738 157062
+Alpha 29 6350 10630
+Alpha 88 1929 424
+Alpha 57 4696 2414
+Alpha 89 1796 399
+Alpha 5 6753 115163
+Alpha 30 6267 10033
+Alpha 58 4603 2291
+Alpha 90 1734 375
+Alpha 91 1683 352
+Alpha 59 4540 2174
+Alpha 31 6244 9443
+Alpha 6 6792 88627
+Alpha 92 1563 330
+Alpha 60 4429 2064
+Alpha 93 1464 310
+Alpha 32 6172 8980
+Alpha 7 6785 73054
+Alpha 61 4347 1949
+Alpha 94 1388 291
+Alpha 33 6113 8506
+Alpha 95 1323 272
+Alpha 62 4222 1842
+Alpha 8 6831 62610
+Alpha 96 1193 255
+Alpha 63 4225 1745
+Alpha 34 6114 8070
+Alpha 97 1137 238
+Alpha 64 4113 1655
+Alpha 98 1018 223
+Alpha 9 6807 53881
+Alpha 35 6062 7640
+Alpha 99 997 208
+Alpha 65 4037 1570
+Alpha 100 890 195
+Alpha 10 6795 45396
+Alpha 36 6006 7266
+Alpha 66 3937 1486
+Alpha 101 807 182
+Alpha 102 714 170
+Alpha 67 3802 1404
+Alpha 37 5958 6895
+Alpha 11 6750 39886
+Alpha 103 636 158
+Alpha 68 3833 1330
+Alpha 104 540 147
+Alpha 38 5883 6533
+Alpha 69 3657 1266
+Alpha 105 498 137
+Alpha 12 6720 36070
+Alpha 106 387 127
+Alpha 39 5900 6172
+Alpha 70 3601 1196
+Alpha 107 282 117
+Alpha 13 6759 32923
+Alpha 71 3498 1134
+Alpha 40 5734 5849
+Alpha 108 89 109
+Beta 80 399 111
+Alpha 72 3464 1076
+Alpha 14 6731 30055
+Alpha 41 5699 5529
+Beta 81 364 111
+Alpha 73 3341 1018
+Beta 82 334 111
+Alpha 42 5652 5242
+Alpha 15 6691 27868
+Alpha 74 3270 960
+Beta 83 329 111
+Beta 84 361 111
+Alpha 75 3160 904
+Alpha 43 5581 4996
+Alpha 16 6665 25671
+Beta 85 371 111
+Alpha 76 3080 850
+Alpha 44 5587 4755
+Beta 86 342 111
+Alpha 77 2980 802
+Alpha 17 6721 23870
+Beta 87 299 110
+Alpha 45 5466 4526
+Alpha 78 2907 757
+Beta 88 287 110
+Beta 89 271 110
+Alpha 18 6690 22100
+Alpha 79 2796 718
+Alpha 46 5440 4285
+Beta 90 246 110
+Beta 51 627 117
+Beta 91 241 110
+Alpha 47 5385 4068
+Alpha 19 6657 20442
+Beta 92 225 110
+Beta 52 600 117
+Beta 93 266 110
+Alpha 48 5293 3863
+Beta 53 581 116
+Alpha 20 6630 18842
+Beta 94 237 109
+Beta 54 570 116
+Beta 95 209 109
+Alpha 49 5253 3687
+Alpha 21 6557 17446
+Beta 96 207 109
+Beta 55 565 116
+Alpha 50 5158 3485
+Beta 97 178 109
+Beta 56 555 116
+Beta 98 166 109
+Alpha 22 6569 16424
+Beta 25 771 131
+Beta 99 153 109
+Beta 57 613 116
+Beta 100 177 109
+Alpha 23 6519 15453
+Beta 58 546 115
+Beta 26 771 131
+Beta 101 155 109
+Beta 102 141 108
+Beta 59 550 115
+Beta 27 764 131
+Alpha 24 6478 14537
+Beta 103 129 108
+Beta 60 541 115
+Beta 104 119 108
+Beta 28 709 131
+Beta 61 522 115
+Beta 105 95 108
+Beta 1 297 300
+Beta 106 69 108
+Beta 62 549 115
+Beta 29 763 131
+Beta 107 56 108
+Beta 63 516 114
+Beta 108 18 108
+range 80 to 108 finished
+Beta 2 1097 265
+Beta 30 806 131
+Beta 64 523 114
+Beta 40 717 119
+Beta 3 979 228
+Beta 31 728 131
+Beta 65 513 114
+Beta 41 646 119
+Beta 66 501 114
+Beta 32 706 128
+Beta 4 949 201
+Beta 67 534 114
+Beta 42 640 119
+Beta 33 824 121
+Beta 68 468 113
+Beta 43 623 119
+Beta 5 908 194
+Beta 69 473 113
+Beta 34 692 121
+Beta 44 633 118
+Beta 70 446 113
+Beta 35 669 121
+Beta 6 905 179
+Beta 71 468 113
+Beta 45 620 118
+Beta 36 673 121
+Beta 72 434 113
+Beta 7 829 148
+Beta 46 613 118
+Beta 73 543 112
+Beta 37 651 120
+Beta 47 614 118
+Beta 74 436 112
+Beta 8 773 147
+Beta 38 692 120
+Beta 75 418 112
+Beta 48 680 117
+Beta 39 655 120
+Beta 9 729 146
+Beta 76 393 112
+Beta 49 595 117
+Beta 77 386 112
+Beta 50 586 117
+Beta 79 439 112
+Beta 10 735 146
+Beta 78 423 112
+range 25 to 50 finished
+Beta 15 760 144
+Beta 12 756 146
+Beta 11 761 146
+Beta 14 756 146
+Beta 16 784 142
+Beta 13 750 146
+Beta 21 776 131
+Beta 23 727 131
+Beta 17 751 131
+Beta 22 845 131
+Beta 18 762 131
+Beta 24 779 131
+Beta 20 830 131
+Beta 19 819 131
+range 51 to 79 finished
+range 1 to 24 finished
+# PBBS time: initialize time: 1.1553
+### Running Time: 77.83
+# time per iter: 77.83
+delete graph
+delete graph
