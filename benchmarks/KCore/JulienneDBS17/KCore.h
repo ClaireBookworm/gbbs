@@ -48,7 +48,7 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
     auto bkt = b.next_bucket();
     bt.stop();
     sequence<uintE>& vtxs = bkt.identifiers;
-    uintT reduc = pbbslib::reduce_add(sequence<uintT>(active.size(), [&](size_t i){ return Dorg[vtxs[i]]; }));
+    uintT reduc = pbbslib::reduce_add(sequence<uintT>(vtxs.size(), [&](size_t i){ return Dorg[vtxs[i]]; }));
     d_sum -= reduc;
     auto active = vertexSubset(n, std::move(bkt.identifiers));
     uintE k = bkt.id;
