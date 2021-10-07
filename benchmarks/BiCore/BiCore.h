@@ -59,6 +59,7 @@ template <class Graph>
 inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
 {
 	std::cout << "starting" << std::endl;
+	timer it; it.start();
 	const size_t n = G.n;					// # of vertices
 	const size_t n_a = bipartition + 1;		// number of vertices in first partition
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
@@ -93,7 +94,6 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	auto timeA = sequence<double>(delta, 0.0);
 	auto timeB = sequence<double>(delta, 0.0);
 	auto tTime = sequence<double>(delta, 0.0);
-	timer it; it.start();
 	sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
 	par_for(1,breakptrs.size(),1,[&](size_t idx){
 		uintE minCore = breakptrs[idx-1]+1;

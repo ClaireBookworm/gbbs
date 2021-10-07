@@ -36,6 +36,7 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
   sequence<uintT> edgeCount = sequence<uintT>(n,d_sum); // this track the sum of degs
   auto D =
       sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
+  const auto Dorg = D;
 
   auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
   auto b = make_vertex_buckets(n, D, increasing, num_buckets);
@@ -46,11 +47,12 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
     bt.start();
     auto bkt = b.next_bucket();
     bt.stop();
+    sequence<uintE>& vtxs = bkt.identifiers;
+    uintT reduc = pbbslib::reduce_add(sequence<uintT>(active.size(), [&](size_t i){ return Dorg[vtxs[i]]; }));
+    d_sum -= reduc;
     auto active = vertexSubset(n, std::move(bkt.identifiers));
     uintE k = bkt.id;
     finished += active.size();
-    uintT reduc = pbbslib::reduce_add(sequence<uintT>(active.size(), [&](size_t i){ return G.get_vertex(active.vtx(i)).out_degree(); }));
-    d_sum -= reduc;
     k_max = std::max(k_max, bkt.id);
 
     auto apply_f = [&](const std::tuple<uintE, uintE>& p)
