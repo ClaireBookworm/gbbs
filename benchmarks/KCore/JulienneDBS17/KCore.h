@@ -32,8 +32,8 @@ template <class Graph>
 inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_buckets = 16) {
   
   const size_t n = G.n;
-  size_t m = G.m;
-  sequence<uintT> edgeCount = sequence<uintT>(n,m);
+  size_t d_sum = G.m;
+  sequence<uintT> edgeCount = sequence<uintT>(n,d_sum); // this track the sum of degs
   auto D =
       sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
 
@@ -49,6 +49,8 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
     auto active = vertexSubset(n, std::move(bkt.identifiers));
     uintE k = bkt.id;
     finished += active.size();
+    uintT reduc = pbbslib::reduce_add(sequence<uintT>(active.size(), [&](size_t i){ return G.get_vertex(active.vtx(i)).out_degree(); }));
+    d_sum -= reduc;
     k_max = std::max(k_max, bkt.id);
 
     auto apply_f = [&](const std::tuple<uintE, uintE>& p)
@@ -57,7 +59,6 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
       uintE deg = D[v];
       if (deg > k) {
         uintE new_deg = std::max(deg - edgesRemoved, k);
-        m -= 2*edgesRemoved;
         D[v] = new_deg;
         return wrap(v, b.get_bucket(new_deg));
       } // deg==k means it's effectually deleted
@@ -67,11 +68,12 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
     auto cond_f = [] (const uintE& u) { return true; };
     vertexSubsetData<uintE> moved = nghCount(G, active, cond_f, apply_f, em, no_dense);
     // "moved" is a wrapper storing a sequence of tuples like (id, newBucket)
+
     bt.start();
     b.update_buckets(moved);
     bt.stop();
     rho++;
-    edgeCount[k_max+1] = std::min(edgeCount[k_max+1], m);
+    edgeCount[k_max+1] = std::min(edgeCount[k_max+1], d_sum);
   }
   std::cout << "### rho = " << rho << " k_{max} = " << k_max << "\n";
   debug(bt.reportTotal("bucket time"););

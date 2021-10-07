@@ -75,7 +75,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	std::vector<size_t> breakptrs;
 	breakptrs.push_back(0);
 
-	double thread_ratio = 1.0;
+	double thread_ratio = 1.0; //try messing with this
 	double avgWork = pbbslib::reduce_add(workC) / num_workers() * thread_ratio;
 	double curWork = 0.0;
 	for(size_t i=1; i<=delta; i++){
@@ -129,7 +129,6 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 			std::vector<uintE> delA(initSize);
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delA[j++]=i; 
 			initialClean(G, D, delA, core);
-
 			auto ret = PeelFixA(G, D, core, n_a, n_b, num_buckets);
 			timeA[core-1] = std::get<1>(ret);
 			t_in.stop();
