@@ -29,13 +29,13 @@
 namespace gbbs {
 
 template <class Graph>
-inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_buckets = 16) {
-  
+inline std::tuple<sequence<uintE>, sequence<uintT>, std::vector<sequence<uintE> > > KCore(Graph& G, size_t num_buckets = 16) {
+
   const size_t n = G.n;
   size_t d_sum = G.m;
   sequence<uintT> edgeCount = sequence<uintT>(n,d_sum); // this track the sum of degs
-  auto D =
-      sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
+  std::vector<sequence<uintE> > prepeel = std::vector<sequence<uintE> >(); prepeel.reserve(500);
+  auto D = sequence<uintE>(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
   const auto Dorg = D;
 
   auto em = hist_table<uintE, uintE>(std::make_tuple(UINT_E_MAX, 0), (size_t)G.m / 50);
@@ -53,6 +53,10 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
     auto active = vertexSubset(n, std::move(bkt.identifiers));
     uintE k = bkt.id;
     finished += active.size();
+    if(bkt.id > k_max){ // we enter (bkt.id, bkt.id)-core territory, all (bkt.id-1, bkt.id-1)-core is peeled
+      prepeel.resize(bkt.id+1);
+      prepeel[bkt.id] = D;
+    }
     k_max = std::max(k_max, bkt.id);
 
     auto apply_f = [&](const std::tuple<uintE, uintE>& p)
@@ -79,7 +83,7 @@ inline std::pair<sequence<uintE>, sequence<uintT> > KCore(Graph& G, size_t num_b
   }
   std::cout << "### rho = " << rho << " k_{max} = " << k_max << "\n";
   debug(bt.reportTotal("bucket time"););
-  return std::make_pair(D, edgeCount);
+  return std::make_tuple(D, edgeCount, prepeel);
 }
 
 template <class W>

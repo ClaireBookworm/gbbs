@@ -65,7 +65,26 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	const size_t n_b = n - bipartition - 1; // number of vertices in second partition
 	auto ret = KCore(G, num_buckets);
 	const uintE delta = static_cast<uintE>(pbbslib::reduce_max(std::get<0>(ret)));
+	// ret stores the largest core value for which each vertex exists
+	// if we peel away (c,c)-core, we want to get rid of all vertices <= c
+	// 
 	sequence<uintT> edgeCount = std::move(std::get<1>(ret));
+	std::vector<sequence<uintE> > prepeel = std::move(std::get<2>(ret));
+	sequence<uintE> copyIdx(prepeel.size());
+	size_t lastAvail = 0;
+	for(size_t i=1; i<=delta; i++){
+		if(i < prepeel.size() && prepeel[i].size() > 0) lastAvail = i;
+		copyIdx[i] = lastAvail;
+	}
+
+	par_for(1,delta+1,1,[&](size_t idx){
+		if(idx != copyIdx[idx]) prepeel[idx] = prepeel[copyIdx[idx]];
+	});
+
+	it.stop();
+	std::cout<<"delta "<<delta<<" prepeel size "<<prepeel.size()<<" k-peel time "<<it.get_total()<<std::endl;
+	it.start();
+
 	sequence<double> workC = sequence<double>(delta, [&](size_t idx){
 		return (double)(edgeCount[idx+1])/G.m;
 	});
@@ -90,40 +109,39 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	}
 	if(breakptrs[breakptrs.size()-1]!=delta)
 		breakptrs.push_back(delta);
-	it.stop();
+
 	std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<" k-peel time "<<it.get_total()<<std::endl;
-	it.start();
 	auto timeA = sequence<double>(delta, 0.0);
 	auto timeB = sequence<double>(delta, 0.0);
 	auto tTime = sequence<double>(delta, 0.0);
-	sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
-	par_for(1,breakptrs.size(),1,[&](size_t idx){
-		uintE minCore = breakptrs[idx-1]+1;
-		sequence<uintE> degA(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
-		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degA[i]<minCore;}));
-		std::vector<uintE> DelA(initSize);
-		for(size_t i=0, j=0; i<n; i++) if(degA[i]<minCore) DelA[j++]=i;
-		initialClean(G, degA, DelA, minCore);
-		prepeelA[idx] = std::move(degA);
-	});
+	// sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
+	// par_for(1,breakptrs.size(),1,[&](size_t idx){
+	// 	uintE minCore = breakptrs[idx-1]+1;
+	// 	sequence<uintE> degA(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
+	// 	size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degA[i]<minCore;}));
+	// 	std::vector<uintE> DelA(initSize);
+	// 	for(size_t i=0, j=0; i<n; i++) if(degA[i]<minCore) DelA[j++]=i;
+	// 	initialClean(G, degA, DelA, minCore);
+	// 	prepeelA[idx] = std::move(degA);
+	// });
 
-	sequence<uintE>* prepeelB = new sequence<uintE>[breakptrs.size()];
-	par_for(1,breakptrs.size(),1,[&](size_t idx){
-		uintE minCore = breakptrs[idx-1]+1;
-		sequence<uintE> degB(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
-		size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degB[i]<minCore;}));
-		std::vector<uintE> DelB(initSize);
-		for(size_t i=0, j=0; i<n; i++) if(degB[i]<minCore) DelB[j++]=i;
-		initialClean(G, degB, DelB, minCore);
-		prepeelB[idx] = std::move(degB);
-	});
+	// sequence<uintE>* prepeelB = new sequence<uintE>[breakptrs.size()];
+	// par_for(1,breakptrs.size(),1,[&](size_t idx){
+	// 	uintE minCore = breakptrs[idx-1]+1;
+	// 	sequence<uintE> degB(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
+	// 	size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degB[i]<minCore;}));
+	// 	std::vector<uintE> DelB(initSize);
+	// 	for(size_t i=0, j=0; i<n; i++) if(degB[i]<minCore) DelB[j++]=i;
+	// 	initialClean(G, degB, DelB, minCore);
+	// 	prepeelB[idx] = std::move(degB);
+	// });
 	it.stop();
 	par_for(1,breakptrs.size(),1,[&](size_t idx){
 		std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
 		uintE minCore = breakptrs[idx-1]+1;
 		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 			timer t_in; t_in.start();
-			sequence<uintE> D = prepeelA[idx];
+			sequence<uintE> D = prepeel[minCore];
 			// use delayed_sequence here
 			// start serial, improve with parallelism
 			size_t initSize = 0;
@@ -138,7 +156,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		}
 		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
 			timer t_in; t_in.start();
-			sequence<uintE> D = prepeelB[idx];
+			sequence<uintE> D = prepeel[minCore];
 			size_t initSize = 0;
 			for(uintE i=0; i<n; i++) if(D[i]<core && D[i]>=minCore) initSize++;
 			std::vector<uintE> delB(initSize);
