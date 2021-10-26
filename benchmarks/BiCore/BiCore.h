@@ -90,8 +90,9 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	}
 	if(breakptrs[breakptrs.size()-1]!=delta)
 		breakptrs.push_back(delta);
-	std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<std::endl;
-
+	it.stop();
+	std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<" k-peel time "<<it.get_total()<<std::endl;
+	it.start();
 	auto timeA = sequence<double>(delta, 0.0);
 	auto timeB = sequence<double>(delta, 0.0);
 	auto tTime = sequence<double>(delta, 0.0);
