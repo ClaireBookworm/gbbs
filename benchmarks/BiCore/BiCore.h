@@ -80,12 +80,13 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	double avgWork = pbbslib::reduce_add(workC) / num_workers() * thread_ratio;
 	double curWork = 0.0;
 	for(size_t i=1; i<=delta; i++){
-		curWork += workC[i-1];
-		if(curWork/avgWork >= 1.05){
-			curWork = 0.0;
-			breakptrs.push_back(i);
-			std::cout<<"breakptr at "<<i<<std::endl;
-		}
+		breakptrs.push_back(i);
+		// curWork += workC[i-1];
+		// if(curWork/avgWork >= 1.05){
+		// 	curWork = 0.0;
+		// 	breakptrs.push_back(i);
+		// 	std::cout<<"breakptr at "<<i<<std::endl;
+		// }
 	}
 	if(breakptrs[breakptrs.size()-1]!=delta)
 		breakptrs.push_back(delta);
