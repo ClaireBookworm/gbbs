@@ -1,0 +1,2354 @@
+readin 1065176 121139452
+graph constructed 1065176 121139452 from 1065176 121139452
+# list_alloc init_blocks: 1000
+# after init: 
+# Used: 0, allocated: 10240, node size: 16392, bytes: 167854080
+### Application: BiCore
+### Graph: ../../inputs/reuter_adj
+### Threads: 8
+### n: 1065176
+### m: 121139452
+### Params: -nb (num_buckets) = 16 -bi = 781264
+### ------------------------------------
+starting
+### rho = 1599 k_{max} = 192
+delta 192 prepeel size 193 k-peel time 0.867301
+1 0.999049 0.998399 0.997899 0.997471 0.997095 0.996741 0.996407 0.996069 0.995721 0.995391 0.994972 0.994462 0.993808 0.993102 0.992324 0.991419 0.990389 0.989162 0.987672 0.985904 0.984033 0.981841 0.979537 0.977198 0.974794 0.972521 0.970102 0.967766 0.965389 0.963045 0.960451 0.957836 0.95511 0.952155 0.949237 0.946227 0.943019 0.939863 0.936618 0.93329 0.930075 0.926704 0.923493 0.920284 0.917141 0.914046 0.910883 0.907494 0.904178 0.901003 0.897704 0.894294 0.890833 0.887364 0.883741 0.880172 0.876546 0.872727 0.868958 0.864993 0.86113 0.857308 0.853369 0.84949 0.845682 0.841981 0.83823 0.834483 0.830828 0.827186 0.823477 0.819823 0.816188 0.812289 0.808736 0.805183 0.801794 0.798264 0.79471 0.790911 0.787529 0.784115 0.780738 0.777367 0.773899 0.770386 0.767075 0.763826 0.76057 0.757299 0.754007 0.750731 0.74741 0.744092 0.740938 0.737615 0.734548 0.731233 0.728172 0.725116 0.721725 0.718675 0.715595 0.712524 0.709467 0.706425 0.703371 0.700221 0.697067 0.693967 0.691013 0.687922 0.684936 0.682048 0.679106 0.676083 0.673012 0.670082 0.667023 0.664083 0.661129 0.658182 0.655279 0.65247 0.649621 0.646661 0.642981 0.640241 0.637433 0.634444 0.631458 0.628496 0.625585 0.622642 0.619756 0.616784 0.613979 0.611203 0.608321 0.60539 0.602531 0.599669 0.596801 0.593784 0.590706 0.587737 0.584709 0.581569 0.578597 0.575522 0.572621 0.569591 0.566741 0.563816 0.56096 0.557691 0.5545 0.55128 0.548056 0.544751 0.541922 0.538573 0.535231 0.5319 0.528541 0.525129 0.521248 0.516195 0.512249 0.508261 0.504766 0.501432 0.497904 0.494417 0.490877 0.487726 0.48344 0.479964 0.47593 0.47179 0.467402 0.462331 0.456166 0.450406 0.444343 0.437087 0.427835 0.417464 0.362465 0.322325 0.316346
+delta 192 size 193 k-peel time 0.867366
+running range 1 to 1
+running range running range running range running range 12 to 12running range 
+177 to 177
+35 to 35
+running range 20 to 20
+156 to 156
+62 to 62
+running range 109 to 109
+Alpha 177 504 286
+Alpha 156 1232 592
+Alpha 109 2687 2843
+Beta 177 261 198
+range 177 to 177 finished
+running range 178 to 178
+Alpha 1 4767 345056
+Beta 156 446 205
+range 156 to 156 finished
+running range 157 to 157
+Alpha 62 4011 11660
+Alpha 178 496 277
+Alpha 35 4570 27234
+Alpha 20 4711 52098
+Alpha 12 4710 78318
+Alpha 157 1177 570
+Beta 109 699 226
+range 109 to 109 finished
+running range 110 to 110
+Beta 178 260 198
+range 178 to 178 finished
+running range 179 to 179
+Alpha 179 473 269
+Beta 157 421 204
+range 157 to 157 finished
+running range 158 to 158
+Beta 62 1004 269
+range 62 to 62 finished
+running range 63 to 63
+Beta 1 636 1585
+range 1 to 1 finished
+running range 2 to 2
+Alpha 110 2593 2758
+Beta 179 243 197
+range 179 to 179 finished
+running range 180 to 180
+Beta 35 1172 307
+range 35 to 35 finished
+running range 36 to 36
+Alpha 158 1095 551
+Beta 20 1311 484
+range 20 to 20 finished
+running range 21 to 21
+Beta 12 1434 745
+range 12 to 12 finished
+running range 13 to 13
+Alpha 180 452 260
+Beta 158 391 204
+range 158 to 158 finished
+running range 159 to 159
+Beta 110 691 226
+range 110 to 110 finished
+running range 111 to 111
+Beta 180 226 197
+range 180 to 180 finished
+running range 181 to 181
+Alpha 2 4764 208202
+Alpha 63 4019 11294
+Alpha 181 411 252
+Alpha 159 1070 532
+Alpha 36 4555 26342
+Alpha 111 2621 2670
+Beta 181 234 197
+range 181 to 181 finished
+running range 182 to 182
+Alpha 21 4679 49448
+Beta 159 396 204
+range 159 to 159 finished
+running range 160 to 160
+Alpha 13 4695 73483
+Alpha 182 393 243
+Beta 63 992 268
+range 63 to 63 finished
+running range 64 to 64
+Beta 2 1210 1131
+range 2 to 2 finished
+running range 3 to 3
+Alpha 160 1043 513
+Beta 111 686 225
+range 111 to 111 finished
+running range 112 to 112
+Beta 182 222 196
+range 182 to 182 finished
+running range 183 to 183
+Alpha 183 354 236
+Beta 160 403 203
+range 160 to 160 finished
+running range 161 to 161
+Beta 36 1157 306
+range 36 to 36 finished
+running range 37 to 37
+Beta 21 1296 468
+range 21 to 21 finished
+running range 22 to 22
+Beta 183 215 196
+range 183 to 183 finished
+running range 184 to 184
+Alpha 112 2604 2590
+Beta 13 1412 666
+range 13 to 13 finished
+running range 14 to 14
+Alpha 64 4037 10910
+Alpha 161 1014 495
+Alpha 3 4755 171509
+Alpha 184 311 229
+Beta 161 364 203
+range 161 to 161 finished
+running range 162 to 162
+Beta 184 194 195
+range 184 to 184 finished
+running range 185 to 185
+Beta 112 640 225
+range 112 to 112 finished
+running range 113 to 113
+Alpha 37 4568 25480
+Alpha 185 298 221
+Beta 64 1010 267
+range 64 to 64 finished
+running range 65 to 65
+Alpha 162 943 479
+Alpha 22 4701 47140
+Alpha 14 4681 70110
+Beta 185 166 195
+range 185 to 185 finished
+running range 186 to 186
+Beta 3 1334 1067
+range 3 to 3 finished
+running range 4 to 4
+Beta 162 372 203
+range 162 to 162 finished
+running range 163 to 163
+Alpha 113 2522 2517
+Alpha 186 257 213
+Beta 186 149 195
+range 186 to 186 finished
+running range 187 to 187
+Alpha 163 931 463
+Alpha 65 3954 10531
+Beta 37 1194 304
+range 37 to 37 finished
+running range 38 to 38
+Beta 113 682 225
+range 113 to 113 finished
+running range 114 to 114
+Alpha 187 208 210
+Beta 22 1314 456
+range 22 to 22 finished
+running range 23 to 23
+Beta 163 386 202
+range 163 to 163 finished
+running range 164 to 164
+Beta 14 1403 599
+range 14 to 14 finished
+running range 15 to 15
+Alpha 4 4756 144565
+Beta 187 128 194
+range 187 to 187 finished
+running range 188 to 188
+Alpha 188 208 206
+Alpha 164 897 447
+Alpha 114 2516 2440
+Beta 65 1017 265
+range 65 to 65 finished
+running range 66 to 66
+Beta 188 134 194
+range 188 to 188 finished
+running range 189 to 189
+Beta 164 371 202
+range 164 to 164 finished
+running range 165 to 165
+Alpha 38 4549 24656
+Alpha 189 165 203
+Alpha 23 4696 45051
+Beta 114 672 224
+range 114 to 114 finished
+running range 115 to 115
+Beta 189 138 193
+range 189 to 189 finished
+running range 190 to 190
+Alpha 15 4702 66881
+Alpha 165 850 432
+Beta 4 1345 1022
+range 4 to 4 finished
+running range 5 to 5
+Alpha 190 88 200
+Alpha 66 3945 10173
+Beta 165 404 202
+range 165 to 165 finished
+running range 166 to 166
+Beta 190 54 193
+range 190 to 190 finished
+running range 191 to 191
+Alpha 115 2467 2358
+Alpha 191 49 196
+Beta 38 1142 302
+range 38 to 38 finished
+running range 39 to 39
+Beta 191 29 193
+range 191 to 191 finished
+running range 192 to 192
+Alpha 166 854 417
+Beta 23 1264 441
+range 23 to 23 finished
+running range 24 to 24
+Alpha 192 29 194
+Alpha 5 4748 133458
+Beta 66 988 264
+range 66 to 66 finished
+running range 67 to 67
+Beta 15 1416 568
+range 15 to 15 finished
+running range 16 to 16
+Beta 192 24 192
+range 192 to 192 finished
+running range 89 to 89
+Beta 166 345 201
+range 166 to 166 finished
+running range 167 to 167
+Beta 115 668 223
+range 115 to 115 finished
+running range 116 to 116
+Alpha 167 807 403
+Alpha 39 4535 23835
+Alpha 116 2422 2279
+Alpha 89 3322 5218
+Beta 167 323 201
+range 167 to 167 finished
+running range 168 to 168
+Alpha 67 3933 9819
+Alpha 24 4728 42995
+Beta 5 1416 965
+range 5 to 5 finished
+running range 6 to 6
+Alpha 16 4685 63710
+Alpha 168 800 390
+Beta 116 671 223
+range 116 to 116 finished
+running range 117 to 117
+Beta 89 807 240
+range 89 to 89 finished
+running range 90 to 90
+Beta 168 304 201
+range 168 to 168 finished
+running range 169 to 169
+Beta 39 1183 301
+range 39 to 39 finished
+running range 40 to 40
+Beta 67 976 263
+range 67 to 67 finished
+running range 68 to 68
+Alpha 169 771 377
+Alpha 117 2411 2207
+Beta 24 1288 410
+range 24 to 24 finished
+running range 25 to 25
+Alpha 6 4741 121026
+Beta 16 1394 551
+range 16 to 16 finished
+running range 17 to 17
+Alpha 90 3283 5059
+Beta 169 371 200
+range 169 to 169 finished
+running range 170 to 170
+Beta 117 634 222
+range 117 to 117 finished
+running range 118 to 118
+Alpha 68 3893 9479
+Alpha 40 4493 23039
+Alpha 170 758 363
+Beta 90 818 239
+range 90 to 90 finished
+running range 91 to 91
+Beta 170 318 200
+range 170 to 170 finished
+running range 171 to 171
+Alpha 25 4650 40692
+Beta 6 1402 914
+range 6 to 6 finished
+running range 7 to 7
+Alpha 118 2386 2131
+Alpha 17 4724 60654
+Alpha 171 710 351
+Beta 68 963 262
+range 68 to 68 finished
+running range 69 to 69
+Beta 40 1171 299
+range 40 to 40 finished
+running range 41 to 41
+Alpha 91 3273 4900
+Beta 171 294 200
+range 171 to 171 finished
+running range 172 to 172
+Beta 118 644 222
+range 118 to 118 finished
+running range 119 to 119
+Alpha 172 698 338
+Alpha 7 4726 112706
+Beta 25 1253 386
+range 25 to 25 finished
+running range 26 to 26
+Alpha 69 3823 9185
+Beta 17 1386 529
+range 17 to 17 finished
+running range 18 to 18
+Beta 91 836 238
+range 91 to 91 finished
+running range 92 to 92
+Alpha 119 2359 2065
+Beta 172 364 199
+range 172 to 172 finished
+running range 173 to 173
+Alpha 41 4493 22217
+Alpha 173 654 327
+Beta 119 621 221
+range 119 to 119 finished
+running range 120 to 120
+Beta 69 989 261
+range 69 to 69 finished
+running range 70 to 70
+Alpha 92 3257 4756
+Beta 173 304 199
+range 173 to 173 finished
+running range 174 to 174
+Beta 7 1410 884
+range 7 to 7 finished
+running range 8 to 8
+Alpha 26 4655 38568
+Alpha 18 4690 57690
+Alpha 174 637 317
+Beta 41 1135 298
+range 41 to 41 finished
+running range 42 to 42
+Alpha 120 2300 1996
+Beta 92 782 238
+range 92 to 92 finished
+running range 93 to 93
+Beta 174 281 199
+range 174 to 174 finished
+running range 175 to 175
+Alpha 70 3820 8940
+Alpha 175 586 306
+Beta 120 628 221
+range 120 to 120 finished
+running range 121 to 121
+Alpha 8 4728 106119
+Beta 26 1257 373
+range 26 to 26 finished
+running range 27 to 27
+Beta 18 1340 513
+range 18 to 18 finished
+running range 19 to 19
+Beta 175 279 199
+range 175 to 175 finished
+running range 176 to 176
+Alpha 93 3215 4615
+Alpha 42 4438 21483
+Beta 70 961 259
+range 70 to 70 finished
+running range 71 to 71
+Alpha 121 2272 1937
+Alpha 176 576 296
+Beta 93 804 237
+range 93 to 93 finished
+running range 94 to 94
+Beta 176 250 198
+range 176 to 176 finished
+running range 136 to 136
+Beta 8 1410 864
+range 8 to 8 finished
+running range 9 to 9
+Beta 121 615 220
+range 121 to 121 finished
+running range 122 to 122
+Alpha 27 4676 36861
+Alpha 19 4722 54914
+Beta 42 1113 297
+range 42 to 42 finished
+running range 43 to 43
+Alpha 71 3790 8673
+Alpha 136 1852 1198
+Alpha 94 3190 4488
+Alpha 122 2235 1884
+Beta 136 526 213
+range 136 to 136 finished
+running range 137 to 137
+Alpha 9 4725 96954
+Beta 71 952 258
+range 71 to 71 finished
+running range 72 to 72
+Beta 27 1230 360
+range 27 to 27 finished
+running range 28 to 28
+Beta 122 608 219
+range 122 to 122 finished
+running range 123 to 123
+Beta 94 809 236
+range 94 to 94 finished
+running range 95 to 95
+Beta 19 1292 500
+range 19 to 19 finished
+running range 29 to 29
+Alpha 43 4442 20661
+Alpha 137 1815 1156
+Alpha 123 2210 1829
+Beta 137 526 213
+range 137 to 137 finished
+running range 138 to 138
+Alpha 95 3138 4350
+Alpha 72 3789 8425
+Beta 9 1412 843
+range 9 to 9 finished
+running range 10 to 10
+Beta 43 1143 295
+range 43 to 43 finished
+running range 44 to 44
+Alpha 28 4664 35056
+Alpha 138 1794 1118
+Alpha 29 4661 33579
+Beta 123 584 219
+range 123 to 123 finished
+running range 124 to 124
+Beta 95 786 236
+range 95 to 95 finished
+running range 96 to 96
+Beta 72 945 257
+range 72 to 72 finished
+running range 73 to 73
+Beta 138 527 212
+range 138 to 138 finished
+running range 139 to 139
+Alpha 124 2157 1777
+Alpha 10 4710 90272
+Alpha 44 4448 19895
+Beta 28 1223 346
+range 28 to 28 finished
+running range 77 to 77
+Alpha 139 1765 1080
+Alpha 96 3062 4219
+Beta 29 1245 331
+range 29 to 29 finished
+running range 30 to 30
+Beta 124 609 219
+range 124 to 124 finished
+running range 125 to 125
+Alpha 73 3726 8192
+Beta 139 531 212
+range 139 to 139 finished
+running range 140 to 140
+Beta 96 775 235
+range 96 to 96 finished
+running range 97 to 97
+Alpha 125 2149 1723
+Alpha 77 3595 7297
+Beta 44 1104 293
+range 44 to 44 finished
+running range 45 to 45
+Beta 10 1421 828
+range 10 to 10 finished
+running range 11 to 11
+Alpha 140 1767 1043
+Alpha 30 4647 32118
+Beta 73 929 255
+range 73 to 73 finished
+running range 74 to 74
+Beta 125 606 218
+range 125 to 125 finished
+running range 126 to 126
+Alpha 97 3074 4091
+Beta 140 511 212
+range 140 to 140 finished
+running range 141 to 141
+Beta 77 906 251
+range 77 to 77 finished
+running range 78 to 78
+Alpha 45 4392 19382
+Alpha 126 2169 1669
+Alpha 141 1697 1006
+Alpha 74 3749 7950
+Alpha 11 4725 83485
+Beta 97 756 234
+range 97 to 97 finished
+running range 98 to 98
+Beta 30 1224 317
+range 30 to 30 finished
+running range 31 to 31
+Beta 141 518 211
+range 141 to 141 finished
+running range 142 to 142
+Alpha 78 3567 7097
+Beta 126 569 218
+range 126 to 126 finished
+running range 127 to 127
+Beta 74 905 254
+range 74 to 74 finished
+running range 75 to 75
+Alpha 98 3050 3966
+Beta 45 1103 292
+range 45 to 45 finished
+running range 46 to 46
+Alpha 142 1666 972
+Alpha 127 2078 1619
+Beta 11 1435 800
+range 11 to 11 finished
+running range 50 to 50
+Alpha 31 4575 31045
+Beta 78 887 250
+range 78 to 78 finished
+running range 79 to 79
+Beta 142 506 210
+range 142 to 142 finished
+running range 143 to 143
+Beta 98 750 234
+range 98 to 98 finished
+running range 99 to 99
+Alpha 75 3662 7740
+Beta 127 598 217
+range 127 to 127 finished
+running range 128 to 128
+Alpha 46 4380 18829
+Alpha 143 1602 935
+Alpha 79 3576 6902
+Alpha 99 2986 3850
+Beta 31 1235 314
+range 31 to 31 finished
+running range 32 to 32
+Alpha 50 4331 16893
+Alpha 128 2074 1567
+Beta 143 479 210
+range 143 to 143 finished
+running range 144 to 144
+Beta 75 927 253
+range 75 to 75 finished
+running range 76 to 76
+Beta 99 768 233
+range 99 to 99 finished
+running range 100 to 100
+Beta 128 565 217
+range 128 to 128 finished
+running range 129 to 129
+Beta 46 1139 290
+range 46 to 46 finished
+running range 47 to 47
+Beta 79 888 248
+range 79 to 79 finished
+running range 80 to 80
+Alpha 144 1558 902
+Beta 50 1099 286
+range 50 to 50 finished
+running range 51 to 51
+Alpha 32 4624 30024
+Alpha 76 3654 7529
+Beta 144 482 210
+range 144 to 144 finished
+running range 145 to 145
+Alpha 129 2018 1519
+Alpha 100 2974 3730
+Alpha 80 3543 6719
+Alpha 47 4338 18315
+Alpha 145 1525 870
+Beta 129 583 216
+range 129 to 129 finished
+running range 130 to 130
+Alpha 51 4264 16435
+Beta 76 939 252
+range 76 to 76 finished
+running range 34 to 34
+Beta 100 752 232
+range 100 to 100 finished
+running range 101 to 101
+Beta 32 1208 312
+range 32 to 32 finished
+running range 33 to 33
+Beta 145 484 209
+range 145 to 145 finished
+running range 146 to 146
+Beta 80 867 248
+range 80 to 80 finished
+running range 81 to 81
+Alpha 130 1961 1472
+Beta 47 1097 289
+range 47 to 47 finished
+running range 48 to 48
+Alpha 146 1498 840
+Alpha 101 2950 3618
+Beta 51 1113 285
+range 51 to 51 finished
+running range 52 to 52
+Beta 130 547 216
+range 130 to 130 finished
+running range 131 to 131
+Alpha 34 4609 28145
+Alpha 33 4617 29051
+Beta 146 489 209
+range 146 to 146 finished
+running range 147 to 147
+Alpha 81 3499 6533
+Beta 101 747 231
+range 101 to 101 finished
+running range 102 to 102
+Alpha 131 1984 1423
+Alpha 48 4322 17827
+Alpha 147 1476 811
+Beta 81 901 247
+range 81 to 81 finished
+running range 82 to 82
+Alpha 52 4282 15948
+Beta 131 533 215
+range 131 to 131 finished
+running range 132 to 132
+Alpha 102 2884 3523
+Beta 147 456 208
+range 147 to 147 finished
+running range 148 to 148
+Beta 34 1157 309
+range 34 to 34 finished
+running range 134 to 134
+Beta 33 1196 310
+range 33 to 33 finished
+running range 57 to 57
+Beta 48 1144 288
+range 48 to 48 finished
+running range 49 to 49
+Alpha 148 1447 784
+Alpha 132 1959 1372
+Beta 102 724 231
+range 102 to 102 finished
+running range 103 to 103
+Alpha 134 1912 1281
+Alpha 82 3495 6354
+Beta 52 1074 284
+range 52 to 52 finished
+running range 53 to 53
+Beta 148 468 208
+range 148 to 148 finished
+running range 149 to 149
+Alpha 57 4169 13581
+Beta 132 569 215
+range 132 to 132 finished
+running range 133 to 133
+Beta 134 550 214
+range 134 to 134 finished
+running range 135 to 135
+Alpha 103 2911 3423
+Beta 82 861 246
+range 82 to 82 finished
+running range 83 to 83
+Alpha 149 1391 757
+Alpha 49 4303 17325
+Alpha 133 1875 1326
+Alpha 135 1877 1239
+Alpha 53 4297 15474
+Beta 57 1056 276
+range 57 to 57 finished
+running range 58 to 58
+Beta 103 690 230
+range 103 to 103 finished
+running range 104 to 104
+Beta 149 461 208
+range 149 to 149 finished
+running range 150 to 150
+Beta 133 510 214
+range 133 to 133 finished
+running range 54 to 54
+Beta 135 523 214
+range 135 to 135 finished
+running range 105 to 105
+Alpha 83 3464 6183
+Alpha 150 1393 731
+Beta 49 1122 287
+range 49 to 49 finished
+running range 84 to 84
+Alpha 104 2825 3327
+Beta 53 1080 282
+range 53 to 53 finished
+running range 60 to 60
+Beta 150 442 207
+range 150 to 150 finished
+running range 151 to 151
+Alpha 58 4127 13203
+Alpha 105 2813 3211
+Beta 83 885 245
+range 83 to 83 finished
+running range 61 to 61
+Alpha 54 4261 14967
+Beta 104 711 230
+range 104 to 104 finished
+running range 152 to 152
+Alpha 84 3447 6020
+Alpha 151 1346 708
+Beta 105 715 229
+range 105 to 105 finished
+running range 106 to 106
+Alpha 152 1333 683
+Beta 58 1033 275
+range 58 to 58 finished
+running range 59 to 59
+Beta 151 456 207
+range 151 to 151 finished
+running range 107 to 107
+Alpha 60 4061 12435
+Alpha 61 4059 12044
+Beta 84 845 244
+range 84 to 84 finished
+running range 85 to 85
+Beta 54 1060 280
+range 54 to 54 finished
+running range 55 to 55
+Beta 152 461 207
+range 152 to 152 finished
+running range 153 to 153
+Alpha 106 2760 3101
+Alpha 107 2706 3005
+Alpha 153 1297 659
+Beta 60 982 272
+range 60 to 60 finished
+running range 154 to 154
+Alpha 59 4113 12835
+Alpha 85 3417 5880
+Beta 61 1029 270
+range 61 to 61 finished
+running range 87 to 87
+Beta 106 687 228
+range 106 to 106 finished
+running range 86 to 86
+Beta 107 689 228
+range 107 to 107 finished
+running range 108 to 108
+Beta 153 422 206
+range 153 to 153 finished
+running range 88 to 88
+Alpha 154 1232 635
+Alpha 55 4217 14465
+Beta 59 1049 273
+range 59 to 59 finished
+running range 56 to 56
+Beta 85 862 243
+range 85 to 85 finished
+running range 155 to 155
+Beta 154 412 206
+range 154 to 154 finished
+Alpha 87 3360 5540
+Alpha 108 2694 2919
+Alpha 86 3409 5707
+Alpha 88 3325 5385
+Alpha 155 1185 613
+Beta 55 1072 279
+range 55 to 55 finished
+Beta 108 688 227
+range 108 to 108 finished
+Beta 87 833 241
+range 87 to 87 finished
+Beta 155 427 205
+range 155 to 155 finished
+Alpha 56 4209 14013
+Beta 86 836 242
+range 86 to 86 finished
+Beta 88 843 240
+range 88 to 88 finished
+Beta 56 1064 277
+range 56 to 56 finished
+# PBBS time: initialize time: 0.8674
+### Running Time: 19.23
+### Application: BiCore
+### Graph: ../../inputs/reuter_adj
+### Threads: 8
+### n: 1065176
+### m: 121139452
+### Params: -nb (num_buckets) = 16 -bi = 781264
+### ------------------------------------
+starting
+### rho = 1599 k_{max} = 192
+delta 192 prepeel size 193 k-peel time 0.8365
+1 0.999 0.9984 0.9979 0.9975 0.9971 0.9967 0.9964 0.9961 0.9957 0.9954 0.995 0.9945 0.9938 0.9931 0.9923 0.9914 0.9904 0.9892 0.9877 0.9859 0.984 0.9818 0.9795 0.9772 0.9748 0.9725 0.9701 0.9678 0.9654 0.963 0.9605 0.9578 0.9551 0.9522 0.9492 0.9462 0.943 0.9399 0.9366 0.9333 0.9301 0.9267 0.9235 0.9203 0.9171 0.914 0.9109 0.9075 0.9042 0.901 0.8977 0.8943 0.8908 0.8874 0.8837 0.8802 0.8765 0.8727 0.869 0.865 0.8611 0.8573 0.8534 0.8495 0.8457 0.842 0.8382 0.8345 0.8308 0.8272 0.8235 0.8198 0.8162 0.8123 0.8087 0.8052 0.8018 0.7983 0.7947 0.7909 0.7875 0.7841 0.7807 0.7774 0.7739 0.7704 0.7671 0.7638 0.7606 0.7573 0.754 0.7507 0.7474 0.7441 0.7409 0.7376 0.7345 0.7312 0.7282 0.7251 0.7217 0.7187 0.7156 0.7125 0.7095 0.7064 0.7034 0.7002 0.6971 0.694 0.691 0.6879 0.6849 0.682 0.6791 0.6761 0.673 0.6701 0.667 0.6641 0.6611 0.6582 0.6553 0.6525 0.6496 0.6467 0.643 0.6402 0.6374 0.6344 0.6315 0.6285 0.6256 0.6226 0.6198 0.6168 0.614 0.6112 0.6083 0.6054 0.6025 0.5997 0.5968 0.5938 0.5907 0.5877 0.5847 0.5816 0.5786 0.5755 0.5726 0.5696 0.5667 0.5638 0.561 0.5577 0.5545 0.5513 0.5481 0.5448 0.5419 0.5386 0.5352 0.5319 0.5285 0.5251 0.5212 0.5162 0.5122 0.5083 0.5048 0.5014 0.4979 0.4944 0.4909 0.4877 0.4834 0.48 0.4759 0.4718 0.4674 0.4623 0.4562 0.4504 0.4443 0.4371 0.4278 0.4175 0.3625 0.3223 0.3163
+delta 192 size 193 k-peel time 0.8365
+running range 1 to 1
+running range running range running range running range 3520 to 136running range running range running range  to 136156 to 109
+50 to 50
+ to 109
+35
+ to 156
+62 to 62
+20
+Alpha 156 1232 592
+Alpha 136 1852 1198
+Alpha 109 2687 2843
+Alpha 1 4767 345056
+Beta 156 446 205
+range 156 to 156 finished
+running range 157 to 157
+Alpha 62 4011 11660
+Alpha 50 4331 16893
+Alpha 35 4570 27234
+Beta 136 526 213
+range 136 to 136 finished
+running range 137 to 137
+Alpha 20 4711 52098
+Beta 109 699 226
+range 109 to 109 finished
+running range 110 to 110
+Alpha 157 1177 570
+Alpha 137 1815 1156
+Beta 62 1004 269
+range 62 to 62 finished
+running range 63 to 63
+Beta 157 421 204
+range 157 to 157 finished
+running range 158 to 158
+Beta 1 636 1585
+range 1 to 1 finished
+running range 2 to 2
+Alpha 110 2593 2758
+Beta 50 1099 286
+range 50 to 50 finished
+running range 51 to 51
+Beta 35 1172 307
+range 35 to 35 finished
+running range 36 to 36
+Beta 20 1311 484
+range 20 to 20 finished
+running range 21 to 21
+Beta 137 526 213
+range 137 to 137 finished
+running range 138 to 138
+Alpha 158 1095 551
+Beta 110 691 226
+range 110 to 110 finished
+running range 111 to 111
+Beta 158 391 204
+range 158 to 158 finished
+running range 159 to 159
+Alpha 2 4764 208202
+Alpha 138 1794 1118
+Alpha 63 4019 11294
+Alpha 51 4264 16435
+Alpha 159 1070 532
+Alpha 36 4555 26342
+Beta 138 527 212
+range 138 to 138 finished
+running range 139 to 139
+Alpha 21 4679 49448
+Alpha 111 2621 2670
+Beta 159 396 204
+range 159 to 159 finished
+running range 160 to 160
+Beta 63 992 268
+range 63 to 63 finished
+running range 64 to 64
+Alpha 139 1765 1080
+Beta 2 1210 1131
+range 2 to 2 finished
+running range 3 to 3
+Beta 111 686 225
+range 111 to 111 finished
+running range 112 to 112
+Alpha 160 1043 513
+Beta 51 1113 285
+range 51 to 51 finished
+running range 52 to 52
+Beta 36 1157 306
+range 36 to 36 finished
+running range 37 to 37
+Beta 139 531 212
+range 139 to 139 finished
+running range 140 to 140
+Beta 21 1296 468
+range 21 to 21 finished
+running range 22 to 22
+Beta 160 403 203
+range 160 to 160 finished
+running range 161 to 161
+Alpha 64 4037 10910
+Alpha 112 2604 2590
+Alpha 3 4755 171509
+Alpha 140 1767 1043
+Alpha 161 1014 495
+Alpha 52 4282 15948
+Beta 112 640 225
+range 112 to 112 finished
+running range 113 to 113
+Alpha 37 4568 25480
+Beta 161 364 203
+range 161 to 161 finished
+running range 162 to 162
+Beta 140 511 212
+range 140 to 140 finished
+running range 141 to 141
+Beta 64 1010 267
+range 64 to 64 finished
+running range 65 to 65
+Alpha 22 4701 47140
+Alpha 162 943 479
+Alpha 113 2522 2517
+Alpha 141 1697 1006
+Beta 3 1334 1067
+range 3 to 3 finished
+running range 4 to 4
+Beta 52 1074 284
+range 52 to 52 finished
+running range 53 to 53
+Beta 162 372 203
+range 162 to 162 finished
+running range 163 to 163
+Beta 37 1194 304
+range 37 to 37 finished
+running range 38 to 38
+Alpha 65 3954 10531
+Beta 141 518 211
+range 141 to 141 finished
+running range 142 to 142
+Beta 113 682 225
+range 113 to 113 finished
+running range 114 to 114
+Beta 22 1314 456
+range 22 to 22 finished
+running range 23 to 23
+Alpha 163 931 463
+Alpha 4 4756 144565
+Alpha 142 1666 972
+Beta 163 386 202
+range 163 to 163 finished
+running range 164 to 164
+Alpha 114 2516 2440
+Alpha 53 4297 15474
+Beta 65 1017 265
+range 65 to 65 finished
+running range 66 to 66
+Alpha 38 4549 24656
+Alpha 164 897 447
+Beta 142 506 210
+range 142 to 142 finished
+running range 143 to 143
+Alpha 23 4696 45051
+Beta 114 672 224
+range 114 to 114 finished
+running range 115 to 115
+Beta 164 371 202
+range 164 to 164 finished
+running range 165 to 165
+Alpha 143 1602 935
+Beta 4 1345 1022
+range 4 to 4 finished
+running range 5 to 5
+Beta 53 1080 282
+range 53 to 53 finished
+running range 54 to 54
+Alpha 66 3945 10173
+Alpha 165 850 432
+Beta 38 1142 302
+range 38 to 38 finished
+running range 39 to 39
+Alpha 115 2467 2358
+Beta 143 479 210
+range 143 to 143 finished
+running range 144 to 144
+Beta 165 404 202
+range 165 to 165 finished
+running range 166 to 166
+Beta 23 1264 441
+range 23 to 23 finished
+running range 24 to 24
+Beta 66 988 264
+range 66 to 66 finished
+running range 67 to 67
+Beta 115 668 223
+range 115 to 115 finished
+running range 116 to 116
+Alpha 144 1558 902
+Alpha 5 4748 133458
+Alpha 166 854 417
+Alpha 54 4261 14967
+Alpha 39 4535 23835
+Beta 166 345 201
+range 166 to 166 finished
+running range 167 to 167
+Beta 144 482 210
+range 144 to 144 finished
+running range 145 to 145
+Alpha 116 2422 2279
+Alpha 24 4728 42995
+Alpha 67 3933 9819
+Alpha 167 807 403
+Alpha 145 1525 870
+Beta 54 1060 280
+range 54 to 54 finished
+running range 55 to 55
+Beta 5 1416 965
+range 5 to 5 finished
+running range 6 to 6
+Beta 116 671 223
+range 116 to 116 finished
+running range 117 to 117
+Beta 167 323 201
+range 167 to 167 finished
+running range 168 to 168
+Beta 39 1183 301
+range 39 to 39 finished
+running range 40 to 40
+Beta 145 484 209
+range 145 to 145 finished
+running range 146 to 146
+Beta 67 976 263
+range 67 to 67 finished
+running range 68 to 68
+Alpha 168 800 390
+Beta 24 1288 410
+range 24 to 24 finished
+running range 25 to 25
+Alpha 117 2411 2207
+Beta 168 304 201
+range 168 to 168 finished
+running range 169 to 169
+Alpha 146 1498 840
+Alpha 55 4217 14465
+Alpha 6 4741 121026
+Alpha 40 4493 23039
+Beta 117 634 222
+range 117 to 117 finished
+running range 118 to 118
+Alpha 169 771 377
+Beta 146 489 209
+range 146 to 146 finished
+running range 147 to 147
+Alpha 68 3893 9479
+Beta 169 371 200
+range 169 to 169 finished
+running range 170 to 170
+Alpha 25 4650 40692
+Beta 55 1072 279
+range 55 to 55 finished
+running range 56 to 56
+Alpha 118 2386 2131
+Alpha 147 1476 811
+Alpha 170 758 363
+Beta 40 1171 299
+range 40 to 40 finished
+running range 41 to 41
+Beta 68 963 262
+range 68 to 68 finished
+running range 69 to 69
+Beta 6 1402 914
+range 6 to 6 finished
+running range 7 to 7
+Beta 147 456 208
+range 147 to 147 finished
+running range 148 to 148
+Beta 118 644 222
+range 118 to 118 finished
+running range 119 to 119
+Beta 170 318 200
+range 170 to 170 finished
+running range 171 to 171
+Beta 25 1253 386
+range 25 to 25 finished
+running range 26 to 26
+Alpha 171 710 351
+Alpha 56 4209 14013
+Alpha 148 1447 784
+Alpha 119 2359 2065
+Alpha 69 3823 9185
+Alpha 7 4726 112706
+Alpha 41 4493 22217
+Beta 171 294 200
+range 171 to 171 finished
+running range 172 to 172
+Beta 148 468 208
+range 148 to 148 finished
+running range 149 to 149
+Beta 119 621 221
+range 119 to 119 finished
+running range 120 to 120
+Alpha 172 698 338
+Beta 56 1064 277
+range 56 to 56 finished
+running range 57 to 57
+Alpha 149 1391 757
+Beta 69 989 261
+range 69 to 69 finished
+running range 70 to 70
+Alpha 26 4655 38568
+Beta 172 364 199
+range 172 to 172 finished
+running range 173 to 173
+Beta 41 1135 298
+range 41 to 41 finished
+running range 42 to 42
+Alpha 120 2300 1996
+Beta 149 461 208
+range 149 to 149 finished
+running range 150 to 150
+Beta 7 1410 884
+range 7 to 7 finished
+running range 8 to 8
+Alpha 173 654 327
+Beta 173 304 199
+range 173 to 173 finished
+running range 174 to 174
+Alpha 70 3820 8940
+Alpha 150 1393 731
+Beta 120 628 221
+range 120 to 120 finished
+running range 121 to 121
+Alpha 57 4169 13581
+Beta 26 1257 373
+range 26 to 26 finished
+running range 27 to 27
+Alpha 174 637 317
+Alpha 42 4438 21483
+Beta 150 442 207
+range 150 to 150 finished
+running range 151 to 151
+Alpha 8 4728 106119
+Beta 174 281 199
+range 174 to 174 finished
+running range 175 to 175
+Alpha 121 2272 1937
+Beta 70 961 259
+range 70 to 70 finished
+running range 71 to 71
+Alpha 151 1346 708
+Beta 57 1056 276
+range 57 to 57 finished
+running range 58 to 58
+Alpha 175 586 306
+Beta 121 615 220
+range 121 to 121 finished
+running range 122 to 122
+Alpha 27 4676 36861
+Beta 175 279 199
+range 175 to 175 finished
+running range 176 to 176
+Beta 42 1113 297
+range 42 to 42 finished
+running range 43 to 43
+Beta 151 456 207
+range 151 to 151 finished
+running range 152 to 152
+Beta 8 1410 864
+range 8 to 8 finished
+running range 9 to 9
+Alpha 71 3790 8673
+Alpha 176 576 296
+Alpha 122 2235 1884
+Alpha 152 1333 683
+Alpha 58 4127 13203
+Beta 176 250 198
+range 176 to 176 finished
+running range 177 to 177
+Beta 27 1230 360
+range 27 to 27 finished
+running range 28 to 28
+Beta 152 461 207
+range 152 to 152 finished
+running range 153 to 153
+Beta 122 608 219
+range 122 to 122 finished
+running range 123 to 123
+Alpha 43 4442 20661
+Alpha 177 504 286
+Beta 71 952 258
+range 71 to 71 finished
+running range 72 to 72
+Alpha 9 4725 96954
+Beta 177 261 198
+range 177 to 177 finished
+running range 178 to 178
+Alpha 153 1297 659
+Beta 58 1033 275
+range 58 to 58 finished
+running range 59 to 59
+Alpha 123 2210 1829
+Alpha 178 496 277
+Beta 153 422 206
+range 153 to 153 finished
+running range 154 to 154
+Beta 43 1143 295
+range 43 to 43 finished
+running range 44 to 44
+Alpha 72 3789 8425
+Alpha 28 4664 35056
+Beta 178 260 198
+range 178 to 178 finished
+running range 179 to 179
+Beta 123 584 219
+range 123 to 123 finished
+running range 124 to 124
+Alpha 154 1232 635
+Alpha 179 473 269
+Beta 9 1412 843
+range 9 to 9 finished
+running range 10 to 10
+Alpha 59 4113 12835
+Beta 179 243 197
+range 179 to 179 finished
+running range 180 to 180
+Alpha 124 2157 1777
+Beta 72 945 257
+range 72 to 72 finished
+running range 73 to 73
+Beta 154 412 206
+range 154 to 154 finished
+running range 155 to 155
+Alpha 44 4448 19895
+Beta 28 1223 346
+range 28 to 28 finished
+running range 29 to 29
+Alpha 180 452 260
+Beta 124 609 219
+range 124 to 124 finished
+running range 125 to 125
+Alpha 155 1185 613
+Beta 180 226 197
+range 180 to 180 finished
+running range 181 to 181
+Beta 59 1049 273
+range 59 to 59 finished
+running range 60 to 60
+Alpha 10 4710 90272
+Alpha 73 3726 8192
+Beta 155 427 205
+range 155 to 155 finished
+running range 12 to 12
+Alpha 181 411 252
+Alpha 125 2149 1723
+Beta 44 1104 293
+range 44 to 44 finished
+running range 45 to 45
+Beta 181 234 197
+range 181 to 181 finished
+running range 182 to 182
+Alpha 29 4661 33579
+Alpha 182 393 243
+Beta 125 606 218
+range 125 to 125 finished
+running range 126 to 126
+Beta 73 929 255
+range 73 to 73 finished
+running range 74 to 74
+Alpha 60 4061 12435
+Beta 182 222 196
+range 182 to 182 finished
+running range 183 to 183
+Beta 10 1421 828
+range 10 to 10 finished
+running range 11 to 11
+Alpha 12 4710 78318
+Alpha 45 4392 19382
+Alpha 126 2169 1669
+Alpha 183 354 236
+Beta 29 1245 331
+range 29 to 29 finished
+running range 30 to 30
+Alpha 74 3749 7950
+Beta 183 215 196
+range 183 to 183 finished
+running range 184 to 184
+Beta 60 982 272
+range 60 to 60 finished
+running range 61 to 61
+Beta 126 569 218
+range 126 to 126 finished
+running range 127 to 127
+Alpha 184 311 229
+Alpha 11 4725 83485
+Beta 45 1103 292
+range 45 to 45 finished
+running range 46 to 46
+Beta 184 194 195
+range 184 to 184 finished
+running range 185 to 185
+Beta 12 1434 745
+range 12 to 12 finished
+running range 13 to 13
+Beta 74 905 254
+range 74 to 74 finished
+running range 75 to 75
+Alpha 127 2078 1619
+Alpha 30 4647 32118
+Alpha 185 298 221
+Alpha 61 4059 12044
+Beta 185 166 195
+range 185 to 185 finished
+running range 186 to 186
+Beta 127 598 217
+range 127 to 127 finished
+running range 128 to 128
+Alpha 186 257 213
+Alpha 46 4380 18829
+Beta 11 1435 800
+range 11 to 11 finished
+running range 17 to 17
+Alpha 75 3662 7740
+Alpha 13 4695 73483
+Beta 186 149 195
+range 186 to 186 finished
+running range 187 to 187
+Alpha 128 2074 1567
+Beta 30 1224 317
+range 30 to 30 finished
+running range 31 to 31
+Beta 61 1029 270
+range 61 to 61 finished
+running range 19 to 19
+Alpha 187 208 210
+Beta 187 128 194
+range 187 to 187 finished
+running range 188 to 188
+Beta 128 565 217
+range 128 to 128 finished
+running range 129 to 129
+Beta 75 927 253
+range 75 to 75 finished
+running range 76 to 76
+Beta 46 1139 290
+range 46 to 46 finished
+running range 47 to 47
+Alpha 188 208 206
+Alpha 17 4724 60654
+Beta 13 1412 666
+range 13 to 13 finished
+running range 14 to 14
+Beta 188 134 194
+range 188 to 188 finished
+running range 189 to 189
+Alpha 31 4575 31045
+Alpha 129 2018 1519
+Alpha 19 4722 54914
+Alpha 189 165 203
+Alpha 76 3654 7529
+Beta 189 138 193
+range 189 to 189 finished
+running range 190 to 190
+Alpha 47 4338 18315
+Beta 129 583 216
+range 129 to 129 finished
+running range 130 to 130
+Alpha 190 88 200
+Beta 17 1386 529
+range 17 to 17 finished
+running range 18 to 18
+Beta 190 54 193
+range 190 to 190 finished
+running range 191 to 191
+Alpha 14 4681 70110
+Beta 31 1235 314
+range 31 to 31 finished
+running range 32 to 32
+Beta 76 939 252
+range 76 to 76 finished
+running range 77 to 77
+Alpha 130 1961 1472
+Alpha 191 49 196
+Beta 19 1292 500
+range 19 to 19 finished
+running range 89 to 89
+Beta 191 29 193
+range 191 to 191 finished
+running range 192 to 192
+Beta 47 1097 289
+range 47 to 47 finished
+running range 48 to 48
+Alpha 192 29 194
+Beta 130 547 216
+range 130 to 130 finished
+running range 131 to 131
+Beta 192 24 192
+range 192 to 192 finished
+running range 49 to 49
+Alpha 77 3595 7297
+Alpha 89 3322 5218
+Alpha 18 4690 57690
+Beta 14 1403 599
+range 14 to 14 finished
+running range 15 to 15
+Alpha 32 4624 30024
+Alpha 131 1984 1423
+Alpha 48 4322 17827
+Beta 77 906 251
+range 77 to 77 finished
+running range 78 to 78
+Beta 89 807 240
+range 89 to 89 finished
+running range 90 to 90
+Alpha 49 4303 17325
+Beta 131 533 215
+range 131 to 131 finished
+running range 132 to 132
+Beta 32 1208 312
+range 32 to 32 finished
+running range 33 to 33
+Beta 18 1340 513
+range 18 to 18 finished
+running range 16 to 16
+Alpha 15 4702 66881
+Alpha 132 1959 1372
+Beta 48 1144 288
+range 48 to 48 finished
+running range 134 to 134
+Alpha 78 3567 7097
+Alpha 90 3283 5059
+Beta 49 1122 287
+range 49 to 49 finished
+running range 34 to 34
+Beta 132 569 215
+range 132 to 132 finished
+running range 133 to 133
+Alpha 134 1912 1281
+Alpha 33 4617 29051
+Beta 90 818 239
+range 90 to 90 finished
+running range 91 to 91
+Beta 78 887 250
+range 78 to 78 finished
+running range 79 to 79
+Alpha 16 4685 63710
+Beta 15 1416 568
+range 15 to 15 finished
+running range 100 to 100
+Alpha 133 1875 1326
+Beta 134 550 214
+range 134 to 134 finished
+running range 135 to 135
+Alpha 34 4609 28145
+Beta 133 510 214
+range 133 to 133 finished
+running range 95 to 95
+Alpha 91 3273 4900
+Alpha 135 1877 1239
+Alpha 100 2974 3730
+Alpha 79 3576 6902
+Beta 33 1196 310
+range 33 to 33 finished
+running range 105 to 105
+Beta 16 1394 551
+range 16 to 16 finished
+running range 107 to 107
+Beta 135 523 214
+range 135 to 135 finished
+running range 92 to 92
+Alpha 95 3138 4350
+Beta 91 836 238
+range 91 to 91 finished
+running range 94 to 94
+Beta 100 752 232
+range 100 to 100 finished
+running range 101 to 101
+Beta 34 1157 309
+range 34 to 34 finished
+running range 103 to 103
+Alpha 105 2813 3211
+Beta 79 888 248
+range 79 to 79 finished
+running range 80 to 80
+Alpha 107 2706 3005
+Alpha 92 3257 4756
+Beta 95 786 236
+range 95 to 95 finished
+running range 96 to 96
+Beta 105 715 229
+range 105 to 105 finished
+running range 106 to 106
+Alpha 103 2911 3423
+Alpha 101 2950 3618
+Alpha 94 3190 4488
+Alpha 80 3543 6719
+Beta 107 689 228
+range 107 to 107 finished
+running range 108 to 108
+Beta 92 782 238
+range 92 to 92 finished
+running range 93 to 93
+Alpha 96 3062 4219
+Beta 103 690 230
+range 103 to 103 finished
+running range 104 to 104
+Beta 101 747 231
+range 101 to 101 finished
+running range 102 to 102
+Alpha 106 2760 3101
+Beta 94 809 236
+range 94 to 94 finished
+running range 98 to 98
+Beta 80 867 248
+range 80 to 80 finished
+running range 81 to 81
+Alpha 108 2694 2919
+Alpha 93 3215 4615
+Beta 96 775 235
+range 96 to 96 finished
+running range 97 to 97
+Beta 106 687 228
+range 106 to 106 finished
+running range 99 to 99
+Alpha 104 2825 3327
+Alpha 102 2884 3523
+Alpha 98 3050 3966
+Beta 108 688 227
+range 108 to 108 finished
+running range 84 to 84
+Alpha 81 3499 6533
+Beta 93 804 237
+range 93 to 93 finished
+running range 83 to 83
+Alpha 97 3074 4091
+Alpha 99 2986 3850
+Beta 104 711 230
+range 104 to 104 finished
+running range 87 to 87
+Beta 102 724 231
+range 102 to 102 finished
+running range 86 to 86
+Beta 98 750 234
+range 98 to 98 finished
+running range 85 to 85
+Alpha 84 3447 6020
+Beta 81 901 247
+range 81 to 81 finished
+running range 82 to 82
+Beta 99 768 233
+range 99 to 99 finished
+running range 88 to 88
+Beta 97 756 234
+range 97 to 97 finished
+Alpha 83 3464 6183
+Alpha 87 3360 5540
+Alpha 86 3409 5707
+Alpha 85 3417 5880
+Beta 84 845 244
+range 84 to 84 finished
+Alpha 82 3495 6354
+Alpha 88 3325 5385
+Beta 83 885 245
+range 83 to 83 finished
+Beta 87 833 241
+range 87 to 87 finished
+Beta 86 836 242
+range 86 to 86 finished
+Beta 85 862 243
+range 85 to 85 finished
+Beta 88 843 240
+range 88 to 88 finished
+Beta 82 861 246
+range 82 to 82 finished
+# PBBS time: initialize time: 0.8365
+### Running Time: 18.62
+### Application: BiCore
+### Graph: ../../inputs/reuter_adj
+### Threads: 8
+### n: 1065176
+### m: 121139452
+### Params: -nb (num_buckets) = 16 -bi = 781264
+### ------------------------------------
+starting
+### rho = 1599 k_{max} = 192
+delta 192 prepeel size 193 k-peel time 0.8405
+1 0.999 0.9984 0.9979 0.9975 0.9971 0.9967 0.9964 0.9961 0.9957 0.9954 0.995 0.9945 0.9938 0.9931 0.9923 0.9914 0.9904 0.9892 0.9877 0.9859 0.984 0.9818 0.9795 0.9772 0.9748 0.9725 0.9701 0.9678 0.9654 0.963 0.9605 0.9578 0.9551 0.9522 0.9492 0.9462 0.943 0.9399 0.9366 0.9333 0.9301 0.9267 0.9235 0.9203 0.9171 0.914 0.9109 0.9075 0.9042 0.901 0.8977 0.8943 0.8908 0.8874 0.8837 0.8802 0.8765 0.8727 0.869 0.865 0.8611 0.8573 0.8534 0.8495 0.8457 0.842 0.8382 0.8345 0.8308 0.8272 0.8235 0.8198 0.8162 0.8123 0.8087 0.8052 0.8018 0.7983 0.7947 0.7909 0.7875 0.7841 0.7807 0.7774 0.7739 0.7704 0.7671 0.7638 0.7606 0.7573 0.754 0.7507 0.7474 0.7441 0.7409 0.7376 0.7345 0.7312 0.7282 0.7251 0.7217 0.7187 0.7156 0.7125 0.7095 0.7064 0.7034 0.7002 0.6971 0.694 0.691 0.6879 0.6849 0.682 0.6791 0.6761 0.673 0.6701 0.667 0.6641 0.6611 0.6582 0.6553 0.6525 0.6496 0.6467 0.643 0.6402 0.6374 0.6344 0.6315 0.6285 0.6256 0.6226 0.6198 0.6168 0.614 0.6112 0.6083 0.6054 0.6025 0.5997 0.5968 0.5938 0.5907 0.5877 0.5847 0.5816 0.5786 0.5755 0.5726 0.5696 0.5667 0.5638 0.561 0.5577 0.5545 0.5513 0.5481 0.5448 0.5419 0.5386 0.5352 0.5319 0.5285 0.5251 0.5212 0.5162 0.5122 0.5083 0.5048 0.5014 0.4979 0.4944 0.4909 0.4877 0.4834 0.48 0.4759 0.4718 0.4674 0.4623 0.4562 0.4504 0.4443 0.4371 0.4278 0.4175 0.3625 0.3223 0.3163
+delta 192 size 193 k-peel time 0.8406
+running range 1 to 1
+running range running range running range running range 109 to 109
+running range 147 to 147
+62 to 62
+156 to 156
+running range 177 to 177
+35 to 35
+running range 136 to 136
+Alpha 177 504 286
+Alpha 156 1232 592
+Alpha 147 1476 811
+Alpha 136 1852 1198
+Beta 177 261 198
+range 177 to 177 finished
+running range 178 to 178
+Alpha 109 2687 2843
+Alpha 1 4767 345056
+Beta 156 446 205
+range 156 to 156 finished
+running range 157 to 157
+Alpha 62 4011 11660
+Beta 147 456 208
+range 147 to 147 finished
+running range 148 to 148
+Alpha 178 496 277
+Beta 136 526 213
+range 136 to 136 finished
+running range 137 to 137
+Alpha 35 4570 27234
+Beta 178 260 198
+range 178 to 178 finished
+running range 179 to 179
+Beta 109 699 226
+range 109 to 109 finished
+running range 110 to 110
+Alpha 157 1177 570
+Alpha 148 1447 784
+Alpha 137 1815 1156
+Alpha 179 473 269
+Beta 62 1004 269
+range 62 to 62 finished
+running range 63 to 63
+Beta 157 421 204
+range 157 to 157 finished
+running range 158 to 158
+Beta 1 636 1585
+range 1 to 1 finished
+running range 2 to 2
+Beta 148 468 208
+range 148 to 148 finished
+running range 149 to 149
+Beta 179 243 197
+range 179 to 179 finished
+running range 180 to 180
+Beta 35 1172 307
+range 35 to 35 finished
+running range 36 to 36
+Alpha 110 2593 2758
+Beta 137 526 213
+range 137 to 137 finished
+running range 138 to 138
+Alpha 158 1095 551
+Alpha 180 452 260
+Alpha 149 1391 757
+Alpha 138 1794 1118
+Beta 180 226 197
+range 180 to 180 finished
+running range 181 to 181
+Beta 158 391 204
+range 158 to 158 finished
+running range 159 to 159
+Beta 110 691 226
+range 110 to 110 finished
+running range 111 to 111
+Alpha 63 4019 11294
+Alpha 2 4764 208202
+Beta 149 461 208
+range 149 to 149 finished
+running range 150 to 150
+Alpha 181 411 252
+Beta 138 527 212
+range 138 to 138 finished
+running range 139 to 139
+Alpha 36 4555 26342
+Alpha 159 1070 532
+Beta 181 234 197
+range 181 to 181 finished
+running range 182 to 182
+Alpha 111 2621 2670
+Alpha 150 1393 731
+Beta 63 992 268
+range 63 to 63 finished
+running range 64 to 64
+Beta 159 396 204
+range 159 to 159 finished
+running range 160 to 160
+Alpha 182 393 243
+Alpha 139 1765 1080
+Beta 2 1210 1131
+range 2 to 2 finished
+running range 3 to 3
+Beta 182 222 196
+range 182 to 182 finished
+running range 183 to 183
+Beta 150 442 207
+range 150 to 150 finished
+running range 151 to 151
+Beta 111 686 225
+range 111 to 111 finished
+running range 112 to 112
+Alpha 160 1043 513
+Beta 36 1157 306
+range 36 to 36 finished
+running range 37 to 37
+Beta 139 531 212
+range 139 to 139 finished
+running range 140 to 140
+Alpha 183 354 236
+Beta 160 403 203
+range 160 to 160 finished
+running range 161 to 161
+Alpha 64 4037 10910
+Alpha 151 1346 708
+Beta 183 215 196
+range 183 to 183 finished
+running range 184 to 184
+Alpha 140 1767 1043
+Alpha 112 2604 2590
+Alpha 3 4755 171509
+Alpha 184 311 229
+Alpha 161 1014 495
+Beta 151 456 207
+range 151 to 151 finished
+running range 152 to 152
+Beta 184 194 195
+range 184 to 184 finished
+running range 185 to 185
+Alpha 37 4568 25480
+Beta 140 511 212
+range 140 to 140 finished
+running range 141 to 141
+Beta 64 1010 267
+range 64 to 64 finished
+running range 65 to 65
+Beta 161 364 203
+range 161 to 161 finished
+running range 162 to 162
+Beta 112 640 225
+range 112 to 112 finished
+running range 113 to 113
+Alpha 152 1333 683
+Alpha 185 298 221
+Alpha 141 1697 1006
+Beta 185 166 195
+range 185 to 185 finished
+running range 186 to 186
+Alpha 162 943 479
+Beta 152 461 207
+range 152 to 152 finished
+running range 153 to 153
+Beta 3 1334 1067
+range 3 to 3 finished
+running range 4 to 4
+Alpha 113 2522 2517
+Alpha 186 257 213
+Beta 162 372 203
+range 162 to 162 finished
+running range 163 to 163
+Beta 37 1194 304
+range 37 to 37 finished
+running range 38 to 38
+Beta 141 518 211
+range 141 to 141 finished
+running range 142 to 142
+Alpha 65 3954 10531
+Beta 186 149 195
+range 186 to 186 finished
+running range 187 to 187
+Alpha 153 1297 659
+Alpha 187 208 210
+Alpha 163 931 463
+Beta 113 682 225
+range 113 to 113 finished
+running range 114 to 114
+Alpha 142 1666 972
+Beta 187 128 194
+range 187 to 187 finished
+running range 188 to 188
+Beta 153 422 206
+range 153 to 153 finished
+running range 154 to 154
+Alpha 4 4756 144565
+Beta 163 386 202
+range 163 to 163 finished
+running range 164 to 164
+Beta 65 1017 265
+range 65 to 65 finished
+running range 66 to 66
+Alpha 188 208 206
+Beta 142 506 210
+range 142 to 142 finished
+running range 143 to 143
+Alpha 38 4549 24656
+Alpha 114 2516 2440
+Alpha 154 1232 635
+Beta 188 134 194
+range 188 to 188 finished
+running range 189 to 189
+Alpha 164 897 447
+Alpha 189 165 203
+Alpha 143 1602 935
+Beta 154 412 206
+range 154 to 154 finished
+running range 155 to 155
+Beta 189 138 193
+range 189 to 189 finished
+running range 190 to 190
+Beta 164 371 202
+range 164 to 164 finished
+running range 165 to 165
+Beta 114 672 224
+range 114 to 114 finished
+running range 115 to 115
+Alpha 66 3945 10173
+Beta 4 1345 1022
+range 4 to 4 finished
+running range 5 to 5
+Alpha 190 88 200
+Beta 143 479 210
+range 143 to 143 finished
+running range 144 to 144
+Beta 38 1142 302
+range 38 to 38 finished
+running range 39 to 39
+Alpha 155 1185 613
+Beta 190 54 193
+range 190 to 190 finished
+running range 191 to 191
+Alpha 165 850 432
+Alpha 191 49 196
+Alpha 115 2467 2358
+Beta 191 29 193
+range 191 to 191 finished
+running range 192 to 192
+Beta 155 427 205
+range 155 to 155 finished
+running range 20 to 20
+Beta 165 404 202
+range 165 to 165 finished
+running range 166 to 166
+Alpha 144 1558 902
+Beta 66 988 264
+range 66 to 66 finished
+running range 67 to 67
+Alpha 192 29 194
+Beta 192 24 192
+range 192 to 192 finished
+running range 145 to 145
+Alpha 5 4748 133458
+Alpha 166 854 417
+Beta 144 482 210
+range 144 to 144 finished
+running range 12 to 12
+Beta 115 668 223
+range 115 to 115 finished
+running range 116 to 116
+Alpha 39 4535 23835
+Beta 166 345 201
+range 166 to 166 finished
+running range 167 to 167
+Alpha 145 1525 870
+Alpha 67 3933 9819
+Alpha 20 4711 52098
+Alpha 116 2422 2279
+Alpha 167 807 403
+Beta 145 484 209
+range 145 to 145 finished
+running range 146 to 146
+Beta 5 1416 965
+range 5 to 5 finished
+running range 6 to 6
+Alpha 12 4710 78318
+Beta 39 1183 301
+range 39 to 39 finished
+running range 40 to 40
+Beta 167 323 201
+range 167 to 167 finished
+running range 168 to 168
+Alpha 146 1498 840
+Beta 67 976 263
+range 67 to 67 finished
+running range 68 to 68
+Beta 116 671 223
+range 116 to 116 finished
+running range 117 to 117
+Alpha 168 800 390
+Beta 146 489 209
+range 146 to 146 finished
+running range 89 to 89
+Beta 20 1311 484
+range 20 to 20 finished
+running range 21 to 21
+Beta 168 304 201
+range 168 to 168 finished
+running range 169 to 169
+Alpha 117 2411 2207
+Alpha 6 4741 121026
+Beta 12 1434 745
+range 12 to 12 finished
+running range 13 to 13
+Alpha 40 4493 23039
+Alpha 68 3893 9479
+Alpha 169 771 377
+Alpha 89 3322 5218
+Beta 117 634 222
+range 117 to 117 finished
+running range 118 to 118
+Beta 169 371 200
+range 169 to 169 finished
+running range 170 to 170
+Alpha 21 4679 49448
+Beta 68 963 262
+range 68 to 68 finished
+running range 69 to 69
+Beta 40 1171 299
+range 40 to 40 finished
+running range 41 to 41
+Alpha 170 758 363
+Beta 6 1402 914
+range 6 to 6 finished
+running range 7 to 7
+Alpha 13 4695 73483
+Beta 89 807 240
+range 89 to 89 finished
+running range 90 to 90
+Alpha 118 2386 2131
+Beta 170 318 200
+range 170 to 170 finished
+running range 171 to 171
+Beta 118 644 222
+range 118 to 118 finished
+running range 119 to 119
+Alpha 171 710 351
+Alpha 69 3823 9185
+Alpha 90 3283 5059
+Beta 21 1296 468
+range 21 to 21 finished
+running range 22 to 22
+Alpha 41 4493 22217
+Alpha 7 4726 112706
+Beta 13 1412 666
+range 13 to 13 finished
+running range 14 to 14
+Beta 171 294 200
+range 171 to 171 finished
+running range 172 to 172
+Alpha 119 2359 2065
+Alpha 172 698 338
+Beta 90 818 239
+range 90 to 90 finished
+running range 91 to 91
+Beta 69 989 261
+range 69 to 69 finished
+running range 70 to 70
+Beta 172 364 199
+range 172 to 172 finished
+running range 173 to 173
+Beta 119 621 221
+range 119 to 119 finished
+running range 120 to 120
+Beta 41 1135 298
+range 41 to 41 finished
+running range 42 to 42
+Alpha 22 4701 47140
+Alpha 14 4681 70110
+Beta 7 1410 884
+range 7 to 7 finished
+running range 8 to 8
+Alpha 173 654 327
+Alpha 91 3273 4900
+Alpha 70 3820 8940
+Beta 173 304 199
+range 173 to 173 finished
+running range 174 to 174
+Alpha 120 2300 1996
+Beta 91 836 238
+range 91 to 91 finished
+running range 92 to 92
+Alpha 174 637 317
+Alpha 42 4438 21483
+Beta 22 1314 456
+range 22 to 22 finished
+running range 23 to 23
+Beta 120 628 221
+range 120 to 120 finished
+running range 121 to 121
+Beta 14 1403 599
+range 14 to 14 finished
+running range 15 to 15
+Alpha 8 4728 106119
+Beta 70 961 259
+range 70 to 70 finished
+running range 71 to 71
+Beta 174 281 199
+range 174 to 174 finished
+running range 175 to 175
+Alpha 92 3257 4756
+Alpha 175 586 306
+Alpha 121 2272 1937
+Beta 42 1113 297
+range 42 to 42 finished
+running range 43 to 43
+Beta 175 279 199
+range 175 to 175 finished
+running range 176 to 176
+Alpha 71 3790 8673
+Alpha 15 4702 66881
+Alpha 23 4696 45051
+Beta 92 782 238
+range 92 to 92 finished
+running range 93 to 93
+Beta 8 1410 864
+range 8 to 8 finished
+running range 9 to 9
+Alpha 176 576 296
+Beta 121 615 220
+range 121 to 121 finished
+running range 122 to 122
+Beta 176 250 198
+range 176 to 176 finished
+running range 100 to 100
+Beta 71 952 258
+range 71 to 71 finished
+running range 72 to 72
+Alpha 43 4442 20661
+Alpha 122 2235 1884
+Alpha 93 3215 4615
+Beta 15 1416 568
+range 15 to 15 finished
+running range 16 to 16
+Alpha 9 4725 96954
+Beta 23 1264 441
+range 23 to 23 finished
+running range 24 to 24
+Alpha 100 2974 3730
+Beta 122 608 219
+range 122 to 122 finished
+running range 123 to 123
+Beta 93 804 237
+range 93 to 93 finished
+running range 94 to 94
+Alpha 72 3789 8425
+Beta 43 1143 295
+range 43 to 43 finished
+running range 44 to 44
+Beta 100 752 232
+range 100 to 100 finished
+running range 101 to 101
+Alpha 123 2210 1829
+Alpha 16 4685 63710
+Alpha 94 3190 4488
+Beta 9 1412 843
+range 9 to 9 finished
+running range 10 to 10
+Alpha 24 4728 42995
+Beta 72 945 257
+range 72 to 72 finished
+running range 73 to 73
+Beta 123 584 219
+range 123 to 123 finished
+running range 124 to 124
+Alpha 101 2950 3618
+Alpha 44 4448 19895
+Beta 94 809 236
+range 94 to 94 finished
+running range 95 to 95
+Beta 16 1394 551
+range 16 to 16 finished
+running range 17 to 17
+Alpha 73 3726 8192
+Alpha 124 2157 1777
+Beta 101 747 231
+range 101 to 101 finished
+running range 102 to 102
+Alpha 10 4710 90272
+Beta 24 1288 410
+range 24 to 24 finished
+running range 25 to 25
+Alpha 95 3138 4350
+Beta 44 1104 293
+range 44 to 44 finished
+running range 45 to 45
+Beta 124 609 219
+range 124 to 124 finished
+running range 125 to 125
+Beta 73 929 255
+range 73 to 73 finished
+running range 74 to 74
+Alpha 102 2884 3523
+Alpha 17 4724 60654
+Beta 95 786 236
+range 95 to 95 finished
+running range 96 to 96
+Alpha 125 2149 1723
+Beta 10 1421 828
+range 10 to 10 finished
+running range 11 to 11
+Alpha 25 4650 40692
+Alpha 45 4392 19382
+Beta 102 724 231
+range 102 to 102 finished
+running range 103 to 103
+Alpha 74 3749 7950
+Beta 125 606 218
+range 125 to 125 finished
+running range 126 to 126
+Alpha 96 3062 4219
+Beta 17 1386 529
+range 17 to 17 finished
+running range 18 to 18
+Alpha 103 2911 3423
+Alpha 11 4725 83485
+Alpha 126 2169 1669
+Beta 74 905 254
+range 74 to 74 finished
+running range 75 to 75
+Beta 45 1103 292
+range 45 to 45 finished
+running range 46 to 46
+Beta 25 1253 386
+range 25 to 25 finished
+running range 26 to 26
+Beta 96 775 235
+range 96 to 96 finished
+running range 97 to 97
+Beta 126 569 218
+range 126 to 126 finished
+running range 127 to 127
+Beta 103 690 230
+range 103 to 103 finished
+running range 104 to 104
+Alpha 18 4690 57690
+Alpha 97 3074 4091
+Alpha 75 3662 7740
+Alpha 46 4380 18829
+Beta 11 1435 800
+range 11 to 11 finished
+running range 19 to 19
+Alpha 127 2078 1619
+Alpha 26 4655 38568
+Alpha 104 2825 3327
+Beta 97 756 234
+range 97 to 97 finished
+running range 98 to 98
+Beta 75 927 253
+range 75 to 75 finished
+running range 76 to 76
+Beta 127 598 217
+range 127 to 127 finished
+running range 128 to 128
+Beta 18 1340 513
+range 18 to 18 finished
+running range 50 to 50
+Beta 104 711 230
+range 104 to 104 finished
+running range 105 to 105
+Beta 46 1139 290
+range 46 to 46 finished
+running range 47 to 47
+Alpha 98 3050 3966
+Alpha 19 4722 54914
+Beta 26 1257 373
+range 26 to 26 finished
+running range 27 to 27
+Alpha 128 2074 1567
+Alpha 76 3654 7529
+Alpha 105 2813 3211
+Alpha 50 4331 16893
+Beta 98 750 234
+range 98 to 98 finished
+running range 99 to 99
+Beta 128 565 217
+range 128 to 128 finished
+running range 129 to 129
+Alpha 47 4338 18315
+Beta 76 939 252
+range 76 to 76 finished
+running range 77 to 77
+Beta 105 715 229
+range 105 to 105 finished
+running range 106 to 106
+Beta 19 1292 500
+range 19 to 19 finished
+running range 49 to 49
+Alpha 27 4676 36861
+Alpha 129 2018 1519
+Alpha 99 2986 3850
+Beta 50 1099 286
+range 50 to 50 finished
+running range 51 to 51
+Beta 47 1097 289
+range 47 to 47 finished
+running range 48 to 48
+Alpha 106 2760 3101
+Alpha 77 3595 7297
+Beta 129 583 216
+range 129 to 129 finished
+running range 130 to 130
+Beta 99 768 233
+range 99 to 99 finished
+running range 131 to 131
+Alpha 49 4303 17325
+Beta 27 1230 360
+range 27 to 27 finished
+running range 28 to 28
+Beta 106 687 228
+range 106 to 106 finished
+running range 107 to 107
+Alpha 130 1961 1472
+Alpha 51 4264 16435
+Alpha 131 1984 1423
+Beta 77 906 251
+range 77 to 77 finished
+running range 78 to 78
+Alpha 48 4322 17827
+Beta 130 547 216
+range 130 to 130 finished
+running range 84 to 84
+Beta 131 533 215
+range 131 to 131 finished
+running range 132 to 132
+Beta 49 1122 287
+range 49 to 49 finished
+running range 108 to 108
+Alpha 107 2706 3005
+Beta 51 1113 285
+range 51 to 51 finished
+running range 52 to 52
+Alpha 28 4664 35056
+Alpha 78 3567 7097
+Alpha 132 1959 1372
+Beta 48 1144 288
+range 48 to 48 finished
+running range 57 to 57
+Beta 107 689 228
+range 107 to 107 finished
+running range 81 to 81
+Alpha 84 3447 6020
+Alpha 108 2694 2919
+Beta 132 569 215
+range 132 to 132 finished
+running range 133 to 133
+Beta 78 887 250
+range 78 to 78 finished
+running range 79 to 79
+Alpha 52 4282 15948
+Beta 28 1223 346
+range 28 to 28 finished
+running range 29 to 29
+Beta 108 688 227
+range 108 to 108 finished
+running range 32 to 32
+Alpha 57 4169 13581
+Beta 84 845 244
+range 84 to 84 finished
+running range 85 to 85
+Alpha 133 1875 1326
+Alpha 81 3499 6533
+Alpha 79 3576 6902
+Beta 133 510 214
+range 133 to 133 finished
+running range 134 to 134
+Beta 52 1074 284
+range 52 to 52 finished
+running range 53 to 53
+Beta 57 1056 276
+range 57 to 57 finished
+running range 58 to 58
+Beta 81 901 247
+range 81 to 81 finished
+running range 82 to 82
+Alpha 85 3417 5880
+Alpha 32 4624 30024
+Alpha 29 4661 33579
+Alpha 134 1912 1281
+Beta 79 888 248
+range 79 to 79 finished
+running range 80 to 80
+Beta 134 550 214
+range 134 to 134 finished
+running range 135 to 135
+Beta 85 862 243
+range 85 to 85 finished
+running range 86 to 86
+Alpha 53 4297 15474
+Alpha 82 3495 6354
+Alpha 58 4127 13203
+Alpha 80 3543 6719
+Beta 32 1208 312
+range 32 to 32 finished
+running range 33 to 33
+Beta 29 1245 331
+range 29 to 29 finished
+running range 30 to 30
+Alpha 135 1877 1239
+Alpha 86 3409 5707
+Beta 82 861 246
+range 82 to 82 finished
+running range 83 to 83
+Beta 53 1080 282
+range 53 to 53 finished
+running range 54 to 54
+Beta 135 523 214
+range 135 to 135 finished
+running range 56 to 56
+Beta 58 1033 275
+range 58 to 58 finished
+running range 59 to 59
+Beta 80 867 248
+range 80 to 80 finished
+running range 55 to 55
+Alpha 33 4617 29051
+Beta 86 836 242
+range 86 to 86 finished
+running range 87 to 87
+Alpha 30 4647 32118
+Alpha 83 3464 6183
+Alpha 54 4261 14967
+Alpha 56 4209 14013
+Alpha 59 4113 12835
+Alpha 55 4217 14465
+Alpha 87 3360 5540
+Beta 83 885 245
+range 83 to 83 finished
+running range 34 to 34
+Beta 33 1196 310
+range 33 to 33 finished
+running range 60 to 60
+Beta 30 1224 317
+range 30 to 30 finished
+running range 31 to 31
+Beta 54 1060 280
+range 54 to 54 finished
+running range 88 to 88
+Beta 56 1064 277
+range 56 to 56 finished
+running range 61 to 61
+Beta 59 1049 273
+range 59 to 59 finished
+Beta 55 1072 279
+range 55 to 55 finished
+Beta 87 833 241
+range 87 to 87 finished
+Alpha 88 3325 5385
+Alpha 34 4609 28145
+Alpha 60 4061 12435
+Alpha 61 4059 12044
+Alpha 31 4575 31045
+Beta 88 843 240
+range 88 to 88 finished
+Beta 60 982 272
+range 60 to 60 finished
+Beta 61 1029 270
+range 61 to 61 finished
+Beta 34 1157 309
+range 34 to 34 finished
+Beta 31 1235 314
+range 31 to 31 finished
+# PBBS time: initialize time: 0.8406
+### Running Time: 18.63
+# time per iter: 18.83
+delete graph
+delete graph
