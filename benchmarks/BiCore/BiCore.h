@@ -192,7 +192,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
-	std::vector<uintE> changeVtx;
+	std::vector<uintE> changeVtx; // allocated outside of loop
+	// use a counter to track the number of changes and then use that to determine when to stop
+	// don't .clear() the changeVtx vector, just reuse it
 	uintE finished = 0;
 
 	uintE vCount = 0;
@@ -234,6 +236,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 			if(ret) { moveV.resize(1); moveV.push_back(*ret); }
 		}
 		auto moveVBucket = vertexSubsetData<uintE>(n, moveV.to_seq());
+		// sequence max size and then resize later 
+
 		bbuckets.update_buckets(moveVBucket);
 		changeVtx.clear();
 		pqt.stop();
@@ -262,7 +266,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	};
 	pqt.stop();
 	size_t iter = 0;
-	std::vector<size_t> tracker(n, 0);
+	std::vector<size_t> tracker(n, 0); // tracks last time the degree changed
 	std::vector<uintE> changeVtx;
 	uintE finished = 0;
 	uintE uCount = 0;
@@ -297,7 +301,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 		}
 		pqt.start();
 		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(changeVtx.size()/16);//try changeVtx.size, try others
-		for(uintE uii : changeVtx){
+		for(uintE uii : changeVtx){ // could be paralleliezd
 			uintE deg = std::max(max_alpha, D[uii]);
 			Du[uii] = deg; D[uii] = deg;
 			auto ret = getUBuckets(uii, deg);
