@@ -102,7 +102,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	auto peelB = [&](){
 		par_for(1,delta+1,1,[&](size_t core){
 			timer t_in; t_in.start();
-			sequence<uintE> D = prepeel[core]; 
+			sequence<uintE>& D = prepeel[core]; 
 			auto ret = PeelFixB(G, D, core, n_a, n_b, num_buckets);
 			t_in.stop();
 			timeB[core-1] = t_in.get_total();
