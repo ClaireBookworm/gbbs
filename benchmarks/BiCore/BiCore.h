@@ -109,8 +109,9 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		});
 	};
 
-	par_do(peelA, peelB);
-
+	//par_do(peelA, peelB);
+	peelA();
+	peelB();
 	double totalRuntime = 0;
 	for(uintE i = 1; i <= delta; i++){
 		std::cout<<"coreA "<<i<<" running time: "<<timeA[i-1]<<std::endl;
