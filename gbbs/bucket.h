@@ -206,6 +206,21 @@ struct buckets {
     }
   }
 
+  template <class A>
+  inline size_t update_buckets_seq_arr(A& f, size_t k) {
+    size_t ne_before = num_elms;
+    for (size_t i = 0; i < k; i++) {
+      auto m = f[i];
+      bucket_id bkt = std::get<1>(*m);
+      if (m.has_value() && bkt != null_bkt) {
+        bkts[bkt].resize(1); // lazy increase size by 1
+        insert_in_bucket(bkt, std::get<0>(*m));
+        num_elms++;
+      }
+    }
+    return num_elms - ne_before;
+  }
+
   // Updates k identifiers in the bucket structure. The i'th identifier and
   // its bucket_dest are given by F(i).
   template <class F>

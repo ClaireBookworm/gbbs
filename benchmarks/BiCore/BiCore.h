@@ -141,6 +141,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx(n, 0); // allocated outside of loop
+	sequence<std::optional<std::tuple<uintE, uintE> > > moveV(n);
+	size_t moveV_size = 0;
 	size_t changeVtx_size = 0;
 	// use a counter to track the number of changes and then use that to determine when to stop
 	// don't .clear() the changeVtx vector, just reuse it
@@ -172,19 +174,16 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 				}
 			}
 		}
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx_size); // print how many times it's resized
 		// use sequence --> alloc to max size (test on more graphs to see if resizing is expensive)
 		for(size_t i = 0; i<changeVtx_size; i++){
 			uintE vii = changeVtx[i];
 			uintE deg = std::max(max_beta, D[vii]);
 			Dv[vii] = deg; D[vii] = deg;
 			auto ret = getVBuckets(vii, deg);
-			if(ret) { moveV.resize(1); moveV.push_back(*ret); }
+			if(ret) { moveV[moveV_size++] = ret; }
 		}
-		auto moveVBucket = vertexSubsetData<uintE>(n, moveV.to_seq());
-		// sequence max size and then resize later 
-
-		bbuckets.update_buckets(moveVBucket);
+		bbuckets.update_buckets_seq_arr(moveV, moveV_size);
+		moveV_size = 0;
 		changeVtx_size = 0; // clear gives compiler option to call destructor
 		rho_alpha++;
 	}
@@ -209,6 +208,8 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0); // tracks last time the degree changed
 	std::vector<uintE> changeVtx(n, 0);
+	sequence<std::optional<std::tuple<uintE, uintE> > > moveU(n);
+	size_t moveU_size = 0;
 	size_t changeVtx_size = 0;
 	uintE finished = 0;
 	uintE uCount = 0;
@@ -238,17 +239,16 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 				}
 			}
 		}
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(changeVtx_size);//try changeVtx.size, try others
 		for(size_t i = 0; i<changeVtx_size; i++){
 			uintE uii = changeVtx[i];
 			uintE deg = std::max(max_alpha, D[uii]);
 			Du[uii] = deg; D[uii] = deg;
 			auto ret = getUBuckets(uii, deg);
-			if(ret) { moveU.resize(1); moveU.push_back(*ret); }
+			if(ret) { moveU[moveU_size++] = ret; }
 		}
-		auto moveUBucket = vertexSubsetData<uintE>(n, moveU.to_seq());
-		abuckets.update_buckets(moveUBucket);
+		abuckets.update_buckets_seq_arr(moveU, moveU_size);
 		changeVtx_size = 0;
+		moveU_size = 0;
 		rho_beta++;
 	}
 	std::cout<<"Beta "<<beta<<" "<<rho_beta <<" "<<max_alpha<<std::endl;
