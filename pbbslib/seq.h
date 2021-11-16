@@ -164,8 +164,8 @@ namespace pbbs
       return *this;
     }
 
-    sequence(const size_t _n)
-        : s(pbbs::new_array<T>(_n)),
+    sequence(const size_t _n, bool _sequential=false)
+        : s(pbbs::new_array<T>(_n, _sequential)),
           n(_n){
               // if (n > 1000000000) std::cout << "make empty: " << s << std::endl;
           };

@@ -104,7 +104,7 @@ struct buckets {
       auto imap_f = [&](size_t i) { return d[i]; };
       auto imap = pbbslib::make_sequence<bucket_id>(n, imap_f);
       size_t min_b = std::numeric_limits<bucket_id>::max();
-      if(sequential) for(size_t i = 0; i<imap.size(); i++) min_b = std::min(min_b, imap[i]);
+      if(sequential) min_b = pbbs::reduce_serial(imap, pbbs::minm<bucket_id>()); // why use pbbs vs pbbs::lib
       else min_b = pbbslib::reduce(imap, pbbslib::minm<bucket_id>());
       // "reduce" performs a "sum" where the sum uses the monoid provided. In this case min.
       // So this obtains the min bucket id
@@ -115,7 +115,7 @@ struct buckets {
       auto imap_f = [&](size_t i) { return (d[i] == null_bkt) ? 0 : d[i]; };
       auto imap = pbbslib::make_sequence<bucket_id>(n, imap_f);
       size_t max_b = 0;
-      if(sequential) for(size_t i = 0; i<imap.size(); i++) max_b = std::max(max_b, imap[i]);
+      if(sequential) max_b = pbbs::reduce_serial(imap, pbbs::maxm<bucket_id>());
       else max_b = pbbslib::reduce(imap, pbbslib::maxm<bucket_id>());
       cur_range = (max_b + open_buckets) / open_buckets;
       // cur_range indicates [(cur_range-1)*open_buckets,cur_range*open_buckets) is materialized
@@ -358,9 +358,7 @@ struct buckets {
 
   inline void unpack() {
     size_t m = bkts[open_buckets].size; // bkts[open_buckets] stores all unmaterialized buckets
-    auto tmp = sequence<ident_t>();
-    tmp.n = m;
-    tmp.s = pbbslib::new_array<ident_t>(m, sequential);
+    auto tmp = sequence<ident_t>(m, sequential);
     ident_t* A = bkts[open_buckets].A;
     par_for(0, m, pbbslib::kSequentialForThreshold, [&] (size_t i)
                     { tmp[i] = A[i]; }, !sequential);
@@ -393,14 +391,14 @@ struct buckets {
       // imap gives the bucket each bucket out of range still belongs to
       if(order == increasing) {
         size_t minBkt = std::numeric_limits<size_t>::max();
-        if(sequential) for(size_t i = 0; i<imap.size(); i++) minBkt = std::min(minBkt, imap[i]);
+        if(sequential) minBkt = pbbs::reduce_serial(imap, pbbs::minm<size_t>());
         else minBkt = pbbs::reduce(imap, pbbs::minm<size_t>());
         cur_range = minBkt/open_buckets-1; //will be incremented in next unpack() call
         // jump the range directly to 1 before the next non-empty bucket
       }
       else if(order == decreasing) {
         size_t minBkt = 0;
-        if(sequential) for(size_t i = 0; i<imap.size(); i++) minBkt = std::max(minBkt, imap[i]);
+        if(sequential) minBkt = pbbs::reduce_serial(imap, pbbs::maxm<size_t>());
         else minBkt = pbbs::reduce(imap, pbbs::maxm<size_t>());
         cur_range = (open_buckets+minBkt)/open_buckets+1; //will be decremented in next unpack() call
       }
