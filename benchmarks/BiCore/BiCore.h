@@ -162,13 +162,11 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 		pqt.stop();
 		for(uintE vi : bkt.identifiers){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
-			uintE viDeg = neighborsVi.degree;
-			for(uintE i = 0; i<viDeg; i++){
+			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
 				if(D[ui]-- == alpha){
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
-					uintE uiDeg = neighborsUi.degree;
-					for(uintE j = 0; j<uiDeg; j++){
+					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
 						if(D[vii] > max_beta){
 							if(tracker[vii]!=iter){ // test par filter (figure out what par helps and what doesn't)
@@ -239,13 +237,11 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 		pqt.stop();
 		for(uintE ui : bkt.identifiers){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
-			uintE uiDeg = neighborsUi.degree;
-			for(uintE i = 0; i<uiDeg; i++){
+			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
 				if(D[vi]-- == beta){
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
-					uintE viDeg = neighborsVi.degree;
-					for(uintE j = 0; j<viDeg; j++){
+					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j); 
 						if(D[uii] > max_alpha){
 							if(tracker[uii]!=iter){
