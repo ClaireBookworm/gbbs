@@ -214,10 +214,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 		pqt.start();
 		auto bkt = bbuckets.next_bucket();
 		max_beta = std::max((uintE)bkt.id, max_beta);
-		auto& bktArr = bkt.identifiers;
-		finished += bktArr.size();
+		finished += bkt.identifiers.size();
 		pqt.stop();
-		for(uintE vi : bktArr){
+		for(uintE vi : bkt.identifiers){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
@@ -289,10 +288,9 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 		pqt.start();
 		auto bkt = abuckets.next_bucket();
 		max_alpha = std::max((uintE)bkt.id, max_alpha);
-		auto& bktArr = bkt.identifiers;
-		finished += bktArr.size();
+		finished += bkt.identifiers.size();
 		pqt.stop();
-		for(uintE ui : bktArr){
+		for(uintE ui : bkt.identifiers){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
