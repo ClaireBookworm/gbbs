@@ -36,9 +36,9 @@
 namespace gbbs{
 // use max alpha and beta
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE alpha, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, size_t n_a, size_t n_b);
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE beta, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE beta, size_t n_a, size_t n_b);
 
 template <class Graph>
 inline void initialClean(Graph &G, sequence<uintE>& D, std::vector<uintE>& del, uintE cutoff){
@@ -124,16 +124,12 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
+inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
 {
 	// allocation could bottleneck
 	const size_t n = n_a + n_b;
-	timer pqt, pt;
 	uintE rho_alpha = 0, max_beta = 0;
 
-	sequence<uintE> D = deg;
-
-	pqt.start();
 	auto Dv = sequence<uintE>(n, std::numeric_limits<uintE>::max(), false);
 	for(uintE i=n_a; i<n; i++) if(D[i]>=alpha) Dv[i] = D[i];
 
@@ -142,7 +138,6 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, bbuckets.get_bucket(deg));
 	};
-	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx(n, 0); // allocated outside of loop
@@ -155,11 +150,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 	while (finished != vCount)
 	{
 		iter++;
-		pqt.start();
 		auto bkt = bbuckets.next_bucket();
 		max_beta = std::max((uintE)bkt.id, max_beta);
 		finished += bkt.identifiers.size();
-		pqt.stop();
 		for(uintE vi : bkt.identifiers){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
@@ -179,8 +172,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 				}
 			}
 		}
-		pqt.start();
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx_size/16); // print how many times it's resized
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx_size); // print how many times it's resized
 		// use sequence --> alloc to max size (test on more graphs to see if resizing is expensive)
 		for(size_t i = 0; i<changeVtx_size; i++){
 			uintE vii = changeVtx[i];
@@ -194,23 +186,18 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 
 		bbuckets.update_buckets(moveVBucket);
 		changeVtx_size = 0; // clear gives compiler option to call destructor
-		pqt.stop();
 		rho_alpha++;
 	}
 	std::cout<<"Alpha "<<alpha<<" "<<rho_alpha <<" "<<max_beta<<std::endl;
-	return std::make_pair(pqt.get_total(), pt.get_total());
+	return std::make_pair(0, 0);
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE beta, size_t n_a, size_t n_b, size_t num_buckets)
+inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE beta, size_t n_a, size_t n_b, size_t num_buckets)
 {
 	const size_t n = n_a + n_b;
-	timer pqt, pt;
 	uintE rho_beta = 0, max_alpha = 0;
 
-	sequence<uintE> D = deg;
-
-	pqt.start();
 	auto Du = sequence<uintE>(n, std::numeric_limits<uintE>::max(), false);
 	for(uintE i=0; i<n_a; i++) if(D[i]>=beta) Du[i]=D[i];
 
@@ -219,7 +206,6 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, abuckets.get_bucket(deg));
 	};
-	pqt.stop();
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0); // tracks last time the degree changed
 	std::vector<uintE> changeVtx(n, 0);
@@ -230,11 +216,9 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 	while (finished != uCount)
 	{
 		iter++;
-		pqt.start();
 		auto bkt = abuckets.next_bucket();
 		max_alpha = std::max((uintE)bkt.id, max_alpha);
 		finished += bkt.identifiers.size();
-		pqt.stop();
 		for(uintE ui : bkt.identifiers){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
@@ -254,8 +238,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 				}
 			}
 		}
-		pqt.start();
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(changeVtx_size/16);//try changeVtx.size, try others
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveU(changeVtx_size);//try changeVtx.size, try others
 		for(size_t i = 0; i<changeVtx_size; i++){
 			uintE uii = changeVtx[i];
 			uintE deg = std::max(max_alpha, D[uii]);
@@ -266,11 +249,10 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 		auto moveUBucket = vertexSubsetData<uintE>(n, moveU.to_seq());
 		abuckets.update_buckets(moveUBucket);
 		changeVtx_size = 0;
-		pqt.stop();
 		rho_beta++;
 	}
 	std::cout<<"Beta "<<beta<<" "<<rho_beta <<" "<<max_alpha<<std::endl;
-	return std::make_pair(pqt.get_total(), pt.get_total());
+	return std::make_pair(0,0);
 }
 
 }
