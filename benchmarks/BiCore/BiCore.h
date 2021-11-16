@@ -108,7 +108,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		// }
 	}
 	if(breakptrs[breakptrs.size()-1]!=delta)
-		breakptrs.push_back(delta);
+		breakptrs.push_back(delta); // get rid of it if not using it
 
 	std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<" k-peel time "<<it.get_total()<<std::endl;
 	auto timeA = sequence<double>(delta, 0.0);
@@ -148,6 +148,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 			for(uintE i=0; i<n; i++) if(D[i]<core && D[i]>=minCore) initSize++;
 			std::vector<uintE> delA(initSize);
 			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delA[j++]=i; 
+			// use delay_sequence to do reduce
 			initialClean(G, D, delA, core);
 			auto ret = PeelFixA(G, D, core, n_a, n_b, num_buckets);
 			timeA[core-1] = std::get<1>(ret);
@@ -175,6 +176,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 template <class Graph>
 inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
 {
+	// allocation could bottleneck
 	const size_t n = n_a + n_b;
 	timer pqt, pt;
 	uintE rho_alpha = 0, max_beta = 0;
@@ -184,7 +186,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	std::fill(Dv.begin(), Dv.end(), std::numeric_limits<uintE>::max());
 	for(uintE i=n_a; i<n; i++) if(D[i]>=alpha) Dv[i] = D[i];
 
-	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
+	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets); //maybe try sequentialize it
 	auto getVBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, bbuckets.get_bucket(deg));
@@ -194,7 +196,6 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx;
 	uintE finished = 0;
-
 	uintE vCount = 0;
 	for(uintE i=n_a; i<n; i++) vCount+=D[i]>=alpha;
 	while (finished != vCount)
@@ -215,8 +216,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
 						if(D[vii] > max_beta){
-							if(tracker[vii]!=iter){
-								changeVtx.push_back(vii);
+							if(tracker[vii]!=iter){ // test par filter (figure out what par helps and what doesn't)
+								changeVtx.push_back(vii); // dynamic alloc is slow
 								tracker[vii] = iter;
 							}
 							D[vii]--;
@@ -226,8 +227,9 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 			}
 		}
 		pqt.start();
-		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx.size()/16);
-		for(uintE vii : changeVtx){
+		pbbslib::dyn_arr<std::tuple<uintE, uintE> > moveV(changeVtx.size()/16); // print how many times it's resized
+		// use sequence --> alloc to max size (test on more graphs to see if resizing is expensive)
+		for(uintE vii : changeVtx){ // test parallelizing this
 			uintE deg = std::max(max_beta, D[vii]);
 			Dv[vii] = deg; D[vii] = deg;
 			auto ret = getVBuckets(vii, deg);
@@ -235,7 +237,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 		}
 		auto moveVBucket = vertexSubsetData<uintE>(n, moveV.to_seq());
 		bbuckets.update_buckets(moveVBucket);
-		changeVtx.clear();
+		changeVtx.clear(); // clear gives compiler option to call destructor
 		pqt.stop();
 		rho_alpha++;
 	}

@@ -123,11 +123,11 @@ E* new_array_no_init(size_t n, bool touch_pages = false) {  // true) {
 
 // Initializes in parallel
 template <typename E>
-E* new_array(size_t n) {
+E* new_array(size_t n, bool sequential = false) {
   E* r = new_array_no_init<E>(n);
   if (!std::is_trivially_default_constructible<E>::value) {
     // if (!std::is_default_constructible<E>::value) {
-    if (n > 2048) {
+    if (n > 2048 && !sequential) {
       auto f = [&](size_t i) { new ((void*)(r + i)) E; };
       parallel_for(0, n, f);
     } else

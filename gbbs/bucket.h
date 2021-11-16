@@ -85,7 +85,7 @@ struct buckets {
   //   For an identifier i:
   //   d[i] is the bucket currently containing i
   //   d[i] = std::numeric_limits<bucket_id>::max() if i is not in any bucket
-  buckets(size_t _n, D& _d, bucket_order _order, size_t _total_buckets)
+  buckets(size_t _n, D& _d, bucket_order _order, size_t _total_buckets, bool _sequential=false)
       : n(_n), // note d.size is not used anywhere
         d(_d),// d is an arr of bucket_ids indicating where each item should go
         order(_order),
@@ -94,15 +94,18 @@ struct buckets {
         cur_bkt(0),
         max_bkt(_total_buckets),
         num_elms(0),
-        allocated(true) {
+        allocated(true),
+        sequential(_sequential) {
     // Initialize array consisting of the materialized buckets.
-    bkts = pbbslib::new_array<id_dyn_arr>(total_buckets);
+    bkts = pbbslib::new_array<id_dyn_arr>(total_buckets, sequential);
 
     // Set the current range being processed based on the order.
     if (order == increasing) {
       auto imap_f = [&](size_t i) { return d[i]; };
       auto imap = pbbslib::make_sequence<bucket_id>(n, imap_f);
-      size_t min_b = pbbslib::reduce(imap, pbbslib::minm<bucket_id>());
+      size_t min_b = std::numeric_limits<bucket_id>::max();
+      if(sequential) for(size_t i = 0; i<imap.size(); i++) min_b = std::min(min_b, imap[i]);
+      else min_b = pbbslib::reduce(imap, pbbslib::minm<bucket_id>());
       // "reduce" performs a "sum" where the sum uses the monoid provided. In this case min.
       // So this obtains the min bucket id
       cur_range = min_b / open_buckets;
@@ -111,7 +114,9 @@ struct buckets {
     } else if (order == decreasing) {
       auto imap_f = [&](size_t i) { return (d[i] == null_bkt) ? 0 : d[i]; };
       auto imap = pbbslib::make_sequence<bucket_id>(n, imap_f);
-      size_t max_b = pbbslib::reduce(imap, pbbslib::maxm<bucket_id>());
+      size_t max_b = 0;
+      if(sequential) for(size_t i = 0; i<imap.size(); i++) max_b = std::max(max_b, imap[i]);
+      else max_b = pbbslib::reduce(imap, pbbslib::maxm<bucket_id>());
       cur_range = (max_b + open_buckets) / open_buckets;
       // cur_range indicates [(cur_range-1)*open_buckets,cur_range*open_buckets) is materialized
     } else {
@@ -207,7 +212,7 @@ struct buckets {
   inline size_t update_buckets(F f, size_t k) {
     size_t num_blocks = k / 4096;
     int num_threads = num_workers();
-    if (k < 4096 || num_threads == 1) {
+    if (k < 4096 || num_threads == 1 || sequential) {
       return update_buckets_seq(f, k);
     }
 
@@ -321,6 +326,7 @@ struct buckets {
   size_t max_bkt;
   size_t num_elms; // the num elements left ahead in open buckets
   bool allocated;
+  bool sequential;
 
   size_t cur_range; // [cur_range*open_buckets,(cur_range+1)*open_buckets) gives the open range
   id_dyn_arr* bkts;
@@ -352,10 +358,12 @@ struct buckets {
 
   inline void unpack() {
     size_t m = bkts[open_buckets].size; // bkts[open_buckets] stores all unmaterialized buckets
-    auto tmp = sequence<ident_t>(m);
+    auto tmp = sequence<ident_t>();
+    tmp.n = m;
+    tmp.s = pbbslib::new_array<ident_t>(m, sequential);
     ident_t* A = bkts[open_buckets].A;
     par_for(0, m, pbbslib::kSequentialForThreshold, [&] (size_t i)
-                    { tmp[i] = A[i]; });
+                    { tmp[i] = A[i]; }, !sequential);
     if (order == increasing) {
       cur_range++;  // increment range
     } else {
@@ -384,12 +392,16 @@ struct buckets {
       auto imap = pbbslib::make_sequence<bucket_t>(bkts[open_buckets].size, [&] (size_t j) { return (size_t)d[bkts[open_buckets].A[j]]; });
       // imap gives the bucket each bucket out of range still belongs to
       if(order == increasing) {
-        size_t minBkt = pbbs::reduce(imap, pbbs::minm<size_t>());
+        size_t minBkt = std::numeric_limits<size_t>::max();
+        if(sequential) for(size_t i = 0; i<imap.size(); i++) minBkt = std::min(minBkt, imap[i]);
+        else minBkt = pbbs::reduce(imap, pbbs::minm<size_t>());
         cur_range = minBkt/open_buckets-1; //will be incremented in next unpack() call
         // jump the range directly to 1 before the next non-empty bucket
       }
       else if(order == decreasing) {
-        size_t minBkt = pbbs::reduce(imap, pbbs::maxm<size_t>());
+        size_t minBkt = 0;
+        if(sequential) for(size_t i = 0; i<imap.size(); i++) minBkt = std::max(minBkt, imap[i]);
+        else minBkt = pbbs::reduce(imap, pbbs::maxm<size_t>());
         cur_range = (open_buckets+minBkt)/open_buckets+1; //will be decremented in next unpack() call
       }
     }
@@ -443,7 +455,9 @@ struct buckets {
     size_t cur_bkt_num = get_cur_bucket_num();
     auto p = [&](size_t i) { return d[i] == cur_bkt_num; };
     // we need to apply filter to check each item is still in the bucket because of lazy delete
-    size_t m = pbbslib::filterf(bkt.A, out, size, p);
+    size_t m;
+    if(sequential) m = pbbslib::filter_seq(bkt.A, out, size, p);
+    else m = pbbslib::filterf(bkt.A, out, size, p);
     bkts[cur_bkt].size = 0;
     if (m == 0) { // if no item is left in the bucket
       pbbslib::free_array(out);
