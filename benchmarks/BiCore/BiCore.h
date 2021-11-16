@@ -83,98 +83,42 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 
 	it.stop();
 	std::cout<<"delta "<<delta<<" prepeel size "<<prepeel.size()<<" k-peel time "<<it.get_total()<<std::endl;
-	it.start();
 
-	sequence<double> workC = sequence<double>(delta, [&](size_t idx){
-		return (double)(edgeCount[idx+1])/G.m;
-	});
-
-	for(uintE i=0; i<delta-1; i++) std::cout<<workC[i]<<" ";
-	std::cout<<workC[delta-1]<<std::endl;
-
-	std::vector<size_t> breakptrs;
-	breakptrs.push_back(0);
-
-	double thread_ratio = 1.0; //try messing with this
-	double avgWork = pbbslib::reduce_add(workC) / num_workers() * thread_ratio;
-	double curWork = 0.0;
-	for(size_t i=1; i<=delta; i++){
-		breakptrs.push_back(i);
-		// curWork += workC[i-1];
-		// if(curWork/avgWork >= 1.05){
-		// 	curWork = 0.0;
-		// 	breakptrs.push_back(i);
-		// 	std::cout<<"breakptr at "<<i<<std::endl;
-		// }
-	}
-	if(breakptrs[breakptrs.size()-1]!=delta)
-		breakptrs.push_back(delta); // get rid of it if not using it
-
-	std::cout<<"delta "<<delta<<" size "<<breakptrs.size()<<" k-peel time "<<it.get_total()<<std::endl;
 	auto timeA = sequence<double>(delta, 0.0);
 	auto timeB = sequence<double>(delta, 0.0);
-	auto tTime = sequence<double>(delta, 0.0);
-	// sequence<uintE>* prepeelA = new sequence<uintE>[breakptrs.size()];
-	// par_for(1,breakptrs.size(),1,[&](size_t idx){
-	// 	uintE minCore = breakptrs[idx-1]+1;
-	// 	sequence<uintE> degA(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
-	// 	size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degA[i]<minCore;}));
-	// 	std::vector<uintE> DelA(initSize);
-	// 	for(size_t i=0, j=0; i<n; i++) if(degA[i]<minCore) DelA[j++]=i;
-	// 	initialClean(G, degA, DelA, minCore);
-	// 	prepeelA[idx] = std::move(degA);
-	// });
 
-	// sequence<uintE>* prepeelB = new sequence<uintE>[breakptrs.size()];
-	// par_for(1,breakptrs.size(),1,[&](size_t idx){
-	// 	uintE minCore = breakptrs[idx-1]+1;
-	// 	sequence<uintE> degB(n, [&](size_t i) { return G.get_vertex(i).out_degree(); });
-	// 	size_t initSize = pbbslib::reduce_add(sequence<uintE>(n, [&](size_t i) {return degB[i]<minCore;}));
-	// 	std::vector<uintE> DelB(initSize);
-	// 	for(size_t i=0, j=0; i<n; i++) if(degB[i]<minCore) DelB[j++]=i;
-	// 	initialClean(G, degB, DelB, minCore);
-	// 	prepeelB[idx] = std::move(degB);
-	// });
-	it.stop();
-	par_for(1,breakptrs.size(),1,[&](size_t idx){
-		std::cout<<"running range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<std::endl;
-		uintE minCore = breakptrs[idx-1]+1;
-		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
+	auto peelA = [&](){
+		par_for(1,delta+1,1,[&](size_t core){
 			timer t_in; t_in.start();
-			sequence<uintE> D = prepeel[minCore];
+			sequence<uintE> D = prepeel[core];
 			// use delayed_sequence here
 			// start serial, improve with parallelism
-			size_t initSize = 0;
-			for(uintE i=0; i<n; i++) if(D[i]<core && D[i]>=minCore) initSize++;
-			std::vector<uintE> delA(initSize);
-			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delA[j++]=i; 
-			// use delay_sequence to do reduce
-			initialClean(G, D, delA, core);
 			auto ret = PeelFixA(G, D, core, n_a, n_b, num_buckets);
-			timeA[core-1] = std::get<1>(ret);
 			t_in.stop();
-			tTime[core-1] += t_in.get_total();
-		}
-		for(uintE core = breakptrs[idx-1]+1; core <= breakptrs[idx]; core++){
+			timeA[core-1] += t_in.get_total();
+		});
+	};
+
+	auto peelB = [&](){
+		par_for(1,delta+1,1,[&](size_t core){
 			timer t_in; t_in.start();
-			sequence<uintE> D = prepeel[minCore];
-			size_t initSize = 0;
-			for(uintE i=0; i<n; i++) if(D[i]<core && D[i]>=minCore) initSize++;
-			std::vector<uintE> delB(initSize);
-			for(size_t i = 0, j = 0; i<n; i++) if((D[i]<core) && (D[i]>=minCore)) delB[j++] = i;
-			initialClean(G, D, delB, core);
+			sequence<uintE> D = prepeel[core]; 
 			auto ret = PeelFixB(G, D, core, n_a, n_b, num_buckets);
-			timeB[core-1] = std::get<1>(ret);
 			t_in.stop();
-			tTime[core-1] += t_in.get_total();
-		}
-		std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
-	});
+			timeB[core-1] = t_in.get_total();
+		});
+	};
+
+	par_do(peelA, peelB);
 
 	double totalRuntime = 0;
-	for(uintE i = 1; i <= breakptrs[breakptrs.size()-1]; i++){
-		std::cout<<"core "<<i<<" running time: "<<tTime[i-1]<<std::endl;
-		totalRuntime += tTime[i-1];
+	for(uintE i = 1; i <= delta; i++){
+		std::cout<<"coreA "<<i<<" running time: "<<timeA[i-1]<<std::endl;
+		totalRuntime += timeA[i-1];
+	}
+	for(uintE i = 1; i <= delta; i++){
+		std::cout<<"coreB "<<i<<" running time: "<<timeB[i-1]<<std::endl;
+		totalRuntime += timeB[i-1];
 	}
 	std::cout<<"ideal runtime with "<<num_workers()<<" threads: "<<totalRuntime/num_workers()<<std::endl;
 	it.reportTotal("initialize time");
