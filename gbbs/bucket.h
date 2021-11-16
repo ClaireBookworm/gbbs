@@ -478,15 +478,15 @@ inline const std::optional<std::tuple<uintE, uintE> > wrap(const uintE& l,
 
 template <class ident_t, class bucket_t, class D>
 inline buckets<D, ident_t, bucket_t> make_buckets(size_t n, D d, bucket_order order,
-                               size_t total_buckets = 128) {
-  return buckets<D, ident_t, bucket_t>(n, d, order, total_buckets);
+                               size_t total_buckets = 128, bool sequential = false) {
+  return buckets<D, ident_t, bucket_t>(n, d, order, total_buckets, sequential);
 }
 
 // ident_t := uintE, bucket_t := uintE
 template <class D>
 inline buckets<D, uintE, uintE> make_vertex_buckets(size_t n, D& d, bucket_order
-      order, size_t total_buckets = 128) {
-  return buckets<D, uintE, uintE>(n, d, order, total_buckets);
+      order, size_t total_buckets = 128, bool sequential = false) {
+  return buckets<D, uintE, uintE>(n, d, order, total_buckets, sequential);
 }
 
 // ident_t := uintE, bucket_t := bucket_t

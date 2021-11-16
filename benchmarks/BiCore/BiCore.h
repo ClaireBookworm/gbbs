@@ -186,7 +186,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 	std::fill(Dv.begin(), Dv.end(), std::numeric_limits<uintE>::max());
 	for(uintE i=n_a; i<n; i++) if(D[i]>=alpha) Dv[i] = D[i];
 
-	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets); //maybe try sequentialize it
+	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets,true); //maybe try sequentialize it
 	auto getVBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, bbuckets.get_bucket(deg));
@@ -261,7 +261,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 	std::fill(Du.begin(), Du.end(), std::numeric_limits<uintE>::max());
 	for(uintE i=0; i<n_a; i++) if(D[i]>=beta) Du[i]=D[i];
 
-	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
+	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets,true);
 	auto getUBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, abuckets.get_bucket(deg));
