@@ -171,9 +171,12 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		std::cout<<"range "<<breakptrs[idx-1]+1<<" to "<<breakptrs[idx]<<" finished"<<std::endl;
 	});
 
+	double totalRuntime = 0;
 	for(uintE i = 1; i <= breakptrs[breakptrs.size()-1]; i++){
 		std::cout<<"core "<<i<<" running time: "<<tTime[i-1]<<std::endl;
+		totalRuntime += tTime[i-1];
 	}
+	std::cout<<"ideal runtime with "<<num_workers()<<" threads: "<<totalRuntime<<std::endl;
 	it.reportTotal("initialize time");
 }
 
