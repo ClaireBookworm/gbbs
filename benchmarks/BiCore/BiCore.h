@@ -134,8 +134,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 	sequence<uintE> D = deg;
 
 	pqt.start();
-	auto Dv = sequence<uintE>::no_init(n);
-	std::fill(Dv.begin(), Dv.end(), std::numeric_limits<uintE>::max());
+	auto Dv = sequence<uintE>(n, std::numeric_limits<uintE>::max(), false);
 	for(uintE i=n_a; i<n; i++) if(D[i]>=alpha) Dv[i] = D[i];
 
 	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets,true); //maybe try sequentialize it
@@ -163,11 +162,13 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE 
 		pqt.stop();
 		for(uintE vi : bkt.identifiers){
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
-			for(uintE i = 0; i<neighborsVi.degree; i++){
+			uintE viDeg = neighborsVi.degree;
+			for(uintE i = 0; i<viDeg; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
 				if(D[ui]-- == alpha){
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
-					for(uintE j = 0; j<neighborsUi.degree; j++){
+					uintE uiDeg = neighborsUi.degree;
+					for(uintE j = 0; j<uiDeg; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
 						if(D[vii] > max_beta){
 							if(tracker[vii]!=iter){ // test par filter (figure out what par helps and what doesn't)
@@ -212,8 +213,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 	sequence<uintE> D = deg;
 
 	pqt.start();
-	auto Du = sequence<uintE>::no_init(n);
-	std::fill(Du.begin(), Du.end(), std::numeric_limits<uintE>::max());
+	auto Du = sequence<uintE>(n, std::numeric_limits<uintE>::max(), false);
 	for(uintE i=0; i<n_a; i++) if(D[i]>=beta) Du[i]=D[i];
 
 	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets,true);
@@ -239,11 +239,13 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE 
 		pqt.stop();
 		for(uintE ui : bkt.identifiers){
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
-			for(uintE i = 0; i<neighborsUi.degree; i++){
+			uintE uiDeg = neighborsUi.degree;
+			for(uintE i = 0; i<uiDeg; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
 				if(D[vi]-- == beta){
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
-					for(uintE j = 0; j<neighborsVi.degree; j++){
+					uintE viDeg = neighborsVi.degree;
+					for(uintE j = 0; j<viDeg; j++){
 						uintE uii = neighborsVi.get_neighbor(j); 
 						if(D[uii] > max_alpha){
 							if(tracker[uii]!=iter){
