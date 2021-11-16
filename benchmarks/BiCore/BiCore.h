@@ -172,7 +172,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	});
 
 	for(uintE i = 1; i <= breakptrs[breakptrs.size()-1]; i++){
-		std::cout<<"core "<<i<<" running time: "<<tTime[i]<<std::endl;
+		std::cout<<"core "<<i<<" running time: "<<tTime[i-1]<<std::endl;
 	}
 	it.reportTotal("initialize time");
 }
