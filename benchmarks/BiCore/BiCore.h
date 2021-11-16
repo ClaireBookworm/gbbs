@@ -214,7 +214,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 		pqt.start();
 		auto bkt = bbuckets.next_bucket();
 		max_beta = std::max((uintE)bkt.id, max_beta);
-		auto bktArr = bkt.identifiers;
+		auto& bktArr = bkt.identifiers;
 		finished += bktArr.size();
 		pqt.stop();
 		for(uintE vi : bktArr){
@@ -228,7 +228,6 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 						if(D[vii] > max_beta){
 							if(tracker[vii]!=iter){ // test par filter (figure out what par helps and what doesn't)
 								changeVtx[changeVtx_size++] = vii;
-								//changeVtx.push_back(vii); // dynamic alloc is slow
 								tracker[vii] = iter;
 							}
 							D[vii]--;
@@ -290,7 +289,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE be
 		pqt.start();
 		auto bkt = abuckets.next_bucket();
 		max_alpha = std::max((uintE)bkt.id, max_alpha);
-		auto bktArr = bkt.identifiers;
+		auto& bktArr = bkt.identifiers;
 		finished += bktArr.size();
 		pqt.stop();
 		for(uintE ui : bktArr){
