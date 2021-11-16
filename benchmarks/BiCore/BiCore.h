@@ -90,10 +90,9 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	auto peelA = [&](){
 		par_for(1,delta+1,1,[&](size_t core){
 			timer t_in; t_in.start();
-			sequence<uintE> D = prepeel[core];
 			// use delayed_sequence here
 			// start serial, improve with parallelism
-			auto ret = PeelFixA(G, D, core, n_a, n_b, num_buckets);
+			auto ret = PeelFixA(G, prepeel[core], core, n_a, n_b, num_buckets);
 			t_in.stop();
 			timeA[core-1] += t_in.get_total();
 		});
@@ -101,9 +100,8 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 
 	auto peelB = [&](){
 		par_for(1,delta+1,1,[&](size_t core){
-			timer t_in; t_in.start();
-			sequence<uintE> D = std::move(prepeel[core]); 
-			auto ret = PeelFixB(G, D, core, n_a, n_b, num_buckets);
+			timer t_in; t_in.start(); 
+			auto ret = PeelFixB(G, prepeel[core], core, n_a, n_b, num_buckets);
 			t_in.stop();
 			timeB[core-1] = t_in.get_total();
 		});
@@ -126,12 +124,14 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
+inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& deg, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
 {
 	// allocation could bottleneck
 	const size_t n = n_a + n_b;
 	timer pqt, pt;
 	uintE rho_alpha = 0, max_beta = 0;
+
+	sequence<uintE> D = deg;
 
 	pqt.start();
 	auto Dv = sequence<uintE>::no_init(n);
@@ -203,11 +203,13 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE>& D, uintE al
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& D, uintE beta, size_t n_a, size_t n_b, size_t num_buckets)
+inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE>& deg, uintE beta, size_t n_a, size_t n_b, size_t num_buckets)
 {
 	const size_t n = n_a + n_b;
 	timer pqt, pt;
 	uintE rho_beta = 0, max_alpha = 0;
+
+	sequence<uintE> D = deg;
 
 	pqt.start();
 	auto Du = sequence<uintE>::no_init(n);
