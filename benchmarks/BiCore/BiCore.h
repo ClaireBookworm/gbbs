@@ -107,7 +107,8 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		});
 	};
 
-	par_do(peelA, peelB);
+	//par_do(peelA, peelB);
+	PeelFixA(G, prepeel[1], 1, n_a, n_b, num_buckets);
 	//peelA();
 	//peelB();
 	double totalRuntime = 0;
@@ -126,65 +127,53 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 template <class Graph>
 inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
 {
+	using W = typename Graph::weight_type;
 	// allocation could bottleneck
 	const size_t n = n_a + n_b;
 	uintE rho_alpha = 0, max_beta = 0;
 
-	auto Dv = sequence<uintE>(n, std::numeric_limits<uintE>::max(), false);
-	for(uintE i=n_a; i<n; i++) if(D[i]>=alpha) Dv[i] = D[i];
+	auto ER = sequence<uintE>(n, [&](size_t i) { return 0; });
 
-	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets,true); //maybe try sequentialize it
-	auto getVBuckets = [&](const uintE& vtx, const uintE& deg)
-		-> const std::optional<std::tuple<uintE, uintE> > {
-		return wrap(vtx, bbuckets.get_bucket(deg));
-	};
-	size_t iter = 0;
-	std::vector<size_t> tracker(n, 0);
-	std::vector<uintE> changeVtx(n, 0); // allocated outside of loop
-	sequence<std::optional<std::tuple<uintE, uintE> > > moveV(n, true);
-	size_t moveV_size = 0;
-	size_t changeVtx_size = 0;
+	auto Dv = sequence<uintE>(n, std::numeric_limits<uintE>::max());
+	par_for(n_a, n, [&](size_t i){
+		if(D[i]>=alpha) Dv[i] = D[i];
+	});
+
+	auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets); //maybe try sequentialize it
 	// use a counter to track the number of changes and then use that to determine when to stop
 	// don't .clear() the changeVtx vector, just reuse it
 	uintE finished = 0;
-	uintE vCount = 0;
-	for(uintE i=n_a; i<n; i++) vCount+=D[i]>=alpha;
+	uintE vCount = pbbslib::reduce_add(pbbslib::make_sequence<uintE>(n_b,[&](size_t i){ return D[i+n_a]>=alpha; }));
 	while (finished != vCount)
 	{
-		iter++;
 		auto bkt = bbuckets.next_bucket();
 		max_beta = std::max((uintE)bkt.id, max_beta);
-		finished += bkt.identifiers.size();
-		for(uintE vi : bkt.identifiers){
-			auto neighborsVi = G.get_vertex(vi).out_neighbors();
-			for(uintE i = 0; i<neighborsVi.degree; i++){
-				uintE ui = neighborsVi.get_neighbor(i);
-				if(D[ui]-- == alpha){
-					auto neighborsUi = G.get_vertex(ui).out_neighbors();
-					for(uintE j = 0; j<neighborsUi.degree; j++){
-						uintE vii = neighborsUi.get_neighbor(j); 
-						if(D[vii] > max_beta){
-							if(tracker[vii]!=iter){ // test par filter (figure out what par helps and what doesn't)
-								changeVtx[changeVtx_size++] = vii;
-								tracker[vii] = iter;
-							}
-							D[vii]--;
-						}
-					}
-				}
-			}
-		}
-		// use sequence --> alloc to max size (test on more graphs to see if resizing is expensive)
-		for(size_t i = 0; i<changeVtx_size; i++){
-			uintE vii = changeVtx[i];
-			uintE deg = std::max(max_beta, D[vii]);
-			Dv[vii] = deg; D[vii] = deg;
-			auto ret = getVBuckets(vii, deg);
-			if(ret) { moveV[moveV_size++] = ret; }
-		}
-		bbuckets.update_buckets_seq_arr(moveV, moveV_size);
-		moveV_size = 0;
-		changeVtx_size = 0; // clear gives compiler option to call destructor
+		auto activeV = vertexSubset(n, std::move(bkt.identifiers));
+		finished += activeV.size();
+
+		auto moveU = edgeMapData<uintE>(G, activeV, kcore_fetch_add<W>(ER.begin(), D.begin(), alpha-1));
+		// returns vertexsubset and updates ER values
+
+		auto apply_f = [&](const uintE u, uintE data) -> void { D[u] -= ER[u]; ER[u] = 0; };
+
+		vertexMap(moveU, apply_f);
+
+		auto moveV = edgeMapData<uintE>(G, moveU, kcore_fetch_add<W>(ER.begin(), D.begin(), max_beta));
+
+		auto apply_fb = [&](const uintE v, uintE& bkt_to_modify) -> void {
+			uintE deg = D[v];
+			uintE edgesRemoved = ER[v];
+			ER[v] = 0;
+			uintE new_deg = std::max(deg - edgesRemoved, max_beta);
+			D[v] = new_deg;
+			Dv[v] = new_deg;
+			bkt_to_modify = bbuckets.get_bucket(deg, new_deg);
+		};
+
+		vertexMap(moveV, apply_fb);
+
+		bbuckets.update_buckets(moveV);
+
 		rho_alpha++;
 	}
 	std::cout<<"Alpha "<<alpha<<" "<<rho_alpha <<" "<<max_beta<<std::endl;
@@ -197,10 +186,10 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 	const size_t n = n_a + n_b;
 	uintE rho_beta = 0, max_alpha = 0;
 
-	auto Du = sequence<uintE>(n, std::numeric_limits<uintE>::max(), false);
+	auto Du = sequence<uintE>(n, std::numeric_limits<uintE>::max());
 	for(uintE i=0; i<n_a; i++) if(D[i]>=beta) Du[i]=D[i];
 
-	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets,true);
+	auto abuckets = make_vertex_buckets(n,Du,increasing,num_buckets);
 	auto getUBuckets = [&](const uintE& vtx, const uintE& deg)
 		-> const std::optional<std::tuple<uintE, uintE> > {
 		return wrap(vtx, abuckets.get_bucket(deg));
@@ -208,7 +197,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0); // tracks last time the degree changed
 	std::vector<uintE> changeVtx(n, 0);
-	sequence<std::optional<std::tuple<uintE, uintE> > > moveU(n, true);
+	sequence<std::optional<std::tuple<uintE, uintE> > > moveU(n);
 	size_t moveU_size = 0;
 	size_t changeVtx_size = 0;
 	uintE finished = 0;
