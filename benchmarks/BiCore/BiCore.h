@@ -55,6 +55,29 @@ inline void initialClean(Graph &G, sequence<uintE>& D, std::vector<uintE>& del, 
 	}
 }
 
+template <class W>
+struct bicore_fetch_add {
+  uintE* er;
+  uintE* D;
+  uintE k;
+  bicore_fetch_add(uintE* _er, uintE* _D, uintE _k) : er(_er), D(_D), k(_k) {}
+  inline std::optional<uintE> update(const uintE& s, const uintE& d, const W& w) {
+    er[d]++;
+    if (er[d] == 1) {
+      return std::optional<uintE>((uintE)0);
+    }
+    return std::nullopt;
+  }
+  inline std::optional<uintE> updateAtomic(const uintE& s, const uintE& d,
+                                   const W& wgh) {
+    if (pbbslib::fetch_and_add(&er[d], (uintE)1) == 1) {
+      return std::optional<uintE>((uintE)0); // returns 0 if it's just created?
+    }
+    return std::nullopt;
+  }
+  inline bool cond(uintE d) { return D[d] > k; }
+};
+
 template <class Graph>
 inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
 {
@@ -108,9 +131,9 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	};
 
 	//par_do(peelA, peelB);
-	PeelFixA(G, prepeel[1], 1, n_a, n_b, num_buckets);
-	//peelA();
-	//peelB();
+	//PeelFixA(G, prepeel[1], 1, n_a, n_b, num_buckets);
+	peelA();
+	peelB();
 	double totalRuntime = 0;
 	for(uintE i = 1; i <= delta; i++){
 		std::cout<<"coreA "<<i<<" running time: "<<timeA[i-1]<<std::endl;
@@ -122,6 +145,21 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	}
 	std::cout<<"ideal runtime with "<<num_workers()<<" threads: "<<totalRuntime/num_workers()<<std::endl;
 	it.reportTotal("initialize time");
+}
+
+template <class V>
+void print_vtxsubset(V& vtxset){
+	if(vtxset.isDense) vtxset.toSparse();
+	for(size_t i = 0; i<vtxset.size(); i++)
+		std::cout<<vtxset.vtx(i)<<" ";
+	std::cout<<std::endl;
+}
+
+template <class T>
+void print_seq(sequence<T>& seq){
+	for(size_t i = 0; i<seq.size(); i++)
+		std::cout<<seq[i]<<" ";
+	std::cout<<std::endl;
 }
 
 template <class Graph>
@@ -151,14 +189,16 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 		auto activeV = vertexSubset(n, std::move(bkt.identifiers));
 		finished += activeV.size();
 
-		auto moveU = edgeMapData<uintE>(G, activeV, kcore_fetch_add<W>(ER.begin(), D.begin(), alpha-1));
+		auto moveU = edgeMapData<uintE>(G, activeV, bicore_fetch_add<W>(ER.begin(), D.begin(), alpha-1));
 		// returns vertexsubset and updates ER values
 
 		auto apply_f = [&](const uintE u, uintE data) -> void { D[u] -= ER[u]; ER[u] = 0; };
+		
+		vertexMap(moveU, apply_f); // filter for deletion
 
-		vertexMap(moveU, apply_f);
+		auto delU = vertexFilter(moveU, [&](uintE u, uintE data){ return D[u]<alpha; });
 
-		auto moveV = edgeMapData<uintE>(G, moveU, kcore_fetch_add<W>(ER.begin(), D.begin(), max_beta));
+		auto moveV = edgeMapData<uintE>(G, delU, bicore_fetch_add<W>(ER.begin(), D.begin(), max_beta));
 
 		auto apply_fb = [&](const uintE v, uintE& bkt_to_modify) -> void {
 			uintE deg = D[v];
