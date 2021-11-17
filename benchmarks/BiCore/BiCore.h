@@ -141,7 +141,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0);
 	std::vector<uintE> changeVtx(n, 0); // allocated outside of loop
-	sequence<std::optional<std::tuple<uintE, uintE> > > moveV(n);
+	sequence<std::optional<std::tuple<uintE, uintE> > > moveV(n, true);
 	size_t moveV_size = 0;
 	size_t changeVtx_size = 0;
 	// use a counter to track the number of changes and then use that to determine when to stop
@@ -208,7 +208,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 	size_t iter = 0;
 	std::vector<size_t> tracker(n, 0); // tracks last time the degree changed
 	std::vector<uintE> changeVtx(n, 0);
-	sequence<std::optional<std::tuple<uintE, uintE> > > moveU(n);
+	sequence<std::optional<std::tuple<uintE, uintE> > > moveU(n, true);
 	size_t moveU_size = 0;
 	size_t changeVtx_size = 0;
 	uintE finished = 0;
