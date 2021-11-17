@@ -1,0 +1,527 @@
+cmake_minimum_required(VERSION 3.20)
+project(gbbs)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(benchmarks/ApproximateDensestSubgraph/ApproxPeelingBKV12)
+include_directories(benchmarks/ApproximateDensestSubgraph/GreedyCharikar)
+include_directories(benchmarks/ApproximateSetCover/MANISBPT11)
+include_directories(benchmarks/BFS/NonDeterministicBFS)
+include_directories(benchmarks/Biconnectivity/TarjanVishkin)
+include_directories(benchmarks/BiCore)
+include_directories(benchmarks/BiCore/serial-test)
+include_directories(benchmarks/ClaireTest)
+include_directories(benchmarks/CliqueCounting)
+include_directories(benchmarks/Connectivity)
+include_directories(benchmarks/Connectivity/BFSCC)
+include_directories(benchmarks/Connectivity/ConnectIt)
+include_directories(benchmarks/Connectivity/ConnectIt/mains)
+include_directories(benchmarks/Connectivity/Incremental)
+include_directories(benchmarks/Connectivity/Incremental/mains)
+include_directories(benchmarks/Connectivity/LabelPropagation)
+include_directories(benchmarks/Connectivity/LiuTarjan)
+include_directories(benchmarks/Connectivity/ShiloachVishkin)
+include_directories(benchmarks/Connectivity/SimpleUnionAsync)
+include_directories(benchmarks/Connectivity/UnionFind)
+include_directories(benchmarks/Connectivity/WorkEfficientSDB14)
+include_directories(benchmarks/CoSimRank)
+include_directories(benchmarks/CycleCounting/Parallel5Cycle)
+include_directories(benchmarks/DegeneracyOrder/BarenboimElkin08)
+include_directories(benchmarks/DegeneracyOrder/GoodrichPszona11)
+include_directories(benchmarks/GeneralWeightSSSP/BellmanFord)
+include_directories(benchmarks/GraphColoring/Hasenplaugh14)
+include_directories(benchmarks/IntegralWeightSSSP/JulienneDBS17)
+include_directories(benchmarks/KCore/JulienneDBS17)
+include_directories(benchmarks/KTruss)
+include_directories(benchmarks/LowDiameterDecomposition/MPX13)
+include_directories(benchmarks/MaximalIndependentSet/RandomGreedy)
+include_directories(benchmarks/MaximalIndependentSet/Yoshida)
+include_directories(benchmarks/MaximalMatching/RandomGreedy)
+include_directories(benchmarks/MaximalMatching/Yoshida)
+include_directories(benchmarks/Michael_Experiment)
+include_directories(benchmarks/MinimumSpanningForest/Boruvka)
+include_directories(benchmarks/MinimumSpanningForest/Kruskal)
+include_directories(benchmarks/MinimumSpanningForest/PBBSMST)
+include_directories(benchmarks/PageRank)
+include_directories(benchmarks/PositiveWeightSSSP/DeltaStepping)
+include_directories(benchmarks/SCAN/IndexBased)
+include_directories(benchmarks/SCAN/IndexBased/unit_tests)
+include_directories(benchmarks/SCAN/Naive)
+include_directories(benchmarks/Spanner/MPXV15)
+include_directories(benchmarks/SpanningForest)
+include_directories(benchmarks/SpanningForest/BFSSF)
+include_directories(benchmarks/SpanningForest/Framework)
+include_directories(benchmarks/SpanningForest/Framework/mains)
+include_directories(benchmarks/SpanningForest/LabelPropagation)
+include_directories(benchmarks/SpanningForest/LiuTarjan)
+include_directories(benchmarks/SpanningForest/SDB14)
+include_directories(benchmarks/SpanningForest/ShiloachVishkin)
+include_directories(benchmarks/SpanningForest/UnionFind)
+include_directories(benchmarks/SSBetweenessCentrality/Brandes)
+include_directories(benchmarks/SSWidestPath/JulienneDBS17)
+include_directories(benchmarks/StronglyConnectedComponents/BGSS16-Filtering)
+include_directories(benchmarks/StronglyConnectedComponents/RandomGreedyBGSS16)
+include_directories(benchmarks/TriangleCounting/DhulipalaLiuShunYu20)
+include_directories(benchmarks/TriangleCounting/Makkar)
+include_directories(benchmarks/TriangleCounting/ShunTangwongsan15)
+include_directories(external/simdinter/advancedbenchmarking/include)
+include_directories(external/simdinter/include)
+include_directories(gbbs)
+include_directories(gbbs/encodings)
+include_directories(gbbs/pbbslib)
+include_directories(gbbs/semiasym)
+include_directories(pbbslib)
+include_directories(pbbslib/strings)
+include_directories(utils)
+include_directories(utils/generators)
+
+add_executable(gbbs
+        benchmarks/ApproximateDensestSubgraph/ApproxPeelingBKV12/DensestSubgraph.cc
+        benchmarks/ApproximateDensestSubgraph/ApproxPeelingBKV12/DensestSubgraph.h
+        benchmarks/ApproximateDensestSubgraph/GreedyCharikar/DensestSubgraph.cc
+        benchmarks/ApproximateDensestSubgraph/GreedyCharikar/DensestSubgraph.h
+        benchmarks/ApproximateSetCover/MANISBPT11/ApproximateSetCover.cc
+        benchmarks/ApproximateSetCover/MANISBPT11/ApproximateSetCover.h
+        benchmarks/BFS/NonDeterministicBFS/unit_tests/test_bfs.cc
+        benchmarks/BFS/NonDeterministicBFS/BFS.cc
+        benchmarks/BFS/NonDeterministicBFS/BFS.h
+        benchmarks/Biconnectivity/TarjanVishkin/Biconnectivity.cc
+        benchmarks/Biconnectivity/TarjanVishkin/Biconnectivity.h
+        benchmarks/BiCore/serial-test/BiCore_serial.cc
+        benchmarks/BiCore/serial-test/BiCore_serial.h
+        benchmarks/BiCore/BiCore-Sequential.cc
+        benchmarks/BiCore/BiCore.cc
+        benchmarks/BiCore/BiCore.h
+        benchmarks/ClaireTest/ClaireTest.cc
+        benchmarks/ClaireTest/ClaireTest.h
+        benchmarks/CliqueCounting/Clique.cc
+        benchmarks/CliqueCounting/Clique.h
+        benchmarks/CliqueCounting/induced_hybrid.h
+        benchmarks/CliqueCounting/induced_intersection.h
+        benchmarks/CliqueCounting/induced_neighborhood.h
+        benchmarks/CliqueCounting/induced_split.h
+        benchmarks/CliqueCounting/intersect.h
+        benchmarks/CliqueCounting/peel.h
+        benchmarks/CliqueCounting/relabel.h
+        benchmarks/Connectivity/BFSCC/Connectivity.cc
+        benchmarks/Connectivity/BFSCC/Connectivity.h
+        benchmarks/Connectivity/ConnectIt/mains/bench_utils.h
+        benchmarks/Connectivity/ConnectIt/mains/bfscc.cc
+        benchmarks/Connectivity/ConnectIt/mains/check.h
+        benchmarks/Connectivity/ConnectIt/mains/gbbscc.cc
+        benchmarks/Connectivity/ConnectIt/mains/jayanti_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/jayanti_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/jayanti_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/jayanti_nosample.cc
+        benchmarks/Connectivity/ConnectIt/mains/label_propagation.cc
+        benchmarks/Connectivity/ConnectIt/mains/liutarjan_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/liutarjan_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/liutarjan_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/liutarjan_nosample.cc
+        benchmarks/Connectivity/ConnectIt/mains/shiloach_vishkin.cc
+        benchmarks/Connectivity/ConnectIt/mains/uf_utils.h
+        benchmarks/Connectivity/ConnectIt/mains/unite_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_early_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_early_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_early_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_early_nosample.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_nd_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_nd_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_nd_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_nd_nosample.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_nosample.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_cas_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_cas_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_cas_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_cas_nosample.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_lock_bfs.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_lock_kout.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_lock_ldd.cc
+        benchmarks/Connectivity/ConnectIt/mains/unite_rem_lock_nosample.cc
+        benchmarks/Connectivity/ConnectIt/benchmark_edge_gather.cc
+        benchmarks/Connectivity/ConnectIt/benchmark_sampling.cc
+        benchmarks/Connectivity/ConnectIt/framework.h
+        benchmarks/Connectivity/ConnectIt/sampling.h
+        benchmarks/Connectivity/Incremental/mains/bench_utils.h
+        benchmarks/Connectivity/Incremental/mains/empty_starting_graph.h
+        benchmarks/Connectivity/Incremental/mains/jayanti.cc
+        benchmarks/Connectivity/Incremental/mains/liutarjan.cc
+        benchmarks/Connectivity/Incremental/mains/lt_utils.h
+        benchmarks/Connectivity/Incremental/mains/shiloachvishkin.cc
+        benchmarks/Connectivity/Incremental/mains/subsample_starting_graph.h
+        benchmarks/Connectivity/Incremental/mains/uf_utils.h
+        benchmarks/Connectivity/Incremental/mains/unite.cc
+        benchmarks/Connectivity/Incremental/mains/unite_early.cc
+        benchmarks/Connectivity/Incremental/mains/unite_nd.cc
+        benchmarks/Connectivity/Incremental/mains/unite_rem_cas.cc
+        benchmarks/Connectivity/Incremental/mains/unite_rem_lock.cc
+        benchmarks/Connectivity/Incremental/bench_utils.h
+        benchmarks/Connectivity/LabelPropagation/Connectivity.cc
+        benchmarks/Connectivity/LabelPropagation/Connectivity.h
+        benchmarks/Connectivity/LiuTarjan/Connectivity.h
+        benchmarks/Connectivity/LiuTarjan/liu_tarjan_rules.h
+        benchmarks/Connectivity/ShiloachVishkin/Connectivity.h
+        benchmarks/Connectivity/SimpleUnionAsync/Connectivity.cc
+        benchmarks/Connectivity/SimpleUnionAsync/Connectivity.h
+        benchmarks/Connectivity/UnionFind/Connectivity.h
+        benchmarks/Connectivity/UnionFind/jayanti.h
+        benchmarks/Connectivity/UnionFind/union_find_rules.h
+        benchmarks/Connectivity/WorkEfficientSDB14/Connectivity.cc
+        benchmarks/Connectivity/WorkEfficientSDB14/Connectivity.h
+        benchmarks/Connectivity/common.cc
+        benchmarks/Connectivity/common.h
+        benchmarks/Connectivity/connectit.cc
+        benchmarks/Connectivity/connectit.h
+        benchmarks/CoSimRank/CoSimRank.cc
+        benchmarks/CoSimRank/CoSimRank.h
+        benchmarks/CycleCounting/Parallel5Cycle/FiveCycle.cc
+        benchmarks/CycleCounting/Parallel5Cycle/FiveCycle.h
+        benchmarks/DegeneracyOrder/BarenboimElkin08/DegeneracyOrder.cc
+        benchmarks/DegeneracyOrder/BarenboimElkin08/DegeneracyOrder.h
+        benchmarks/DegeneracyOrder/GoodrichPszona11/DegeneracyOrder.cc
+        benchmarks/DegeneracyOrder/GoodrichPszona11/DegeneracyOrder.h
+        benchmarks/GeneralWeightSSSP/BellmanFord/BellmanFord.cc
+        benchmarks/GeneralWeightSSSP/BellmanFord/BellmanFord.h
+        benchmarks/GraphColoring/Hasenplaugh14/GraphColoring.cc
+        benchmarks/GraphColoring/Hasenplaugh14/GraphColoring.h
+        benchmarks/IntegralWeightSSSP/JulienneDBS17/wBFS.cc
+        benchmarks/IntegralWeightSSSP/JulienneDBS17/wBFS.h
+        benchmarks/KCore/JulienneDBS17/KCore.cc
+        benchmarks/KCore/JulienneDBS17/KCore.h
+        benchmarks/KTruss/KTruss.cc
+        benchmarks/KTruss/KTruss.h
+        benchmarks/KTruss/truss_utils.h
+        benchmarks/LowDiameterDecomposition/MPX13/LowDiameterDecomposition.cc
+        benchmarks/LowDiameterDecomposition/MPX13/LowDiameterDecomposition.h
+        benchmarks/MaximalIndependentSet/RandomGreedy/MaximalIndependentSet.cc
+        benchmarks/MaximalIndependentSet/RandomGreedy/MaximalIndependentSet.h
+        benchmarks/MaximalIndependentSet/Yoshida/MaximalIndependentSet.cc
+        benchmarks/MaximalIndependentSet/Yoshida/MaximalIndependentSet.h
+        benchmarks/MaximalIndependentSet/Yoshida/reorder.h
+        benchmarks/MaximalMatching/RandomGreedy/MaximalMatching.cc
+        benchmarks/MaximalMatching/RandomGreedy/MaximalMatching.h
+        benchmarks/MaximalMatching/Yoshida/MaximalMatching.cc
+        benchmarks/MaximalMatching/Yoshida/MaximalMatching.h
+        benchmarks/MaximalMatching/Yoshida/reorder.h
+        benchmarks/MaximalMatching/Yoshida/yoshida_matching_utils.h
+        benchmarks/Michael_Experiment/DegCount.cc
+        benchmarks/Michael_Experiment/DegCount.h
+        benchmarks/MinimumSpanningForest/Boruvka/MinimumSpanningForest.cc
+        benchmarks/MinimumSpanningForest/Boruvka/MinimumSpanningForest.h
+        benchmarks/MinimumSpanningForest/Kruskal/MinimumSpanningForest.cc
+        benchmarks/MinimumSpanningForest/Kruskal/MinimumSpanningForest.h
+        benchmarks/MinimumSpanningForest/PBBSMST/MinimumSpanningForest.cc
+        benchmarks/MinimumSpanningForest/PBBSMST/MinimumSpanningForest.h
+        benchmarks/PageRank/PageRank.cc
+        benchmarks/PageRank/PageRank.h
+        benchmarks/PositiveWeightSSSP/DeltaStepping/DeltaStepping.cc
+        benchmarks/PositiveWeightSSSP/DeltaStepping/DeltaStepping.h
+        benchmarks/SCAN/IndexBased/experiments/remove_singleton_vertices.cc
+        benchmarks/SCAN/IndexBased/experiments/run_gbbs_experiments.cc
+        benchmarks/SCAN/IndexBased/unit_tests/scan_test.cc
+        benchmarks/SCAN/IndexBased/unit_tests/similarity_measure_test.cc
+        benchmarks/SCAN/IndexBased/unit_tests/similarity_measure_test_utils.h
+        benchmarks/SCAN/IndexBased/unit_tests/utils_test.cc
+        benchmarks/SCAN/IndexBased/intersect.h
+        benchmarks/SCAN/IndexBased/run_scan.cc
+        benchmarks/SCAN/IndexBased/scan.cc
+        benchmarks/SCAN/IndexBased/scan.h
+        benchmarks/SCAN/IndexBased/scan_helpers.cc
+        benchmarks/SCAN/IndexBased/scan_helpers.h
+        benchmarks/SCAN/IndexBased/similarity_measure.cc
+        benchmarks/SCAN/IndexBased/similarity_measure.h
+        benchmarks/SCAN/IndexBased/utils.cc
+        benchmarks/SCAN/IndexBased/utils.h
+        benchmarks/SCAN/Naive/unit_tests/scan_test.cc
+        benchmarks/SCAN/Naive/scan.h
+        benchmarks/SCAN/Naive/scan_helpers.cc
+        benchmarks/SCAN/Naive/scan_helpers.h
+        benchmarks/Spanner/MPXV15/Spanner.cc
+        benchmarks/Spanner/MPXV15/Spanner.h
+        benchmarks/SpanningForest/BFSSF/SpanningForest.cc
+        benchmarks/SpanningForest/BFSSF/SpanningForest.h
+        benchmarks/SpanningForest/Framework/mains/bench_utils.h
+        benchmarks/SpanningForest/Framework/mains/bfssf.cc
+        benchmarks/SpanningForest/Framework/mains/gbbssf.cc
+        benchmarks/SpanningForest/Framework/mains/jayanti_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/jayanti_kout.cc
+        benchmarks/SpanningForest/Framework/mains/jayanti_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/jayanti_nosample.cc
+        benchmarks/SpanningForest/Framework/mains/label_propagation.cc
+        benchmarks/SpanningForest/Framework/mains/liutarjan_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/liutarjan_kout.cc
+        benchmarks/SpanningForest/Framework/mains/liutarjan_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/liutarjan_nosample.cc
+        benchmarks/SpanningForest/Framework/mains/shiloach_vishkin.cc
+        benchmarks/SpanningForest/Framework/mains/uf_utils.h
+        benchmarks/SpanningForest/Framework/mains/unite_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/unite_early_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/unite_early_kout.cc
+        benchmarks/SpanningForest/Framework/mains/unite_early_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/unite_early_nosample.cc
+        benchmarks/SpanningForest/Framework/mains/unite_kout.cc
+        benchmarks/SpanningForest/Framework/mains/unite_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/unite_nd_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/unite_nd_kout.cc
+        benchmarks/SpanningForest/Framework/mains/unite_nd_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/unite_nd_nosample.cc
+        benchmarks/SpanningForest/Framework/mains/unite_nosample.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_cas_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_cas_kout.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_cas_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_cas_nosample.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_lock_bfs.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_lock_kout.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_lock_ldd.cc
+        benchmarks/SpanningForest/Framework/mains/unite_rem_lock_nosample.cc
+        benchmarks/SpanningForest/Framework/bfs_sampling.h
+        benchmarks/SpanningForest/Framework/framework.h
+        benchmarks/SpanningForest/Framework/kout_sampling.h
+        benchmarks/SpanningForest/Framework/ldd_sampling.h
+        benchmarks/SpanningForest/Framework/sampling.h
+        benchmarks/SpanningForest/Framework/utils.h
+        benchmarks/SpanningForest/LabelPropagation/SpanningForest.cc
+        benchmarks/SpanningForest/LabelPropagation/SpanningForest.h
+        benchmarks/SpanningForest/LiuTarjan/liu_tarjan_rules.h
+        benchmarks/SpanningForest/LiuTarjan/SpanningForest.cc
+        benchmarks/SpanningForest/LiuTarjan/SpanningForest.h
+        benchmarks/SpanningForest/SDB14/contract_sf.h
+        benchmarks/SpanningForest/SDB14/SpanningForest.cc
+        benchmarks/SpanningForest/SDB14/SpanningForest.h
+        benchmarks/SpanningForest/ShiloachVishkin/SpanningForest.cc
+        benchmarks/SpanningForest/ShiloachVishkin/SpanningForest.h
+        benchmarks/SpanningForest/UnionFind/jayanti.h
+        benchmarks/SpanningForest/UnionFind/SpanningForest.h
+        benchmarks/SpanningForest/UnionFind/union_find_rules.h
+        benchmarks/SpanningForest/check.h
+        benchmarks/SpanningForest/common.h
+        benchmarks/SSBetweenessCentrality/Brandes/SSBetweennessCentrality.cc
+        benchmarks/SSBetweenessCentrality/Brandes/SSBetweennessCentrality.h
+        benchmarks/SSWidestPath/JulienneDBS17/SSWidestPath.cc
+        benchmarks/SSWidestPath/JulienneDBS17/SSWidestPath.h
+        benchmarks/StronglyConnectedComponents/BGSS16-Filtering/StronglyConnectedComponents.cc
+        benchmarks/StronglyConnectedComponents/BGSS16-Filtering/StronglyConnectedComponents.h
+        benchmarks/StronglyConnectedComponents/RandomGreedyBGSS16/StronglyConnectedComponents.cc
+        benchmarks/StronglyConnectedComponents/RandomGreedyBGSS16/StronglyConnectedComponents.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/benchmark.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/dynamic_graph.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/dynamic_graph_hash.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/makkar.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/preprocess.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/rebalancing.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/shared.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/sparse_table.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/tomb_table.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/Triangle.cc
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/Triangle.h
+        benchmarks/TriangleCounting/DhulipalaLiuShunYu20/Triangle2.h
+        benchmarks/TriangleCounting/Makkar/dynamic_graph.h
+        benchmarks/TriangleCounting/Makkar/shared.h
+        benchmarks/TriangleCounting/Makkar/Triangle.cc
+        benchmarks/TriangleCounting/Makkar/Triangle.h
+        benchmarks/TriangleCounting/ShunTangwongsan15/Triangle.cc
+        benchmarks/TriangleCounting/ShunTangwongsan15/Triangle.h
+        external/simdinter/advancedbenchmarking/include/budgetedpostingcollector.h
+        external/simdinter/advancedbenchmarking/include/maropuparser.h
+        external/simdinter/advancedbenchmarking/include/statisticsrecorder.h
+        external/simdinter/advancedbenchmarking/src/budgetedtest.cpp
+        external/simdinter/advancedbenchmarking/src/compflatstat.cpp
+        external/simdinter/advancedbenchmarking/src/compress.cpp
+        external/simdinter/advancedbenchmarking/src/entropy.cpp
+        external/simdinter/advancedbenchmarking/src/ramtocache.cpp
+        external/simdinter/advancedbenchmarking/src/readflat.cpp
+        external/simdinter/advancedbenchmarking/src/simplesynth.cpp
+        external/simdinter/advancedbenchmarking/src/uncompress.cpp
+        external/simdinter/include/binarypacking.h
+        external/simdinter/include/bitpacking.h
+        external/simdinter/include/bitpackinghelpers.h
+        external/simdinter/include/boolarray.h
+        external/simdinter/include/codecfactory.h
+        external/simdinter/include/codecs.h
+        external/simdinter/include/common.h
+        external/simdinter/include/compositecodec.h
+        external/simdinter/include/delta.h
+        external/simdinter/include/deltatemplates.h
+        external/simdinter/include/fastpfor.h
+        external/simdinter/include/for.h
+        external/simdinter/include/forcodec.h
+        external/simdinter/include/frameofreference.h
+        external/simdinter/include/hybm2.h
+        external/simdinter/include/integratedbitpacking.h
+        external/simdinter/include/intersection.h
+        external/simdinter/include/mersenne.h
+        external/simdinter/include/platform.h
+        external/simdinter/include/simdbinarypacking.h
+        external/simdinter/include/simdbitpacking.h
+        external/simdinter/include/simdbitpackinghelpers.h
+        external/simdinter/include/simdfastpfor.h
+        external/simdinter/include/simdintegratedbitpacking.h
+        external/simdinter/include/simdvariablebyte.h
+        external/simdinter/include/skipping.h
+        external/simdinter/include/sortedbitpacking.h
+        external/simdinter/include/streamvariablebyte.h
+        external/simdinter/include/synthetic.h
+        external/simdinter/include/timer.h
+        external/simdinter/include/usimdbitpacking.h
+        external/simdinter/include/util.h
+        external/simdinter/include/variablebyte.h
+        external/simdinter/include/VarIntG8IU.h
+        external/simdinter/include/varintgb.h
+        external/simdinter/src/benchintersection.cpp
+        external/simdinter/src/benchsearch.cpp
+        external/simdinter/src/bitpacking.cpp
+        external/simdinter/src/for-gen.c
+        external/simdinter/src/for.c
+        external/simdinter/src/frameofreference.cpp
+        external/simdinter/src/integratedbitpacking.cpp
+        external/simdinter/src/intersection.cpp
+        external/simdinter/src/simdbitpacking.cpp
+        external/simdinter/src/simdintegratedbitpacking.cpp
+        external/simdinter/src/simdpackedsearch.c
+        external/simdinter/src/simdpackedselect.c
+        external/simdinter/src/streamvbyte.c
+        external/simdinter/src/testcodecs.cpp
+        external/simdinter/src/testintegration.cpp
+        external/simdinter/src/unit.cpp
+        external/simdinter/src/usimdbitpacking.cpp
+        external/simdinter/src/varintdecode.c
+        external/simdinter/example.cpp
+        gbbs/encodings/byte.cc
+        gbbs/encodings/byte.h
+        gbbs/encodings/byte_pd.cc
+        gbbs/encodings/byte_pd.h
+        gbbs/encodings/byte_pd_amortized.cc
+        gbbs/encodings/byte_pd_amortized.h
+        gbbs/encodings/decoders.h
+        gbbs/pbbslib/atomic_max_counter.h
+        gbbs/pbbslib/atomic_sum_counter.h
+        gbbs/pbbslib/counting_sort_no_transpose.h
+        gbbs/pbbslib/dyn_arr.h
+        gbbs/pbbslib/resizable_table.h
+        gbbs/pbbslib/sparse_additive_map.h
+        gbbs/pbbslib/sparse_table.h
+        gbbs/semiasym/tests/graph_filter_test.cc
+        gbbs/semiasym/bitset.h
+        gbbs/semiasym/bitset_managers.h
+        gbbs/semiasym/bitvector.h
+        gbbs/semiasym/block_vertex.h
+        gbbs/semiasym/graph_filter.h
+        gbbs/semiasym/graph_utils.h
+        gbbs/semiasym/utils.h
+        gbbs/unit_tests/graph_io_test.cc
+        gbbs/unit_tests/graph_test.cc
+        gbbs/unit_tests/undirected_edge_test.cc
+        gbbs/benchmark.cc
+        gbbs/benchmark.h
+        gbbs/bridge.cc
+        gbbs/bridge.h
+        gbbs/bucket.h
+        gbbs/chains.h
+        gbbs/compressed_vertex.h
+        gbbs/contract.h
+        gbbs/edge_array.h
+        gbbs/edge_map_blocked.cc
+        gbbs/edge_map_blocked.h
+        gbbs/edge_map_data.h
+        gbbs/edge_map_reduce.h
+        gbbs/edge_map_utils.h
+        gbbs/flags.h
+        gbbs/gbbs.h
+        gbbs/graph.h
+        gbbs/graph_io.cc
+        gbbs/graph_io.h
+        gbbs/graph_mutation.h
+        gbbs/graph_test_utils.cc
+        gbbs/graph_test_utils.h
+        gbbs/histogram.h
+        gbbs/interface.h
+        gbbs/io.cc
+        gbbs/io.h
+        gbbs/julienne.h
+        gbbs/macros.h
+        gbbs/parse_command_line.cc
+        gbbs/parse_command_line.h
+        gbbs/sequential_ht.h
+        gbbs/speculative_for.h
+        gbbs/uncompressed_intersection.h
+        gbbs/undirected_edge.cc
+        gbbs/undirected_edge.h
+        gbbs/union_find.cc
+        gbbs/union_find.h
+        gbbs/vertex.h
+        gbbs/vertex_subset.cc
+        gbbs/vertex_subset.h
+        pbbslib/strings/test/suffix_array.cc
+        pbbslib/strings/test/suffix_array_test.cc
+        pbbslib/strings/cartesian_tree.h
+        pbbslib/strings/lcp.h
+        pbbslib/strings/string_basics.cc
+        pbbslib/strings/string_basics.h
+        pbbslib/strings/suffix_array.h
+        pbbslib/strings/suffix_tree.h
+        pbbslib/strings/test_suffix_tree.cc
+        pbbslib/unit_tests/seq_test.cc
+        pbbslib/unit_tests/sequence_ops_test.cc
+        pbbslib/alloc.cc
+        pbbslib/alloc.h
+        pbbslib/assert.h
+        pbbslib/bag.h
+        pbbslib/binary_search.h
+        pbbslib/bucket_sort.h
+        pbbslib/collect_reduce.h
+        pbbslib/concurrent_stack.h
+        pbbslib/counting_sort.h
+        pbbslib/get_time.cc
+        pbbslib/get_time.h
+        pbbslib/hash_table.h
+        pbbslib/histogram.h
+        pbbslib/integer_sort.h
+        pbbslib/kth_smallest.h
+        pbbslib/list_allocator.h
+        pbbslib/memory_size.cc
+        pbbslib/memory_size.h
+        pbbslib/merge.h
+        pbbslib/merge_sort.h
+        pbbslib/monoid.h
+        pbbslib/parallel.cc
+        pbbslib/parallel.h
+        pbbslib/quicksort.h
+        pbbslib/random.h
+        pbbslib/random_shuffle.h
+        pbbslib/range_min.h
+        pbbslib/reducer.h
+        pbbslib/sample_sort.h
+        pbbslib/scheduler.cc
+        pbbslib/scheduler.h
+        pbbslib/seq.h
+        pbbslib/sequence.h
+        pbbslib/sequence_ops.h
+        pbbslib/sparse_mat_vec_mult.h
+        pbbslib/stlalgs.h
+        pbbslib/time_operations.cc
+        pbbslib/time_operations.h
+        pbbslib/time_tests.cc
+        pbbslib/transpose.h
+        pbbslib/union_find.h
+        pbbslib/utilities.cc
+        pbbslib/utilities.h
+        pybindings/gbbs_lib.cc
+        utils/generators/barabasi_albert.h
+        utils/generators/BarabasiAlbert.cc
+        utils/generators/RMAT.cc
+        utils/generators/rmat.h
+        utils/generators/torus.cc
+        utils/add_weights.cc
+        utils/benchmark.h
+        utils/compressor.cc
+        utils/converter.cc
+        utils/converter.h
+        utils/delimiter_converter.cpp
+        utils/random_reorder.cc
+        utils/snap_converter.cc
+        utils/to_char_arr.h
+        utils/to_edge_list.cc
+        utils/toAdjacencyG.cpp
+        utils/toEdgeList.cpp)

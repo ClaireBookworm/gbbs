@@ -188,14 +188,14 @@ namespace gbbs
 
 		size_t vCount = 0;
 
-		auto vD =
+		auto Dv =
 			sequence<uintE>(n, [&](size_t i) {
 				if (i <= bipartition || D[i] == 0)
 					return std::numeric_limits<uintE>::max();
 				return D[i];
 			});
 		it.start();
-		auto bbuckets = make_vertex_buckets(n,vD,increasing,num_buckets);
+		auto bbuckets = make_vertex_buckets(n,Dv,increasing,num_buckets);
 		it.stop();
 		// make num_buckets open buckets such that each vertex i is in D[i] bucket
 		// note this i value is not real i value; realI = i+bipartition+1 or i+n_a
