@@ -131,8 +131,8 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	};
 
 	//par_do(peelA, peelB);
-	PeelFixA(G, prepeel[2], 2, n_a, n_b, num_buckets);
-	//peelA();
+	//PeelFixA(G, prepeel[2], 2, n_a, n_b, num_buckets);
+	peelA();
 	//peelB();
 	double totalRuntime = 0;
 	for(uintE i = 1; i <= delta; i++){
@@ -186,8 +186,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 	{
 		auto bkt = bbuckets.next_bucket();
 		max_beta = std::max((uintE)bkt.id, max_beta);
-		std::cout<<"activeV"<<std::endl;
-		print_seq(bkt.identifiers);
+		//std::cout<<"activeV"<<std::endl;
+		//print_seq(bkt.identifiers);
 		auto activeV = vertexSubset(n, std::move(bkt.identifiers));
 		finished += activeV.size();
 		auto moveU = edgeMapData<uintE>(G, activeV, bicore_fetch_add<W>(ER.begin(), D.begin(), alpha-1));
@@ -198,6 +198,8 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 		vertexMap(moveU, apply_f); // filter for deletion
 
 		auto delU = vertexFilter(moveU, [&](uintE u, uintE data){ return D[u]<alpha; });
+
+		//print_vtxsubset(delU);
 
 		auto moveV = edgeMapData<uintE>(G, delU, bicore_fetch_add<W>(ER.begin(), D.begin(), max_beta));
 
