@@ -70,7 +70,7 @@ struct bicore_fetch_add {
   }
   inline std::optional<uintE> updateAtomic(const uintE& s, const uintE& d,
                                    const W& wgh) {
-    if (pbbslib::fetch_and_add(&er[d], (uintE)1) == 1) {
+    if (pbbslib::fetch_and_add(&er[d], (uintE)1) == 0) {
       return std::optional<uintE>((uintE)0); // returns 0 if it's just created?
     }
     return std::nullopt;
@@ -94,6 +94,9 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	sequence<uintT> edgeCount = std::move(std::get<1>(ret));
 	std::vector<sequence<uintE> > prepeel = std::move(std::get<2>(ret));
 	sequence<uintE> copyIdx(prepeel.size());
+	prepeel[0] = sequence<uintE>(n);
+	par_for(0, n, [&](size_t i){ prepeel[0][i] = G.get_vertex(i).out_degree(); });
+
 	size_t lastAvail = 0;
 	for(size_t i=1; i<=delta; i++){
 		if(i < prepeel.size() && prepeel[i].size() > 0) lastAvail = i;
@@ -130,8 +133,8 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		});
 	};
 
-	//par_do(peelA, peelB);
-	PeelFixA(G, prepeel[1], 1, n_a, n_b, num_buckets);
+	par_do(peelA, peelB);
+	//PeelFixA(G, prepeel[3], 3, n_a, n_b, num_buckets);
 	//peelA();
 	//peelB();
 	double totalRuntime = 0;
@@ -170,7 +173,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 	const size_t n = n_a + n_b;
 	uintE rho_alpha = 0, max_beta = 0;
 
-	auto ER = sequence<uintE>(n, [&](size_t i) { return 0; });
+	auto ER = sequence<uintE>(n, (uintE)0);
 
 	auto Dv = sequence<uintE>(n, std::numeric_limits<uintE>::max());
 	par_for(n_a, n, [&](size_t i){
@@ -186,20 +189,13 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 	{
 		auto bkt = bbuckets.next_bucket();
 		max_beta = std::max((uintE)bkt.id, max_beta);
-		std::cout<<"activeV"<<std::endl;
-		print_seq(bkt.identifiers);
 		auto activeV = vertexSubset(n, std::move(bkt.identifiers));
 		finished += activeV.size();
 		auto moveU = edgeMapData<uintE>(G, activeV, bicore_fetch_add<W>(ER.begin(), D.begin(), alpha-1));
 		// returns vertexsubset and updates ER values
-
-		auto apply_f = [&](const uintE u, uintE data) -> void { D[u] -= ER[u]; ER[u] = 0; };
-		
+		auto apply_f = [&](const uintE u, uintE data) -> void { D[u] -= ER[u]; ER[u] = 0; };	
 		vertexMap(moveU, apply_f); // filter for deletion
-
 		auto delU = vertexFilter(moveU, [&](uintE u, uintE data){ return D[u]<alpha; });
-
-		print_vtxsubset(delU);
 
 		auto moveV = edgeMapData<uintE>(G, delU, bicore_fetch_add<W>(ER.begin(), D.begin(), max_beta));
 
