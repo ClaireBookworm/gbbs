@@ -36,9 +36,10 @@
 namespace gbbs{
 // use max alpha and beta
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, sequence<sequence<uintE> >& AlphaMax, sequence<sequence<uintE> >& BetaMax, size_t n_a, size_t n_b, size_t num_buckets);
+
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE beta, size_t n_a, size_t n_b);
+inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE beta, sequence<sequence<uintE> >& AlphaMax, sequence<sequence<uintE> >& BetaMax, size_t n_a, size_t n_b, size_t num_buckets);
 
 template <class Graph>
 inline void initialClean(Graph &G, sequence<uintE>& D, std::vector<uintE>& del, uintE cutoff){
@@ -81,6 +82,13 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 		if(idx != copyIdx[idx]) prepeel[idx] = prepeel[copyIdx[idx]];
 	});
 
+	sequence<sequence<uintE> > AlphaMax(n_b, [&](size_t i){
+		return sequence<uintE>(G.get_vertex(i+n_a).out_degree()+1,(uintE)0);
+	});
+	sequence<sequence<uintE> > BetaMax(n_a, [&](size_t i){
+		return sequence<uintE>(G.get_vertex(i).out_degree()+1,(uintE)0);
+	});
+
 	it.stop();
 	std::cout<<"delta "<<delta<<" prepeel size "<<prepeel.size()<<" k-peel time "<<it.get_total()<<std::endl;
 
@@ -92,7 +100,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 			timer t_in; t_in.start();
 			// use delayed_sequence here
 			// start serial, improve with parallelism
-			auto ret = PeelFixA(G, prepeel[core], core, n_a, n_b, num_buckets);
+			auto ret = PeelFixA(G, prepeel[core], core, AlphaMax, BetaMax, n_a, n_b, num_buckets);
 			t_in.stop();
 			timeA[core-1] += t_in.get_total();
 		});
@@ -101,15 +109,23 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	auto peelB = [&](){
 		par_for(1,delta+1,1,[&](size_t core){
 			timer t_in; t_in.start(); 
-			auto ret = PeelFixB(G, prepeel[core], core, n_a, n_b, num_buckets);
+			auto ret = PeelFixB(G, prepeel[core], core, AlphaMax, BetaMax, n_a, n_b, num_buckets);
 			t_in.stop();
 			timeB[core-1] = t_in.get_total();
 		});
 	};
 
 	par_do(peelA, peelB);
-	//peelA();
-	//peelB();
+	par_for(0,n_a,[&](size_t vtx){
+		if(BetaMax[vtx].size()>1)
+			for(size_t i = BetaMax[vtx].size()-1; i>0; i--) BetaMax[vtx][i-1] = std::max(BetaMax[vtx][i-1],BetaMax[vtx][i]);
+	});
+
+	par_for(0,n_b,[&](size_t vtx){
+		if(AlphaMax[vtx].size()>1)
+			for(size_t i = AlphaMax[vtx].size()-1; i>0; i--) AlphaMax[vtx][i-1] = std::max(AlphaMax[vtx][i-1],AlphaMax[vtx][i]);
+	});
+
 	double totalRuntime = 0;
 	for(uintE i = 1; i <= delta; i++){
 		std::cout<<"coreA "<<i<<" running time: "<<timeA[i-1]<<std::endl;
@@ -124,7 +140,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, size_t n_a, size_t n_b, size_t num_buckets)
+inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alpha, sequence<sequence<uintE> >& AlphaMax, sequence<sequence<uintE> >& BetaMax, size_t n_a, size_t n_b, size_t num_buckets)
 {
 	// allocation could bottleneck
 	const size_t n = n_a + n_b;
@@ -156,10 +172,12 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 		max_beta = std::max((uintE)bkt.id, max_beta);
 		finished += bkt.identifiers.size();
 		for(uintE vi : bkt.identifiers){
+			AlphaMax[vi-n_a][max_beta] = pbbslib::write_max(&AlphaMax[vi-n_a][max_beta], alpha);
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
 				if(D[ui]-- == alpha){
+					BetaMax[ui][alpha] = max_beta;
 					auto neighborsUi = G.get_vertex(ui).out_neighbors();
 					for(uintE j = 0; j<neighborsUi.degree; j++){
 						uintE vii = neighborsUi.get_neighbor(j); 
@@ -192,7 +210,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 }
 
 template <class Graph>
-inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE beta, size_t n_a, size_t n_b, size_t num_buckets)
+inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE beta, sequence<sequence<uintE> >& AlphaMax, sequence<sequence<uintE> >& BetaMax, size_t n_a, size_t n_b, size_t num_buckets)
 {
 	const size_t n = n_a + n_b;
 	uintE rho_beta = 0, max_alpha = 0;
@@ -221,10 +239,12 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 		max_alpha = std::max((uintE)bkt.id, max_alpha);
 		finished += bkt.identifiers.size();
 		for(uintE ui : bkt.identifiers){
+			BetaMax[ui][max_alpha] = pbbslib::write_max(&BetaMax[ui][max_alpha], beta);
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
 				if(D[vi]-- == beta){
+					AlphaMax[vi-n_a][beta] = max_alpha;
 					auto neighborsVi = G.get_vertex(vi).out_neighbors();
 					for(uintE j = 0; j<neighborsVi.degree; j++){
 						uintE uii = neighborsVi.get_neighbor(j); 
