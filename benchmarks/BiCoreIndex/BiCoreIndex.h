@@ -57,34 +57,34 @@ struct BiCoreIndex{
 	  	std::cout<<"done"<<std::endl;
 	}
 
-	sequence<uintE> queryU(uintE alpha, uintE beta){
+	sequence<uintE> query(uintE alpha, uintE beta){
 		alpha--; beta--; // remember our query table is down by 1 index
-		if(alpha>=queryTU.size()) return sequence<uintE>();
-		if(beta>=queryTU[alpha].size()) return sequence<uintE>();
-		uintE endC = 0;
-		if(alpha < queryTU.size()-1) endC = queryTU[alpha+1][0]-1;
-		else endC = UP.size()-1;
-		uintE startC = queryTU[alpha][beta];
-		uintE range = endC - startC + 1;
-		sequence<uintE> vtxs(range);
-		par_for(0, range, [&](uintE id){
-			vtxs[id] = std::get<2>(UP[id+startC]);
-		});
-		return vtxs;
-	}
 
-	sequence<uintE> queryV(uintE alpha, uintE beta){
-		alpha--; beta--; // remember our query table is down by 1 index
-		if(beta>=queryTV.size()) return sequence<uintE>();
-		if(alpha>=queryTV[beta].size()) return sequence<uintE>();
-		uintE endC = 0;
-		if(beta < queryTV.size()-1) endC = queryTV[beta+1][0]-1;
-		else endC = VP.size()-1;
-		uintE startC = queryTV[beta][alpha];
-		uintE range = endC - startC + 1;
-		sequence<uintE> vtxs(range);
-		par_for(0, range, [&](uintE id){
-			vtxs[id] = std::get<2>(VP[id+startC]) + n_a;
+		uintE rangeU = 0, rangeV = 0;
+		uintE startCU, startCV;
+
+		if(alpha<queryTU.size() && beta<queryTU[alpha].size()){
+			uintE endC = 0;
+			if(alpha < queryTU.size()-1) endC = queryTU[alpha+1][0]-1;
+			else endC = UP.size()-1;
+			startCU = queryTU[alpha][beta];
+			rangeU = endC - startCU + 1;
+		}
+
+		if(beta<queryTV.size() && alpha<queryTV[beta].size()){
+			uintE endC = 0;
+			if(beta < queryTV.size()-1) endC = queryTV[beta+1][0]-1;
+			else endC = VP.size()-1;
+			startCV = queryTV[beta][alpha];
+			rangeV = endC - startCV + 1;
+		}
+
+		sequence<uintE> vtxs(rangeU + rangeV);
+		par_for(0, rangeU, [&](uintE id){
+			vtxs[id] = std::get<2>(UP[id+startCU]);
+		});
+		par_for(0, rangeV, [&](uintE id){
+			vtxs[rangeU + id] = std::get<2>(VP[id+startCV]) + n_a;
 		});
 		return vtxs;
 	}

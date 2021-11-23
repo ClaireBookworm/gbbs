@@ -60,9 +60,13 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
   assert(P.getOption("-s"));
   std::string graph_name(P.getArgument(0));
 
+  timer t1; t1.start();
+
   auto ret = BiCore(G,num_buckets,bipartition,peel_by_alpha,peel_by_beta);
   sequence<sequence<uintE> > AlphaMax = std::move(ret.first);
   sequence<sequence<uintE> > BetaMax = std::move(ret.second);
+
+  double tp = t1.stop();
 
   // runs the fetch-and-add based implementation if set.
   timer t; t.start();
@@ -71,8 +75,18 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
 
   double tt = t.stop();
 
-  std::cout << "### Running Time: " << tt << std::endl;
-  return tt;
+  timer t2; t2.start();
+  for(size_t i=0; i<10; i++){
+    index.query(10,10);
+  }
+  double tq = t2.stop();
+
+  std::cout<<"### Peeling Time: "<<tp<<std::endl;
+
+  std::cout << "### Index Construction Time: " << tt << std::endl;
+
+  std::cout << "### Query Time: " << tq << std::endl;
+  return tt+tp+tq;
 }
 }  // namespace gbbs
 // test
