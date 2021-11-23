@@ -68,6 +68,7 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
   timer t; t.start();
 
   BiCoreIndex index(G,bipartition,AlphaMax,BetaMax);
+
   double tt = t.stop();
 
   std::cout << "### Running Time: " << tt << std::endl;

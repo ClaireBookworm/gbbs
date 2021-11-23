@@ -39,42 +39,73 @@ template <class Graph>
 struct BiCoreIndex{
 	Graph& G; 
 	size_t n, n_a, n_b;
-	sequence<sequence<uintE> > AlphaBetaQ;
+	sequence<std::tuple<uintE, uintE, uintE> > UP, VP;
+	sequence<sequence<uintE> > queryTU, queryTV;
 	BiCoreIndex(Graph& _G, size_t _bipartition, sequence<sequence<uintE> >& AlphaMax, sequence<sequence<uintE> >& BetaMax)
-	: G(_G)
+	: G(_G), n(_G.n)
 	{
-		const size_t n = G.n;					// # of vertices
-		const size_t n_a = _bipartition + 1;		// number of vertices in first partition
-		const size_t n_b = n - _bipartition - 1; // number of vertices in second partition
+		n_a = _bipartition + 1;		// number of vertices in first partition
+		n_b = n - _bipartition - 1; // number of vertices in second partition
 		// AlphaMax is n_b by deg+1
 		// BetaMax is n_a by deg+1
 		// Let's consider BetaMax
 		std::cout<<"creation starting"<<std::endl;
-		sequence<uintE> indices(n_a, [&](uintE vtx){
-			return BetaMax[vtx].size()-1;
+		auto buildU = [&](){ build_table(n_a, BetaMax, UP, queryTU); };
+		auto buildV = [&](){ build_table(n_b, AlphaMax, VP, queryTV); }; // note that VP vtx needs offset
+		par_do(buildU, buildV);
+		// buildU();
+	  	std::cout<<"done"<<std::endl;
+	}
+
+	sequence<uintE> queryU(uintE alpha, uintE beta){
+		alpha--; beta--; // remember our query table is down by 1 index
+		if(alpha>=queryTU.size()) return sequence<uintE>();
+		if(beta>=queryTU[alpha].size()) return sequence<uintE>();
+		uintE endC = 0;
+		if(alpha < queryTU.size()-1) endC = queryTU[alpha+1][0]-1;
+		else endC = UP.size()-1;
+		uintE startC = queryTU[alpha][beta];
+		uintE range = endC - startC + 1;
+		sequence<uintE> vtxs(range);
+		par_for(0, range, [&](uintE id){
+			vtxs[id] = std::get<2>(UP[id+startC]);
+		});
+		return vtxs;
+	}
+
+	sequence<uintE> queryV(uintE alpha, uintE beta){
+		alpha--; beta--; // remember our query table is down by 1 index
+		if(beta>=queryTV.size()) return sequence<uintE>();
+		if(alpha>=queryTV[beta].size()) return sequence<uintE>();
+		uintE endC = 0;
+		if(beta < queryTV.size()-1) endC = queryTV[beta+1][0]-1;
+		else endC = VP.size()-1;
+		uintE startC = queryTV[beta][alpha];
+		uintE range = endC - startC + 1;
+		sequence<uintE> vtxs(range);
+		par_for(0, range, [&](uintE id){
+			vtxs[id] = std::get<2>(VP[id+startC]) + n_a;
+		});
+		return vtxs;
+	}
+
+	void build_table(size_t nn, sequence<sequence<uintE> >& DegMax, sequence<std::tuple<uintE, uintE, uintE> >& allVtx, sequence<sequence<uintE> >& queryT){
+		sequence<uintE> indices(nn, [&](uintE vtx){
+			return DegMax[vtx].size()-1;
 		});
 
 		uintT total = pbbslib::scan_add_inplace(indices); // exclusive prefix sum
-		sequence<std::tuple<uintE, uintE, uintE> > allVtx(total);
+		allVtx = sequence<std::tuple<uintE, uintE, uintE> >(total);
 
-		std::cout<<"indices obtained"<<std::endl;
-
-		par_for(0, n_a, [&](uintE vtx){
+		par_for(0, nn, [&](uintE vtx){
 			uintT st = indices[vtx];
-			par_for(1, BetaMax[vtx].size(), [&](uintE alpha){
-				uintE beta = BetaMax[vtx][alpha];
-				assert(beta<100000000);
-				allVtx[st + alpha - 1] = std::make_tuple(alpha, beta, vtx);
+			par_for(1, DegMax[vtx].size(), [&](uintE deg1){
+				uintE deg2 = DegMax[vtx][deg1];
+				allVtx[st + deg1 - 1] = std::make_tuple(deg1, deg2, vtx);
 			});
 		});
 
-		std::cout<<"allVtx created"<<std::endl;
 	  	pbbslib::sample_sort_inplace(allVtx.slice(), std::less<std::tuple<uintE,uintE,uintE> >(), false);
-
-	  	std::cout<<"allVtx sorted"<<std::endl;
-
-	  	assert(total>0);
-
 	  	sequence<uintE> tptP(total);
 	  	tptP[0] = 1;
 	  	par_for(1, total, [&](uintE i){
@@ -83,8 +114,6 @@ struct BiCoreIndex{
 	  	});
 	  	sequence<uintE> TPT = pbbslib::filter(tptP, [](uintE idx){ return idx>0; });
 	  	TPT[0] = 0;
-
-	  	std::cout<<"TPT created"<<std::endl;
 
 	  	sequence<uintE> fptP(TPT.size());
 	  	fptP[0] = 1; 
@@ -95,23 +124,20 @@ struct BiCoreIndex{
 	  	sequence<uintE> FPT = pbbslib::filter(fptP, [](uintE idx){ return idx>0; });
 	  	FPT[0] = 0;
 
-	  	std::cout<<"FPT created"<<std::endl;
-
-	  	// FPT is all set, its indices are alpha-1
-	  	AlphaBetaQ = sequence<sequence<uintE> >(FPT.size(), [&](uintE i){
+	  	// FPT is all set, its indices are deg1-1
+	  	queryT = sequence<sequence<uintE> >(FPT.size(), [&](uintE i){
 	  		uintE endC, startC = FPT[i];
 	  		if(i < FPT.size()-1) endC = FPT[i+1]-1;
 	  		else endC = TPT.size()-1;
-	  		uintE maxBeta = std::get<1>(allVtx[TPT[endC]]);
-	  		sequence<uintE> SPT(maxBeta, std::numeric_limits<uintE>::max());
+	  		uintE maxDeg2 = std::get<1>(allVtx[TPT[endC]]);
+	  		sequence<uintE> SPT(maxDeg2, std::numeric_limits<uintE>::max());
 	  		par_for(startC, endC+1, [&](uintE j){
-	  			uintE beta = std::get<1>(allVtx[TPT[j]]);
-	  			SPT[beta-1] = TPT[j]; // SPT is also beta-1
+	  			uintE deg2 = std::get<1>(allVtx[TPT[j]]);
+	  			SPT[deg2-1] = TPT[j]; // SPT is also deg2-1
 	  		});
 	  		pbbslib::scan_inplace(SPT.rslice(), pbbslib::minm<uintE>(), pbbslib::fl_scan_inclusive);
 	  		return SPT;
 	  	});
-	  	std::cout<<"done"<<std::endl;
 	}
 };
 
