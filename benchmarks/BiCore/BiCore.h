@@ -57,7 +57,7 @@ inline void initialClean(Graph &G, sequence<uintE>& D, std::vector<uintE>& del, 
 }
 
 template <class Graph>
-inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
+inline std::pair<sequence<sequence<uintE> >, sequence<sequence<uintE> > > BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
 {
 	std::cout << "starting" << std::endl;
 	timer it; it.start();
@@ -116,6 +116,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	};
 
 	par_do(peelA, peelB);
+
 	par_for(0,n_a,[&](size_t vtx){
 		if(BetaMax[vtx].size()>1)
 			for(size_t i = BetaMax[vtx].size()-1; i>0; i--) BetaMax[vtx][i-1] = std::max(BetaMax[vtx][i-1],BetaMax[vtx][i]);
@@ -137,6 +138,7 @@ inline void BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, ui
 	}
 	std::cout<<"ideal runtime with "<<num_workers()<<" threads: "<<totalRuntime/num_workers()<<std::endl;
 	it.reportTotal("initialize time");
+	return std::make_pair(AlphaMax, BetaMax);
 }
 
 template <class Graph>
@@ -172,7 +174,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 		max_beta = std::max((uintE)bkt.id, max_beta);
 		finished += bkt.identifiers.size();
 		for(uintE vi : bkt.identifiers){
-			AlphaMax[vi-n_a][max_beta] = pbbslib::write_max(&AlphaMax[vi-n_a][max_beta], alpha);
+			pbbslib::write_max(&AlphaMax[vi-n_a][max_beta], alpha);
 			auto neighborsVi = G.get_vertex(vi).out_neighbors();
 			for(uintE i = 0; i<neighborsVi.degree; i++){
 				uintE ui = neighborsVi.get_neighbor(i);
@@ -205,7 +207,7 @@ inline std::pair<double, double> PeelFixA(Graph& G, sequence<uintE> D, uintE alp
 		changeVtx_size = 0; // clear gives compiler option to call destructor
 		rho_alpha++;
 	}
-	std::cout<<"Alpha "<<alpha<<" "<<rho_alpha <<" "<<max_beta<<std::endl;
+	//std::cout<<"Alpha "<<alpha<<" "<<rho_alpha <<" "<<max_beta<<std::endl;
 	return std::make_pair(0, 0);
 }
 
@@ -239,7 +241,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 		max_alpha = std::max((uintE)bkt.id, max_alpha);
 		finished += bkt.identifiers.size();
 		for(uintE ui : bkt.identifiers){
-			BetaMax[ui][max_alpha] = pbbslib::write_max(&BetaMax[ui][max_alpha], beta);
+			pbbslib::write_max(&BetaMax[ui][max_alpha], beta);
 			auto neighborsUi = G.get_vertex(ui).out_neighbors();
 			for(uintE i = 0; i<neighborsUi.degree; i++){
 				uintE vi = neighborsUi.get_neighbor(i);
@@ -271,7 +273,7 @@ inline std::pair<double, double> PeelFixB(Graph& G, sequence<uintE> D, uintE bet
 		moveU_size = 0;
 		rho_beta++;
 	}
-	std::cout<<"Beta "<<beta<<" "<<rho_beta <<" "<<max_alpha<<std::endl;
+	//std::cout<<"Beta "<<beta<<" "<<rho_beta <<" "<<max_alpha<<std::endl;
 	return std::make_pair(0,0);
 }
 

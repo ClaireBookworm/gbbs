@@ -34,6 +34,7 @@
 //     -nb : the number of buckets to use in the bucketing implementation
 
 #include "BiCoreIndex.h"
+#include "benchmarks/BiCore/BiCore.h"
 
 namespace gbbs {
 template <class Graph>
@@ -58,11 +59,15 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
   
   assert(P.getOption("-s"));
   std::string graph_name(P.getArgument(0));
+
+  auto ret = BiCore(G,num_buckets,bipartition,peel_by_alpha,peel_by_beta);
+  sequence<sequence<uintE> > AlphaMax = std::move(ret.first);
+  sequence<sequence<uintE> > BetaMax = std::move(ret.second);
+
   // runs the fetch-and-add based implementation if set.
   timer t; t.start();
 
-
-  BiCoreIndex(G,num_buckets,bipartition,peel_by_alpha,peel_by_beta);
+  BiCoreIndex index(G,bipartition,AlphaMax,BetaMax);
   double tt = t.stop();
 
   std::cout << "### Running Time: " << tt << std::endl;
