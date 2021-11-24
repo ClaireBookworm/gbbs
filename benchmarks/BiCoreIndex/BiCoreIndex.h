@@ -80,12 +80,17 @@ struct BiCoreIndex{
 		}
 
 		sequence<uintE> vtxs(rangeU + rangeV);
-		par_for(0, rangeU, [&](uintE id){
-			vtxs[id] = std::get<2>(UP[id+startCU]);
-		});
-		par_for(0, rangeV, [&](uintE id){
-			vtxs[rangeU + id] = std::get<2>(VP[id+startCV]) + n_a;
-		});
+		auto moveU = [&](){ 
+			par_for(0, rangeU, [&](uintE id){
+				vtxs[id] = std::get<2>(UP[id+startCU]);
+			});
+		};
+		auto moveV = [&](){
+			par_for(0, rangeV, [&](uintE id){
+				vtxs[rangeU + id] = std::get<2>(VP[id+startCV]) + n_a;
+			});
+		};
+		par_do(moveU, moveV);
 		return vtxs;
 	}
 
