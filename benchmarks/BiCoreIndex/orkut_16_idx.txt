@@ -1,0 +1,15 @@
+readin 11514053 654074974
+graph constructed 11514053 654074974 from 11514053 654074974
+# list_alloc init_blocks: 1405
+# after init: 
+# Used: 0, allocated: 14848, node size: 16392, bytes: 243388416
+### Application: BiCoreIndex
+### Graph: ../../inputs/orkut_adj
+### Threads: 16
+### n: 11514053
+### m: 654074974
+### Params: -nb (num_buckets) = 16 -bi = 2783195
+### ------------------------------------
+starting
+### rho = 4955 k_{max} = 466
+delta 466 prepeel size 467 k-peel time 8.44162
