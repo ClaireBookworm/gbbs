@@ -1,0 +1,13 @@
+readin 40421974 281227524
+graph constructed 40421974 281227524 from 40421974 281227524
+# list_alloc init_blocks: 4934
+# after init: 
+# Used: 0, allocated: 22528, node size: 16392, bytes: 369278976
+### Application: BiCoreIndex
+### Graph: ../../inputs/tracker_adj
+### Threads: 24
+### n: 40421974
+### m: 281227524
+### Params: -nb (num_buckets) = 16 -bi = 27665729
+### ------------------------------------
+starting
