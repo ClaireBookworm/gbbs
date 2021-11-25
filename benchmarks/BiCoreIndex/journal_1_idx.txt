@@ -1,0 +1,241 @@
+readin 10690276 224614770
+graph constructed 10690276 224614770 from 10690276 224614770
+# list_alloc init_blocks: 1304
+# after init: 
+# Used: 0, allocated: 7168, node size: 16392, bytes: 117497856
+### Application: BiCoreIndex
+### Graph: ../../inputs/journal_adj
+### Threads: 1
+### n: 10690276
+### m: 224614770
+### Params: -nb (num_buckets) = 16 -bi = 3201202
+### ------------------------------------
+starting
+### rho = 1346 k_{max} = 108
+delta 108 prepeel size 109 k-peel time 10.5992
+coreA 1 running time: 1.68989
+coreA 2 running time: 1.74757
+coreA 3 running time: 1.79223
+coreA 4 running time: 1.60902
+coreA 5 running time: 1.59331
+coreA 6 running time: 1.56843
+coreA 7 running time: 1.5608
+coreA 8 running time: 1.539
+coreA 9 running time: 1.51304
+coreA 10 running time: 1.50205
+coreA 11 running time: 1.50172
+coreA 12 running time: 1.46654
+coreA 13 running time: 1.46562
+coreA 14 running time: 1.43667
+coreA 15 running time: 1.45386
+coreA 16 running time: 1.42702
+coreA 17 running time: 1.39998
+coreA 18 running time: 1.3954
+coreA 19 running time: 1.37931
+coreA 20 running time: 1.42529
+coreA 21 running time: 1.37094
+coreA 22 running time: 1.39804
+coreA 23 running time: 1.39805
+coreA 24 running time: 1.3569
+coreA 25 running time: 1.31628
+coreA 26 running time: 1.32197
+coreA 27 running time: 1.3044
+coreA 28 running time: 1.32205
+coreA 29 running time: 1.2846
+coreA 30 running time: 1.27479
+coreA 31 running time: 1.26047
+coreA 32 running time: 1.27386
+coreA 33 running time: 1.2306
+coreA 34 running time: 1.2949
+coreA 35 running time: 1.23904
+coreA 36 running time: 1.21409
+coreA 37 running time: 1.20659
+coreA 38 running time: 1.18536
+coreA 39 running time: 1.17184
+coreA 40 running time: 1.22602
+coreA 41 running time: 1.16709
+coreA 42 running time: 1.16131
+coreA 43 running time: 1.1807
+coreA 44 running time: 1.15765
+coreA 45 running time: 1.15196
+coreA 46 running time: 1.14765
+coreA 47 running time: 1.16417
+coreA 48 running time: 1.09903
+coreA 49 running time: 1.17667
+coreA 50 running time: 1.08474
+coreA 51 running time: 1.09835
+coreA 52 running time: 1.07408
+coreA 53 running time: 1.05677
+coreA 54 running time: 1.03935
+coreA 55 running time: 1.0248
+coreA 56 running time: 1.02331
+coreA 57 running time: 1.00773
+coreA 58 running time: 1.00618
+coreA 59 running time: 0.99398
+coreA 60 running time: 0.988989
+coreA 61 running time: 0.974326
+coreA 62 running time: 0.97465
+coreA 63 running time: 0.954044
+coreA 64 running time: 0.957185
+coreA 65 running time: 0.941397
+coreA 66 running time: 0.925243
+coreA 67 running time: 0.914884
+coreA 68 running time: 0.913144
+coreA 69 running time: 0.903838
+coreA 70 running time: 0.888182
+coreA 71 running time: 0.877847
+coreA 72 running time: 0.897686
+coreA 73 running time: 0.866441
+coreA 74 running time: 0.861989
+coreA 75 running time: 0.837324
+coreA 76 running time: 0.828257
+coreA 77 running time: 0.812851
+coreA 78 running time: 0.827718
+coreA 79 running time: 0.806786
+coreA 80 running time: 0.791
+coreA 81 running time: 0.803978
+coreA 82 running time: 0.76435
+coreA 83 running time: 0.777768
+coreA 84 running time: 0.761178
+coreA 85 running time: 0.732823
+coreA 86 running time: 0.756683
+coreA 87 running time: 0.72822
+coreA 88 running time: 0.76309
+coreA 89 running time: 0.697705
+coreA 90 running time: 0.66476
+coreA 91 running time: 0.710954
+coreA 92 running time: 0.663752
+coreA 93 running time: 0.632565
+coreA 94 running time: 0.633261
+coreA 95 running time: 0.611662
+coreA 96 running time: 0.59731
+coreA 97 running time: 0.586129
+coreA 98 running time: 0.58417
+coreA 99 running time: 0.563724
+coreA 100 running time: 0.548712
+coreA 101 running time: 0.53478
+coreA 102 running time: 0.524754
+coreA 103 running time: 0.505622
+coreA 104 running time: 0.490628
+coreA 105 running time: 0.472313
+coreA 106 running time: 0.453187
+coreA 107 running time: 0.428155
+coreA 108 running time: 0.380455
+coreB 1 running time: 2.09259
+coreB 2 running time: 1.84388
+coreB 3 running time: 1.79183
+coreB 4 running time: 1.73586
+coreB 5 running time: 1.72444
+coreB 6 running time: 1.66121
+coreB 7 running time: 1.63333
+coreB 8 running time: 1.60115
+coreB 9 running time: 1.57847
+coreB 10 running time: 1.55138
+coreB 11 running time: 1.52743
+coreB 12 running time: 1.50288
+coreB 13 running time: 1.50413
+coreB 14 running time: 1.47436
+coreB 15 running time: 1.44461
+coreB 16 running time: 1.43442
+coreB 17 running time: 1.44671
+coreB 18 running time: 1.40817
+coreB 19 running time: 1.39004
+coreB 20 running time: 1.41384
+coreB 21 running time: 1.38472
+coreB 22 running time: 1.39118
+coreB 23 running time: 1.33325
+coreB 24 running time: 1.31426
+coreB 25 running time: 1.29421
+coreB 26 running time: 1.29775
+coreB 27 running time: 1.27072
+coreB 28 running time: 1.28938
+coreB 29 running time: 1.25734
+coreB 30 running time: 1.23661
+coreB 31 running time: 1.2136
+coreB 32 running time: 1.22141
+coreB 33 running time: 1.20991
+coreB 34 running time: 1.183
+coreB 35 running time: 1.18229
+coreB 36 running time: 1.16991
+coreB 37 running time: 1.1613
+coreB 38 running time: 1.14217
+coreB 39 running time: 1.17336
+coreB 40 running time: 1.12515
+coreB 41 running time: 1.1178
+coreB 42 running time: 1.10771
+coreB 43 running time: 1.11216
+coreB 44 running time: 1.08876
+coreB 45 running time: 1.06768
+coreB 46 running time: 1.08256
+coreB 47 running time: 1.04777
+coreB 48 running time: 1.06556
+coreB 49 running time: 1.02293
+coreB 50 running time: 1.01877
+coreB 51 running time: 1.01986
+coreB 52 running time: 1.00957
+coreB 53 running time: 1.03154
+coreB 54 running time: 1.09029
+coreB 55 running time: 0.998355
+coreB 56 running time: 0.977988
+coreB 57 running time: 0.983842
+coreB 58 running time: 1.02606
+coreB 59 running time: 0.935697
+coreB 60 running time: 0.995532
+coreB 61 running time: 0.925858
+coreB 62 running time: 0.927382
+coreB 63 running time: 0.895974
+coreB 64 running time: 0.908809
+coreB 65 running time: 0.89158
+coreB 66 running time: 0.884501
+coreB 67 running time: 0.8654
+coreB 68 running time: 0.857452
+coreB 69 running time: 0.845517
+coreB 70 running time: 0.841674
+coreB 71 running time: 0.827139
+coreB 72 running time: 0.821843
+coreB 73 running time: 0.820043
+coreB 74 running time: 0.808513
+coreB 75 running time: 0.786303
+coreB 76 running time: 0.790972
+coreB 77 running time: 0.785775
+coreB 78 running time: 0.783208
+coreB 79 running time: 0.756193
+coreB 80 running time: 0.752405
+coreB 81 running time: 0.742875
+coreB 82 running time: 0.73251
+coreB 83 running time: 0.717288
+coreB 84 running time: 0.708334
+coreB 85 running time: 0.697399
+coreB 86 running time: 0.692645
+coreB 87 running time: 0.678117
+coreB 88 running time: 0.669666
+coreB 89 running time: 0.635032
+coreB 90 running time: 0.641715
+coreB 91 running time: 0.616811
+coreB 92 running time: 0.607725
+coreB 93 running time: 0.599639
+coreB 94 running time: 0.597476
+coreB 95 running time: 0.573369
+coreB 96 running time: 0.57928
+coreB 97 running time: 0.56647
+coreB 98 running time: 0.546466
+coreB 99 running time: 0.528136
+coreB 100 running time: 0.541437
+coreB 101 running time: 0.540221
+coreB 102 running time: 0.537839
+coreB 103 running time: 0.473324
+coreB 104 running time: 0.48955
+coreB 105 running time: 0.440609
+coreB 106 running time: 0.424997
+coreB 107 running time: 0.40093
+coreB 108 running time: 0.361196
+ideal runtime with 1 threads: 223.58
+# PBBS time: initialize time: 10.5992
+creation starting
+done
+### Peeling Time: 236.4
+### Index Construction Time: 31.45
+### Query Time: 0.02637
+# time per iter: 267.9
+delete graph
+delete graph
