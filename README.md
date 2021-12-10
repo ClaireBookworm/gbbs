@@ -1,65 +1,27 @@
-# GBBS: Graph Based Benchmark Suite
+# Efficient Algorithm for Parallel Bi-core Decomposition
 
-Organization
+Introduction
 --------
 
-This repository contains code for our SPAA paper "Theoretically Efficient
-Parallel Graph Algorithms Can Be Fast and Scalable" (SPAA'18). It includes
-implementations of the following parallel graph algorithms:
+This is the codebase for our Efficient Algorithm for Parallel Bi-core Decomposition paper. The repository uses Graph Based Benchmark Suite ([GBBS](https://github.com/ParAlg/gbbs)). 
 
-**Connectivity Problems**
-* Low-Diameter Decomposition
-* Connectivity
-* Spanning Forest
-* Biconnectivity
-* Minimum Spanning Tree
-* Strongly Connected Components
+The repository consists of several branches, each corresponding to the four algorithms in our paper:
 
-**Covering Problems**
-* Coloring
-* Maximal Matching
-* Maximal Independent Set
-* Approximate Set Cover
+**SEQ-BASELINE** : branch _bicore-seq-base_
 
-**Eigenvector Problems**
-* PageRank
+**SEQ-OPTIMIZED** : branch _bicore-seq-optim_
 
-**Substructure Problems**
-* Triangle Counting
-* Approximate Densest Subgraph
-* k-Core (coreness)
+**PAR-BASELINE** : branch _bicore-par-base_
 
-**Shortest Path Problems**
-* Unweighted SSSP (Breadth-First Search)
-* General Weight SSSP (Bellman-Ford)
-* Integer Weight SSSP (Weighted Breadth-First Search)
-* Single-Source Betweenness Centrality
-* Single-Source Widest Path
-* k-Spanner
+**PAR-OPTIMIZED** : branch _bicore-par-optim_
 
-The code for these applications is located in the `benchmark` directory. The
-implementations are based on the Ligra/Ligra+/Julienne graph processing
-frameworks. The framework code is located in the `src` directory.
+The code for parallel bi-core peeling is under the directory /benchmarks/BiCore in each of the branches. 
 
-The codes used here are still in development, and we plan to add more
-applications/benchmarks. We currently include the following extra codes,
-which are part of ongoing work.
+The branch _bicore-index_ contains the parallel index construction and query code and runs **PAR-OPTIMIZED** as a subroutine. The code for **PAR-INDEX** and **PAR-QUERY** is under /benchmarks/BiCoreIndex
 
-* experimental/KTruss
+The branch _bicore-par-fetch-add_ contains a fetch-and-add based implementation of parallel bi-core peeing.
 
-If you use our work, please cite our [paper](https://arxiv.org/abs/1805.05208):
-
-```
-@inproceedings{dhulipala2018theoretically,
-  author    = {Laxman Dhulipala and
-               Guy E. Blelloch and
-               Julian Shun},
-  title     = {Theoretically Efficient Parallel Graph Algorithms Can Be Fast and
-               Scalable},
-  booktitle = {ACM Symposium on Parallelism in Algorithms and Architectures (SPAA)},
-  year      = {2018},
-}
-```
+The branch _bicore-par-aggregate_ contains an implementation of bi-core peeling based on aggregation-based degree update (this is the theoretically efficient algorithm introduced in the paper).
 
 Compilation
 --------
@@ -69,158 +31,10 @@ Compiler:
 * g++ &gt;= 7.4.0 with pthread support (Homemade Scheduler)
 
 Build system:
-* [Bazel](https://docs.bazel.build/versions/master/install.html) 2.1.0
-* Make --- though our primary build system is Bazel, we also maintain Makefiles
-  for those who wish to run benchmarks without installing Bazel.
+* Make
 
 The default compilation uses a lightweight scheduler developed at CMU (Homemade)
-for parallelism, which results in comparable performance to Cilk Plus. The
-half-lengths for certain functions such as histogramming are lower using
-Homemade, which results in better performance for codes like KCore.
-
-The benchmark supports both uncompressed and compressed graphs. The uncompressed
-format is identical to the uncompressed format in Ligra. The compressed format,
-called bytepd_amortized (bytepda) is similar to the parallelByte format used in
-Ligra+, with some additional functionality to support efficiently packs,
-filters, and other operations over neighbor lists.
-
-To compile codes for graphs with more than 2^32 edges, the `LONG` command-line
-parameter should be set. If the graph has more than 2^32 vertices, the
-`EDGELONG` command-line parameter should be set. Note that the codes have not
-been tested with more than 2^32 vertices, so if any issues arise please contact
-[Laxman Dhulipala](mailto:ldhulipa@cs.cmu.edu).
-
-To compile with the Cilk Plus scheduler instead of the Homegrown scheduler, use
-the Bazel configuration `--config=cilk`. To compile using OpenMP instead, use
-the Bazel configuration `--config=openmp`. To compile serially instead, use the
-Bazel configuration `--config=serial`. (For the Makefiles, instead set the
-environment variables `CILK`, `OPENMP`, or `SERIAL` respectively.)
-
-To build:
-```sh
-# For Bazel:
-$ bazel build  //...  # compiles all benchmarks
-
-# For Make:
-# First set the appropriate environment variables, e.g., first run
-# `export CILK=1` to compile with Cilk Plus.
-# After that, build using `make`.
-$ cd benchmarks/BFS/NonDeterministicBFS  # go to a benchmark
-$ make
-```
-Note that the default compilation mode in bazel is to build optimized binaries
-(stripped of debug symbols). You can compile debug binaries by supplying `-c
-dbg` to the bazel build command.
-
-The following commands cleans the directory:
-```sh
-# For Bazel:
-$ bazel clean  # removes all executables
-
-# For Make:
-$ make clean  # removes executables for the current directory
-```
-
-Running code
--------
-The applications take the input graph as input as well as an optional
-flag "-s" to indicate a symmetric graph.  Symmetric graphs should be
-called with the "-s" flag for better performance. For example:
-
-```sh
-# For Bazel:
-$ bazel run //benchmarks/BFS/NonDeterministicBFS:BFS_main -- -s -src 10 ~/gbbs/inputs/rMatGraph_J_5_100
-$ bazel run //benchmarks/IntegralWeightSSSP/JulienneDBS17:wBFS_main -- -s -w -src 15 ~/gbbs/inputs/rMatGraph_WJ_5_100
-
-# For Make:
-$ ./BFS -s -src 10 ../../../inputs/rMatGraph_J_5_100
-$ ./wBFS -s -w -src 15 ../../../inputs/rMatGraph_WJ_5_100
-```
-
-Note that the codes that compute single-source shortest paths (or centrality)
-take an extra `-src` flag. The benchmark is run four times by default, and can
-be changed by passing the `-rounds` flag followed by an integer indicating the
-number of runs.
-
-On NUMA machines, adding the command "numactl -i all " when running
-the program may improve performance for large graphs. For example:
-
-```sh
-$ numactl -i all bazel run [...]
-```
-
-Running code on compressed graphs
------------
-
-We make use of the bytePDA format in our benchmark, which is similar to the
-parallelByte format of Ligra+, extended with additional functionality. We have
-provided a converter utility which takes as input an uncompressed graph and
-outputs a bytePDA graph. The converter can be used as follows:
-
-```sh
-# For Bazel:
-bazel run //utils:compressor -- -s -o ~/gbbs/inputs/rMatGraph_J_5_100.bytepda ~/gbbs/inputs/rMatGraph_J_5_100
-bazel run //utils:compressor -- -s -w -o ~/gbbs/inputs/rMatGraph_WJ_5_100.bytepda ~/gbbs/inputs/rMatGraph_WJ_5_100
-
-# For Make:
-./compressor -s -o ../inputs/rMatGraph_J_5_100.bytepda ../inputs/rMatGraph_J_5_100
-./compressor -s -w -o ../inputs/rMatGraph_WJ_5_100.bytepda ../inputs/rMatGraph_WJ_5_100
-```
-
-After an uncompressed graph has been converted to the bytepda format,
-applications can be run on it by passing in the usual command-line flags, with
-an additional `-c` flag.
-
-```sh
-# For Bazel:
-$ bazel run //benchmarks/BFS/NonDeterministicBFS:BFS_main -- -s -c -src 10 ~/gbbs/inputs/rMatGraph_J_5_100.bytepda
-
-# For Make:
-$ ./BFS -s -c -src 10 ../../../inputs/rMatGraph_J_5_100.bytepda
-$ ./wBFS -s -w -c -src 15 ../../../inputs/rMatGraph_WJ_5_100.bytepda
-```
-
-When processing large compressed graphs, using the `-m` command-line flag can
-help if the file is already in the page cache, since the compressed graph data
-can be mmap'd. Application performance will be affected if the file is not
-already in the page-cache. We have found that using `-m` when the compressed
-graph is backed by SSD results in a slow first-run, followed by fast subsequent
-runs.
-
-Running code on binary-encoded graphs
------------
-We make use of a binary-graph format in our benchmark. The binary representation
-stores the representation we use for in-memory processing (compressed sparse row)
-directly on disk, which enables applications to avoid string-conversion overheads
-associated with the adjacency graph format described below. We have provided a 
-converter utility which takes as input an uncompressed graph (e.g., in adjacency
-graph format) and outputs this graph in the binary format. The converter can be 
-used as follows:
-
-```sh
-# For Bazel:
-bazel run //utils:compressor -- -s -o ~/gbbs/inputs/rMatGraph_J_5_100.binary ~/gbbs/inputs/rMatGraph_J_5_100
-
-# For Make:
-./compressor -s -o ../inputs/rMatGraph_J_5_100.binary ../inputs/rMatGraph_J_5_100
-```
-
-After an uncompressed graph has been converted to the binary format,
-applications can be run on it by passing in the usual command-line flags, with
-an additional `-b` flag. Note that the application will always load the binary
-file using mmap.
-
-```sh
-# For Bazel:
-$ bazel run //benchmarks/BFS/NonDeterministicBFS:BFS_main -- -s -b -src 10 ~/gbbs/inputs/rMatGraph_J_5_100.binary
-
-# For Make:
-$ ./BFS -s -b -src 10 ../../../inputs/rMatGraph_J_5_100.binary
-```
-
-Note that application performance will be affected if the file is not already 
-in the page-cache. We have found that using `-m` when the binary graph is backed
-by SSD or disk results in a slow first-run, followed by fast subsequent runs.
+for parallelism, which results in comparable performance to Cilk Plus. 
 
 
 Input Formats
@@ -251,27 +65,46 @@ AdjacencyGraph
 <e(m-1)>
 ```
 
-This file is represented as plain text.
+### KONECT Input
 
-Weighted graphs are represented in the weighted adjacency graph format. The file
-should start with the string "WeightedAdjacencyGraph". The m edge weights
-should be stored after all of the edge targets in the .adj file.
+You can convert a graph in [KONECT](http://konect.cc/) graph format to our adjacency graph format by formating the graph's name as XXX_konect and storing it under /inputs. Then run /utils/toEdgeList.cpp and input the name of the graph XXX into the standard input stream. The code should convert the graph to adjacency format, outputing a file named XXX_adj under /inputs
 
-**Using SNAP graphs**
+## Running the Code
 
-Graphs from the [SNAP dataset
-collection](https://snap.stanford.edu/data/index.html) are commonly used for
-graph algorithm benchmarks. We provide a tool that converts the most common SNAP
-graph format to the adjacency graph format that GBBS accepts. Usage example:
-```sh
-# Download a graph from the SNAP collection.
-wget https://snap.stanford.edu/data/wiki-Vote.txt.gz
-gzip --decompress ${PWD}/wiki-Vote.txt.gz
-# Run the SNAP-to-adjacency-graph converter.
-# Run with Bazel:
-bazel run //utils:snap_converter -- -s -i ${PWD}/wiki-Vote.txt -o <output file>
-# Or run with Make:
-#   cd utils
-#   make snap_converter
-#   ./snap_converter -s -i <input file> -o <output file>
+Navigate into /benchmarks/BiCore or /benchmarks/BiCoreIndex
+
+Specify the number of threads by 
+
 ```
+export NUM_THREADS = x
+```
+
+Then compile it by
+
+```
+make
+```
+
+After the compilation, run the code using the following command
+
+```
+./BiCore -s -bi BIPARTITION -rounds NUMBER-OF-ROUNDS GRAPH-FILE-PATH
+```
+
+The BIPARTITION of a graph is the size of its first partition $- 1$. For example, we have a small example graph named `example`. It comes from the graph [South African Companies](http://konect.cc/networks/brunson_southern-women/). The graph's first partition has 6 vertices. Thus the BIPARTITION$=5$. NUMBER-OF-ROUNDS indicates the number of times to run this by. 
+
+For example, for `example` we run it with
+
+```
+./BiCore -s -bi 5 -rounds 1 ../../inputs/example
+```
+
+This performs the bi-core peeling for `example` graph
+
+To also construct the bi-core index structure, navigate to /benchmarks/BiCoreIndex and run
+
+```
+./BiCoreIndex -s -bi 5 -rounds 1 ../../inputs/example
+```
+
+`./BiCoreIndex` performs the bi-core peeling, constructs the bicore index, and performs 10 queries of the $(10,10)$-core for benchmarking the query runtime. 
