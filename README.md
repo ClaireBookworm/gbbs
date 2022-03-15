@@ -1,5 +1,7 @@
 # Efficient Algorithm for Parallel Bi-core Decomposition
 
+You can find the paper [here](https://github.com/ClaireBookworm/gbbs/blob/bicore-index/MIND-BIG.pdf).
+
 Introduction
 --------
 
