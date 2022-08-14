@@ -1,39 +1,34 @@
 unset NUM_THREADS
 unset SERIAL
-export NUM_THREADS=60
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_60_idx.txt
 
-export NUM_THREADS=30
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_30_idx.txt
 
-export NUM_THREADS=24
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_24_idx.txt
 
-export NUM_THREADS=16
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_16_idx.txt
 
-export NUM_THREADS=12
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_12_idx.txt
+for((s=30; s<=60; s*=2)); do
+	echo ${s}
+	export NUM_THREADS=${s}
+	make
+	./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_${s}_idx.txt
+	./BiCoreIndex -s -bi 120491 -rounds 3 ../../inputs/epinions_adj > epinions_${s}_idx.txt
+	./BiCoreIndex -s -bi 781264 -rounds 3 ../../inputs/reuters_adj > reuters_${s}_idx.txt
+	./BiCoreIndex -s -bi 556076 -rounds 3 ../../inputs/trec_adj > trec_${s}_idx.txt
+	./BiCoreIndex -s -bi 3201202 -rounds 3 ../../inputs/livejournal_adj > livejournal_${s}_idx.txt
+	./BiCoreIndex -s -bi 27665729 -rounds 3 ../../inputs/trackers_adj > trackers_${s}_idx.txt
+	./BiCoreIndex -s -bi 2783195 -rounds 3 ../../inputs/orkut_adj > orkut_${s}_idx.txt
+done
 
-export NUM_THREADS=8
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_8_idx.txt
+for((s=1; s<=24; s*=2)); do
+	echo ${s}
+	export NUM_THREADS=${s}
+	make
+	./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_${s}_idx.txt
+	./BiCoreIndex -s -bi 120491 -rounds 3 ../../inputs/epinions_adj > epinions_${s}_idx.txt
+	./BiCoreIndex -s -bi 781264 -rounds 3 ../../inputs/reuters_adj > reuters_${s}_idx.txt
+	./BiCoreIndex -s -bi 556076 -rounds 3 ../../inputs/trec_adj > trec_${s}_idx.txt
+	./BiCoreIndex -s -bi 3201202 -rounds 3 ../../inputs/livejournal_adj > livejournal_${s}_idx.txt
+	./BiCoreIndex -s -bi 27665729 -rounds 3 ../../inputs/trackers_adj > trackers_${s}_idx.txt
+	./BiCoreIndex -s -bi 2783195 -rounds 3 ../../inputs/orkut_adj > orkut_${s}_idx.txt
+done
 
-export NUM_THREADS=4
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_4_idx.txt
-
-export NUM_THREADS=2
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_2_idx.txt
-
-export SERIAL=1
-make
-./BiCoreIndex -s -bi 395978 -rounds 3 ../../inputs/flickr_adj > flickr_1_idx.txt
 
 sudo shutdown

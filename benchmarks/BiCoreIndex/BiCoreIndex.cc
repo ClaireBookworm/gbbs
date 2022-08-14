@@ -35,6 +35,7 @@
 
 #include "BiCoreIndex.h"
 #include "benchmarks/BiCore/BiCore.h"
+#include <random>
 
 namespace gbbs {
 template <class Graph>
@@ -76,8 +77,10 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
   double tt = t.stop();
 
   timer t2; t2.start();
-  for(size_t i=0; i<10; i++){
-    index.query(10,10);
+  for(size_t i=0; i<10000; i++){
+	  int a = rand()%99+2;
+	  int b = rand()%99+2;
+	  index.query(a,b);
   }
   double tq = t2.stop();
 
@@ -85,7 +88,7 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
 
   std::cout << "### Index Construction Time: " << tt << std::endl;
 
-  std::cout << "### Query Time: " << tq << std::endl;
+  std::cout << "### Query Time: " << tq/10000.0 << std::endl;
   return tt+tp+tq;
 }
 }  // namespace gbbs
