@@ -57,7 +57,7 @@ inline void initialClean(Graph &G, sequence<uintE>& D, std::vector<uintE>& del, 
 }
 
 template <class Graph>
-inline std::pair<sequence<sequence<uintE> >, sequence<sequence<uintE> > > BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
+inline std::tuple<sequence<sequence<uintE> >, sequence<sequence<uintE> >, uintE> BiCore(Graph &G, size_t num_buckets = 16, size_t bipartition = 2, uintE peel_core_alpha = 0, uintE peel_core_beta = 0)
 {
 	std::cout << "starting" << std::endl;
 	timer it; it.start();
@@ -138,7 +138,7 @@ inline std::pair<sequence<sequence<uintE> >, sequence<sequence<uintE> > > BiCore
 	}
 	std::cout<<"ideal runtime with "<<num_workers()<<" threads: "<<totalRuntime/num_workers()<<std::endl;
 	it.reportTotal("initialize time");
-	return std::make_pair(AlphaMax, BetaMax);
+	return std::make_tuple(AlphaMax, BetaMax, delta);
 }
 
 template <class Graph>
