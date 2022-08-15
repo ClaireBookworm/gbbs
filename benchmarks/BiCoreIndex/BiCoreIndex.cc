@@ -43,8 +43,7 @@ namespace gbbs {
 template <class Graph>
 double BiCoreIndex_runner(Graph& G, commandLine P) { 
 
-  std::ofstream fout; fout.open("selected_query_cores.txt");
-
+  std::string core_file = P.getOptionValue("-co", "selected_cores/flickr_cores.txt");
   size_t num_buckets = P.getOptionLongValue("-nb", 16);
   size_t bipartition = P.getOptionLongValue("-bi", 2);
   size_t peel_by_alpha = P.getOptionLongValue("-a", 0);
@@ -70,35 +69,8 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
   auto ret = BiCore(G,num_buckets,bipartition,peel_by_alpha,peel_by_beta);
   sequence<sequence<uintE> > AlphaMax = std::move(std::get<0>(ret));
   sequence<sequence<uintE> > BetaMax = std::move(std::get<1>(ret));
-  uintE delta = std::get<2>(ret);
-
+ 
   double tp = t1.stop();
-
-  sequence<uintE> max_alpha(delta+1, [&](uintE beta){
-	  sequence<uintE> alphas(AlphaMax.size(), [&](uintE v){
-		  if(AlphaMax[v].size()>beta)
-			  return AlphaMax[v][beta];
-		  else
-			  return (uintE)0;
-	  });
-	  return pbbslib::reduce_max(alphas);
-  });
-
-  sequence<uintE> max_beta(delta+1, [&](uintE alpha){
-	  sequence<uintE> betas(BetaMax.size(), [&](uintE u){
-		  if(BetaMax[u].size()>alpha)
-			  return BetaMax[u][alpha];
-		  else
-			  return (uintE)0;
-	  });
-	  return pbbslib::reduce_max(betas);
-  });
-
-  for(int i=0; i<=delta; i++) fout<<max_alpha[i]<<" ";
-  fout<<'\n';
-  for(int i=0; i<=delta; i++) fout<<max_beta[i]<<" ";
-  fout<<'\n';
-  fout.close();
 
   timer t; t.start();
 
@@ -106,11 +78,15 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
 
   double tt = t.stop();
 
+  std::ifstream fin(core_file);
+  std::vector<int> core_alphas(10000,-1);
+  std::vector<int> core_betas(10000, -1);
+  for(size_t i=0; i<10000; i++)
+	  fin >> core_alphas[i] >> core_betas[i];
+  
   timer t2; t2.start();
   for(size_t i=0; i<10000; i++){
-	  int a = rand()%99+2;
-	  int b = rand()%99+2;
-	  index.query(a,b);
+	  index.query(core_alphas[i],core_betas[i]);
   }
   double tq = t2.stop();
 
@@ -118,7 +94,7 @@ double BiCoreIndex_runner(Graph& G, commandLine P) {
 
   std::cout << "### Index Construction Time: " << tt << std::endl;
 
-  std::cout << "### Query Time: " << tq/10000.0 << std::endl;
+  std::cout << "### Query Time: " << tq << std::endl;
   return tt+tp+tq;
 }
 }  // namespace gbbs

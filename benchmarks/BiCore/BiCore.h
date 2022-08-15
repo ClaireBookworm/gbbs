@@ -127,7 +127,7 @@ inline std::tuple<sequence<sequence<uintE> >, sequence<sequence<uintE> >, uintE>
 			for(size_t i = AlphaMax[vtx].size()-1; i>0; i--) AlphaMax[vtx][i-1] = std::max(AlphaMax[vtx][i-1],AlphaMax[vtx][i]);
 	});
 
-	double totalRuntime = 0;
+	/*double totalRuntime = 0;
 	for(uintE i = 1; i <= delta; i++){
 		std::cout<<"coreA "<<i<<" running time: "<<timeA[i-1]<<std::endl;
 		totalRuntime += timeA[i-1];
@@ -137,7 +137,7 @@ inline std::tuple<sequence<sequence<uintE> >, sequence<sequence<uintE> >, uintE>
 		totalRuntime += timeB[i-1];
 	}
 	std::cout<<"ideal runtime with "<<num_workers()<<" threads: "<<totalRuntime/num_workers()<<std::endl;
-	it.reportTotal("initialize time");
+	it.reportTotal("initialize time");*/
 	return std::make_tuple(AlphaMax, BetaMax, delta);
 }
 
