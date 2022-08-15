@@ -38,6 +38,7 @@
 #include <random>
 #include <fstream>
 
+
 namespace gbbs {
 template <class Graph>
 double BiCoreIndex_runner(Graph& G, commandLine P) { 
