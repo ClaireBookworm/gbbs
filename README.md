@@ -1,6 +1,6 @@
 # Efficient Algorithm for Parallel Bi-core Decomposition
 
-You can find the paper [here](https://github.com/ClaireBookworm/gbbs/blob/bicore-index/primes-conference-final.pdf).
+You can find the original paper [here](https://github.com/ClaireBookworm/gbbs/blob/bicore-index/primes-conference-final.pdf), and our published paper [here (ACM-SIAM 2023)](https://epubs.siam.org/doi/abs/10.1137/1.9781611977578.ch2).
 
 Introduction
 --------
